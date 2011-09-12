@@ -1,0 +1,2 @@
+module CorrectionLinksHelper
+end

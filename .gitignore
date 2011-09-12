@@ -1,0 +1,15 @@
+log/*.log
+log/*.log.*
+log/searchd.*
+tmp/**/*
+tmp/tags
+db/*.db
+db/*.sqlite3
+db/schema.rb
+news_stories/
+.DS_Store
+doc/
+db/sphinx/**/*
+solr/**/*
+.sass-cache/
+sii_data/

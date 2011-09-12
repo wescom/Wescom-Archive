@@ -1,0 +1,27 @@
+<h1>Home</h1>
+
+<h2>Stastistics<span>(daily paper statistics)</span></h2>
+<div class="inner-box clearfix">
+
+  <%= render(:partial => "sidebar") %>
+
+  <div id="stats-graphs-block">
+    <h4>Stats Graphs</h4>
+    <div class="image-left">
+      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archived Per Day Graph") %> 
+      <div class="caption">Stories Archived Per Day</div>
+    </div>
+    <div class="image-right">
+      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archived Per Week Graph") %>
+      <div class="caption">Stories Archived Per Week</div>
+    </div>
+    <div class="image-left">
+      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archives Per Month Graph") %>
+      <div class="caption">Stories Archived Per Month</div>
+    </div>	
+    <div class="image-right">
+      <%= image_tag("/images/test-graph.jpg", :alt => "Total Stories Archives Graph" ) %>
+      <div class="caption">Total Stories Archived</div>
+    </div>
+  </div><!-- end stats-graphs-block -->
+</div>

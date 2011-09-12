@@ -1,0 +1,26 @@
+<h1>Today</h1>
+
+<h2>Todays Stories <span>(The Bulletin)</span></h2>
+<div class="inner-box clearfix">
+  <%= render (:partial => 'home/sidebar') %>
+
+  <div id="table-block">
+    <%= will_paginate @stories %>
+    <table cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr class="header">
+          <td>Headline</td>
+          <td>Author</td>
+          <td>Page</td>
+          <td>Section</td>
+          <td>Page Date</td>
+          <td>Status</td>
+          <td>Actions</td>
+        </tr>
+        <%= render :partial => 'story_fragment', :collection => @stories %>
+      </tbody>
+    </table>
+    <%= will_paginate @stories %>
+  </div>
+
+</div>

@@ -1,0 +1,11 @@
+<tr class="<%= cycle("alternate","") %>">
+  <td class="headline"><%= link_to text_for_story_link(story_fragment), story_fragment -%>
+    <%= truncate(story_fragment.copy, :length => 250).html_safe%>
+  </td>
+  <td><%= story_fragment.byline -%></td>
+  <td><%= story_fragment.section.name if story_fragment.section -%></td>
+  <td>1.0</td>
+  <td><%= story_fragment.pubdate %></td>
+  <td class="false">Needs Review</td>
+  <td class="actions"><a class="edit" href="#">edit</a> | <a class="delete" href="#">delete</a></td>
+</tr>

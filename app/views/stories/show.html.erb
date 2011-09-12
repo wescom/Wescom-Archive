@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  <%= "#{h @story.hl1} - " if @story.hl1 -%>
+<% end %>
+
+<div class="inner-box clearfix">
+  <div id="story-content">
+    <h1><%= @story.hl1.html_safe %></h1>
+    <% if @story.hl2 %>
+      <h4><%= @story.hl2.html_safe %> </h4>
+    <% end %>
+    <% if  @story.byline %>
+      <h4>By: <%= @story.byline.html_safe %>, <%= @story.paper.name.html_safe if @story.paper %></h4>
+    <% end %>
+    <%= render(:partial => 'sidebar') %>
+    <%=  @story.copy.html_safe %>
+    <% if @story.tagline %>
+      <h3><%= @story.tagline.html_safe -%></h3>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title><%= yield :title %> Wescom | Archive</title>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div id="page-container">
+      <div id="branding">
+        <h1>Wescom <span>| Archive</span></h1>
+      </div>
+      <%= render(:partial => "home/pagenav") %>
+      <div id="page-content" class="clearfix">
+
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+
+        <%= yield %>
+
+      </div>
+      <div id="page-footer">
+        <p><strong>Wescom Archive</strong> - &copy; Copyright 2006-2010 - <a href="http://www.bendbulletin.com">Western Communications</a>.<br /></p>
+      </div>
+    </div>
+  </body>
+</html>

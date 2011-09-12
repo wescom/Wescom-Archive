@@ -1,0 +1,28 @@
+<div id="story-sidebar">
+  <p class='story-information'>Information</p>
+  <div id="story-info">
+    Pubdate: <%= @story.pubdate.to_s%><br />
+    Section: <%= @story.section.name if @story.section %> <br />
+    Page: <%= @story.page %><br />
+    Byline: <%= @story.byline %> <br />
+    Publicaton: <%= @story.paper.name if @story.paper%>
+  </div>
+
+  <% if @story.corrections.length > 0%>
+    <p class='story-information'>Corrections</p>
+    <div id="story-info">
+      <% @story.corrections.each do |story| %>
+        <%= link_to text_for_story_link(story), story%>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @story.corrected_stories.length > 0%>
+    <p class='story-information'>Corrected Stories</p>
+    <div id="story-info">
+      <% @story.corrected_stories.each do |story| %>
+        <%= link_to text_for_story_link(story), story%>
+      <% end %>
+    </div>
+  <% end %>
+</div> <!-- end sidebar-->

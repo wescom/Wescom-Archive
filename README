@@ -1,0 +1,9 @@
+== Wescom Archive ==
+
+Installation
+1) Configure Database.yml
+
+Ensure there is a news_stories directory in the applications directory
+2) Run rake db:migrate
+3) run script/server
+4) Enjoy
