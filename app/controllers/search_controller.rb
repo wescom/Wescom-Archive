@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  before_filter :require_user
+
   def index
     if params[:search_query]
       @stories = Story.search do

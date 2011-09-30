@@ -7,6 +7,7 @@ gem 'sunspot'
 gem 'sunspot_rails'
 gem 'will_paginate'
 gem 'chronic'
+gem 'mongrel', "1.2.0.pre2"
 
 gem 'unicorn'
 gem 'capistrano'
