@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+ 
+<Name>Wescom Archive</Name>
+<Description>A company wide archive for Western Communications publications.</Description>
+ 
+<!-- Administrators and users will be sent to this URL for application support -->
+<Support>
+<!-- URL for application setup as an optional redirect during the install -->
+<!-- <Link rel="setup" href="http://g5cafe.heroku.com/setup?domain=${DOMAIN_NAME}" /> -->
+ 
+<!-- URL for application configuration, accessed from the app settings page in the control panel -->
+<Link rel="manage" href="http://archive.wescompapers.com/config?domain=${DOMAIN_NAME}" />
+ 
+<!-- URL explaining how customers get support. -->
+<Link rel="support" href="http://archive.wescompapers.com/support" />
+ 
+<!-- URL that is displayed to admins during the deletion process, to specify policies such as data retention, how to claim accounts, etc. -->
+<Link rel="deletion-policy" href="http://archive.wescompapers.com/deletion?domain=${DOMAIN_NAME}" />
+</Support>
+ 
+<!-- Show this link in Google's universal navigation for all users -->
+<Extension id="navLink" type="link">
+  <Name>Archive</Name>
+  <Url>http://archive.wescompapers.com/login?domain=${DOMAIN_NAME}</Url>
+  <Scope ref="contactFeed"/>
+</Extension>
+ 
+<!-- Declare our OpenID realm so our app is white listed -->
+<Extension id="realm" type="openIdRealm">
+  <Url>archive.wescompapers.com</Url>
+</Extension>
+
+<Scope id="contactFeed">
+  <Url>https://www.google.com/m8/feeds/</Url>
+  <Reason>Email Notifications</Reason>
+</Scope>
+</ApplicationManifest>
+
