@@ -11,6 +11,13 @@ gem 'chronic'
 gem 'unicorn'
 gem 'capistrano'
 
+
+# Authentication
+gem "oauth"
+gem "ruby-openid", :require => "openid"
+gem "ruby-openid-apps-discovery", :git => "git://github.com/skrat/ruby-openid-apps-discovery.git", :require => "gapps_openid"
+gem "rack-openid", :require => "rack/openid"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
