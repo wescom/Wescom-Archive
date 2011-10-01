@@ -9,6 +9,6 @@
     </li>-->
   </ul>
   <div id="login-box">
-    <span>Hello <a href=""> Mark T.</a> | <a href="">Logout</a></span>
+    <span>Hello <%= current_user.first_name -%> | <%= link_to "Logout", logout_url %></span>
   </div>
 </div><!-- end page-navigation -->
