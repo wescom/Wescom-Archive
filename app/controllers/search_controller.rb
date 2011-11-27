@@ -3,9 +3,13 @@ class SearchController < ApplicationController
 
   def index
     if params[:search_query]
-      @stories = Story.search do
-        keywords(params[:search_query])
-        paginate(:page => params[:page])
+      begin
+        @stories = Story.search do
+          keywords(params[:search_query])
+          paginate(:page => params[:page])
+        end
+      rescue Errno::ECONNREFUSED
+        render :text => "Search Server Down\n\n\n It will be back online shortly"
       end
     end
   end
