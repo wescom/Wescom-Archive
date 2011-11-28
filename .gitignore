@@ -5,7 +5,6 @@ tmp/**/*
 tmp/tags
 db/*.db
 db/*.sqlite3
-db/schema.rb
 news_stories/
 .DS_Store
 doc/

@@ -1,8 +1,18 @@
+require "bundler/capistrano"
+
 set :application, "wescomarchive"
 set :repository,  "git@github.com:wescom/Wescom-Archive.git"
 default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require "rvm/capistrano"
+set :rvm_ruby_string, '1.9.2-p290@wescomarchive'
 
 set :scm, :git
+set :branch, "master"
+
+set :deploy_via, :remote_cache
 
 ARCHIVE1 = "216.228.165.100"
 ARCHIVE2 = "216.228.165.101"
