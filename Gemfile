@@ -30,5 +30,6 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem "capistrano"
   gem 'ruby-debug19', :require => 'ruby-debug'
 end
