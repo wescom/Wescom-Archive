@@ -33,3 +33,7 @@ group :development, :test do
   gem "capistrano"
   gem 'ruby-debug19', :require => 'ruby-debug'
 end
+
+group :production do
+  gem "therubyracer"
+end
