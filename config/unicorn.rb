@@ -12,8 +12,6 @@ if env == "production"
   working_directory "/u/apps/wescomarchive/current"
   shared_directory = "/u/apps/wescomarchive/shared"
 
-  user 'archive', 'archive'
-
   stderr_path "#{shared_directory}/log/unicorn.stderr.log"
   stdout_path "#{shared_directory}/log/unicorn.stdout.log"
 end
