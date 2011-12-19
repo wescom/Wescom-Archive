@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless current_user
-      redirect_to '/login?domain=bendbulletin.com'
+      redirect_to '/login?domain=wescompapers.com'
       return false
     end
   end
