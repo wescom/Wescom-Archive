@@ -31,3 +31,7 @@ role :db,  ARCHIVE3, :primary => true
 #     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
 #   end
 # end
+
+after 'deploy:update_code' do
+  run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
+end
