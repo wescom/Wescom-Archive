@@ -1,22 +1,41 @@
-worker_processes 2
-working_directory "/u/apps/wescomarchive/current"
+env = ENV["RAILS_ENV"] || "development"
 
+worker_processes 2
 preload_app true
 timeout 60
 
 listen 6000
 
-pid "/u/apps/wescomarchive/current/tmp/pids/unicorn.pid"
+pid "/u/apps/wescomarchive/shared/pids/unicorn.pid"
 
-stderr_path "/u/apps/wescomarchive/current/log/unicorn.stderr.log"
-stdout_path "/u/apps/wescomarchive/current/log/unicorn.stdout.log"
+if env == "production"
+  working_directory "/u/apps/wescomarchive/current"
+  shared_directory = "/u/apps/wescomarchive/shared"
+
+  user 'archive', 'archive'
+
+  stderr_path "#{shared_directory}/log/unicorn.stderr.log"
+  stdout_path "#{shared_directory}/log/unicorn.stdout.log"
+end
+
 
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
+  if defined? ActiveRecord::Base
     ActiveRecord::Base.connection.disconnect!
+  end
+
+  old_pid = "/u/apps/wescomarchive/shared/pids/unicorn.pid.oldpid"
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      # someone else did our job for us
+    end
+  end
 end
 
 after_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
+  if defined? ActiveRecord::Base
     ActiveRecord::Base.establish_connection
+  end
 end
