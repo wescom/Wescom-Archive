@@ -1,7 +1,7 @@
 require 'chronic'
 
 namespace :wescom do
-  desc "Import all teh SII stories"
+  desc "Import all the SII stories"
   task :sii_import  => :environment do
     def count_stories_in_file(input_file)
       counter = 0
@@ -18,24 +18,34 @@ namespace :wescom do
   def split_file_into_multiple_pieces(file, counter)
     #Subracting 1 from the counter length for csplit to work correctly. 
     counter -= 1
-    news_files = File.join(RAILS_ROOT,"news_stories")
+    news_files = File.join("/","archive_sii","news_stories")
     Dir.chdir(news_files)
-    system "csplit -s -fstory#{file.split("/")[7]} -n4 #{file} \"/^=== END OF STORY ===/+1\" {#{counter}}"
+    system "csplit -s -f story_`date '+%H_%M_%S'`_ #{file.split("/")[7]} -n5 #{file} \"/^=== END OF STORY ===/+1\" {#{counter}}"
+    sleep 2   # Need to wait 2 seconds. system too fast to increment seconds in filename
+    #puts file + " - news_stories contents: " + Dir.entries(news_files).to_s
   end
 
   def get_files
-    news_files = File.join(RAILS_ROOT,"news_stories","story*")
+    news_files = File.join("/","archive_sii","news_stories","story*")
     news_files = Dir.glob(news_files)
     return_files = Dir.glob(news_files)
   end
 
   def process_file(file)
     File.open(file, "rb") do |infile|
+      puts "Processing: #{file}"
       file_contents = infile.read
-      next if file_contents.size == 0
-      clean_text = cleanup_text(file_contents)
-      add_story(clean_text)
+      if file_contents.size != 0
+        clean_text = cleanup_text(file_contents)
+        add_story(clean_text)
+      end
+      remove_storyfile(file)
     end
+  end
+  
+  def remove_storyfile(file)
+    delete_result = File.delete(file)
+    puts file + " deleted.  Result: " + delete_result.to_s
   end
 
   def cleanup_text(text)
@@ -91,7 +101,7 @@ namespace :wescom do
     #puts "Copy: #{copy[0] unless copy.nil?}\n\n"
 
     story = Story.new
-    story.headline = headline[1] unless headline.nil?
+    story.hl1 = headline[1] unless headline.nil?
     story.pubdate = pagedate.to_s unless pagedate.nil?
     story.byline = byline[1] unless byline.nil?
     story.page = pagedesc[1] unless pagedesc.nil?
@@ -110,7 +120,8 @@ namespace :wescom do
   end
 
   def find_sii_files_in_directory
-    sii_files = File.join(RAILS_ROOT,"sii_data","*.txt")
+#    sii_files = File.join("/","archive_sii",'test','*.txt')
+    sii_files = File.join("/","archive_sii",'test','*.txt')
     sii_files = Dir.glob(sii_files)
     sii_files
   end

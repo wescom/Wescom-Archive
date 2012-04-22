@@ -33,4 +33,5 @@ class Story < ActiveRecord::Base
       topics.map {|tp| tp.text}
     end
   end
+
 end

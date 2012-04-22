@@ -5,8 +5,10 @@ module ApplicationHelper
       story.hl1
     elsif !story.hl2.nil?
       story.hl2
-    else
+    elsif !story.copy.nil?
       truncate(story.copy.gsub(/<.*?>/, ''), :length => 50)
+    else
+      story.doc_name
     end
     text.html_safe
   end

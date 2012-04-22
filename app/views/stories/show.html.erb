@@ -12,7 +12,7 @@
       <h4>By: <%= @story.byline.html_safe %>, <%= @story.paper.name.html_safe if @story.paper %></h4>
     <% end %>
     <%= render(:partial => 'sidebar') %>
-    <%=  @story.copy.html_safe %>
+    <% if @story.copy %><%=  @story.copy.html_safe %><% end %>
     <% if @story.tagline %>
       <h3><%= @story.tagline.html_safe -%></h3>
     <% end %>

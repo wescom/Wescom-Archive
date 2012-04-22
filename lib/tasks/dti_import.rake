@@ -2,11 +2,11 @@ require 'chronic'
 require 'dti_nitf'
 
 namespace :wescom do
-  desc "Import teh DTI stories"
+  desc "Import the DTI stories"
   task :dti_import  => :environment do
 
     def get_files
-      news_files = File.join("/","tmp","02","*.xml")
+      news_files = File.join("/","archive_data","test",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -27,7 +27,7 @@ namespace :wescom do
 
     def add_story(file_contents, filename)
       begin
-        dti_story = DTI::Story.new(file_contents)
+        dti_story = ImportStory.new(file_contents)
         # puts "\nHl1: #{dti_story.hl1}"
         # puts "Hl2: #{dti_story.hl2}"
         # puts "Byline: #{dti_story.byline}"
@@ -35,7 +35,8 @@ namespace :wescom do
         # puts "Page: #{dti_story.page}"
         # puts "Paper: #{dti_story.paper}"
         # puts "Body Length: #{dti_story.body.length}" unless dti_story.body.nil?
-
+        # puts "Copy: \n#{dti_story.body}"
+        puts "Media: #{dti_story.media}"
 
         story = Story.new
         story.hl1 = dti_story.hl1 unless dti_story.hl1.nil?
@@ -51,15 +52,21 @@ namespace :wescom do
         story.publication = Publication.find_or_create_by_name(dti_story.publication) unless dti_story.publication.nil?
         story.section = Section.find_or_create_by_name(dti_story.section) unless dti_story.section.nil?
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
-        story.save
+        story.sidebar_head = dti_story.sidebar_head unless dti_story.sidebar_head.nil?
+        story.sidebar_body = dti_story.sidebar_body unless dti_story.sidebar_body.nil?
+        story.save!
 
         if dti_story.correction?
-          puts "Correction"
+          puts "Correction for Original Story #" + dti_story.original_story_id.to_s
           original_story = Story.find_by_doc_id(dti_story.original_story_id)
-          puts original_story.class
-          correction_link = original_story.correction_links.build(:correction_id => story.id)
-          puts correction_link.class
-          correction_link.save
+          if original_story
+            #puts original_story.class
+            correction_link = original_story.correction_links.build(:correction_id => story.id)
+            #puts correction_link.class
+            correction_link.save
+          else
+            puts "No original story found in database"
+          end
         end
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"

@@ -523,6 +523,11 @@ input#search_query {
   color: #33393c;
 }
 
+#story-content p.hl2_chapterhead {
+  font-weight: bold;
+  color: black;
+}
+
 #search_input_field {
   display: block;
   margin-bottom: 60px;

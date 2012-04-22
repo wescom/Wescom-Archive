@@ -5,7 +5,10 @@
     Section: <%= @story.section.name if @story.section %> <br />
     Page: <%= @story.page %><br />
     Byline: <%= @story.byline %> <br />
-    Publicaton: <%= @story.paper.name if @story.paper%>
+    Publicaton: <%= @story.paper.name if @story.paper%> <br />
+		 <br />
+		StoryID: <%= @story.doc_id %> <br />
+		Imported File: <%= @story.doc_name %> <br />
   </div>
 
   <% if @story.corrections.length > 0%>
