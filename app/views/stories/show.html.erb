@@ -4,7 +4,9 @@
 
 <div class="inner-box clearfix">
   <div id="story-content">
-    <h1><%= @story.hl1.html_safe %></h1>
+    <% if @story.hl1 %>
+    	<h1><%= @story.hl1.html_safe %></h1>
+		<% end %>
     <% if @story.hl2 %>
       <h4><%= @story.hl2.html_safe %> </h4>
     <% end %>
@@ -15,6 +17,10 @@
     <% if @story.copy %><%=  @story.copy.html_safe %><% end %>
     <% if @story.tagline %>
       <h3><%= @story.tagline.html_safe -%></h3>
+    <% end %>
+		</br><br/>
+    <% if @story.sidebar_body %>
+      <%= @story.sidebar_body.html_safe -%>
     <% end %>
   </div>
 </div>
