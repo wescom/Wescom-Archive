@@ -60,8 +60,7 @@ ActiveRecord::Schema.define(:version => 20120422022824) do
     t.integer  "paper_id"
     t.string   "hl2"
     t.string   "tagline"
-    t.string   "sidebar_head"
-    t.string   "sidebar_body"
+    t.text     "sidebar_body"
   end
 
   create_table "story_keywords", :force => true do |t|
