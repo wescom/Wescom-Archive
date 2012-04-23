@@ -528,6 +528,12 @@ input#search_query {
   color: black;
 }
 
+#story-content p.hl2_head {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
 #search_input_field {
   display: block;
   margin-bottom: 60px;
