@@ -7,12 +7,13 @@ namespace :wescom do
 
     def get_files
       news_files = File.join("/","archive_data","test",'**','*.xml')
+      #news_files = File.join("/","archive_data","2011",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
 
     def process_file(file)
-      puts "Processing: #{file}"
+      #puts "Processing: #{file}"
       File.open(file, "rb") do |infile|
         file_contents = infile.read
         next if file_contents.size == 0
@@ -36,7 +37,8 @@ namespace :wescom do
         # puts "Paper: #{dti_story.paper}"
         # puts "Body Length: #{dti_story.body.length}" unless dti_story.body.nil?
         # puts "Copy: \n#{dti_story.body}"
-        puts "Media: #{dti_story.media}"
+        # puts "Media: #{dti_story.media}"
+        # puts "Sidebar: #{dti_story.sidebar_body}"
 
         story = Story.new
         story.hl1 = dti_story.hl1 unless dti_story.hl1.nil?
@@ -52,7 +54,6 @@ namespace :wescom do
         story.publication = Publication.find_or_create_by_name(dti_story.publication) unless dti_story.publication.nil?
         story.section = Section.find_or_create_by_name(dti_story.section) unless dti_story.section.nil?
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
-        story.sidebar_head = dti_story.sidebar_head unless dti_story.sidebar_head.nil?
         story.sidebar_body = dti_story.sidebar_body unless dti_story.sidebar_body.nil?
         story.save!
 
@@ -70,6 +71,8 @@ namespace :wescom do
         end
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
+        file = File.basename(filename)
+        FileUtils.cp filename, '/archive_data/import_failed/'+file
       end
     end
 

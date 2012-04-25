@@ -4,13 +4,16 @@ class ImportStory < ActiveRecord::Base
   attr_accessor :body, :byline, :paper, :hl1, :hl2, :tagline
   attr_accessor :sidebar_head, :sidebar_body
   attr_accessor :media
-  attr_accessor :media_id, :media_name, :media_reference, :media_printcaption, :media_printproducer, :media_originalcaption
-  attr_accessor :media_source, :media_byline, :media_job, :media_notes, :media_status, :media_type
   attr_accessor :correction, :original_story_id
   
   def initialize(xml)
     self.raw_xml = Nitf.parse(xml)
     self.correction = false
+
+    self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
+    self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
+    self.raw_xml = cleanup_hedline_tags(self.raw_xml)
+
     cracked = Crack::XML.parse(self.raw_xml)
     if cracked["nitf"]['head']['original_storyid']
       self.correction = true 
@@ -35,54 +38,41 @@ class ImportStory < ActiveRecord::Base
 
     if !doc_body["body.content"].nil? 
       if !doc_body["body.content"]["p"].nil?    # Body Copy Content
-        if doc_body["body.content"]["p"].length < 30
-          self.body = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
-        else
-          self.body = "<p>" + doc_body["body.content"]["p"].to_s.strip + "</p>"
+
+        case doc_body["body.content"]["p"]
+          when Array
+            self.body = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+          else
+            self.body = "<p>" + doc_body["body.content"]["p"].to_s.strip + "</p>"
         end
 
-        if self.body.length < 30
-          self.body = doc_body["body.content"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
-        end
+        #if count_p_elements(doc_body["body.content"]) > 1
+        #  self.body = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+        #else
+        #  self.body = "<p>" + doc_body["body.content"]["p"].to_s.strip + "</p>"
+        #end
+        #if self.body.length < 30
+        #  self.body = doc_body["body.content"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+        #end
+
         self.body = fix_escaped_elements(self.body)
         self.body = handle_chapterheads_in_body(self.body)
       end
 
       if !doc_body["body.content"]["block"].nil?    # Sidebar Content
-        self.sidebar_head = doc_body["body.content"]["block"]["hl2"]
-        self.sidebar_body = doc_body["body.content"]["block"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
-        #puts "sidebar_head: " + self.sidebar_head.to_s
+        # grab sidebar block from raw text to avoid bad parsing of xml
+        start_of_sidebar_block = self.raw_xml.index('<block class="sidebar">')+23
+        end_of_sidebar_block = self.raw_xml.index('</block>')-1
+        self.sidebar_body = self.raw_xml[start_of_sidebar_block..end_of_sidebar_block]
+        self.sidebar_body = fix_escaped_elements(self.sidebar_body)
+        self.sidebar_body = handle_styling_in_sidebar(self.sidebar_body)
         #puts "sidebar_body: " + self.sidebar_body.to_s
       end
 
       if !doc_body["body.content"]["media"].nil?    # Media Content
         self.media = doc_body["body.content"]["media"]
-        self.media_id = doc_body["body.content"]["media"]["media_id"]
-        self.media_name = doc_body["body.content"]["media"]["media_name"]
-        self.media_reference = doc_body["body.content"]["media"]["media_reference"]
-        self.media_printcaption = doc_body["body.content"]["media"]["media_printcaption"]
-        self.media_printproducer = doc_body["body.content"]["media"]["media_printproducer"]
-        self.media_originalcaption = doc_body["body.content"]["media"]["media_originalcaption"]
-        self.media_source = doc_body["body.content"]["media"]["media_source"]
-        self.media_byline = doc_body["body.content"]["media"]["media_byline"]
-        self.media_job = doc_body["body.content"]["media"]["media_job"]
-        self.media_notes = doc_body["body.content"]["media"]["media_notes"]
-        self.media_status = doc_body["body.content"]["media"]["media_status"]
-        self.media_type = doc_body["body.content"]["media"]["media_type"]
-
         #puts "\nmedia info: \n"
-        #puts self.media_id.to_s
-        #puts self.media_name.to_s
-        #puts self.media_reference.to_s
-        #puts self.media_printcaption.to_s
-        #puts self.media_printproducer.to_s
-        #puts self.media_originalcaption.to_s
-        #puts self.media_source.to_s
-        #puts self.media_byline.to_s
-        #puts self.media_job.to_s
-        #puts self.media_notes.to_s
-        #puts self.media_status.to_s
-        #puts self.media_type.to_s
+        #puts self.media.to_s
       end
     end
     
@@ -101,6 +91,14 @@ class ImportStory < ActiveRecord::Base
   
   def correction?
     self.correction
+  end
+  
+  def count_p_elements(hash)
+    count = 0
+    hash.each_key { |key|
+      count = count + 1 unless key != "p"
+    }
+    return count
   end
   
   def fix_escaped_elements(string)
@@ -127,10 +125,91 @@ class ImportStory < ActiveRecord::Base
   end
   
   def handle_chapterheads_in_body(string)
-    # puts string
+    #puts string
     return_string = string
     return_string.gsub! '<p>{"em"=>{"p"=>"', '<p class="hl2_chapterhead">'
     return_string.gsub! '", "style"=>"bold", "class"=>"hl2_chapterhead"}}</p>', "</p>"
     return_string    
+  end
+
+  def handle_styling_in_sidebar(string)
+    #puts string
+    return_string = string
+    return_string.gsub! '<hl2>', '<p class="hl2_head">'
+    return_string.gsub! '</hl2>', "</p>"
+    return_string.gsub! '<p><em style="bold" class="hl2_chapterhead"><p>', '<p class="hl2_chapterhead">'
+    return_string.gsub! '</p></em></p>', "</p>"
+    return_string    
+  end
+  
+  def cleanup_problems_in_keywords(string)    # remove all bad ' characters
+    string = string
+    start = string.index('<tobject tobject.type="news">')
+    stop = string.index('</tobject>')
+    if !start.nil? && !stop.nil?
+      start = start + 29
+      keywords_string = string[start...stop]
+
+      keywords_string.gsub! "<Keyword name = '", '"'
+      keywords_string.gsub! "'/>", '"'
+      keywords_string.gsub! '""', '","'
+      keywords_string.gsub! "\n", ""
+      keywords_string = "[" + keywords_string.strip + "]"
+      keywords_string = eval(keywords_string)
+
+      new_string = ""
+      keywords_string.each {|x|
+        x.gsub! "'", ""
+        new_string = new_string + "<Keyword name = '" + x + "'/>"
+      }
+    
+      return_string = string.gsub! string[start...stop], new_string
+      #puts return_string
+      return_string
+    else
+      string
+    end
+  end
+
+  def cleanup_media_originalcaption(string)     # remove all <p> tags
+    string = string
+    start = string.index('<media-originalcaption>')
+    stop = string.index('</media-originalcaption>')
+    string_end = string.length
+    while !start.nil? && !stop.nil?
+      start = start + 23
+      caption_string = string[start...stop]
+      caption_string.gsub! "<p>", ""
+      caption_string.gsub! "</p>", ""
+      string.gsub! string[start...stop], caption_string
+
+      if string[stop...string_end].index('<media-originalcaption>')   # Any more occurances?
+        start = string[stop...string_end].index('<media-originalcaption>') + stop
+        stop = string[(stop+24)...string_end].index('</media-originalcaption>') + stop+24
+      else
+        return string
+      end
+    end
+    string
+  end
+  
+  def cleanup_hedline_tags(string)
+    string = string
+    start = string.index('<hedline>')
+    stop = string.index('</hedline>')
+    if !start.nil? && !stop.nil?
+      start = start + 9
+      hedline_string = string[start...stop]
+      start_hl2 = string.index('<hl2>')
+      if !start_hl2.nil?
+        start_hl2 = start_hl2 + 5
+        hl1_string = string[start...start_hl2]
+        hl2_string = string[start_hl2...stop]
+        hl2_string.gsub! "<hl2>", ""
+        hl2_string.gsub! "</hl2>", ""
+        string.gsub! string[start...stop], (hl1_string + hl2_string + "</hl2>")
+      end
+    end
+    string
   end
 end
