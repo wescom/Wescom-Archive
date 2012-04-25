@@ -88,6 +88,7 @@ class ImportStory < ActiveRecord::Base
         self.hl2 = doc_body["body.head"]["hedline"]["hl2"].to_s.lstrip.rstrip
       end
       self.tagline = doc_body["body.end"]["tagline"].to_s.lstrip.rstrip if doc_body["body.end"]
+      self.tagline = fix_escaped_elements(self.tagline)
     end
   end    
   
