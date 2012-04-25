@@ -10,6 +10,7 @@ class ImportStory < ActiveRecord::Base
     self.raw_xml = Nitf.parse(xml)
     self.correction = false
 
+    #self.raw_xml = cleanup_invalid_encoding(self.raw_xml)
     self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
     self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
     self.raw_xml = cleanup_hedline_tags(self.raw_xml)
@@ -78,6 +79,7 @@ class ImportStory < ActiveRecord::Base
     
     if !self.correction?
       self.byline = doc_body["body.head"]["byline"]["person"].to_s.rstrip.gsub(/^By\s/, '') if doc_body["body.head"]["byline"]
+      self.byline = fix_escaped_elements(self.byline)
       if !doc_body["body.head"]["byline"].nil?
         self.paper = doc_body["body.head"]["byline"]["byttl"].to_s.strip if doc_body["body.head"]["byline"]["byttl"]
       end
@@ -200,16 +202,22 @@ class ImportStory < ActiveRecord::Base
     if !start.nil? && !stop.nil?
       start = start + 9
       hedline_string = string[start...stop]
-      start_hl2 = string.index('<hl2>')
+      start_hl2 = hedline_string.index('<hl2>')
       if !start_hl2.nil?
         start_hl2 = start_hl2 + 5
-        hl1_string = string[start...start_hl2]
-        hl2_string = string[start_hl2...stop]
+        hl1_string = hedline_string[1...start_hl2]
+        hl2_string = hedline_string[start_hl2...stop]
         hl2_string.gsub! "<hl2>", ""
         hl2_string.gsub! "</hl2>", ""
         string.gsub! string[start...stop], (hl1_string + hl2_string + "</hl2>")
       end
     end
+    string
+  end
+
+  def cleanup_invalid_encoding(string)
+    string = string
+    
     string
   end
 end
