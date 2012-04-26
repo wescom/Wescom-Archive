@@ -9,8 +9,6 @@ class Nitf < ActiveRecord::Base
 
   private
   def self.cleanup_text(file_string)
-    file_string.gsub!(/<!-- (.*?)\(unknown\) -->/) {replace_unknown($1)}
-
 #    file_string.gsub! /\xef\xbb\xbf/, '' #BOMS
     file_string.gsub!("\xEF\xBB\xBF".force_encoding("ASCII-8BIT"), '')    #BOMS
     file_string.gsub! /\t/, ' '
@@ -28,8 +26,12 @@ class Nitf < ActiveRecord::Base
     file_string.gsub! /<P>/, "<p>"
     file_string.gsub! /<\/P>/, "</p>"
   
-    file_string.gsub! /<hl2_chapterhead>/, '<p><em style="bold" class="hl2_chapterhead">'
-		file_string.gsub! /<\/hl2_chapterhead>/, '</em></p><p> </p>'
+    file_string.gsub! '<em style="bold">  </em>', ""
+    file_string.gsub! '<p> <em style="bold">', '<p class="hl2_chapterhead">'
+    file_string.gsub! '</em> </p>', "</p>"
+    file_string.gsub! '<em style="bold">', ""
+    file_string.gsub! '<em style="italic">', ""
+    file_string.gsub! '</em>', ""
 
     file_string.gsub!(/<!-- (.*?)\(unknown\) -->/) {replace_unknown($1)}
 
@@ -38,6 +40,8 @@ class Nitf < ActiveRecord::Base
   
     file_string.gsub! /\007/, "\n"
   
+    file_string.force_encoding("UTF-8").gsub!(/\u9999/) {replace_unknown($1)}
+
     file_string
   end
 

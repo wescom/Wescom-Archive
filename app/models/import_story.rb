@@ -10,7 +10,6 @@ class ImportStory < ActiveRecord::Base
     self.raw_xml = Nitf.parse(xml)
     self.correction = false
 
-    #self.raw_xml = cleanup_invalid_encoding(self.raw_xml)
     self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
     self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
     self.raw_xml = cleanup_hedline_tags(self.raw_xml)
@@ -105,26 +104,31 @@ class ImportStory < ActiveRecord::Base
   end
   
   def fix_escaped_elements(string)
-    return_string = string
-#      return_string.gsub! /\342\200[\230\231]/, "'"
-#      return_string.gsub! /\342\200[\234\235]/, '"'
-    return_string.gsub! '&#x2008', "-"
-    return_string.gsub! '&#x2009', "-"
-    return_string.gsub! '&#x2010', "-"
-    return_string.gsub! '&#x2011', "-"
-    return_string.gsub! '&#x2012', "--"
-    return_string.gsub! '&#x2013', "--"
-    return_string.gsub! '&#x2014', "--"
-    return_string.gsub! '&#x2015', "--"
-    return_string.gsub! '&#x2016', "'"
-    return_string.gsub! '&#x2017', "'"
-    return_string.gsub! '&#x2018', "'"
-    return_string.gsub! '&#x2019', "'"
-    return_string.gsub! '&#x2020', '"'
-    return_string.gsub! '&#x2021', '"'
-    return_string.gsub! '&#x2022', '*'
-    return_string.gsub! '&#x2030', "..."
-    return_string
+    if !string.nil?
+      return_string = string
+  #      return_string.gsub! /\342\200[\230\231]/, "'"
+  #      return_string.gsub! /\342\200[\234\235]/, '"'
+      return_string.gsub! '&#x2008', "-"
+      return_string.gsub! '&#x2009', "-"
+      return_string.gsub! '&#x2010', "-"
+      return_string.gsub! '&#x2011', "-"
+      return_string.gsub! '&#x2012', "--"
+      return_string.gsub! '&#x2013', "--"
+      return_string.gsub! '&#x2014', "--"
+      return_string.gsub! '&#x2015', "--"
+      return_string.gsub! '&#x2016', "'"
+      return_string.gsub! '&#x2017', "'"
+      return_string.gsub! '&#x2018', "'"
+      return_string.gsub! '&#x2019', "'"
+      return_string.gsub! '&#x2020', '"'
+      return_string.gsub! '&#x2021', '"'
+      return_string.gsub! '&#x2022', '*'
+      return_string.gsub! '&#x2030', "..."
+      return_string.gsub! '&#x2044', "/"
+      return_string
+    else
+      string
+    end
   end
   
   def handle_chapterheads_in_body(string)
@@ -132,6 +136,8 @@ class ImportStory < ActiveRecord::Base
     return_string = string
     return_string.gsub! '<p>{"em"=>{"p"=>"', '<p class="hl2_chapterhead">'
     return_string.gsub! '", "style"=>"bold", "class"=>"hl2_chapterhead"}}</p>', "</p>"
+    return_string.gsub! '<p>{"em"=>"', '<p class="hl2_chapterhead">'
+    return_string.gsub! '"}</p>', "</p>"
     return_string    
   end
 
@@ -196,7 +202,7 @@ class ImportStory < ActiveRecord::Base
     string
   end
   
-  def cleanup_hedline_tags(string)
+  def cleanup_hedline_tags(string)    # remove extra hl2 tags within <hedline>
     string = string
     start = string.index('<hedline>')
     stop = string.index('</hedline>')
@@ -216,9 +222,4 @@ class ImportStory < ActiveRecord::Base
     string
   end
 
-  def cleanup_invalid_encoding(string)
-    string = string
-    
-    string
-  end
 end
