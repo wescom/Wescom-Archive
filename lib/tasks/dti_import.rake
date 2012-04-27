@@ -52,6 +52,7 @@ namespace :wescom do
         story.doc_id = dti_story.doc_id unless dti_story.doc_id.nil?
         story.copyright_holder = dti_story.copyright_holder unless dti_story.copyright_holder.nil?
         story.doc_name = dti_story.doc_name unless dti_story.doc_name.nil?
+        story.project_group = dti_story.project_group unless dti_story.project_group.nil?
         story.publication = Publication.find_or_create_by_name(dti_story.publication) unless dti_story.publication.nil?
         story.section = Section.find_or_create_by_name(dti_story.section) unless dti_story.section.nil?
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?

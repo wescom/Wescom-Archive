@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427033943) do
+ActiveRecord::Schema.define(:version => 20120427045436) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20120427033943) do
     t.string   "hl2"
     t.string   "tagline"
     t.text     "sidebar_body"
+    t.string   "project_group"
   end
 
   create_table "story_topics", :force => true do |t|
