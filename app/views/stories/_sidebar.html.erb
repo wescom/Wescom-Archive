@@ -15,7 +15,7 @@
     <p class='story-information'>Corrections</p>
     <div id="story-info">
       <% @story.corrections.each do |story| %>
-        <%= link_to text_for_story_link(story), story%>
+        <%= link_to text_for_story_link(story), story %>
       <% end %>
     </div>
   <% end %>
@@ -24,7 +24,7 @@
     <p class='story-information'>Corrected Stories</p>
     <div id="story-info">
       <% @story.corrected_stories.each do |story| %>
-        <%= link_to text_for_story_link(story), story%>
+        <%= link_to text_for_story_link(story), story %>
       <% end %>
     </div>
   <% end %>
@@ -37,4 +37,16 @@
 		<% end %>
 	</div>
 -->
+
+	<% if @related_stories.count > 1 %>
+		<p class='story-information'>Related Stories:</p>
+		<div id="story-info">
+			<% @related_stories.each do |related_story| %>
+				<% if related_story.id != @story.id %>
+					<%= link_to text_for_story_link(related_story), related_story %><br/>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+
 </div> <!-- end sidebar-->

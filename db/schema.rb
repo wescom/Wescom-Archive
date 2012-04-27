@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(:version => 20120427045436) do
     t.string   "project_group"
   end
 
+  add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
+
   create_table "story_topics", :force => true do |t|
     t.integer  "story_id"
     t.integer  "topic_id"
