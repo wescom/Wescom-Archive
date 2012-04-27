@@ -3,7 +3,7 @@ class ImportStory < ActiveRecord::Base
   attr_accessor :publication, :section, :pub_date, :page
   attr_accessor :body, :byline, :paper, :hl1, :hl2, :tagline
   attr_accessor :sidebar_head, :sidebar_body
-  attr_accessor :media
+  attr_accessor :keywords, :media
   attr_accessor :correction, :original_story_id
   
   def initialize(xml)
@@ -24,11 +24,23 @@ class ImportStory < ActiveRecord::Base
     doc_data = cracked["nitf"]["head"]["docdata"]
     pub_data = cracked["nitf"]["head"]["pubdata"]
     doc_body = cracked["nitf"]["body"]
+
+    keyword_data = cracked["nitf"]["head"]["tobject"]["Keyword"]
+    if !keyword_data.nil?
+      self.keywords = []
+      count = 0
+      keyword_data.each { |x|
+        self.keywords[count] = x["name"]
+        count += 1
+      }
+      #puts "Keys:"+self.keywords.to_s
+    end
     
+
     self.doc_id = doc_data["doc_id"]["id_string"].to_i
     self.copyright_holder = doc_data["doc.copyright"]["holder"]
     self.doc_name = doc_data["doc_name"]["name_string"]
-    
+
     if !pub_data.nil?
       self.section = pub_data["position.section"].strip
       self.pub_date = pub_data["date.publication"].strip
@@ -82,9 +94,11 @@ class ImportStory < ActiveRecord::Base
       if !doc_body["body.head"]["byline"].nil?
         self.paper = doc_body["body.head"]["byline"]["byttl"].to_s.strip if doc_body["body.head"]["byline"]["byttl"]
       end
-      self.hl1 = doc_body["body.head"]["hedline"]["hl1"].to_s.chomp.strip.gsub(/\n/,'') if doc_body["body.head"]["hedline"]     
+      self.hl1 = doc_body["body.head"]["hedline"]["hl1"].to_s.chomp.strip.gsub(/\n/,'') if doc_body["body.head"]["hedline"]
+      self.hl1 = fix_escaped_elements(self.hl1) unless self.hl1.nil?
       if doc_body["body.head"]["hedline"] && doc_body["body.head"]["hedline"]["hl2"]
         self.hl2 = doc_body["body.head"]["hedline"]["hl2"].to_s.lstrip.rstrip
+        self.hl2 = fix_escaped_elements(self.hl2)
       end
       self.tagline = doc_body["body.end"]["tagline"].to_s.lstrip.rstrip if doc_body["body.end"]
       self.tagline = fix_escaped_elements(self.tagline)
@@ -138,6 +152,7 @@ class ImportStory < ActiveRecord::Base
     return_string.gsub! '", "style"=>"bold", "class"=>"hl2_chapterhead"}}</p>', "</p>"
     return_string.gsub! '<p>{"em"=>"', '<p class="hl2_chapterhead">'
     return_string.gsub! '"}</p>', "</p>"
+    return_string.gsub! '<p>{"hl2"=>"', '<p class="hl2_chapterhead">'
     return_string    
   end
 

@@ -39,6 +39,7 @@ namespace :wescom do
         # puts "Copy: \n#{dti_story.body}"
         # puts "Media: #{dti_story.media}"
         # puts "Sidebar: #{dti_story.sidebar_body}"
+        # puts "Keywords: #{dti_story.keywords}"
 
         story = Story.new
         story.hl1 = dti_story.hl1 unless dti_story.hl1.nil?
@@ -55,6 +56,11 @@ namespace :wescom do
         story.section = Section.find_or_create_by_name(dti_story.section) unless dti_story.section.nil?
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
         story.sidebar_body = dti_story.sidebar_body unless dti_story.sidebar_body.nil?
+        if !dti_story.keywords.nil?
+          dti_story.keywords.each { |x|
+            keyword = story.keywords.find_or_create_by_text(x)
+          }
+        end
         story.save!
 
         if dti_story.correction?

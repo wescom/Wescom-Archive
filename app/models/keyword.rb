@@ -1,4 +1,3 @@
 class Keyword < ActiveRecord::Base
-  has_many :story_keywords
-  has_many :stories, :through => :story_keywords
+  has_and_belongs_to_many :stories
 end

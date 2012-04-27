@@ -11,7 +11,7 @@
 		Imported File: <%= @story.doc_name %> <br />
   </div>
 
-  <% if @story.corrections.length > 0%>
+  <% if @story.corrections.length > 0 %>
     <p class='story-information'>Corrections</p>
     <div id="story-info">
       <% @story.corrections.each do |story| %>
@@ -20,7 +20,7 @@
     </div>
   <% end %>
 
-  <% if @story.corrected_stories.length > 0%>
+  <% if @story.corrected_stories.length > 0 %>
     <p class='story-information'>Corrected Stories</p>
     <div id="story-info">
       <% @story.corrected_stories.each do |story| %>
@@ -28,4 +28,13 @@
       <% end %>
     </div>
   <% end %>
+
+<!--
+  <p class='story-information'>Taxonomy:</p>
+  <div id="story-info">
+		<% @story.keywords.each do |keyword| %>
+			<%= keyword.text %>
+		<% end %>
+	</div>
+-->
 </div> <!-- end sidebar-->

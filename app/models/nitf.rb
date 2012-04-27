@@ -32,6 +32,7 @@ class Nitf < ActiveRecord::Base
     file_string.gsub! '<em style="bold">', ""
     file_string.gsub! '<em style="italic">', ""
     file_string.gsub! '</em>', ""
+    file_string.gsub! '{"hl2_chapterhead"=>"', ""
 
     file_string.gsub!(/<!-- (.*?)\(unknown\) -->/) {replace_unknown($1)}
 

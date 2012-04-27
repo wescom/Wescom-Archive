@@ -3,9 +3,8 @@ class Story < ActiveRecord::Base
   belongs_to :section
   belongs_to :paper
 
-  has_many :story_keywords
+  has_and_belongs_to_many :keywords
   has_many :story_topics
-  has_many :keywords, :through => :story_keywords
   has_many :topics, :through => :story_topics
   has_many :correction_links
   has_many :corrections, :through => :correction_links
