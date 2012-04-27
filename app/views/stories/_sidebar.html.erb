@@ -38,7 +38,7 @@
 	</div>
 -->
 
-	<% if @related_stories.count > 1 %>
+	<% if !@related_stories.nil? && @related_stories.count > 1 %>
 		<p class='story-information'>Related Stories:</p>
 		<div id="story-info">
 			<% @related_stories.each do |related_story| %>
