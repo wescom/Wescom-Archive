@@ -29,14 +29,14 @@
     </div>
   <% end %>
 
-<!--
+
   <p class='story-information'>Taxonomy:</p>
   <div id="story-info">
 		<% @story.keywords.each do |keyword| %>
-			<%= keyword.text %>
+			<%= keyword.text.downcase %><br/>
 		<% end %>
 	</div>
--->
+
 
 	<% if !@related_stories.nil? && @related_stories.count > 1 %>
 		<p class='story-information'>Related Stories:</p>
