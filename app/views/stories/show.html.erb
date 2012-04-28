@@ -24,4 +24,13 @@
       <%= @story.sidebar_body.html_safe -%>
     <% end %>
   </div>
+
+	<% if @story.story_images %>
+		<% @story.story_images do |image| %>
+			<%= image_tag image.image_file_name %>
+			<%= image_tag image.url %>
+			<%= image_tag image.url(:medium) %>
+			<%= image_tag image.url(:thumb) %>
+		<% end %>
+	<% end %>
 </div>

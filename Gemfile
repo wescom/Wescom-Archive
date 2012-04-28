@@ -9,6 +9,7 @@ gem 'progress_bar'
 gem 'will_paginate'
 gem 'chronic'
 gem 'mongrel', "1.2.0.pre2"
+gem "paperclip", "~> 3.0"
 
 gem 'unicorn'
 gem 'capistrano'

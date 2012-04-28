@@ -57,6 +57,7 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     chronic (0.6.4)
+    cocaine (0.2.1)
     coffee-rails (3.1.0)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0.rc1)
@@ -104,6 +105,12 @@ GEM
     oauth (0.4.5)
     options (2.3.0)
       fattr
+    paperclip (3.0.2)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (>= 0.0.2)
+      mime-types
     polyglot (0.3.2)
     pr_geohash (1.0.0)
     progress_bar (0.4.0)
@@ -192,6 +199,7 @@ DEPENDENCIES
   mongrel (= 1.2.0.pre2)
   mysql2
   oauth
+  paperclip (~> 3.0)
   progress_bar
   rack-openid
   rails (= 3.1.0)

@@ -10,6 +10,7 @@ class Story < ActiveRecord::Base
   has_many :corrections, :through => :correction_links
   has_many :inverse_correction_links, :class_name => 'CorrectionLink', :foreign_key => "correction_id"
   has_many :corrected_stories, :through => :inverse_correction_links, :source => :story
+  has_many :story_images, :dependent => :destroy
 
   searchable do
     text :hl1, :default_boost => 2.0, :stored => true

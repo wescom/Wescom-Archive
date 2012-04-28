@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427045436) do
+ActiveRecord::Schema.define(:version => 20120428183311) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -70,6 +70,29 @@ ActiveRecord::Schema.define(:version => 20120427045436) do
   end
 
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
+
+  create_table "story_images", :force => true do |t|
+    t.integer  "story_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "media_id"
+    t.string   "media_name"
+    t.integer  "media_height"
+    t.integer  "media_width"
+    t.string   "media_mime_type"
+    t.string   "media_printcaption"
+    t.string   "media_printproducer"
+    t.string   "media_originalcaption"
+    t.string   "media_source"
+    t.string   "media_byline"
+    t.string   "media_project_group"
+    t.string   "media_notes"
+    t.string   "media_status"
+    t.string   "media_type"
+    t.string   "publish_status"
+  end
 
   create_table "story_topics", :force => true do |t|
     t.integer  "story_id"

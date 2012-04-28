@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      #news_files = File.join("/","archive_data","test",'**','*.xml')
-      news_files = File.join("/","archive_data","2012",'**','*.xml')
+      news_files = File.join("/","archive_data","test",'**','*.xml')
+      #news_files = File.join("/","archive_data","2012",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
