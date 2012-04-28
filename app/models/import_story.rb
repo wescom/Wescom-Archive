@@ -25,20 +25,29 @@ class ImportStory < ActiveRecord::Base
     pub_data = cracked["nitf"]["head"]["pubdata"]
     doc_body = cracked["nitf"]["body"]
 
-    keyword_data = cracked["nitf"]["head"]["tobject"]["Keyword"]
-    if !keyword_data.nil?
-      self.keywords = []
-      count = 0
-      keyword_data.each { |x|
-        self.keywords[count] = x["name"]
-        count += 1
-      }
+    if cracked["nitf"]["head"]["tobject"]
+      keyword_data = cracked["nitf"]["head"]["tobject"]["Keyword"]
+      keyword_count = keyword_data.count
+      if !keyword_data.nil?
+        self.keywords = []
+        if keyword_count == 1
+          self.keywords[0] = keyword_data["name"]
+        else
+          count = 0
+          keyword_data.each { |x|
+            self.keywords[count] = x["name"]
+            count += 1
+          }
+        end
+      end
     end
 
     self.doc_id = doc_data["doc_id"]["id_string"].to_i
     self.copyright_holder = doc_data["doc.copyright"]["holder"]
     self.doc_name = doc_data["doc_name"]["name_string"]
-    self.project_group = cracked["nitf"]["head"]["meta"]["content"]
+    if cracked["nitf"]["head"]["meta"]
+      self.project_group = cracked["nitf"]["head"]["meta"]["content"]
+    end
 
     if !pub_data.nil?
       self.section = pub_data["position.section"].strip

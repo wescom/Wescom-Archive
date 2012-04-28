@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      news_files = File.join("/","archive_data","test",'**','*.xml')
-      #news_files = File.join("/","archive_data","2011",'**','*.xml')
+      #news_files = File.join("/","archive_data","test",'**','*.xml')
+      news_files = File.join("/","archive_data","2012",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -62,6 +62,7 @@ namespace :wescom do
             keyword = story.keywords.find_or_create_by_text(x)
           }
         end
+        #puts story.keywords.to_s
         story.save!
 
         if dti_story.correction?
