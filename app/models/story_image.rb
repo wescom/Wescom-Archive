@@ -4,7 +4,7 @@ class StoryImage < ActiveRecord::Base
   has_attached_file :image, 
       :styles => { 
         :thumb => "100x100>",
-        :medium => "400x400>"
+        :medium => "200x200>"
       }
 
 end

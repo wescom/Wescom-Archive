@@ -11,6 +11,7 @@ class CreateStoryImages < ActiveRecord::Migration
       t.integer :media_height
       t.integer :media_width
       t.string :media_mime_type
+      t.string :media_source
       t.string :media_printcaption
       t.string :media_printproducer
       t.string :media_originalcaption

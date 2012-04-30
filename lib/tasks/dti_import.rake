@@ -37,7 +37,6 @@ namespace :wescom do
         # puts "Paper: #{dti_story.paper}"
         # puts "Body Length: #{dti_story.body.length}" unless dti_story.body.nil?
         # puts "Copy: \n#{dti_story.body}"
-        # puts "Media: #{dti_story.media}"
         # puts "Sidebar: #{dti_story.sidebar_body}"
         # puts "Keywords: #{dti_story.keywords}"
 
@@ -62,7 +61,6 @@ namespace :wescom do
             keyword = story.keywords.find_or_create_by_text(x)
           }
         end
-        #puts story.keywords.to_s
         story.save!
 
         if dti_story.correction?
@@ -77,6 +75,36 @@ namespace :wescom do
             puts "No original story found in database"
           end
         end
+
+        if !dti_story.media.nil?
+          # puts "Media: #{dti_story.media}"
+          dti_story.media.each { |x|
+#            media = story.story_images.build(:image => File.open('/archive_data/test/IMAG0436.jpg'))
+            media.media_id = x["media_id"]
+            media.media_name = x["media_name"]
+            media.media_height = x["media_reference"]["height"]
+            media.media_width = x["media_reference"]["width"]
+            media.media_mime_type = x["media_reference"]["mime_type"]
+            media.media_source = x["media_reference"]["source"]
+            media.media_printcaption = x["media_printcaption"]
+            media.media_printproducer = x["media_printproducer"]
+            media.media_originalcaption = x["media_originalcaption"]
+            media.media_byline = x["media_byline"]
+            media.media_project_group = x["media_job"]
+            media.media_notes = x["media_notes"]
+            media.media_status = x["media_status"]
+            media.media_type = x["media_type"]
+      published = "true"
+            if published == "true"
+              media.publish_status = "Published"
+            else
+              media.publish_status = "Attached"
+            end
+          }
+          story.save!
+
+        end
+
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
