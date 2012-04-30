@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      news_files = File.join("/","archive_data","test",'**','*.xml')
-      #news_files = File.join("/","archive_data","2012",'**','*.xml')
+      #news_files = File.join("/","archive_data","test",'**','*.xml')
+      news_files = File.join("/","archive_data","2012",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -61,25 +61,10 @@ namespace :wescom do
             keyword = story.keywords.find_or_create_by_text(x)
           }
         end
-        story.save!
-
-        if dti_story.correction?
-          puts "Correction for Original Story #" + dti_story.original_story_id.to_s
-          original_story = Story.find_by_doc_id(dti_story.original_story_id)
-          if original_story
-            #puts original_story.class
-            correction_link = original_story.correction_links.build(:correction_id => story.id)
-            #puts correction_link.class
-            correction_link.save
-          else
-            puts "No original story found in database"
-          end
-        end
-
         if !dti_story.media.nil?
-          # puts "Media: #{dti_story.media}"
+          #puts "Media: #{dti_story.media}"
           dti_story.media.each { |x|
-#            media = story.story_images.build(:image => File.open('/archive_data/test/IMAG0436.jpg'))
+            media = story.story_images.build  #(:image => File.open('/archive_data/test/IMAG0436.jpg'))
             media.media_id = x["media_id"]
             media.media_name = x["media_name"]
             media.media_height = x["media_reference"]["height"]
@@ -101,8 +86,20 @@ namespace :wescom do
               media.publish_status = "Attached"
             end
           }
-          story.save!
+        end
+        story.save!
 
+        if dti_story.correction?
+          puts "Correction for Original Story #" + dti_story.original_story_id.to_s
+          original_story = Story.find_by_doc_id(dti_story.original_story_id)
+          if original_story
+            #puts original_story.class
+            correction_link = original_story.correction_links.build(:correction_id => story.id)
+            #puts correction_link.class
+            correction_link.save
+          else
+            puts "No original story found in database"
+          end
         end
 
       rescue Exception => e

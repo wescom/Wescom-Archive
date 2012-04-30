@@ -90,7 +90,11 @@ class ImportStory < ActiveRecord::Base
       end
 
       if !doc_body["body.content"]["media"].nil?    # Media Content
-        self.media = doc_body["body.content"]["media"]
+        if doc_body["body.content"]["media"].kind_of?(Array)    # Read as an array when multiple images.
+          self.media = doc_body["body.content"]["media"]
+        else                                                    # Read as hash when only 1 image. Convert to array.
+          self.media = [doc_body["body.content"]["media"]]
+        end
         #puts "\nmedia info: \n"
         #puts self.media.to_s
       end
