@@ -5,6 +5,7 @@ class StoryImage < ActiveRecord::Base
       :styles => { 
         :thumb => "100x100>",
         :medium => "200x200>"
-      }
+      },
+      :default_url => '/images/no-image.jpg'
 
 end
