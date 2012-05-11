@@ -7,7 +7,7 @@ namespace :wescom do
 
     def get_files
       #news_files = File.join("/","archive_data","test",'**','*.xml')
-      news_files = File.join("/","archive_data","2012",'**','*.xml')
+      news_files = File.join("/","archive_data","stories","2012",'**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -64,7 +64,12 @@ namespace :wescom do
         if !dti_story.media.nil?
           #puts "Media: #{dti_story.media}"
           dti_story.media.each { |x|
-            media = story.story_images.build  #(:image => File.open('/archive_data/test/IMAG0436.jpg'))
+            image_filename = '/archive_data/images/' + x["media_reference"]["source"]
+            if File.exists?(image_filename)
+              media = story.story_images.build(:image => File.open(image_filename))
+            else
+              media = story.story_images.build
+            end
             media.media_id = x["media_id"]
             media.media_name = x["media_name"]
             media.media_height = x["media_reference"]["height"]
