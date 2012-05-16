@@ -1,0 +1,23 @@
+<div id="image-sidebar">
+	<p class='image-head1'>Images</p>
+	<div id="image-info">
+		<%= @story.story_images.each do |image| %>
+			<%= image_tag image.image.url(:medium) %><br/>
+			<% if !image.media_source.nil? %><%= image.media_source %><br/><% end %>
+			<% if !image.media_name.nil? %><%= image.media_name %><br/><% end %>
+			<% if !image.media_width.nil? and !image.media_height.nil?%>
+				<%= image.media_width %>x<%= image.media_height %><br/>
+			<% end %>
+			<% if !image.media_mime_type.nil? %><%= image.media_mime_type %><br/><% end %>
+			<% if !image.media_printcaption.nil? %><%= image.media_printcaption %><br/><% end %>
+			<% if !image.media_printproducer.nil? %><%= image.media_printproducer %><br/><% end %>
+			<% if !image.media_originalcaption.nil? %><%= image.media_originalcaption %><br/><% end %>
+			<% if !image.media_byline.nil? %><%= image.media_byline %><br/><% end %>
+			<% if !image.media_project_group.nil? %><%= image.media_project_group %><br/><% end %>
+			<% if !image.media_notes.nil? %><%= image.media_notes %><br/><% end %>
+			<% if !image.media_status.nil? %><%= image.media_status %><br/><% end %>
+			<% if !image.media_type.nil? %><%= image.media_type %><br/><% end %>
+			</br><br/>
+		<% end %>
+	</div>
+</div>
