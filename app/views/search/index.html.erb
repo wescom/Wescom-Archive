@@ -32,7 +32,7 @@
   <% if @stories %>
     <div id="table-block" class="grid_15">
 			<div id="table-paginate" class="full_width">
-      	Results: <%= @stories.results.count %>
+      	Results: <%= @stories.results.total_pages * @stories.results.count %>
       	<div class="float_right"><%= will_paginate @stories.hits %></div>
 			</div>
       <% unless @stories.nil? %>
