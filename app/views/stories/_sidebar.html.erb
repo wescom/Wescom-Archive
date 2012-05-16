@@ -38,7 +38,7 @@
 
 
 	<% if !@related_stories.nil? && @related_stories.count > 1 %>
-		<p class='story-infohead1'>Related Stories:</p>
+		<p class='story-infohead2'>Related Stories:</p>
 		<div id="story-info">
 			<% @related_stories.each do |related_story| %>
 				<% if related_story.id != @story.id %>
