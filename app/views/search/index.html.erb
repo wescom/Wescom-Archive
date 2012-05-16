@@ -4,53 +4,37 @@
 <h1>Search</h1>
 <h2>Archive Search Form</h2>
 
-<!--
-<div class="success">
-  Data successfully saved!
-</div>
--->
-
 <div class="inner-box clearfix">
 
-  <%= render(:partial => 'home/sidebar') %>
-
-  <div id="form-block">
-    <%= form_tag search_path , :method => :get do %>
-
-      <%= label_tag :search_query, "Search" %>
-      <span id="search_input_field">
-        <%= text_field_tag :search_query, params[:search_query] %>
-        <%= submit_tag "Search", :class => 'submit'%>
-      </span>
-      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
-      <div id="advanced-search">
-        <%= label_tag :date_from_select, "From" %>
-        <%= text_field_tag :date_from_select, params[:date_from_select], :class => 'short_date_picker' %>
-        <%= label_tag :date_to_select, "To" %>
-        <%= text_field_tag :date_to_select, params[:date_to_select], :class => 'short_date_picker' %>
-
-        <!--
-        #TODO Add Section Searches
-        <label for="sections_select">Section</label>
-        <select name="sections" id="sections_select" multiple onchange="" size="1">
-          <option value="option1">Main</option>
-          <option value="option2">Sports</option>
-          <option value="option3">Business</option>
-          <option value="option4">Local</option>
-          <option value="option5">Features</option>
-        </select>
-        -->
-      </div>
-    <% end %>
+  <div id="form-block" class="grid_15">
+		<div id="search_block" class="grid_10">
+	    <%= form_tag search_path , :method => :get do %>
+	      <%= label_tag :search_query, "Search" %>
+	      <span id="search_input_field">
+	        <%= text_field_tag :search_query, params[:search_query] %>
+	        <%= submit_tag "Search", :class => 'submit'%>
+	      </span>
+	      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
+	      <div id="advanced-search">
+	        <%= label_tag :date_from_select, "From" %>
+	        <%= text_field_tag :date_from_select, params[:date_from_select], :class => 'short_date_picker' %>
+	        <%= label_tag :date_to_select, "To" %>
+	        <%= text_field_tag :date_to_select, params[:date_to_select], :class => 'short_date_picker' %>
+	      </div>
+	    <% end %>
+		</div>
+		
+		<div id="sidebar" class="grid_3">
+		  <%= render(:partial => 'sidebar') %>
+		</div>
   </div>
-  <br />
-  <br />
-  <br />
-
+	
   <% if @stories %>
-    <div id="table-block">
-      Results: <%= @total_results %>
-      <%= will_paginate @stories.hits %>
+    <div id="table-block" class="grid_15">
+			<div id="table-paginate" class="full_width">
+      	Results: <%= @stories.results.count %>
+      	<div class="float_right"><%= will_paginate @stories.hits %></div>
+			</div>
       <% unless @stories.nil? %>
         <table cellspacing="0" cellpadding="0">
           <tbody>
@@ -67,7 +51,9 @@
           </tbody>
         </table>
       <% end %>
-      <%= will_paginate @stories.hits %>
+			<div id="table-paginate" class="full_width">
+      	<div class="float_right"><%= will_paginate @stories.hits %></div>
+			</div>
     </div>
   <% end %>
 </div>
