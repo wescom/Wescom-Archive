@@ -1,10 +1,14 @@
 <div id="image-sidebar">
-	<p class='image-head1'>Images</p>
-	<div id="image-info">
-		<%= @story.story_images.each do |image| %>
-			<%= image_tag image.image.url(:medium) %><br/>
+	<p class='image-head1 indent'>Images</p>
+	<% @story.story_images.each do |image| %>
+		<div class="indent">
+			<%= image_tag image.image.url(:medium) %>
+		</div>
+		<div class="image-info indent">
+			<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+		</div>
+<!--
 			<% if !image.media_source.nil? %><%= image.media_source %><br/><% end %>
-			<% if !image.media_name.nil? %><%= image.media_name %><br/><% end %>
 			<% if !image.media_width.nil? and !image.media_height.nil?%>
 				<%= image.media_width %>x<%= image.media_height %><br/>
 			<% end %>
@@ -17,7 +21,7 @@
 			<% if !image.media_notes.nil? %><%= image.media_notes %><br/><% end %>
 			<% if !image.media_status.nil? %><%= image.media_status %><br/><% end %>
 			<% if !image.media_type.nil? %><%= image.media_type %><br/><% end %>
-			</br><br/>
-		<% end %>
-	</div>
+-->
+			<br/><br/>
+	<% end %>
 </div>

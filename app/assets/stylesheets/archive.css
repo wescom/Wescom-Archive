@@ -555,7 +555,7 @@ input#search_query {
   position: relative;
   padding: 10px 0px 10px 0px;
   margin-left: 7px;
-  border: 1px solid #c1c1c1;
+/*  border: 1px solid #c1c1c1;*/
 }
 
 #image-sidebar p.image-head1 {
@@ -565,9 +565,7 @@ input#search_query {
   padding: 10px 0px 0px 5px;
 }
 
-#image-info {
-  padding-left: 10px;
-  padding-right: 10px;
+.image-info {
   font: normal 0.7em Arial, Tahoma, sans-serif;
 }
 

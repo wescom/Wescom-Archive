@@ -28,7 +28,7 @@
 		<div id="sidebar_block" class="grid_3 full_width">
 	    <%= render(:partial => 'sidebar') %>
 			<br/>
-			<% if @story.story_images %>
+			<% if @story.story_images.count > 0 %>
 		  	<%= render(:partial => 'image_sidebar') %>
 			<% end %>
 		</div>
