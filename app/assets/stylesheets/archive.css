@@ -429,36 +429,6 @@ input#search_query {
   float: right;
 }
 
-/* Global formatting */
-.full_height { height: 98%;}
-.full_width { width: 98%;}
-.float_left { float: left;}
-.float_right { float: right;}
-.indent { margin: 0px 0px 0px 20px;}
-
-/* Story styling */
-#story-sidebar {
-  position: relative;
-  width: 240px;	
-  float: right;
-  padding: 10px;
-  margin-left: 7px;
-  border: 1px solid #c1c1c1;
-}
-
-#story-sidebar p.story-information {
-  font: bold 1.1em Arial, Tahoma, sans-serif;
-  color: #0099ff;
-  text-transform: uppercase;
-  padding: 15px 0px 0px 15px;
-}
-
-#story-info {
-  padding-left: 15px;
-  padding-right: 15px;
-  font: normal 0.7em Arial, Tahoma, sans-serif;
-}
-
 #sidebar ul {
   margin: 0px;
   padding: 0px 0px 100px 0px;
@@ -518,6 +488,14 @@ input#search_query {
   color: #fff;
 }
 
+/* Global formatting */
+.full_height { height: 98%;}
+.full_width { width: 98%;}
+.float_left { float: left;}
+.float_right { float: right;}
+.indent { margin: 0px 0px 0px 20px;}
+
+/* Story Content */
 #story-content {
   font-family: "Times New Roman", Times, serif;
   font-size: 18px;
@@ -545,3 +523,51 @@ input#search_query {
   margin-bottom: 60px;
 	width: 100%;
 }
+
+/* Story sidebars */
+#story-sidebar {
+  position: relative;
+  padding: 10px 0px 10px 0px;
+  margin-left: 7px;
+  border: 1px solid #c1c1c1;
+}
+
+#story-sidebar p.story-infohead1 {
+  font: bold 1.1em Arial, Tahoma, sans-serif;
+  color: #0099ff;
+  text-transform: uppercase;
+  padding: 10px 0px 0px 5px;
+}
+
+#story-sidebar p.story-infohead2 {
+  font: bold 0.9em Arial, Tahoma, sans-serif;
+  text-transform: uppercase;
+  padding: 10px 0px 0px 5px;
+}
+
+#story-info {
+  padding-left: 10px;
+  padding-right: 10px;
+  font: normal 0.7em Arial, Tahoma, sans-serif;
+}
+
+#image-sidebar {
+  position: relative;
+  padding: 10px 0px 10px 0px;
+  margin-left: 7px;
+  border: 1px solid #c1c1c1;
+}
+
+#image-sidebar p.image-head1 {
+  font: bold 1.1em Arial, Tahoma, sans-serif;
+  color: #0099ff;
+  text-transform: uppercase;
+  padding: 10px 0px 0px 5px;
+}
+
+#image-info {
+  padding-left: 10px;
+  padding-right: 10px;
+  font: normal 0.7em Arial, Tahoma, sans-serif;
+}
+
