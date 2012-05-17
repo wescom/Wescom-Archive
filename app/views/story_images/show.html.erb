@@ -1,0 +1,24 @@
+<div class="inner-box clearfix">
+	<%= link_to image_tag(@image.image(:medium), :alt=>"Story Image"), @image.image.url(:original), :rel => 'facebox' %>
+	
+	<div class="image-info indent">
+		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
+	</div>
+	<br/>
+
+	<div>
+		<% if !@image.media_source.nil? %><%= @image.media_source %><br/><% end %>
+		<% if !@image.media_width.nil? and !@image.media_height.nil?%>
+			<%= @image.media_width %>x<%= @image.media_height %><br/>
+		<% end %>
+		<% if !@image.media_mime_type.nil? %><%= @image.media_mime_type %><br/><% end %>
+		<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><% end %>
+		<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
+		<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><% end %>
+		<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
+		<% if !@image.media_project_group.nil? %><%= @image.media_project_group %><br/><% end %>
+		<% if !@image.media_notes.nil? %><%= @image.media_notes %><br/><% end %>
+		<% if !@image.media_status.nil? %><%= @image.media_status %><br/><% end %>
+		<% if !@image.media_type.nil? %><%= @image.media_type %><br/><% end %>
+	</div>
+</div>
