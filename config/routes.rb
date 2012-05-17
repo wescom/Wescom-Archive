@@ -2,6 +2,7 @@ Wescomarchive::Application.routes.draw do
   resources :papers
   resources :stories
   resources :correction_links
+  resources :story_images
 
   match "/home" => "home#index"
   match "/search" => "search#index"

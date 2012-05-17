@@ -565,6 +565,38 @@ input#search_query {
   padding: 10px 0px 0px 5px;
 }
 
+/* Image Content */
+#image-content {
+  font: normal 1.2em Arial, Tahoma, sans-serif;
+  color: #33393c;
+}
+
+.image-header-bar {
+  background-color: #4a5154;
+  font: normal 1.5em Arial, Tahoma, sans-serif;
+	color: white;
+	padding: 10px 10px 10px 10px;
+	margin-bottom: 15px;
+}
+
+.image-head {
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.image-field {
+	font-weight: 600;
+	font-style: normal;
+	text-decoration:none;
+	padding-right: 15px;
+}
+
+.image-info-box {
+  border: 1px solid #fff;
+	margin: 5px;
+	padding: 5px;
+}
+
 .image-info {
   font: normal 0.7em Arial, Tahoma, sans-serif;
 }
