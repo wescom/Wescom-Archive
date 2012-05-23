@@ -5,11 +5,6 @@ GIT
     ruby-openid-apps-discovery (1.01)
       ruby-openid (>= 2.1.7)
 
-PATH
-  remote: ~/.rvm/gems/ruby-1.9.3/gems/linecache19-0.5.13/
-  specs:
-    linecache19 (0.5.13)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -190,7 +185,6 @@ DEPENDENCIES
   coffee-rails (~> 3.1.0)
   dti_nitf
   jquery-rails
-  linecache19 (= 0.5.13)!
   mongrel (= 1.2.0.pre2)
   mysql2
   oauth
