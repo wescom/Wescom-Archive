@@ -153,6 +153,8 @@ GEM
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
     ruby-openid (2.1.8)
+    rvm-capistrano (1.1.0)
+      capistrano (>= 2.0.0)
     sass (3.1.7)
     sass-rails (3.1.0)
       actionpack (~> 3.1.0)
@@ -207,6 +209,7 @@ DEPENDENCIES
   ruby-debug19
   ruby-openid
   ruby-openid-apps-discovery!
+  rvm-capistrano
   sass-rails (~> 3.1.0)
   sunspot
   sunspot_rails

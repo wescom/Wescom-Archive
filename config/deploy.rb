@@ -1,26 +1,33 @@
-require "bundler/capistrano"
-
 set :application, "wescomarchive"
 set :repository,  "git@github.com:wescom/Wescom-Archive.git"
 set :ssh_options, { :forward_agent => true }
 set :rails_env,   "production"
 set :scm,         :git
+set :scm_username,    "shoffmann"     # Git user
+set :scm_passphrase,  "Go2yskwescom"  # Git password
 set :branch,      "origin/master"
-set :deploy_via,  :remote_cache
+#set :deploy_via,  :remote_cache
+set :deploy_via,  :copy
 
-set :group, "archive"
+set :user,      "shoffmann"  # The server's user for deploys
+set :group,     "archive"
 
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require "bundler/capistrano"
 require "rvm/capistrano"
-set :rvm_ruby_string, '1.9.2-p290@wescomarchive'
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+set :rvm_ruby_string, 'ruby-1.9.3-p194@global'
+set :rvm_bin_path, "/usr/local/rvm/bin"
 
 default_environment["RAILS_ENV"] = 'production'
 
 default_run_options[:pty] =   true
 
-ARCHIVE1 = "216.228.165.100"
-ARCHIVE2 = "216.228.165.101"
-ARCHIVE3 = "216.228.165.102"
+#ARCHIVE1 = "216.228.165.100"
+#ARCHIVE2 = "216.228.165.101"
+#ARCHIVE3 = "216.228.165.102"
+ARCHIVE1 = "archive1.wescompapers.com"
+ARCHIVE2 = "archive2.wescompapers.com"
+ARCHIVE3 = "archive3.wescompapers.com"
 
 role :web, ARCHIVE1
 role :app, ARCHIVE1

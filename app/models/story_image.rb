@@ -9,4 +9,8 @@ class StoryImage < ActiveRecord::Base
       },
       :default_url => '/images/no-image.jpg'
 
+  before_post_process :is_image?
+  def is_image?
+    !(image_content_type =~ /^image.*/).nil?
+  end
 end
