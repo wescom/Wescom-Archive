@@ -36,7 +36,6 @@ group :development, :test do
   gem "capistrano"
 
 	#  http://rails.vandenabeele.com/blog/2011/12/21/installing-ruby-debug19-with-ruby-1-dot-9-3-on-rvm/
-	gem 'linecache19', '0.5.13', :path => "~/.rvm/gems/ruby-1.9.3/gems/linecache19-0.5.13/"
 end
 
 group :production do
