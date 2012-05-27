@@ -13,3 +13,4 @@ solr/**/*
 .sass-cache/
 sii_data/
 public/system/story_images
+public/system/images

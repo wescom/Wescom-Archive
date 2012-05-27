@@ -7,7 +7,7 @@ namespace :wescom do
 
     def get_files
       news_files = File.join("/","archive_data","test",'**','*.xml')
-      #news_files = File.join("/","archive_data","stories","2012",'**','*.xml')
+      #news_files = File.join("/","archive_data","stories","2012",'05','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -92,6 +92,22 @@ namespace :wescom do
             end
           }
         end
+        
+        # Attach PDF of printed page
+        # ie. C01_NEWS MAIN_28-05-2010_.PDF
+        pdf_month = story.pubdate.month.to_s
+        pdf_day = story.pubdate.day.to_s
+        pdf_year = story.pubdate.year.to_s
+        pdf_filename = dti_story.section+("%02d" % story.page)+"_NEWS MAIN_"+story.pubdate.strftime('%d-%m-%y')+"_.PDF"
+        pdf_path = '/archive_data/images/'
+        if File.exists?(pdf_path+pdf_filename)
+          media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
+        else
+          media = story.story_images.build
+        end
+        media.media_name = pdf_filename
+        media.media_type = "PagePDF"
+        
         story.save!
 
         if dti_story.correction?
