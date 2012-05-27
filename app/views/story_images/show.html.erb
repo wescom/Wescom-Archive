@@ -7,41 +7,41 @@
 		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
 	</div>
 
-	<div class="grid_8">
-		<% if @image.media_type == "PagePDF" %>
-			<%= image_tag(@image.image(:large), :alt=>"PagePDF") %>
-		<% else %>
+	<% if @image.media_type == "PagePDF" %>
+		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF"), @image.image.url %>
+	<% else %>
+		<div class="grid_8">
 			<%= image_tag(@image.image(:large), :alt=>"Story Image") %>
-		<% end %>
-	</div>
-
-	<div class="grid_6">
-		<div class="image-head">Print Caption:</div>
-		<div class="image-info-box indent">
-			<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>
-			<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
 		</div>
 
-		<div class="image-head">Original Caption:</div>
-		<div class="image-info-box indent full_width">
-			<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
-			<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
-		</div>
+		<div class="grid_6">
+			<div class="image-head">Print Caption:</div>
+			<div class="image-info-box indent">
+				<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>
+				<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
+			</div>
+
+			<div class="image-head">Original Caption:</div>
+			<div class="image-info-box indent full_width">
+				<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
+				<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
+			</div>
 		
-		<div class="image-head">DTI Related Info:</div>
-		<div class="image-info-box indent">
-			<% if !@image.media_source.nil? %>
-				<a class="image-field">Original Filename: </a><%= @image.media_source %><br/><% end %>
-			<% if !@image.media_width.nil? and !@image.media_height.nil?%>
-				<a class="image-field">Image Size: </a><%= @image.media_width %>x<%= @image.media_height %><br/>
-			<% end %>
+			<div class="image-head">DTI Related Info:</div>
+			<div class="image-info-box indent">
+				<% if !@image.media_source.nil? %>
+					<a class="image-field">Original Filename: </a><%= @image.media_source %><br/><% end %>
+				<% if !@image.media_width.nil? and !@image.media_height.nil?%>
+					<a class="image-field">Image Size: </a><%= @image.media_width %>x<%= @image.media_height %><br/>
+				<% end %>
 
-			<% if !@image.media_project_group.nil? %>
-				<a class="image-field">Project Group: </a><%= @image.media_project_group %><br/>
-			<% end %>
-			<% if !@image.media_status.nil? %>
-				<a class="image-field">Status: </a><%= @image.media_status %><br/>
-			<% end %>
+				<% if !@image.media_project_group.nil? %>
+					<a class="image-field">Project Group: </a><%= @image.media_project_group %><br/>
+				<% end %>
+				<% if !@image.media_status.nil? %>
+					<a class="image-field">Status: </a><%= @image.media_status %><br/>
+				<% end %>
+			</div>
 		</div>
-	</div>
+	<% end %>
 </div>
