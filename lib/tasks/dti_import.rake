@@ -95,10 +95,7 @@ namespace :wescom do
         
         # Attach PDF of printed page
         # ie. C01_NEWS MAIN_28-05-2010_.PDF
-        pdf_month = story.pubdate.month.to_s
-        pdf_day = story.pubdate.day.to_s
-        pdf_year = story.pubdate.year.to_s
-        pdf_filename = dti_story.section+("%02d" % story.page)+"_NEWS MAIN_"+story.pubdate.strftime('%d-%m-%y')+"_.PDF"
+        pdf_filename = create_pdf_filename(story.pubdate,dti_story.section,story.page)
         pdf_path = '/archive_data/images/'
         if File.exists?(pdf_path+pdf_filename)
           media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
@@ -128,6 +125,11 @@ namespace :wescom do
         file = File.basename(filename)
         FileUtils.cp filename, '/archive_data/import_failed/'+file
       end
+    end
+    
+    def create_pdf_filename(pubdate,section,page)
+      pdf_filename = section+("%02d" % page)+"_NEWS MAIN_"+pubdate.strftime('%d-%m-%y')+"_.PDF"
+      return pdf_filename
     end
 
     import_files
