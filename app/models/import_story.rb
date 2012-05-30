@@ -13,7 +13,6 @@ class ImportStory < ActiveRecord::Base
     self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
     self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
     self.raw_xml = cleanup_hedline_tags(self.raw_xml)
-
     cracked = Crack::XML.parse(self.raw_xml)
     if cracked["nitf"]['head']['original_storyid']
       self.correction = true 
@@ -61,10 +60,13 @@ class ImportStory < ActiveRecord::Base
 
         case doc_body["body.content"]["p"]
           when Array
-            self.body = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+            body_p = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+            body_chapter = doc_body["body.content"]["hl2_chapterhead"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+            self.body = body_chapter + body_p
           else
             self.body = "<p>" + doc_body["body.content"]["p"].to_s.strip + "</p>"
         end
+        #puts "\n****\n"+self.body
 
         #if count_p_elements(doc_body["body.content"]) > 1
         #  self.body = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
@@ -163,8 +165,11 @@ class ImportStory < ActiveRecord::Base
     return_string.gsub! '<p>{"em"=>{"p"=>"', '<p class="hl2_chapterhead">'
     return_string.gsub! '", "style"=>"bold", "class"=>"hl2_chapterhead"}}</p>', "</p>"
     return_string.gsub! '<p>{"em"=>"', '<p class="hl2_chapterhead">'
-    return_string.gsub! '"}</p>', "</p>"
     return_string.gsub! '<p>{"hl2"=>"', '<p class="hl2_chapterhead">'
+    return_string.gsub! '<p>{"p"=>"', '<p class="hl2_chapterhead">'
+    return_string.gsub! '<p>{"hl2_chapterhead"=>"', '<p class="hl2_chapterhead">'
+    return_string.gsub! '"}</p>', "</p>"
+    return_string.gsub! '{"p"=>nil}', ""
     return_string    
   end
 
