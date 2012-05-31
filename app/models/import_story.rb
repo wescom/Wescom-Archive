@@ -61,7 +61,11 @@ class ImportStory < ActiveRecord::Base
         case doc_body["body.content"]["p"]
           when Array
             body_p = doc_body["body.content"]["p"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
-            body_chapter = doc_body["body.content"]["hl2_chapterhead"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+            if !doc_body["body.content"]["hl2_chapterhead"].nil?
+              body_chapter = doc_body["body.content"]["hl2_chapterhead"].collect{|d| "<p>#{d.to_s.strip}</p>"}.join
+            else
+              body_chapter = ""
+            end
             self.body = body_chapter + body_p
           else
             self.body = "<p>" + doc_body["body.content"]["p"].to_s.strip + "</p>"
