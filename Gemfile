@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
 gem 'mysql2'
+gem 'mysql'
 gem 'dti_nitf'
 gem 'sunspot'
 gem 'sunspot_rails'
