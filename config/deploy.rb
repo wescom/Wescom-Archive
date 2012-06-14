@@ -17,6 +17,8 @@ require "rvm/capistrano"
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_ruby_string, 'ruby-1.9.3-p194@global'
 set :rvm_bin_path, "/usr/local/rvm/bin"
+#set :rvm_type, :system
+set :rvm_install_ruby, :install
 
 default_environment["RAILS_ENV"] = 'production'
 
@@ -38,7 +40,7 @@ namespace :deploy do
   desc "Deploy Wescom Archive"
   task :default do
     update
-    restart
+#    restart
   end
 
   task :update do
@@ -80,9 +82,9 @@ namespace :deploy do
   end 
 end
 
-after 'deploy:update_code' do
-  run_rake "assets:precompile"
-end
+#after 'deploy:update_code' do
+#  run_rake "assets:precompile"
+#end
 
 def run_rake(cmd)
   run "cd #{current_path}; #{rake} #{cmd}"
