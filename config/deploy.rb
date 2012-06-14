@@ -3,8 +3,8 @@ set :repository,  "git@github.com:wescom/Wescom-Archive.git"
 set :ssh_options, { :forward_agent => true }
 set :rails_env,   "production"
 set :scm,         :git
-set :scm_username,    "shoffmann"     # Git user
-set :scm_passphrase,  "Go2yskwescom"  # Git password
+set :scm_username,    "wescomarchive"     # Git user
+set :scm_passphrase,  "Go2cmdarchive"  # Git password
 set :branch,      "origin/master"
 #set :deploy_via,  :remote_cache
 set :deploy_via,  :copy
