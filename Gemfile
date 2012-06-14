@@ -35,7 +35,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem "capistrano"
-
+	gem 'sunspot_solr'
 	#  http://rails.vandenabeele.com/blog/2011/12/21/installing-ruby-debug19-with-ruby-1-dot-9-3-on-rvm/
 end
 
