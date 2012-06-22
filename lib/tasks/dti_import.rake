@@ -6,8 +6,9 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      news_files = File.join("/","archive_data","test",'**','*.xml')
-      #news_files = File.join("/","archive_data","stories","2012",'05','**','*.xml')
+      #news_files = File.join("/","archive_data","test",'**','*.xml')
+      #news_files = File.join("/","archive_data","stories","2012",'**','*.xml')
+      news_files = File.join("/","nfs","archive",'data','stories','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -64,7 +65,7 @@ namespace :wescom do
         if !dti_story.media.nil?
           #puts "Media: #{dti_story.media}"
           dti_story.media.each { |x|
-            image_filename = '/archive_data/images/' + x["media_reference"]["source"]
+            image_filename = '/nfs/archive/data/images/' + x["media_reference"]["source"]
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
             else
@@ -97,7 +98,7 @@ namespace :wescom do
         # ie. C01_NEWS MAIN_28-05-2010_.PDF
         if story.pubdate? and !dti_story.section.nil? and story.page?
           pdf_filename = create_pdf_filename(story.pubdate,dti_story.section,story.page)
-          pdf_path = '/archive_data/images/'
+          pdf_path = '/archive_data/test/'
           if File.exists?(pdf_path+pdf_filename)
             media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
           else
