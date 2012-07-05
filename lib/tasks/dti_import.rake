@@ -8,7 +8,7 @@ namespace :wescom do
     def get_files
       #news_files = File.join("/","archive_data","test",'**','*.xml')
       #news_files = File.join("/","archive_data","stories","2012",'**','*.xml')
-      news_files = File.join("/","data","archiveup",'completed','2012','**','*.xml')
+      news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -126,7 +126,8 @@ namespace :wescom do
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
-        FileUtils.cp filename, '/archive_data/import_failed/'+file
+        #FileUtils.cp filename, '/archive_data/import_failed/'+file
+        FileUtils.cp filename, '/data/archiveup/import_failed/'+file
       end
     end
     
