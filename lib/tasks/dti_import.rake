@@ -6,15 +6,14 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      #news_files = File.join("/","archive_data","test",'**','*.xml')
-      #news_files = File.join("/","archive_data","stories","2012",'**','*.xml')
-      news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
+      news_files = File.join("/","data","archiveup","completed","2012",'**','*.xml')
+      #news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
 
     def process_file(file)
-      #puts "Processing: #{file}"
+      puts "Processing: #{file}"
       File.open(file, "rb") do |infile|
         file_contents = infile.read
         next if file_contents.size == 0
@@ -98,7 +97,7 @@ namespace :wescom do
         # ie. C01_NEWS MAIN_28-05-2010_.PDF
         if story.pubdate? and !dti_story.section.nil? and story.page?
           pdf_filename = create_pdf_filename(story.pubdate,dti_story.section,story.page)
-          pdf_path = '/archive_data/test/'
+          pdf_path = '/data/archiveup/test/'
           if File.exists?(pdf_path+pdf_filename)
             media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
           else
@@ -126,7 +125,6 @@ namespace :wescom do
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
-        #FileUtils.cp filename, '/archive_data/import_failed/'+file
         FileUtils.cp filename, '/data/archiveup/import_failed/'+file
       end
     end
