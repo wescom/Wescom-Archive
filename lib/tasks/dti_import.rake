@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      news_files = File.join("/","data","archiveup","completed","2012",'**','*.xml')
-      #news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
+      #news_files = File.join("/","data","archiveup","completed","2012",'**','*.xml')
+      news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -68,7 +68,12 @@ namespace :wescom do
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
             else
-              media = story.story_images.build
+              image_filename = '/data/archiveup/images_storage/' + x["media_reference"]["source"]
+              if File.exists?(image_filename)
+                media = story.story_images.build(:image => File.open(image_filename))
+              else
+                media = story.story_images.build
+              end
             end
             media.media_id = x["media_id"]
             media.media_name = x["media_name"]
@@ -108,6 +113,7 @@ namespace :wescom do
         end
 
         story.save!
+puts 'StoryId: '+story.id.to_s
 
         if dti_story.correction?
           puts "Correction for Original Story #" + dti_story.original_story_id.to_s
