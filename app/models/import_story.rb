@@ -174,6 +174,8 @@ class ImportStory < ActiveRecord::Base
     return_string.gsub! '<p>{"hl2_chapterhead"=>"', '<p class="hl2_chapterhead">'
     return_string.gsub! '"}</p>', "</p>"
     return_string.gsub! '{"p"=>nil}', ""
+    return_string.gsub! '<p>["p", " ', '<p class="hl2_chapterhead">'
+    return_string.gsub! ' "]</p>', '</p>'
     return_string    
   end
 
