@@ -109,7 +109,7 @@ namespace :wescom do
         end
 
         story.save!
-puts 'StoryId: '+story.id.to_s
+#puts 'StoryId: '+story.id.to_s
 
         if dti_story.correction?
           puts "Correction for Original Story #" + dti_story.original_story_id.to_s
