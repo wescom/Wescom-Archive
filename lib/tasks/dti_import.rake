@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      #news_files = File.join("/","data","archiveup","completed","2012",'**','*.xml')
-      news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
+      news_files = File.join("/","data","archiveup","completed","2012",'**','*.xml')
+      #news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -67,10 +67,12 @@ namespace :wescom do
             image_filename = '/data/archiveup/images_worked/' + x["media_reference"]["source"]
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
+              media.publish_status = "Published"
             else
               image_filename = '/data/archiveup/images_storage/' + x["media_reference"]["source"]
               if File.exists?(image_filename)
                 media = story.story_images.build(:image => File.open(image_filename))
+                media.publish_status = "Attached"
               else
                 media = story.story_images.build
               end
@@ -89,12 +91,6 @@ namespace :wescom do
             media.media_notes = x["media_notes"]
             media.media_status = x["media_status"]
             media.media_type = x["media_type"]
-      published = "true"
-            if published == "true"
-              media.publish_status = "Published"
-            else
-              media.publish_status = "Attached"
-            end
           }
         end
         
