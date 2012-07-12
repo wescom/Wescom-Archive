@@ -1,19 +1,35 @@
 <div id="image-sidebar">
-	<p class='image-head1 '>Published Images</p>
-	<% @story.story_images.published.each do |image| %>
-		<div class="indent">
-			<%= link_to image_tag(image.image(:medium), :alt=>"Story Image"), 
-					{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-		</div>
-		<div class="image-info indent">
-			<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-		</div>
-			<br/><br/>
+	<% if @story.story_images.published.length > 0 %>
+		<p class='image-head1 '>Published Images</p>
+		<% @story.story_images.published.each do |image| %>
+			<div class="indent">
+				<%= link_to image_tag(image.image(:medium), :alt=>"Story Image"), 
+						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+			</div>
+			<div class="image-info indent">
+				<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+			</div>
+				<br/><br/>
+		<% end %>
 	<% end %>
 
 	<% if @story.story_images.attached.length > 0 %>
 		<p class='image-head1 indent'>Attached Images</p>
 		<% @story.story_images.attached.each do |image| %>
+			<div class="indent">
+				<%= link_to image_tag(image.image(:medium), :alt=>"Story Image"), 
+						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+			</div>
+			<div class="image-info indent">
+				<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+			</div>
+				<br/><br/>
+		<% end %>
+	<% end %>
+
+	<% if @story.story_images.pagepdf.length > 0 %>
+		<p class='image-head1 indent'>Published Page</p>
+		<% @story.story_images.pagepdf.each do |image| %>
 			<div class="indent">
 				<%= link_to image_tag(image.image(:medium), :alt=>"Story Image"), 
 						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>

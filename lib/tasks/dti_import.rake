@@ -106,7 +106,7 @@ namespace :wescom do
           end
           media.media_name = pdf_filename
           media.media_type = "PagePDF"
-          media.publish_status = "Attached"
+          media.publish_status = "PagePDF"
         end
 
         story.save!

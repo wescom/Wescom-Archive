@@ -29,4 +29,10 @@ class StoryImage < ActiveRecord::Base
     end
   end
 
+  class << self
+    def pagepdf
+      where(:publish_status => 'PagePDF')
+    end
+  end
+
 end
