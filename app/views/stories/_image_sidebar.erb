@@ -1,6 +1,7 @@
 <div id="image-sidebar">
 	<p class='image-head1 indent'>Images</p>
 	<% @story.story_images.each do |image| %>
+		<%= image.publish_status %>
 		<div class="indent">
 			<%= link_to image_tag(image.image(:medium), :alt=>"Story Image"), 
 					{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
