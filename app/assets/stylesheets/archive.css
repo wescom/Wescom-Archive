@@ -562,7 +562,7 @@ input#search_query {
   font: bold 1.1em Arial, Tahoma, sans-serif;
   color: #0099ff;
   text-transform: uppercase;
-  padding: 10px 0px 0px 5px;
+  padding: 10px 0px 10px 5px;
 }
 
 /* Image Content */

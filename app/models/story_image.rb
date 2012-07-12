@@ -15,4 +15,18 @@ class StoryImage < ActiveRecord::Base
   def is_image?
     !(image_content_type =~ /^image.*/).nil?
   end
+
+
+  class << self
+    def published
+      where(:publish_status => 'Published')
+    end
+  end
+  
+  class << self
+    def attached
+      where(:publish_status => 'Attached')
+    end
+  end
+
 end
