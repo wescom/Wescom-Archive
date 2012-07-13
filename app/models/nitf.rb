@@ -27,12 +27,17 @@ class Nitf < ActiveRecord::Base
     file_string.gsub! /<\/P>/, "</p>"
   
     file_string.gsub! '<em style="bold">  </em>', ""
-    file_string.gsub! '<p> <em style="bold">', '<p class="hl2_chapterhead">'
-    file_string.gsub! '</em> </p>', "</p>"
+    #    file_string.gsub! '<p> <em style="bold">', '<p class="hl2_chapterhead">'
+    #    file_string.gsub! '</em> </p>', "</p>"
+    file_string.gsub! '<p> <em style="bold">', '<p>{"hl2_chapterhead"=>"'
+    file_string.gsub! '</em> </p>', '}</p>'
     file_string.gsub! '<em style="bold">', ""
     file_string.gsub! '<em style="italic">', ""
     file_string.gsub! '</em>', ""
     file_string.gsub! '{"hl2_chapterhead"=>"', ""
+
+    file_string.gsub! '<hl2_chapterhead><p>', '<p>{"hl2_chapterhead"=>"'
+    file_string.gsub! '</p></hl2_chapterhead>', '"}</p>'
 
     file_string.gsub!(/<!-- (.*?)\(unknown\) -->/) {replace_unknown($1)}
 
