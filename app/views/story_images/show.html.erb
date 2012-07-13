@@ -11,7 +11,8 @@
 		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
 	<% else %>
 		<div class="grid_8">
-			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %>
+<!--			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %> -->
+			<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_large"), @image.image.url %>
 		</div>
 
 		<div class="grid_6">
