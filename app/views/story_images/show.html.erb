@@ -8,10 +8,10 @@
 	</div>
 
 	<% if @image.media_type == "PagePDF" %>
-		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF"), @image.image.url %>
+		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
 	<% else %>
 		<div class="grid_8">
-			<%= image_tag(@image.image(:large), :alt=>"Story Image") %>
+			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %>
 		</div>
 
 		<div class="grid_6">

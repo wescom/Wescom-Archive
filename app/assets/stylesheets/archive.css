@@ -565,6 +565,14 @@ input#search_query {
   padding: 10px 0px 10px 5px;
 }
 
+.image-body {
+	margin-bottom: 15px;
+}
+
+img.image_small {height:auto;width:75px;}
+img.image_medium {height:auto;width:150px;}
+img.image_large {height:auto;width:450px;}
+
 /* Image Content */
 #image-content {
   font: normal 1.2em Arial, Tahoma, sans-serif;
@@ -599,5 +607,6 @@ input#search_query {
 
 .image-info {
   font: normal 0.7em Arial, Tahoma, sans-serif;
+	width: 100%;
 }
 
