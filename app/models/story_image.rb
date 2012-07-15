@@ -3,7 +3,7 @@ class StoryImage < ActiveRecord::Base
   
   has_attached_file :image, 
       :styles => { 
-        :large => ["400x400>",:jpg]
+        :large => ["500x500>",:jpg]
       },
       :url => "/system/:attachment/:id/:style_:basename.:extension",  
       :path => ":rails_root/public/system/:attachment/:id/:style_:basename.:extension",
