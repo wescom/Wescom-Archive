@@ -5,8 +5,8 @@ class StoryImage < ActiveRecord::Base
       :styles => { 
         :large => ["500x500>",:jpg]
       },
-      :url => "/system/:attachment/:id/:style_:basename.:extension",  
-      :path => ":rails_root/public/system/:attachment/:id/:style_:basename.:extension",
+      :url => "/system/db_images/:id/:style_:basename.:extension",  
+      :path => ":rails_root/public/system/db_images/:id/:style_:basename.:extension",
       :default_url => '/images/no-image.jpg'
 
 #  before_post_process :is_image?
