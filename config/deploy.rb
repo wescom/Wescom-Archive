@@ -40,7 +40,7 @@ namespace :deploy do
   desc "Deploy Wescom Archive"
   task :default do
     update
-    start
+    restart
   end
 
   task :update do
