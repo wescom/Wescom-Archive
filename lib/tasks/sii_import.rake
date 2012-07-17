@@ -37,7 +37,7 @@ namespace :wescom do
       file_contents = infile.read
       if file_contents.size != 0
         clean_text = cleanup_text(file_contents)
-        add_story(clean_text)
+        add_story(clean_text,file)
       end
       remove_storyfile(file)
     end
@@ -88,39 +88,46 @@ namespace :wescom do
     text
   end
 
-  def add_story(text)
-    headline =  /headline \((.*?)\)/i.match(text)
-    byline = /byline \((.*?)\)/i.match(text)
-    topic = /topic \((.*?)\)/i.match(text)
-    keyword = /keyword \((.*?)\)/i.match(text)
-    pagedesc = /pagedesc \((.*?)\)/i.match(text)
-    pagedate = /pagedate \((.*?)\)/i.match(text)
-    pagedate = Chronic.parse(pagedate[1])
-    copy = /<p>.+<\/p>/.match(text)
+  def add_story(text,filename)
+    begin
+      headline =  /headline \((.*?)\)/i.match(text)
+      byline = /byline \((.*?)\)/i.match(text)
+      topic = /topic \((.*?)\)/i.match(text)
+      keyword = /keyword \((.*?)\)/i.match(text)
+      pagedesc = /pagedesc \((.*?)\)/i.match(text)
+      pagedate = /pagedate \((.*?)\)/i.match(text)
+      pagedate = Chronic.parse(pagedate[1])
+      copy = /<p>.+<\/p>/.match(text)
 
-    #puts "\n\nHeadline: #{headline[1] unless headline.nil? }"
-    #puts "Byline: #{byline[1] unless byline.nil?}"
-    #puts "Topic: #{topic[1] unless topic.nil?}"
-    #puts "Keyword: #{keyword[1] unless keyword.nil?}"
-    #puts "Page Description: #{pagedesc[1] unless pagedesc.nil?}"
-    #puts "Page Date: #{pagedate.to_s}"
-    #puts "Copy: #{copy[0] unless copy.nil?}\n\n"
+      #puts "\n\nHeadline: #{headline[1] unless headline.nil? }"
+      #puts "Byline: #{byline[1] unless byline.nil?}"
+      #puts "Topic: #{topic[1] unless topic.nil?}"
+      #puts "Keyword: #{keyword[1] unless keyword.nil?}"
+      #puts "Page Description: #{pagedesc[1] unless pagedesc.nil?}"
+      #puts "Page Date: #{pagedate.to_s}"
+      #puts "Copy: #{copy[0] unless copy.nil?}\n\n"
 
-    story = Story.new
-    story.hl1 = headline[1] unless headline.nil?
-    story.pubdate = pagedate.to_s unless pagedate.nil?
-    story.byline = byline[1] unless byline.nil?
-    story.page = pagedesc[1] unless pagedesc.nil?
-    story.copy = copy[0] unless copy.nil?
-    story.frontend_db = "SII"
-    story.save
-    keywords = keyword[1].split
-    keywords.each do |keyword|
-      find_keyword = Keyword.find_or_create_by_text(keyword)
-      story.keywords << find_keyword
+      story = Story.new
+      story.hl1 = headline[1] unless headline.nil?
+      story.pubdate = pagedate.to_s unless pagedate.nil?
+      story.byline = byline[1] unless byline.nil?
+      story.page = pagedesc[1] unless pagedesc.nil?
+      story.copy = copy[0] unless copy.nil?
+      story.frontend_db = "SII"
+      story.save
+      keywords = keyword[1].split
+      keywords.each do |keyword|
+        find_keyword = Keyword.find_or_create_by_text(keyword)
+        story.keywords << find_keyword
+      end
+      story.save
+      #puts "StoryID: "+story.id.to_s
+
+    rescue Exception => e
+      puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
+      file = File.basename(filename)
+      FileUtils.cp filename, '/data/archiveup/import_failed/'+file
     end
-    story.save
-#puts "StoryID: "+story.id.to_s
   end
 
   def tag_headlines(text)
@@ -168,7 +175,7 @@ namespace :wescom do
   end
 
   def find_sii_files_in_directory
-    sii_files = File.join("/","data","archiveup","sii_stories",'*.txt')
+    sii_files = File.join("/","data","archiveup","sii_stories",'test.txt')
     sii_files = Dir.glob(sii_files)
     sii_files
   end
