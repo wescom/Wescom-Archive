@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428183311) do
+ActiveRecord::Schema.define(:version => 20120717175449) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120428183311) do
     t.string   "tagline"
     t.text     "sidebar_body"
     t.string   "project_group"
+    t.string   "frontend_db"
   end
 
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
