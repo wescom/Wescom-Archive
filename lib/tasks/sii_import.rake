@@ -18,7 +18,7 @@ namespace :wescom do
   def split_file_into_multiple_pieces(file, counter)
     #Subracting 1 from the counter length for csplit to work correctly. 
     counter -= 1
-    news_files = File.join("/","archive_sii","news_stories")
+    news_files = File.join("/","data","archiveup","sii_stories","news_stories")
     Dir.chdir(news_files)
     system "csplit -s -f story_`date '+%H_%M_%S'`_ #{file.split("/")[7]} -n5 #{file} \"/^=== END OF STORY ===/+1\" {#{counter}}"
     sleep 2   # Need to wait 2 seconds. system too fast to increment seconds in filename
@@ -26,7 +26,7 @@ namespace :wescom do
   end
 
   def get_files
-    news_files = File.join("/","archive_sii","news_stories","story*")
+    news_files = File.join("/","data","archiveup","sii_stories","news_stories","story*")
     news_files = Dir.glob(news_files)
     return_files = Dir.glob(news_files)
   end
@@ -52,12 +52,18 @@ namespace :wescom do
     #remove ^M line ending
     text.gsub!("\015", '')
 
-    #Remove the elements I do not need
+    #Remove the elements we do not need
     text.gsub!(/^LG:?.+/,'')
     text.gsub!(/^AT:?.+/,'')
     text.gsub!(/^GR:?.+/,'')
     text.gsub!(/^PA:?.+/,'')
-    text.gsub!(/^BY:?.+/,'')
+    text.gsub!(/^CP:?.+/,'')
+
+    #Remove text we do not need
+    text.gsub!('pu,byline ','')
+    text.gsub!('pu,edtext ','')
+    text.gsub!('pu,newstext ','')
+    text.gsub!('pu,edtext ','')
 
     #Fix the Text elements with Empty attributes. 
     text.gsub!(/BYLINE\s*\(\)/,'BYLINE (BLANK)')
@@ -67,16 +73,16 @@ namespace :wescom do
     #Remove empty HD elemets.
     #text.gsub!(/HD:\s*([\w+\s]\n)/,'')
 
-    #Remove newlines as a test
-    #
+    #Replace the HD Element at the beginning of a line with a <p>HD
+    #text.gsub!(/^HD/,'<p>HD')
 
-    #Replace the HD Element at teh beginning of a line with a <p>HD
-    text.gsub!(/^HD/,'<p>HD')
-    #Replace the three spaces with pragraph tags
+    #Replace the three spaces with pargraph tags
     text.gsub!(/\ \ \ /,'</p><p>')
 
     text.gsub!(/^=== END OF STORY ===/,'</p>')
 
+    tag_headlines(text)
+    strip_byline_paragraph(text)
     remove_newlines(text)
 
     text
@@ -113,6 +119,47 @@ namespace :wescom do
       story.keywords << find_keyword
     end
     story.save
+#puts "StoryID: "+story.id.to_s
+  end
+
+  def tag_headlines(text)
+    start = text.index('HD: ')
+    text_end = text.length
+    while !start.nil?
+      stop = text[start...text_end].index(/\n/)
+      if !stop.nil?
+        head_text = text[start...start+stop]
+        head_text.gsub! "HD: ", '<p></p><p class="hl2_chapterhead">'
+        text.gsub! text[start...start+stop], head_text+'</p><p>'
+        if text.index('HD: ')   # Any more occurances?
+          start = text.index('HD: ')
+        else
+          return text
+        end
+      else
+        return text
+      end
+    end
+    text
+  end
+
+  def strip_byline_paragraph(text)
+    start = text.index('BY: ')
+    text_end = text.length
+    if !start.nil?
+      stop = text[start...text_end].index('The Bulletin')
+      if !stop.nil?
+        byline_text = text[start...start+stop+12]
+        text.gsub! text[start...start+stop+12], ''
+      else
+        stop = text[start...text_end].index('Bulletin Staff Reporter')
+        if !stop.nil?
+          byline_text = text[start...start+stop+23]
+          text.gsub! text[start...start+stop+23], ''
+        end        
+      end
+    end
+    text
   end
 
   def remove_newlines(text)
@@ -120,8 +167,7 @@ namespace :wescom do
   end
 
   def find_sii_files_in_directory
-#    sii_files = File.join("/","archive_sii",'test','*.txt')
-    sii_files = File.join("/","archive_sii",'test','*.txt')
+    sii_files = File.join("/","data","archiveup","sii_stories",'test.txt')
     sii_files = Dir.glob(sii_files)
     sii_files
   end
