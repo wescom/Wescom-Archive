@@ -168,7 +168,7 @@ namespace :wescom do
   end
 
   def find_sii_files_in_directory
-    sii_files = File.join("/","data","archiveup","sii_stories",'test.txt')
+    sii_files = File.join("/","data","archiveup","sii_stories",'*.txt')
     sii_files = Dir.glob(sii_files)
     sii_files
   end
