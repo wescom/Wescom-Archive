@@ -7,7 +7,15 @@
   <td><%= story_fragment.byline -%></td>
   <td><%= story_fragment.section.name if story_fragment.section -%></td>
   <td><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
-	<td><%= story_fragment.frontend_db %></td>
+	<td>
+		<% if story_fragment.frontend_db == "DTI" %>
+			<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+		<% else %>
+			<% if story_fragment.frontend_db == "SII" %>
+				<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+			<% end %>
+		<% end %>
+	</td>
   <td class="false">Needs Review</td>
   <td class="actions"><a class="edit" href="#">edit</a> | <a class="delete" href="#">delete</a></td>
 </tr>

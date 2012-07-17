@@ -569,6 +569,7 @@ input#search_query {
 	margin-bottom: 15px;
 }
 
+img.image_thumb {height:20px;width:auto;}
 img.image_small {height:auto;width:75px;}
 img.image_medium {height:auto;width:150px;}
 img.image_large {height:auto;width:450px;}
