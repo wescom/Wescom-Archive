@@ -62,6 +62,8 @@ namespace :wescom do
             keyword = story.keywords.find_or_create_by_text(x)
           }
         end
+        story.frontend_db = "DTI"
+
         if !dti_story.media.nil?
           #puts "Media: #{dti_story.media}"
           dti_story.media.each { |x|

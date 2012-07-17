@@ -45,7 +45,7 @@ namespace :wescom do
   
   def remove_storyfile(file)
     delete_result = File.delete(file)
-    puts file + " deleted.  Result: " + delete_result.to_s
+#    puts file + " deleted.  Result: " + delete_result.to_s
   end
 
   def cleanup_text(text)
@@ -112,6 +112,7 @@ namespace :wescom do
     story.byline = byline[1] unless byline.nil?
     story.page = pagedesc[1] unless pagedesc.nil?
     story.copy = copy[0] unless copy.nil?
+    story.frontend_db = "SII"
     story.save
     keywords = keyword[1].split
     keywords.each do |keyword|
