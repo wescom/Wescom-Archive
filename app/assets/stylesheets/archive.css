@@ -551,6 +551,11 @@ input#search_query {
   font: normal 0.7em Arial, Tahoma, sans-serif;
 }
 
+#story-info div.story_frontend_logo {
+	margin-left: 30%;
+	margin-bottom: 10px;
+}
+
 #image-sidebar {
   position: relative;
   padding: 10px 0px 10px 0px;

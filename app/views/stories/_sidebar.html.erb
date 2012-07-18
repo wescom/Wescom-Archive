@@ -1,6 +1,16 @@
 <div id="story-sidebar">
   <p class='story-infohead1'>Information</p>
   <div id="story-info">
+		<div class="story_frontend_logo">
+			<% if @story.frontend_db == "DTI" %>
+				<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+			<% else %>
+				<% if @story.frontend_db == "SII" %>
+					<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				<% end %>
+			<% end %>
+		</div>
+
     Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%y') %><% end %><br />
     Section: <%= @story.section.name if @story.section %> <br />
     Page: <%= @story.page %><br />
