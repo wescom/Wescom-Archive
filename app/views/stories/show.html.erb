@@ -11,7 +11,9 @@
       <h4><%= @story.hl2.html_safe %> </h4>
     <% end %>
     <% if  @story.byline %>
-      <h4>By: <%= @story.byline.html_safe %>, <%= @story.paper.name.html_safe if @story.paper %></h4>
+      <h4>By: <%= @story.byline.html_safe %>
+				<% if @story.paper %>, <%= @story.paper.name.html_safe %> <% end %>
+			</h4>
     <% end %>
 
 		<div id="story_block" class="grid_11">
