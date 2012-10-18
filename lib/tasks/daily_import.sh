@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "$(date +%m/%d/%y - %T)"
+echo "$(date +%m/%d/%y  %T)"
 cd /u/apps/wescomarchive/current
 rvm ruby-1.9.3-p194
 #bundle install
