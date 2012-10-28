@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo "$(date +%m/%d/%y  %T)"
+# load rvm ruby
+source /usr/local/rvm/environments/ruby-1.9.3-p194@rails-3.2.3
+
+echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
-rvm ruby-1.9.3-p194
-#bundle install
+bundle install
 
-rake wescom:dti_import RAILS_ENV=production
+rake wescom:dti_import RAILS_EN=production
