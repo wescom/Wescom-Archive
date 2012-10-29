@@ -9,8 +9,6 @@ listen 6000
 pid "/u/apps/wescomarchive/shared/pids/unicorn.pid"
 
 if env == "production"
-  user "archive", "archive"
-  
   working_directory "/u/apps/wescomarchive/current"
   shared_directory = "/u/apps/wescomarchive/shared"
 
