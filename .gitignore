@@ -12,4 +12,4 @@ db/sphinx/**/*
 solr/**/*
 .sass-cache/
 sii_data/
-public/system
+public/system/
