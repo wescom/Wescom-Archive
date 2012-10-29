@@ -7,4 +7,4 @@ echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
 bundle install
 
-rake wescom:dti_import RAILS_EN=production
+rake wescom:dti_import RAILS_ENV=production
