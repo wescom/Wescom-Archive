@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+# load rvm ruby
+source /usr/local/rvm/environments/ruby-1.9.3-p194
+
+echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
-rvm ruby-1.9.3-p194
-#bundle install
+bundle install>>/tmp/null
 
-rake sunspot:solr:reindex RAILS_ENV=production
+rake sunspot:reindex RAILS_ENV=production
