@@ -64,7 +64,6 @@ namespace :deploy do
       ln -s #{shared_path}/log #{latest_release}/log &&
       ln -s #{shared_path}/pids #{latest_release}/tmp/pids
     CMD
-    #ln -s #{shared_path}/system #{latest_release}/public/system &&
     #ln -sf /u/apps/wescomarchive/shared/system /u/apps/wescomarchive/current/public/system &&
   end
 
