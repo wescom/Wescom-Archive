@@ -6,8 +6,8 @@ namespace :wescom do
   task :dti_import  => :environment do
 
     def get_files
-      #news_files = File.join("/","data","archiveup",'*.xml')
-      news_files = File.join("/","data","archiveup","completed","2012","10",'**','*.xml')
+      news_files = File.join("/","data","archiveup",'*.xml')
+      #news_files = File.join("/","data","archiveup","completed","2012","10",'**','*.xml')
       #news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
@@ -67,12 +67,12 @@ namespace :wescom do
         if !dti_story.media.nil?
           #puts "Media: #{dti_story.media}"
           dti_story.media.each { |x|
-            image_filename = '/data/archiveup/images_worked/' + x["media_reference"]["source"]
+            image_filename = '/data/archiveup/images_worked/' + x["media_reference"]["source"].strip
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
               media.publish_status = "Published"
             else
-              image_filename = '/data/archiveup/images_storage/' + x["media_reference"]["source"]
+              image_filename = '/data/archiveup/images_storage/' + x["media_reference"]["source"].strip
               if File.exists?(image_filename)
                 media = story.story_images.build(:image => File.open(image_filename))
                 media.publish_status = "Attached"
