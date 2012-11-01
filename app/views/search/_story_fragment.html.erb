@@ -5,7 +5,18 @@
 		<% end %>
   </td>
   <td><%= story_fragment.byline -%></td>
-  <td><%= story_fragment.section.name if story_fragment.section -%></td>
+  <td>
+		<% if !story_fragment.publication.nil? %>
+			<% if story_fragment.publication.name == "The Bulletin" %>
+				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
+			<% else %>
+				<% if story_fragment.publication.name == "Redmond Spokesman" %>
+					<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
+				<% end %>
+			<% end %>
+		<% end %>
+		<center><%= story_fragment.section.name if story_fragment.section -%></center>
+	</td>
   <td><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
 	<td>
 		<% if story_fragment.frontend_db == "DTI" %>
