@@ -92,6 +92,7 @@ class ImportStory < ActiveRecord::Base
         self.sidebar_body = self.raw_xml[start_of_sidebar_block..end_of_sidebar_block]
         self.sidebar_body = fix_escaped_elements(self.sidebar_body)
         self.sidebar_body = handle_styling_in_sidebar(self.sidebar_body)
+        self.sidebar_body = handle_chapterheads_in_body(self.sidebar_body)
         #puts "sidebar_body: " + self.sidebar_body.to_s
       end
 
