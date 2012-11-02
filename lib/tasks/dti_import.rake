@@ -77,8 +77,14 @@ namespace :wescom do
                 media = story.story_images.build(:image => File.open(image_filename))
                 media.publish_status = "Attached"
               else
-                puts image_filename+' does not exist'
-                media = story.story_images.build
+                image_filename = '/WescomArchive/archiveup/images_storage/' + x["media_reference"]["source"].strip
+                if File.exists?(image_filename)
+                  media = story.story_images.build(:image => File.open(image_filename))
+                  media.publish_status = "Attached"
+                else
+                  puts image_filename+' does not exist'
+                  media = story.story_images.build
+                end
               end
             end
             media.media_id = x["media_id"]
