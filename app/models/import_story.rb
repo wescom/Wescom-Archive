@@ -115,9 +115,11 @@ class ImportStory < ActiveRecord::Base
       end
       self.hl1 = doc_body["body.head"]["hedline"]["hl1"].to_s.chomp.strip.gsub(/\n/,'') if doc_body["body.head"]["hedline"]
       self.hl1 = fix_escaped_elements(self.hl1) unless self.hl1.nil?
+      self.hl1 = strip_formatting(self.hl1) unless self.hl1.nil?
       if doc_body["body.head"]["hedline"] && doc_body["body.head"]["hedline"]["hl2"]
         self.hl2 = doc_body["body.head"]["hedline"]["hl2"].to_s.lstrip.rstrip
-        self.hl2 = fix_escaped_elements(self.hl2)
+        self.hl2 = fix_escaped_elements(self.hl2) unless self.hl2.nil?
+        self.hl2 = strip_formatting(self.hl2) unless self.hl2.nil?
       end
       self.tagline = doc_body["body.end"]["tagline"].to_s.lstrip.rstrip if doc_body["body.end"]
       self.tagline = fix_escaped_elements(self.tagline)
@@ -134,6 +136,24 @@ class ImportStory < ActiveRecord::Base
       count = count + 1 unless key != "p"
     }
     return count
+  end
+  
+  def strip_formatting(string)
+    if !string.nil?
+      return_string = string
+      return_string.gsub! '<p>{"em"=>{"p"=>"', ''
+      return_string.gsub! '", "style"=>"bold", "class"=>"hl2_chapterhead"}}</p>', ''
+      return_string.gsub! '<p>{"em"=>"', ''
+      return_string.gsub! '<p>{"hl2"=>"', ''
+      return_string.gsub! '<p>{"p"=>"', ''
+      return_string.gsub! '<p>{"hl2_chapterhead"=>"', ''
+      return_string.gsub! '{"hl2_chapterhead"=>"', ''
+      return_string.gsub! '"}</p>', ''
+      return_string.gsub! '{"p"=>nil}', ''
+      return_string.gsub! '<p>["p", " ', ''
+      return_string.gsub! ' "]</p>', ''
+      return_string    
+    end
   end
   
   def fix_escaped_elements(string)
