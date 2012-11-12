@@ -8,3 +8,5 @@ cd /u/apps/wescomarchive/current
 bundle install>>/tmp/null
 
 rake wescom:dti_import RAILS_ENV=production
+
+echo "$(date +%m/%d/%y\ %T)"
