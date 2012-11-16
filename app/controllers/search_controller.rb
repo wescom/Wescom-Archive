@@ -16,6 +16,7 @@ class SearchController < ApplicationController
         render :text => "Search Server Down\n\n\n It will be back online shortly"
       end
     end
+    @total_stories_count = Story.count(:all)
   end
 
   def today
