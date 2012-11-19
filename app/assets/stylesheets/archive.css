@@ -276,6 +276,17 @@ html .clearfix {
   border: 1px solid #fff;
 }
 
+#page-content .delete {
+  background-color: transparent;
+  border: none;
+  font: bold 0.9em Arial, Tahoma, sans-serif;
+  color: #999;
+  text-decoration: none;
+  padding: 0px 2px 0px 2px;
+  text-transform: uppercase;
+	cursor: pointer;
+}
+
 #page-content input.reset {
   background-color: #33393c;
 }
