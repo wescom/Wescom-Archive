@@ -9,7 +9,9 @@ news_stories/
 .DS_Store
 doc/
 db/sphinx/**/*
-solr/**/*
+solr/lib/*
+solr/data/*
+solor/pids/*
 .sass-cache/
 sii_data/
 public/system/
