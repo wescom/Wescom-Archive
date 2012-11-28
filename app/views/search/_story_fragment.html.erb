@@ -4,7 +4,7 @@
 			<%= truncate(story_fragment.copy, :length => 250).html_safe %>
 		<% end %>
   </td>
-  <td><%= story_fragment.byline -%></td>
+  <td><%= story_fragment.byline if story_fragment.byline %></td>
   <td>
 		<% if !story_fragment.publication.nil? %>
 			<% if story_fragment.publication.name == "The Bulletin" %>
@@ -15,7 +15,7 @@
 				<% end %>
 			<% end %>
 		<% end %>
-		<center><%= story_fragment.section.name if story_fragment.section -%></center>
+		<center><%= story_fragment.section.name if story_fragment.section %></center>
 	</td>
   <td><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
 	<td>

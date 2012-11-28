@@ -9,8 +9,8 @@ class SearchController < ApplicationController
           paginate(:page => params[:page])
           order_by :pubdate, :desc
           fulltext params[:search_query]
-          facet(:publish_year)
-          with(:publish_year, params[:year]) if params[:year].present?
+#          facet(:publish_year)
+#          with(:publish_year, params[:year]) if params[:year].present?
         end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"
