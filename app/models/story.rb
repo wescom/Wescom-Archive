@@ -12,7 +12,7 @@ class Story < ActiveRecord::Base
   has_many :corrected_stories, :through => :inverse_correction_links, :source => :story
   has_many :story_images, :dependent => :destroy
 
-  searchable do
+  searchable :auto_index => true, :auto_remove => true do
     text :hl1, :default_boost => 2.0, :stored => true
     text :hl2, :stored => true
     text :page
