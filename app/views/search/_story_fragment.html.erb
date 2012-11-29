@@ -32,7 +32,7 @@
 		<a class="edit" href="#">edit</a> | 
 		<a><%= button_to "Delete", story_path(story_fragment), 
 					:method => :delete, 
-					:confirm => 'Are you sure you want to delete?',
+					:confirm => "Are you sure you want to delete story? \n\n"+text_for_story_link(story_fragment),
 					:action => 'destroy',
 					:class => 'delete' %></a>
 	</td>
