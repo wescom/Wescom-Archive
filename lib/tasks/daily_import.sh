@@ -9,4 +9,6 @@ bundle install>>/tmp/null
 
 rake wescom:dti_import RAILS_ENV=production
 
+find /WescomArchive/db_images/* -mtime -1 -exec chown -hR shoffmann:shoffmann {} \;
+
 echo "$(date +%m/%d/%y\ %T)"
