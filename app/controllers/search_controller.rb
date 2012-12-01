@@ -20,6 +20,9 @@ class SearchController < ApplicationController
   end
 
   def today
-    @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(:page => params[:page], :per_page => 30, :order => "Pubdate DESC")
+    @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
+                                                            :page => params[:page], 
+                                                            :per_page => 30, 
+                                                            :order => "Pubdate DESC").order_by_section_page
   end
 end

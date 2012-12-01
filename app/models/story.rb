@@ -44,5 +44,8 @@ class Story < ActiveRecord::Base
       pubdate.strftime("%Y")
     end
   end
-
+  
+  def self.order_by_section_page
+    includes(:section).order('sections.name').order('page')
+  end
 end
