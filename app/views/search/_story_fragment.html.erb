@@ -1,7 +1,7 @@
 <tr class="<%= cycle("alternate","") %>">
   <td class="headline"><%= link_to text_for_story_link(story_fragment), story_fragment -%>
     <% if story_fragment.copy %>
-			<%= story_fragment.copy.truncate(250).html_safe %>
+			<%= story_fragment.copy[0..250].html_safe %>
 		<% end %>
   </td>
   <td><%= story_fragment.byline if story_fragment.byline %></td>
