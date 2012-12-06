@@ -1,16 +1,16 @@
 <tr class="<%= cycle("alternate","") %>">
-  <td class="headline"><%= link_to text_for_story_link(story_fragment), story_fragment -%>
+  <td class="headline"><%= link_to text_for_story_link(story_fragment), story_fragment %>
     <% if story_fragment.copy %>
-			<%= story_fragment.copy[0..250].html_safe %>
+			<%= strip_subhead_tags(story_fragment.copy)[0..250].html_safe %>
 		<% end %>
   </td>
-  <td><%= story_fragment.byline if story_fragment.byline %></td>
+  <td><%= story_fragment.byline if story_fragment.byline %></p></td>
   <td>
 		<% if !story_fragment.publication.nil? %>
-			<% if story_fragment.publication.name == "The Bulletin" %>
+			<% if story_fragment.publication.name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
 			<% else %>
-				<% if story_fragment.publication.name == "Redmond Spokesman" %>
+				<% if story_fragment.publication.name.strip == "Redmond Spokesman" %>
 					<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
 				<% end %>
 			<% end %>

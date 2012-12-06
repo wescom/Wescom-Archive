@@ -13,4 +13,8 @@ module ApplicationHelper
     # strip all nonalphanumberic characters 
     text.html_safe.gsub(/\W/, ' ')
   end
+
+  def strip_subhead_tags(text)
+    text.html_safe.gsub(/<p class="hl2_chapterhead">/, '<p>')
+  end
 end
