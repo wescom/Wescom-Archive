@@ -17,10 +17,11 @@ class SearchController < ApplicationController
       end
     end
     @total_stories_count = Story.count(:all)
+    @publications = Publication.find(:all)
   end
 
   def today
-    @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
+    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, params[:paper]).paginate(
                                                             :page => params[:page], 
                                                             :per_page => 30, 
                                                             :order => "Pubdate DESC").order_by_section_page
