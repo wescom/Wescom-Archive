@@ -4,7 +4,7 @@
     <li><%= link_to "All", search_today_url %></li>
 		<% if !@publications.nil? %>
 			<% for paper in @publications %>
-	    	<li><%= link_to paper.name, search_today_url(:paper => paper.id) %></li>
+	    	<li><%= link_to paper.name, search_today_url(:papername => paper.name) %></li>
 			<% end %>
 		<% end %>
   </ul>

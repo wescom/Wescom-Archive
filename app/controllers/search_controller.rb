@@ -21,9 +21,15 @@ class SearchController < ApplicationController
   end
 
   def today
-    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, params[:paper]).paginate(
-                                                            :page => params[:page], 
-                                                            :per_page => 30, 
-                                                            :order => "Pubdate DESC").order_by_section_page
+    @publications = Publication.find(:all)
+    Rails.logger.info "**** " + @publications.to_s
+    Rails.logger.info "**** " + params[:papername]
+    @papername = params[:papername]
+Rails.logger.info "**** " + @paper.to_s
+    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @paper).paginate(
+                            :page => params[:page], 
+                            :per_page => 30, 
+                            :order => "Pubdate DESC").order_by_section_page
+    @total_stories_count = @stories.count
   end
 end
