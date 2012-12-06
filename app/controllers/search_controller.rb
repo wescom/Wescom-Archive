@@ -24,9 +24,9 @@ class SearchController < ApplicationController
     @publications = Publication.find(:all)
     Rails.logger.info "**** " + @publications.to_s
     Rails.logger.info "**** " + params[:papername]
-    @papername = params[:papername]
+    @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
 Rails.logger.info "**** " + @paper.to_s
-    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @paper).paginate(
+    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
                             :page => params[:page], 
                             :per_page => 30, 
                             :order => "Pubdate DESC").order_by_section_page
