@@ -24,12 +24,12 @@ class SearchController < ApplicationController
     @publications = Publication.find(:all)
     @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
     if params[:papername] == "All"
-      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
+      @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
                               :page => params[:page], 
                               :per_page => 30, 
                               :order => "Pubdate DESC").order_by_section_page
     else
-      @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
+      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
                               :page => params[:page], 
                               :per_page => 30, 
                               :order => "Pubdate DESC").order_by_section_page

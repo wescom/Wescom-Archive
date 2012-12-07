@@ -1,7 +1,7 @@
 <ul>
   <li class="head toggle_today">Today's Stories</li>
 	<div id="sidebar_today">
-	   <li><%= link_to "All", search_today_url("All") %></li>
+	   <li><%= link_to "All", search_today_url(:papername => "All") %></li>
 		<% if !@publications.nil? %>
 			<% for paper in @publications %>
 	    	<li><%= link_to paper.name, search_today_url(:papername => paper.name) %></li>
