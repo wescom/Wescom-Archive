@@ -1,6 +1,6 @@
 <h1>Today</h1>
 <h2>
-	Today's Stories in <%= @publication.name %>
+	Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
 	<span>(<%= @total_stories_count %> archived stories - <%= Date.today.strftime('%m/%d/%y') %>)</span>
 </h2>
 

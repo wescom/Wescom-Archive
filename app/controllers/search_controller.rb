@@ -22,14 +22,18 @@ class SearchController < ApplicationController
 
   def today
     @publications = Publication.find(:all)
-    Rails.logger.info "**** " + @publications.to_s
-    Rails.logger.info "**** " + params[:papername]
     @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
-Rails.logger.info "**** " + @paper.to_s
-    @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
-                            :page => params[:page], 
-                            :per_page => 30, 
-                            :order => "Pubdate DESC").order_by_section_page
+    if params[:papername] == "All"
+      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
+                              :page => params[:page], 
+                              :per_page => 30, 
+                              :order => "Pubdate DESC").order_by_section_page
+    else
+      @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
+                              :page => params[:page], 
+                              :per_page => 30, 
+                              :order => "Pubdate DESC").order_by_section_page
+    end
     @total_stories_count = @stories.count
   end
 end
