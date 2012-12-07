@@ -442,7 +442,7 @@ input#search_query {
 
 #sidebar ul {
   margin: 0px;
-  padding: 0px 0px 100px 0px;
+  padding: 0px 0px 10px 0px;
   list-style: none;
   border-left: 1px solid #cdcdcd;
 }
@@ -452,6 +452,7 @@ input#search_query {
   color: #0099ff;
   text-transform: uppercase;
   padding: 15px 0px 15px 15px;
+	cursor: pointer;
 }
 
 #sidebar ul li {
