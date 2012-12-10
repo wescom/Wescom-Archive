@@ -16,7 +16,6 @@ gem 'unicorn'
 gem 'capistrano'
 gem 'rvm-capistrano'
 
-
 # Authentication
 gem "oauth"
 gem "ruby-openid", :require => "openid"
