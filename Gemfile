@@ -6,6 +6,7 @@ gem 'mysql'
 gem 'dti_nitf'
 gem 'sunspot'
 gem 'sunspot_rails'
+gem 'sunspot_solr'
 gem 'progress_bar'
 gem 'will_paginate'
 gem 'chronic'
@@ -34,7 +35,6 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem "capistrano"
-	gem 'sunspot_solr', '1.3.0'
 	#  http://rails.vandenabeele.com/blog/2011/12/21/installing-ruby-debug19-with-ruby-1-dot-9-3-on-rvm/
 end
 
