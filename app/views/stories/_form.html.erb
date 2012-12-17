@@ -28,7 +28,7 @@
 			<%= form.date_select(:pubdate, {
 														:include_blank => true,
 														:start_year => 1992,
-														:end_year => Time.now.year,
+														:end_year => Time.now.year+10,
 														:use_month_numbers => true,  
 														:order => [:month, :day, :year]},
 													{:class => "story_field smaller"}) %>
