@@ -1,0 +1,69 @@
+	<%= form.label :hl1, "Headline", :class => "story_label" %>
+	<%= form.text_field :hl1, :class => "story_field full" %>
+	<%= form.label :hl2, "SubHead", :class => "story_label" %>
+	<%= form.text_field :hl2, :class => "story_field full" %>
+
+	<%= form.label :byline, "Byline", :class => "story_label" %>
+	<%= form.text_field :byline, :class => "story_field larger" %>
+
+<div id="story_block" class="grid_11">
+	<%= form.label :copy, "Copy Body", :class => "story_label" %>
+  <%= form.text_area :copy, :class => 'story_field large' %>
+
+	</br>
+	<%= form.label :tagline, "Tagline", :class => "story_label" %>
+  <%= form.text_field :tagline, :class => "story_field full" %>
+
+	</br>
+	<%= form.label :sidebar_body, "Sidebar Body", :class => "story_label" %>
+	<%= form.text_area :sidebar_body, :class => "story_field small" %>
+</div>
+
+<div id="sidebar_block" class="grid_3 full_width">
+	<div id="story-sidebar">
+	  <p class='story-infohead1'>Information</p>
+	  <div id="story-info">
+			<%= form.label :pubdate, "PubDate", :class => "story_label" %>
+<!--			<%= form.text_field :pubdate, :class => "story_field small short_date_picker" %> -->
+			<%= form.date_select(:pubdate, {
+														:include_blank => true,
+														:start_year => 1992,
+														:end_year => Time.now.year,
+														:use_month_numbers => true,  
+														:order => [:month, :day, :year]},
+													{:class => "story_field smaller"}) %>
+
+			<%= form.label :section_id, "Section", :class => "story_label" %>
+			<%= form.select :section_id, @sections.collect { |c| [c.name, c.id] }, {}, :class => 'story_field small' %>
+
+			<%= form.label :page, "Page", :class => "story_label" %>
+		  <%= form.text_field :page, :class => "story_field small" %>
+
+			<%= form.label :project_group, "Project Group", :class => "story_label" %>
+		  <%= form.text_field :project_group, :class => "story_field small" %>
+	  </div>
+
+	  <% if @story.corrections.length > 0 %>
+	    <p class='story-infohead1'>Corrections</p>
+	    <div id="story-info">
+	      <% @story.corrections.each do |story| %>
+	        <%= link_to text_for_story_link(story), story %>
+	      <% end %>
+	    </div>
+	  <% end %>
+
+	  <% if @story.corrected_stories.length > 0 %>
+	    <p class='story-infohead1'>Corrected Stories</p>
+	    <div id="story-info">
+	      <% @story.corrected_stories.each do |story| %>
+	        <%= link_to text_for_story_link(story), story %>
+	      <% end %>
+	    </div>
+	  <% end %>
+
+	</div>
+	<br/>
+	<% if @story.story_images.count > 0 %>
+  	<%= render(:partial => 'image_sidebar') %>
+	<% end %>
+</div>

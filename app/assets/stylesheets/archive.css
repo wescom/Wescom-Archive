@@ -248,7 +248,7 @@ html .clearfix {
   display: block;
 }
 
-#page-content input, #page-content textarea {
+#page-content input, #page-content text_area {
   font: normal 1.5em Arial, Tahoma, sans-serif;
   color: #454545;
   margin: 0px 0px 15px 0px;
@@ -258,7 +258,7 @@ html .clearfix {
   width: 100%;
 }
 
-#page-content textarea {
+#page-content text_area {
   font: normal 1.2em Arial, Tahoma, sans-serif;
   height: 150px;
 }
@@ -628,3 +628,46 @@ img.image_large {height:auto;width:450px;}
 	width: 100%;
 }
 
+/* Story Editing */
+#page-content form {height: 95%;}
+#page-content form input, select {
+	background: #fefefe;
+	border: 1px solid #bbb;
+	color: #333;
+	padding: 7px;
+	outline: none;
+	vertical-align: middle;
+}
+#page-content form label.story_label {
+	font: bold .7em Arial, Tahoma, sans-serif;
+	color: #808080;
+}
+#page-content form input.story_field, select.story_field, textarea {
+	font-size: 1em;
+	margin: 0px 0px 10px 10px;
+	padding: 4px;
+}
+
+#page-content form input.extra_small { width: 50px; }
+#page-content form input.smaller { width: 75px; }
+#page-content form input.small { width: 100px; }
+#page-content form input.medium { width: 150px; }
+#page-content form input.large { width: 200px; }
+#page-content form input.larger { width: 250px; }
+#page-content form input.big { width: 300px; }
+#page-content form input.biggest { width: 400px; }
+#page-content form input.full { width: 95%; }
+
+#page-content form input.date_picker { width: 100px;}
+
+#page-content form textarea {padding:5px; overflow: scroll; }
+#page-content form textarea.small { width: 95%; height: 150px; }
+#page-content form textarea.medium { width: 95%; height: 250px; }
+#page-content form textarea.large { width: 95%; height: 400px; }
+#page-content form textarea.xlarge { width: 95%; height: 600px; }
+
+#page-content form select.extra_small { width: 50px; }
+#page-content form select.smaller { width: 75px; }
+#page-content form select.small { width: 100px; }
+#page-content form select.medium { width: 200px; }
+#page-content form select.large { width: 300px; }

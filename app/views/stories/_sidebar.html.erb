@@ -1,7 +1,7 @@
 <div id="story-sidebar">
   <p class='story-infohead1'>Information</p>
   <div id="story-info">
-    Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%y') %><% end %><br />
+    Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%Y') %><% end %><br />
     Section: <%= @story.section.name if @story.section %> <br />
     Page: <%= @story.page %><br />
     Byline: <%= @story.byline %> <br />

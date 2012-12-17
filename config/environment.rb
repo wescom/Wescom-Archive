@@ -6,3 +6,5 @@ Encoding.default_internal = Encoding::UTF_8
 
 # Initialize the rails application
 Wescomarchive::Application.initialize!
+
+#Date::DATE_FORMATS.merge!(:default => "%m/%d/%Y")
