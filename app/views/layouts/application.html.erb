@@ -23,11 +23,11 @@
       </div>
       <%= render(:partial => "home/pagenav") %>
       <div id="page-content" class="clearfix">
-
+<!--
         <%- flash.each do |name, msg| -%>
           <%= content_tag :div, msg, :id => "flash_#{name}" %>
         <%- end -%>
-
+-->
         <%= yield %>
 
       </div>

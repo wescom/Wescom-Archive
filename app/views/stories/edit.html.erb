@@ -2,6 +2,8 @@
   <%= "#{h @story.hl1} - " if @story.hl1 -%>
 <% end %>
 
+<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
+
 <div class="inner-box clearfix">
   <div id="story-content" class="grid_15">
 		<%= form_for @story, :url => story_path do |form| %>

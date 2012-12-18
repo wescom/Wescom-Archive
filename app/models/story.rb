@@ -12,6 +12,10 @@ class Story < ActiveRecord::Base
   has_many :corrected_stories, :through => :inverse_correction_links, :source => :story
   has_many :story_images, :dependent => :destroy
 
+  validates :pubdate, :presence => true, :on => :update
+  validates :section_id, :presence => true, :on => :update
+  validates :page, :presence => true, :numericality => true, :on => :update
+
   searchable :auto_index => true, :auto_remove => true do
     text :hl1, :default_boost => 2.0, :stored => true
     text :hl2, :stored => true

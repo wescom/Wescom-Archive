@@ -19,6 +19,8 @@ class StoriesController < ApplicationController
 
   def update
     @story = Story.find(params[:id])
+    @papers = Paper.find(:all, :order => "name")
+    @sections = Section.find(:all, :order => "name")
 
     if params[:cancel_button]
       redirect_to story_path
