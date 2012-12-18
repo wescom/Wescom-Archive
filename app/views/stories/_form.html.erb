@@ -1,10 +1,21 @@
+<div class="grid_15">
 	<%= form.label :hl1, "Headline", :class => "story_label" %>
 	<%= form.text_field :hl1, :class => "story_field full" %>
 	<%= form.label :hl2, "SubHead", :class => "story_label" %>
 	<%= form.text_field :hl2, :class => "story_field full" %>
+</div>
 
-	<%= form.label :byline, "Byline", :class => "story_label" %>
-	<%= form.text_field :byline, :class => "story_field larger" %>
+<div>
+	<div class="grid_5">
+		<%= form.label :byline, "Byline", :class => "story_label" %>
+		<%= form.text_field :byline, :class => "story_field larger" %>
+	</div>
+	<div class="grid_5">
+		<%= form.label :paper_id, "Paper", :class => "story_label" %>
+		<%= form.select :paper_id, @papers.collect { |c| [c.name, c.id] }, {:include_blank => true}, 
+					:class => 'story_field medium' %>
+	</div>
+</div>
 
 <div id="story_block" class="grid_11">
 	<%= form.label :copy, "Copy Body", :class => "story_label" %>

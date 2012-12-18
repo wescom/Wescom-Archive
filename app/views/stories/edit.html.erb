@@ -9,8 +9,12 @@
 		<%= form_for @story, :url => story_path do |form| %>
 			<div id="story-edit">
 				<%= render :partial => 'form', :object => form %>
-				<%= form.submit "Update", :class => 'submit small'%>
-				<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+			</div>
+			<div class="grid_15">
+				<div class="grid_4">
+					<%= form.submit "Update", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				</div>
 			</div>
 		<% end %>
 
