@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
       user.email = openid_params["http://axschema.org/contact/email"].first
       user.first_name = openid_params["http://axschema.org/namePerson/first"].first
       user.last_name = openid_params["http://axschema.org/namePerson/last"].first
+      user.role = "View"
     end
   end
 end
