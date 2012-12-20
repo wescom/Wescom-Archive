@@ -27,6 +27,12 @@
 	    <% end %>
 		</div>
 
+		<div class="grid_3 full_width">
+			<% if admin? || edit? %>
+				<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'submit small' %>
+			<% end %>
+		</div>
+
 		<div id="sidebar_block" class="grid_3 full_width">
 	    <%= render(:partial => 'sidebar') %>
 			<br/>
