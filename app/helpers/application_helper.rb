@@ -8,6 +8,14 @@ module ApplicationHelper
     end
   end
   
+  def edit?
+    if User.find(session[:user_id]).role == "Edit"
+      return true
+    else
+      return false
+    end
+  end
+  
   def text_for_story_link(story)
     text = if !story.hl1.nil? and story.hl1.length > 0
       story.hl1

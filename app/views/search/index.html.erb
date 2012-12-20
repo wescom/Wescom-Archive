@@ -45,7 +45,7 @@
               <td>PubDate</td>
 							<td>System</td>
               <td>Status</td>
-              <td>Actions</td>
+							<% if admin? || edit? %><td>Actions</td><% end %>
             </tr>
             <%= render :partial => 'story_fragment', :collection => @stories.results %>
           </tbody>
