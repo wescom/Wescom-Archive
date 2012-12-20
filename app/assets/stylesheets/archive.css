@@ -541,6 +541,10 @@ input#search_query {
 	width: 100%;
 }
 
+#story_block {
+	min-height: 100px;
+}
+
 /* Story sidebars */
 #story-sidebar {
   position: relative;
