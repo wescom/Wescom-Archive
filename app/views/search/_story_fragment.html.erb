@@ -5,7 +5,7 @@
 		<% end %>
   </td>
   <td><%= story_fragment.byline if story_fragment.byline %></p></td>
-  <td>
+  <td class="center">
 		<% if !story_fragment.publication.nil? %>
 			<% if story_fragment.publication.name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
@@ -15,10 +15,10 @@
 				<% end %>
 			<% end %>
 		<% end %>
-		<center><%= story_fragment.section.name if story_fragment.section %></center>
+		<%= story_fragment.section.name if story_fragment.section %>
 	</td>
-  <td><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
-	<td>
+  <td class="center"><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
+	<td class="center">
 		<% if story_fragment.frontend_db == "DTI" %>
 			<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
 		<% else %>
@@ -27,10 +27,10 @@
 			<% end %>
 		<% end %>
 	</td>
-  <td class="false">Needs Review</td>
-  <td class="actions">
+  <td class="false center">Needs Review</td>
+  <td class="actions center">
 		<% if admin? || edit? %>
-			<a class="edit" href="#"><%= link_to "Edit", edit_story_path(story_fragment) %></a> | 
+			<br/><a class="edit" href="#"><%= link_to "Edit", edit_story_path(story_fragment) %></a>
 			<a><%= button_to "Delete", story_path(story_fragment), 
 						:method => :delete, 
 						:confirm => "Are you sure you want to delete story? \n\n"+text_for_story_link(story_fragment),

@@ -418,6 +418,11 @@ input#search_query {
   text-decoration: none;
   padding: 0px 2px 0px 2px;
 }
+
+#table-block table td.center {
+	text-align: center;
+}
+
 #table-block table td.actions a {
   font: bold 0.9em Arial, Tahoma, sans-serif;
   color: #0099ff;
