@@ -1,5 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def admin?
+    if User.find(session[:user_id]).role == "Admin"
+      return true
+    else
+      return false
+    end
+  end
+  
   def text_for_story_link(story)
     text = if !story.hl1.nil? and story.hl1.length > 0
       story.hl1

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include ApplicationHelper
 
   def require_user
     unless current_user
@@ -18,4 +19,12 @@ class ApplicationController < ActionController::Base
   def signed_in?
     !!current_user
   end
+  
+  def require_admin
+    unless admin?
+      redirect_to '/search'
+      return false
+    end
+  end
+
 end
