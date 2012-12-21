@@ -593,6 +593,7 @@ input#search_query {
 
 .image-body {
 	margin-bottom: 15px;
+	position: relative;
 }
 
 img.image_thumb {height:20px;width:auto;}
