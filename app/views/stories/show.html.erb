@@ -10,7 +10,7 @@
     <% if @story.hl2 %>
       <h4><%= @story.hl2.html_safe %> </h4>
     <% end %>
-    <% if  @story.byline %>
+    <% if @story.byline and @story.byline.length > 0 %>
       <h4>By: <%= @story.byline.html_safe %>
 				<% if @story.paper %>, <%= @story.paper.name.html_safe %> <% end %>
 			</h4>
@@ -18,7 +18,7 @@
 
 		<div id="story_block" class="grid_11">
 	    <% if @story.copy %><%=  @story.copy.html_safe %><% end %>
-	    <% if @story.tagline %>
+	    <% if @story.tagline and @story.tagline.length > 0 %>
 	      <h3><%= @story.tagline.html_safe %></h3>
 	    <% end %>
 			</br><br/>
