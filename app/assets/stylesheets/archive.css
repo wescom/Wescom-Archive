@@ -638,6 +638,17 @@ img.image_large {height:auto;width:450px;}
 	width: 100%;
 }
 
+#page-content input.image-delete {
+	cursor: pointer;
+  font: normal 0.7em Arial, Tahoma, sans-serif;
+	width: 90px;
+  background-color: #E6E6D2;
+  margin: 0px 0px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
 /* Story Editing */
 #page-content form {height: 95%;}
 #page-content form input, select {

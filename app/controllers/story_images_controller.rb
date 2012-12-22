@@ -4,4 +4,18 @@ class StoryImagesController < ApplicationController
     @image = StoryImage.find(params[:id])
     render :layout => "plain"
   end
+  
+  def destroy
+    @image = StoryImage.find(params[:id])
+    @story = @image.story
+    if @image.destroy
+      flash[:notice] = "Image Deleted"
+      redirect_to :back and return unless request.referrer == story_path(@story)
+      redirect_to search_path
+    else
+      flash[:error] = "Image Deletion Failed"
+      redirect_to :back and return unless request.referrer == story_path(@story)
+      redirect_to search_path
+    end
+  end
 end
