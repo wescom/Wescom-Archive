@@ -10,8 +10,7 @@ class StoryImagesController < ApplicationController
     @story = @image.story
     if @image.destroy
       flash[:notice] = "Image Deleted"
-      redirect_to :back and return unless request.referrer == story_path(@story)
-      redirect_to search_path
+      redirect_to story_path(@story)
     else
       flash[:error] = "Image Deletion Failed"
       redirect_to :back and return unless request.referrer == story_path(@story)
