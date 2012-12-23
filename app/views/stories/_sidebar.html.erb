@@ -5,22 +5,29 @@
     Section: <%= @story.section.name if @story.section %> <br />
     Page: <%= @story.page %><br />
     Byline: <%= @story.byline %> <br />
-    Publicaton: <%= @story.publication.name if @story.publication %> <br />
-		 <br />
-		
-			<% if @story.frontend_db == "DTI" %>
-				<div class="story_frontend_logo">
-					<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
-				</div>
-				StoryID: <%= @story.doc_id %> <br />
-				Imported Filename: <%= @story.doc_name %> <br />
+    Publicaton: <% if @story.publication %>
+			<% if @story.publication.name.length < 8 %>
+				<%= @story.publication.name %>
 			<% else %>
-				<% if @story.frontend_db == "SII" %>
-					<div class="story_frontend_logo">
-						<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
-					</div>
-				<% end %>
+				 <br/><div class="indent"><%= @story.publication.name %></div>
 			<% end %>
+			<br/>
+		<% end %>
+		<br/>
+
+		<% if @story.frontend_db == "DTI" %>
+			<div class="story_frontend_logo">
+				<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+			</div>
+			StoryID: <%= @story.doc_id %> <br />
+			Imported Filename: <%= @story.doc_name %> <br />
+		<% else %>
+			<% if @story.frontend_db == "SII" %>
+				<div class="story_frontend_logo">
+					<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				</div>
+			<% end %>
+		<% end %>
   </div>
 
   <% if @story.corrections.length > 0 %>
@@ -45,7 +52,7 @@
 	  <p class='story-infohead2'>Taxonomy:</p>
 	  <div id="story-info">
 			<% @story.keywords.each do |keyword| %>
-				<%= keyword.text.downcase %><br/>
+				<div class="indent"><%= keyword.text.downcase %></div>
 			<% end %>
 		</div>
 	<% end %>
