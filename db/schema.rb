@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219212302) do
+ActiveRecord::Schema.define(:version => 20121223192432) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -84,9 +84,9 @@ ActiveRecord::Schema.define(:version => 20121219212302) do
     t.integer  "media_width"
     t.string   "media_mime_type"
     t.string   "media_source"
-    t.string   "media_printcaption"
+    t.text     "media_printcaption"
     t.string   "media_printproducer"
-    t.string   "media_originalcaption"
+    t.text     "media_originalcaption"
     t.string   "media_byline"
     t.string   "media_project_group"
     t.string   "media_notes"
