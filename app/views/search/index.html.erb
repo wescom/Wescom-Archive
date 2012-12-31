@@ -16,9 +16,9 @@
 	      </span>
 	      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
 	      <div id="advanced-search">
-	        <%= label_tag :date_from_select, "From" %>
+	        <%= label_tag :date_from_select, "From (mm/dd/yyyy)" %>
 	        <%= text_field_tag :date_from_select, params[:date_from_select], :class => 'short_date_picker' %>
-	        <%= label_tag :date_to_select, "To" %>
+	        <%= label_tag :date_to_select, "To (mm/dd/yyyy)" %>
 	        <%= text_field_tag :date_to_select, params[:date_to_select], :class => 'short_date_picker' %>
 	      </div>
 	    <% end %>
