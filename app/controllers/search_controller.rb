@@ -9,8 +9,8 @@ class SearchController < ApplicationController
           paginate(:page => params[:page])
           order_by :pubdate, :desc
           fulltext params[:search_query]
-          with(:pubdate).greater_than(DateTime.strptime(params[:date_from_select], '%y/%d/%m')) if params[:date_from_select].present?
-          with(:pubdate).less_than(DateTime.strptime(params[:date_to_select], '%y/%d/%m')) if params[:date_to_select].present?
+          with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+          with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
 #          facet(:publish_year)
 #          with(:publish_year, params[:year]) if params[:year].present?
         end
