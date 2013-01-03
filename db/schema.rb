@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223192432) do
+ActiveRecord::Schema.define(:version => 20130103231000) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20121223192432) do
   end
 
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
+  add_index "stories", ["pubdate"], :name => "index_stories_on_pubdate"
 
   create_table "story_images", :force => true do |t|
     t.integer  "story_id"
