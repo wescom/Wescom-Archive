@@ -3,8 +3,13 @@
 </h1>
 	<%= form_tag search_today_path, :method => 'get' do %>
 		<%= submit_tag "Go", :class => 'today_submit float_right'%>
-		<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', selected = @publication.name),
-						:class => 'today_publication float_right' %>
+		<% if @publication %>
+			<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
+							selected = @publication.name), :class => 'today_publication float_right' %>
+		<% else %>
+			<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
+							:class => 'today_publication float_right' %>
+		<% end %>
 	<% end %>
 
 <h2>
