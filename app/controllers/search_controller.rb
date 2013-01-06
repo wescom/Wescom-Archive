@@ -2,6 +2,8 @@ class SearchController < ApplicationController
   before_filter :require_user
 
   def index
+    @publications = Publication.find(:all)
+    @sections = Section.find(:all, :order => "name")
     if params[:search_query]
       begin
         @stories = Story.search do
@@ -11,6 +13,8 @@ class SearchController < ApplicationController
           fulltext params[:search_query]
           with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+          with :publication_id, params[:pub_select] if params[:pub_select].present?
+          with :section_id, params[:section_select] if params[:section_select].present?
 #          facet(:publish_year)
 #          with(:publish_year, params[:year]) if params[:year].present?
         end

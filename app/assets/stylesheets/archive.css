@@ -303,11 +303,6 @@ input#search_query {
   width: 35%;
 }
 
-#page-content .short_date_picker {
-  width: 35%;
-}
-
-
 #page-content .medium {
   width: 60%;
 }
@@ -539,6 +534,24 @@ input#search_query {
   display: block;
   margin-bottom: 60px;
 	width: 100%;
+}
+
+#advanced-search {
+	border: 1px solid #CDCDCD;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+#page-content #advanced-search input {
+	font: normal 1.0em Arial, Tahoma, sans-serif;
+}
+
+#page-content #advanced-search label {
+	font: normal 1.0em Arial, Tahoma, sans-serif;
+}
+
+#page-content #advanced-search label.secondary {
+	font: normal 1.0em Arial, Tahoma, sans-serif;
 }
 
 #story_block {

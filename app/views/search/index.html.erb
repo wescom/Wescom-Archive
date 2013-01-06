@@ -15,11 +15,33 @@
 	        <%= submit_tag "Search", :class => 'submit'%>
 	      </span>
 	      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
-	      <div id="advanced-search">
-	        <%= label_tag :date_from_select, "From (mm/dd/yyyy)" %>
-	        <%= text_field_tag :date_from_select, params[:date_from_select], :class => 'short_date_picker' %>
-	        <%= label_tag :date_to_select, "To (mm/dd/yyyy)" %>
-	        <%= text_field_tag :date_to_select, params[:date_to_select], :class => 'short_date_picker' %>
+	      <div id="advanced-search" class="grid_10">
+					<div id="search_pubdate" class="grid_9">
+						<div class="grid_2">
+			        <%= label_tag :date_from_select, "From" %>
+			        <%= text_field_tag :date_from_select, params[:date_from_select], 
+												:class => 'small short_date_picker', 
+												:placeholder => "mm/dd/yyyy" %>
+						</div>
+						<div class="grid_2">
+			        <%= label_tag :date_to_select, "To" %>
+			        <%= text_field_tag :date_to_select, params[:date_to_select], 
+												:class => 'small short_date_picker', 
+												:placeholder => "mm/dd/yyyy" %>
+						</div>
+					</div>
+					<div id="search_pubdate" class="grid_9">
+						<div class="grid_4">
+							<%= label_tag :pub_select, "Paper" %>
+							<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name'),
+												{:include_blank => true, :selected => params[:pub_select], :class => 'medium'} %>
+						</div>
+						<div class="grid_2">
+							<%= label_tag :section_select, "Section" %>
+							<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'name'),
+												{:include_blank => true, :selected => params[:section_select], :class => 'small'} %>
+						</div>
+					</div>
 	      </div>
 	    <% end %>
 		</div>
