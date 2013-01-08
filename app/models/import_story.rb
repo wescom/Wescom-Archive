@@ -161,6 +161,7 @@ class ImportStory < ActiveRecord::Base
       return_string = string
   #      return_string.gsub! /\342\200[\230\231]/, "'"
   #      return_string.gsub! /\342\200[\234\235]/, '"'
+      return_string.gsub! '&#x2002', " "
       return_string.gsub! '&#x2008', "-"
       return_string.gsub! '&#x2009', "-"
       return_string.gsub! '&#x2010', "-"
