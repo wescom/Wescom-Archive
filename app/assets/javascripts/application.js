@@ -17,7 +17,7 @@ $(document).ready(function(){
   });
 
 	// Modal boxes - to all links with rel="facebox"
-	$('a[rel*=facebox]').facebox()
+	$('a[rel*=facebox]').facebox();
 	
 });
  
