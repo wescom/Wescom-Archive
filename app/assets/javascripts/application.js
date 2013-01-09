@@ -11,7 +11,7 @@ $(document).ready(function(){
     return false;
   });
 
-  $(".toggle_today").click(function () {
+  $("#toggle_today").click(function () {
     $("#sidebar_today").slideToggle("medium");
     return false;
   });

@@ -1,5 +1,5 @@
 <ul>
-  <li class="head toggle_today">Today's Stories</li>
+  <li id="toggle_today" class="head">Today's Stories</li>
 	<div id="sidebar_today">
 	   <li><%= link_to "All", search_today_url(:papername => "All") %></li>
 		<% if !@publications.nil? %>
