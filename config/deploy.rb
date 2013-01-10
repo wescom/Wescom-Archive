@@ -15,7 +15,7 @@ set :group,     "archive"
 require "bundler/capistrano"
 require "rvm/capistrano"
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-set :rvm_ruby_string, 'ruby-1.9.3-p194@global'
+set :rvm_ruby_string, 'ruby-1.9.3-p194'
 set :rvm_bin_path, "/usr/local/rvm/bin"
 #set :rvm_type, :system
 set :rvm_install_ruby, :install
