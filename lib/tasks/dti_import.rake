@@ -106,18 +106,18 @@ namespace :wescom do
         
         # Attach PDF of printed page
         # ie. C01_NEWS MAIN_28-05-2010_.PDF
-        if story.pubdate? and !dti_story.section.nil? and story.page?
-          pdf_filename = create_pdf_filename(story.pubdate,dti_story.section,story.page)
-          pdf_path = '/data/archiveup/test/'
-          if File.exists?(pdf_path+pdf_filename)
-            media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
-          else
-            media = story.story_images.build
-          end
-          media.media_name = pdf_filename
-          media.media_type = "PagePDF"
-          media.publish_status = "PagePDF"
-        end
+#        if story.pubdate? and !dti_story.section.nil? and story.page?
+#          pdf_filename = create_pdf_filename(story.pubdate,dti_story.section,story.page)
+#          pdf_path = '/data/archiveup/test/'
+#          if File.exists?(pdf_path+pdf_filename)
+#            media = story.story_images.build(:image => File.open(pdf_path+pdf_filename))
+#          else
+#            media = story.story_images.build
+#          end
+#          media.media_name = pdf_filename
+#          media.media_type = "PagePDF"
+#          media.publish_status = "PagePDF"
+#        end
 
         story.save!
         story.index!
