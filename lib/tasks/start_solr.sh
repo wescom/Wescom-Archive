@@ -7,4 +7,4 @@ echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
 bundle install
 
-rake sunspot:solr:start RAILS_ENV=production
+bundle exec rake sunspot:solr:start RAILS_ENV=production

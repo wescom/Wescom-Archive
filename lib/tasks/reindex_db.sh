@@ -7,4 +7,4 @@ echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
 bundle install>>/tmp/null
 
-rake sunspot:reindex RAILS_ENV=production
+bundle exec rake sunspot:reindex RAILS_ENV=production
