@@ -3,6 +3,11 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @story }
+    end
   end
   
   def new
