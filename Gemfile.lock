@@ -80,7 +80,7 @@ GEM
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
     multi_json (1.5.0)
-    mysql (2.9.0)
+    mysql (2.8.1)
     mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -184,7 +184,7 @@ DEPENDENCIES
   dti_nitf
   jquery-rails
   mongrel (= 1.2.0.pre2)
-  mysql (= 2.9.0)
+  mysql (= 2.8.1)
   mysql2
   oauth
   paperclip (~> 3.0)
