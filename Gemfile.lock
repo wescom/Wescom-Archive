@@ -156,8 +156,8 @@ GEM
       nokogiri
       sunspot (= 1.3.3)
     sunspot_solr (1.3.3)
-    therubyracer (0.11.1)
-      libv8 (~> 3.11.8.7)
+    therubyracer (0.11.2)
+      libv8 (~> 3.11.8.12)
       ref
     thor (0.16.0)
     tilt (1.3.3)
@@ -184,7 +184,7 @@ DEPENDENCIES
   dti_nitf
   jquery-rails
   mongrel (= 1.2.0.pre2)
-  mysql
+  mysql (= 2.9.0)
   mysql2
   oauth
   paperclip (~> 3.0)
