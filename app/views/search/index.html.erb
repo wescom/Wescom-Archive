@@ -11,7 +11,7 @@
 	    <%= form_tag search_path , :method => :get do %>
 	      <%= label_tag :search_query, "Search" %>
 	      <span id="search_input_field">
-	        <%= text_field_tag :search_query, params[:search_query] %>
+	        <%= text_field_tag :search_query, params[:search_query], :placeholder => "search" %>
 	        <%= submit_tag "Search", :class => 'submit'%>
 	      </span>
 	      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
