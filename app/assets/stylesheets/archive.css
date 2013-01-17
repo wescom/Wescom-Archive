@@ -466,8 +466,8 @@ input#search_query {
 	cursor: pointer;
 }
 
-#sidebar ul li, #lower-block ul li {
-  /* border-bottom: 1px solid #cdcdcd; */
+#sidebar ul li {
+  border-bottom: 1px solid #cdcdcd;
 }
 
 #sidebar ul li a, #lower-block ul li a {
@@ -478,6 +478,10 @@ input#search_query {
   text-decoration: none;
   padding: 8px 1.0638% 8px 1.5957%;
   height: 1%;
+}
+
+#sidebar ul li a {
+  background-color: #f2f2e8;
 }
 
 #sidebar ul li a:hover, #lower-block ul li a:hover {
