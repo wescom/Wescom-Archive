@@ -1,11 +1,11 @@
 <tr class="<%= cycle("alternate","") %>">
-  <td class="headline"><%= link_to text_for_story_link(story_fragment), story_fragment %>
+  <td class="headline headline_col"><%= link_to text_for_story_link(story_fragment), story_fragment %>
     <% if story_fragment.copy %>
 			<%= strip_subhead_tags(story_fragment.copy)[0..250].html_safe %>
 		<% end %>
   </td>
-  <td><%= story_fragment.byline if story_fragment.byline %></p></td>
-  <td class="center">
+  <td class="byline_col"><%= story_fragment.byline if story_fragment.byline %></p></td>
+  <td class="center section_col">
 		<% if !story_fragment.publication.nil? %>
 			<% if story_fragment.publication.name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
@@ -18,8 +18,10 @@
 		<%= story_fragment.section.name if story_fragment.section %>
 		- <%= story_fragment.page if story_fragment.section %>
 	</td>
-  <td class="center"><% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %></td>
-	<td class="center">
+  <td class="center pubdate_col">
+		<% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %>
+	</td>
+	<td class="center system_col">
 		<% if story_fragment.frontend_db == "DTI" %>
 			<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
 		<% else %>
@@ -28,8 +30,8 @@
 			<% end %>
 		<% end %>
 	</td>
-  <td class="false center">Needs Review</td>
-  <td class="actions center">
+  <td class="false center status_col">Needs Review</td>
+  <td class="actions center action_col">
 		<% if admin? || edit? %>
 			<br/><a class="edit" href="#"><%= link_to "Edit", edit_story_path(story_fragment) %></a>
 			<a><%= button_to "Delete", story_path(story_fragment), 

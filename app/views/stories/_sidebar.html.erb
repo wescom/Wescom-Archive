@@ -1,71 +1,68 @@
-<div id="story-sidebar">
-  <p class='story-infohead1'>Information</p>
-  <div id="story-info">
-    Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%Y') %><% end %><br />
-    Section: <%= @story.section.name if @story.section %> <br />
-    Page: <%= @story.page %><br />
-    Byline: <%= @story.byline %> <br />
-    Publicaton: <% if @story.publication %>
-			<% if @story.publication.name.length < 8 %>
-				<%= @story.publication.name %>
-			<% else %>
-				 <br/><div class="indent"><%= @story.publication.name %></div>
-			<% end %>
-			<br/>
-		<% end %>
-		<br/>
+<p class='story-infohead1'>Information</p>
+<div id="story-info">
+  Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%Y') %><% end %><br />
+  Section: <%= @story.section.name if @story.section %> <br />
+  Page: <%= @story.page %><br />
+  Byline: <%= @story.byline %> <br />
+  Publicaton: <% if @story.publication %>
+	<% if @story.publication.name.length < 8 %>
+		<%= @story.publication.name %>
+	<% else %>
+		 <br/><div class="indent"><%= @story.publication.name %></div>
+	<% end %>
+	<br/>
+<% end %>
+<br/>
 
-		<% if @story.frontend_db == "DTI" %>
-			<div class="story_frontend_logo">
-				<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
-			</div>
-			StoryID: <%= @story.doc_id %> <br />
-			Imported Filename: <%= @story.doc_name %> <br />
-		<% else %>
-			<% if @story.frontend_db == "SII" %>
-				<div class="story_frontend_logo">
-					<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
-				</div>
-			<% end %>
-		<% end %>
-  </div>
-
-  <% if @story.corrections.length > 0 %>
-    <p class='story-infohead1'>Corrections</p>
-    <div id="story-info">
-      <% @story.corrections.each do |story| %>
-        <%= link_to text_for_story_link(story), story %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <% if @story.corrected_stories.length > 0 %>
-    <p class='story-infohead1'>Corrected Stories</p>
-    <div id="story-info">
-      <% @story.corrected_stories.each do |story| %>
-        <%= link_to text_for_story_link(story), story %>
-      <% end %>
-    </div>
-  <% end %>
-
-	<% if @story.keywords.count > 0 %>
-	  <p class='story-infohead2'>Taxonomy:</p>
-	  <div id="story-info">
-			<% @story.keywords.each do |keyword| %>
-				<div class="indent"><%= keyword.text.downcase %></div>
-			<% end %>
+<% if @story.frontend_db == "DTI" %>
+	<div class="story_frontend_logo">
+		<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+	</div>
+	StoryID: <%= @story.doc_id %> <br />
+	Imported Filename: <%= @story.doc_name %> <br />
+<% else %>
+	<% if @story.frontend_db == "SII" %>
+		<div class="story_frontend_logo">
+			<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
 		</div>
 	<% end %>
-
-	<% if !@related_stories.nil? && @related_stories.count > 1 %>
-		<p class='story-infohead2'>Related Stories:</p>
-		<div id="story-info">
-			<% @related_stories.each do |related_story| %>
-				<% if related_story.id != @story.id %>
-					<%= link_to text_for_story_link(related_story), related_story %><br/>
-				<% end %>
-			<% end %>
-		</div>
-	<% end %>
-
+<% end %>
 </div>
+
+<% if @story.corrections.length > 0 %>
+  <p class='story-infohead1'>Corrections</p>
+  <div id="story-info">
+    <% @story.corrections.each do |story| %>
+      <%= link_to text_for_story_link(story), story %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @story.corrected_stories.length > 0 %>
+  <p class='story-infohead1'>Corrected Stories</p>
+  <div id="story-info">
+    <% @story.corrected_stories.each do |story| %>
+      <%= link_to text_for_story_link(story), story %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @story.keywords.count > 0 %>
+ <p class='story-infohead2'>Taxonomy:</p>
+ <div id="story-info">
+	<% @story.keywords.each do |keyword| %>
+		<div class="indent"><%= keyword.text.downcase %></div>
+	<% end %>
+</div>
+<% end %>
+
+<% if !@related_stories.nil? && @related_stories.count > 1 %>
+<p class='story-infohead2'>Related Stories:</p>
+<div id="story-info">
+	<% @related_stories.each do |related_story| %>
+		<% if related_story.id != @story.id %>
+			<%= link_to text_for_story_link(related_story), related_story %><br/>
+		<% end %>
+	<% end %>
+</div>
+<% end %>

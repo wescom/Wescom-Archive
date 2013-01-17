@@ -1,42 +1,54 @@
 <div id="image-sidebar">
-	<% if @story.story_images.published.length > 0 %>
-		<p class='image-head1 '>Published Images</p>
-		<% @story.story_images.published.each do |image| %>
-			<div class="image-body indent">
-				<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-				<div class="image-info">
-					<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-				</div>
-			</div>
+	<div class="clearfix">
+		<% if @story.story_images.published.length > 0 %>
+			<p class='image-head1 '>Published Images</p>
+			<% @story.story_images.published.each do |image| %>
+				<ul id="image-body">
+					<li>
+						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+						<p class="image-info">
+							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+						</p>
+					</li>
+				</ul>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 
-	<% if @story.story_images.attached.length > 0 %>
-		<p class='image-head1 indent'>Attached Images</p>
-		<% @story.story_images.attached.each do |image| %>
-			<div class="image-body indent">
-				<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-				<div class="image-info">
-					<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-				</div>
-			</div>
+	<div class="clearfix">
+		<% if @story.story_images.attached.length > 0 %>
+			<p class='image-head1'>Attached Images</p>
+			<% @story.story_images.attached.each do |image| %>
+				<ul id="image-body">
+					<li>
+						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+						<p class="image-info">
+							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+						</p>
+					</li>
+				</ul>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 
 <!-- 
-	<% if @story.story_images.pagepdf.length > 0 %>
-		<p class='image-head1 indent'>Published Page</p>
-		<% @story.story_images.pagepdf.each do |image| %>
-			<div class="image-body indent">
-				<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-				<div class="image-info">
-					<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-				</div>
-			</div>
+	<div class="clearfix">
+		<% if @story.story_images.pagepdf.length > 0 %>
+			<p class='image-head1'>Published Page</p>
+			<% @story.story_images.pagepdf.each do |image| %>
+				<ul id="image-body">
+					<li>
+						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+						<p class="image-info">
+							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+						</p>
+					</li>
+				</ul>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 -->
 </div>

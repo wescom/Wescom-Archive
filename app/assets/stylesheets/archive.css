@@ -142,7 +142,7 @@ html .clearfix {
 
 #page-navigation {
   background-color: #4a5154;
-  padding: 12px 30px 12px 30px;
+  padding: 12px 3.19% 12px 3.19%;
 }
 
 #page-navigation ul {
@@ -188,6 +188,7 @@ html .clearfix {
 #page-content {
   background-color: #e6e6d2;
   padding: 20px 10px 10px 10px;
+	min-width: 320px;
 }
 
 #page-content h1 {
@@ -233,7 +234,7 @@ html .clearfix {
 
 #page-content .inner-box {
   background-color: #fff;
-  padding: 15px;
+  padding: 1.5957%;
 }
 
 #page-content .margin-top {
@@ -248,7 +249,7 @@ html .clearfix {
   display: block;
 }
 
-#page-content input, #page-content text_area {
+#page-content input, #page-content text_area, #page-content select {
   font: normal 1.5em Arial, Tahoma, sans-serif;
   color: #454545;
   margin: 0px 0px 15px 0px;
@@ -266,14 +267,21 @@ html .clearfix {
 #page-content input.submit {
   background-color: #0099ff;
   /* display: block; */
-  width: 120px;
+	width: 60%;
+  min-width: 75px;
   margin: 0px 10px 20px 0px;
   padding: 6px 0px 6px 0px;
   font: bold 1.1em Arial, Tahoma, sans-serif;
   color: #fff;
-  float: right;
+  /* float: right; */
   text-transform: uppercase;
   border: 1px solid #fff;
+}
+
+#page-content #search_input_field input.submit {
+	width: 20%;
+  min-width: 75px;
+	float: right;
 }
 
 #page-content .delete {
@@ -434,52 +442,65 @@ input#search_query {
   color: #ff6600;
 }
 
-#sidebar {
+#sidebar_edit_block {
+	margin-top: 20px;
+}
+
+#sidebar,#lower-block {
   position: relative;
-  width: 240px;
   float: right;
 }
 
-#sidebar ul {
+#sidebar ul, #lower-block ul{
   margin: 0px;
   padding: 0px 0px 10px 0px;
   list-style: none;
-  border-left: 1px solid #cdcdcd;
+	/* border-left: 1px solid #cdcdcd; */
 }
 
-#sidebar ul li.head {
+#sidebar ul li.head, #lower-block ul li.head{
   font: bold 1.4em Arial, Tahoma, sans-serif;
   color: #0099ff;
   text-transform: uppercase;
-  padding: 15px 0px 15px 15px;
+  padding: 15px 0px 15px 1.5957%;
 	cursor: pointer;
 }
 
-#sidebar ul li {
-  border-bottom: 1px solid #cdcdcd;
+#sidebar ul li, #lower-block ul li {
+  /* border-bottom: 1px solid #cdcdcd; */
 }
 
-#sidebar ul li a {
-  background-color: #f2f2e8;
+#sidebar ul li a, #lower-block ul li a {
+  /* background-color: #f2f2e8; */
   display: block;
   font: normal 1.0em Arial, Tahoma, sans-serif;
   color: #33393c;
   text-decoration: none;
-  padding: 8px 10px 8px 15px;
+  padding: 8px 1.0638% 8px 1.5957%;
   height: 1%;
 }
 
-#sidebar ul li a:hover {
+#sidebar ul li a:hover, #lower-block ul li a:hover {
   background-color: #e6e6d2;
 }
 
-#sidebar ul li.current a {
+#sidebar ul li.current a, #lower-block ul li.current a {
   background-color: #fff;
   font: bold 1.2em Arial, Tahoma, sans-serif;
   color: #33393c;
   text-decoration: none;
   padding: 8px 10px 8px 16px;
   margin-left: -1px;
+}
+
+#lower-block ul {
+	padding: 0px;
+}
+
+#lower-block ul li {
+  /* border:1px solid #BBBBBB; */
+  float: left;
+	margin: 5px;
 }
 
 #page-footer {
@@ -501,16 +522,20 @@ input#search_query {
 }
 
 /* Global formatting */
-.full_height { height: 98%;}
-.full_width { width: 98%;}
+.full_height { height: 100%;}
+.full_width { width: 100%;}
 .float_left { float: left;}
 .float_right { float: right;}
-.indent { margin: 0px 0px 0px 20px;}
+.indent { margin: 0px 0px 0px 10%;}
 
 /* Story Content */
+#story-block {
+  position: relative;
+}
+
 #story-content {
   font-family: "Times New Roman", Times, serif;
-  font-size: 18px;
+  font-size: 1.5em;
   color: #33393c;
 }
 
@@ -525,7 +550,7 @@ input#search_query {
 }
 
 #story-content p.hl2_head {
-  font-size: 24px;
+  font-size: 1.5em;
   font-weight: bold;
   color: black;
 }
@@ -533,13 +558,12 @@ input#search_query {
 #search_input_field {
   display: block;
   margin-bottom: 60px;
-	width: 100%;
+	width: 90%;
 }
 
 #advanced-search {
-	border: 1px solid #CDCDCD;
 	padding: 10px;
-	margin-bottom: 20px;
+	margin: 0px 0px 20px 0px;
 }
 
 #page-content #advanced-search input {
@@ -550,14 +574,11 @@ input#search_query {
 	font: normal 1.0em Arial, Tahoma, sans-serif;
 }
 
-#page-content #advanced-search label.secondary {
-	font: normal 1.0em Arial, Tahoma, sans-serif;
-}
-
-.today_publication {
+#papername.today_publication {
 	font: normal 1.5em Arial, Tahoma, sans-serif;
 	vertical-align: middle;
-	width: 250px;
+	width: 20%;
+	min-width: 200px;
 	margin: 8px 10px;
 }
 
@@ -578,8 +599,7 @@ input#search_query {
 	box-shadow: rgba(0,0,0,1) 0 1px 0;
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	color: white;
-	font-size: 16px;
-	font-family: Helvetica, Arial, Sans-Serif;
+	font-family: normal 1.5em Arial, Tahoma, sans-serif;
 	text-decoration: none;
 	vertical-align: middle;
 	width: 40px;
@@ -597,12 +617,17 @@ input#search_query {
 	min-height: 100px;
 }
 
-/* Story sidebars */
-#story-sidebar {
+/* Story sidebars & lower blocks */
+#info-block {
+	clear:both
+}
+
+#story-sidebar, #story-lower {
   position: relative;
   padding: 10px 0px 10px 0px;
-  margin-left: 7px;
+  margin-left: 0.75%;
   border: 1px solid #c1c1c1;
+	min-width: 150px;
 }
 
 #story-sidebar p.story-infohead1 {
@@ -618,9 +643,22 @@ input#search_query {
   padding: 10px 0px 0px 5px;
 }
 
+#story-lower p.story-infohead1 {
+  font: bold 1.1em Arial, Tahoma, sans-serif;
+  color: #0099ff;
+  text-transform: uppercase;
+  padding: 10px 0px 0px 5px;
+}
+
+#story-lower p.story-infohead2 {
+  font: bold 0.9em Arial, Tahoma, sans-serif;
+  text-transform: uppercase;
+  padding: 10px 0px 0px 5px;
+}
+
 #story-info {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 6%;
+  padding-right: 6%;
   font: normal 0.7em Arial, Tahoma, sans-serif;
 }
 
@@ -629,10 +667,15 @@ input#search_query {
 	margin-bottom: 10px;
 }
 
+#lower-block {
+	clear: both;
+}
+
 #image-sidebar {
   position: relative;
   padding: 10px 0px 10px 0px;
   margin-left: 7px;
+	min-width: 150px;
 /*  border: 1px solid #c1c1c1;*/
 }
 
@@ -643,8 +686,8 @@ input#search_query {
   padding: 10px 0px 10px 5px;
 }
 
-.image-body {
-	margin-bottom: 15px;
+#sidebar #image-body {
+	margin: 0px 0px 0px 5%;
 	position: relative;
 }
 
@@ -688,6 +731,7 @@ img.image_large {height:auto;width:450px;}
 .image-info {
   font: normal 0.7em Arial, Tahoma, sans-serif;
 	width: 100%;
+	text-align:center;
 }
 
 #page-content input.image-delete {
@@ -721,26 +765,32 @@ img.image_large {height:auto;width:450px;}
 	padding: 4px;
 }
 
-#page-content form input.extra_small { width: 50px; }
-#page-content form input.smaller { width: 75px; }
-#page-content form input.small { width: 100px; }
-#page-content form input.medium { width: 150px; }
-#page-content form input.large { width: 200px; }
-#page-content form input.larger { width: 250px; }
-#page-content form input.big { width: 300px; }
-#page-content form input.biggest { width: 400px; }
+#page-content form select.story_field {
+	font-size: 1em;
+	margin: 0px 0px 10px 10px;
+	padding: 4px;
+}
+
+#page-content form input.extra_small { width: 6%; }
+#page-content form input.smaller { width: 8%; }
+#page-content form input.small { width: 12%; }
+#page-content form input.medium { width: 16%; }
+#page-content form input.large { width: 22%; }
+#page-content form input.larger { width: 27%; }
+#page-content form input.big { width: 32%; }
+#page-content form input.biggest { width: 42%; }
 #page-content form input.full { width: 95%; }
 
-#page-content form input.date_picker { width: 100px;}
+#page-content form input.date_picker { width: 11%;}
 
-#page-content form textarea {padding:5px; overflow: scroll; }
+#page-content form textarea {padding:0.5%; overflow: scroll; }
 #page-content form textarea.small { width: 95%; height: 150px; }
 #page-content form textarea.medium { width: 95%; height: 250px; }
 #page-content form textarea.large { width: 95%; height: 400px; }
 #page-content form textarea.xlarge { width: 95%; height: 600px; }
 
-#page-content form select.extra_small { width: 50px; }
-#page-content form select.smaller { width: 75px; }
-#page-content form select.small { width: 100px; }
-#page-content form select.medium { width: 200px; }
-#page-content form select.large { width: 300px; }
+#page-content form select.extra_small { width: 10%; min-width: 50px; height: 25px;}
+#page-content form select.smaller { width: 20%; min-width: 75px; height: 25px;}
+#page-content form select.small { width: 30%; min-width: 100px; height: 25px;}
+#page-content form select.medium { width: 40%; min-width: 200px; height: 25px;}
+#page-content form select.large { width: 50%; min-width: 200px; height: auto;}

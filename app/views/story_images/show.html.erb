@@ -2,7 +2,7 @@
   <%= "#{h @image.media_name} - " if @image.media_name -%>
 <% end %>
 
-<div id="image-content" class="grid_15">
+<div id="image-content" class="grid_16">
 	<div class="image-header-bar ">
 		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
 	</div>
@@ -10,12 +10,12 @@
 	<% if @image.media_type == "PagePDF" %>
 		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
 	<% else %>
-		<div class="grid_8">
+		<div id="image_image" class="grid_8 clearfix">
 <!--			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %> -->
 			<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_large"), @image.image.url %>
 		</div>
 
-		<div class="grid_6">
+		<div id="image_info" class="grid_8 clearfix">
 			<div class="image-head">Print Caption:</div>
 			<div class="image-info-box indent">
 				<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>
@@ -23,7 +23,7 @@
 			</div>
 
 			<div class="image-head">Original Caption:</div>
-			<div class="image-info-box indent full_width">
+			<div class="image-info-box indent">
 				<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
 				<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
 			</div>
@@ -46,7 +46,7 @@
 		</div>
 	<% end %>
 	
-	<div class="grid_14">
+	<div id="image_edit" class="full_width">
 		<% if admin? || edit? %>
 			<%= button_to "Delete Image", story_image_path(@image), 
 					:method => :delete, 

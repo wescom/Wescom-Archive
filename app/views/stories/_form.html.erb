@@ -1,23 +1,25 @@
-<div class="grid_15">
-	<%= form.label :hl1, "Headline", :class => "story_label" %>
-	<%= form.text_field :hl1, :class => "story_field full" %>
-	<%= form.label :hl2, "SubHead", :class => "story_label" %>
-	<%= form.text_field :hl2, :class => "story_field full" %>
+<div class="clearfix">
+	<div class="grid_15">
+		<%= form.label :hl1, "Headline", :class => "story_label" %>
+		<%= form.text_field :hl1, :class => "story_field full" %>
+		<%= form.label :hl2, "SubHead", :class => "story_label" %>
+		<%= form.text_field :hl2, :class => "story_field full" %>
+	</div>
+
+	<div>
+		<div class="grid_8">
+			<%= form.label :byline, "Byline", :class => "story_label" %>
+			<%= form.text_field :byline, :class => "story_field full" %>
+		</div>
+		<div class="grid_5">
+			<%= form.label :paper_id, "Paper", :class => "story_label" %>
+			<%= form.select :paper_id, @papers.collect { |c| [c.name, c.id] }, {:include_blank => true}, 
+						:class => 'story_field large' %>
+		</div>
+	</div>
 </div>
 
-<div>
-	<div class="grid_5">
-		<%= form.label :byline, "Byline", :class => "story_label" %>
-		<%= form.text_field :byline, :class => "story_field larger" %>
-	</div>
-	<div class="grid_5">
-		<%= form.label :paper_id, "Paper", :class => "story_label" %>
-		<%= form.select :paper_id, @papers.collect { |c| [c.name, c.id] }, {:include_blank => true}, 
-					:class => 'story_field medium' %>
-	</div>
-</div>
-
-<div id="story_block" class="grid_11">
+<div id="story_block" class="grid_12">
 	<%= form.label :copy, "Copy Body", :class => "story_label" %>
   <%= form.text_area :copy, :class => 'story_field large' %>
 
@@ -30,7 +32,7 @@
 	<%= form.text_area :sidebar_body, :class => "story_field small" %>
 </div>
 
-<div id="sidebar_block" class="grid_3 full_width">
+<div id="sidebar_edit_block" class="grid_3">
 	<div id="story-sidebar">
 	  <p class='story-infohead1'>Information</p>
 	  <div id="story-info">
@@ -48,10 +50,10 @@
 			<%= form.select :section_id, @sections.collect { |c| [c.name, c.id] }, {}, :class => 'story_field small' %>
 
 			<%= form.label :page, "Page", :class => "story_label" %>
-		  <%= form.text_field :page, :class => "story_field small" %>
+		  <%= form.text_field :page, :class => "story_field larger" %>
 
 			<%= form.label :project_group, "Project Group", :class => "story_label" %>
-		  <%= form.text_field :project_group, :class => "story_field small" %>
+		  <%= form.text_field :project_group, :class => "story_field full" %>
 	  </div>
 
 	  <% if @story.corrections.length > 0 %>

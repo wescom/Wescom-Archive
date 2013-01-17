@@ -3,20 +3,22 @@
 <% end %>
 
 <div class="inner-box clearfix">
-  <div id="story-content" class="grid_15">
-    <% if @story.hl1 %>
-    	<h1><%= @story.hl1.html_safe %></h1>
-		<% end %>
-    <% if @story.hl2 %>
-      <h4><%= @story.hl2.html_safe %> </h4>
-    <% end %>
-    <% if @story.byline and @story.byline.length > 0 %>
-      <h4>By: <%= @story.byline.html_safe %>
-				<% if @story.paper %>, <%= @story.paper.name.html_safe %> <% end %>
-			</h4>
-    <% end %>
+  <div id="story-content" class="full_width clearfix">
+		<div class="clearfix">
+	    <% if @story.hl1 %>
+	    	<h1><%= @story.hl1.html_safe %></h1>
+			<% end %>
+	    <% if @story.hl2 %>
+	      <h4><%= @story.hl2.html_safe %> </h4>
+	    <% end %>
+	    <% if @story.byline and @story.byline.length > 0 %>
+	      <h4>By: <%= @story.byline.html_safe %>
+					<% if @story.paper %>, <%= @story.paper.name.html_safe %> <% end %>
+				</h4>
+	    <% end %>
+		</div>
 
-		<div id="story_block" class="grid_11">
+		<div id="story_block" class="grid_12 clearfix">
 	    <% if @story.copy %><%=  @story.copy.html_safe %><% end %>
 	    <% if @story.tagline and @story.tagline.length > 0 %>
 	      <h3><%= @story.tagline.html_safe %></h3>
@@ -27,19 +29,36 @@
 	    <% end %>
 		</div>
 
-		<div class="grid_3 full_width">
-			<% if admin? || edit? %>
-				<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'submit small' %>
-			<% end %>
+		<div id="sidebar" class="grid_3 clearfix">
+			<div id="edit-block" class="full_width">
+				<% if admin? || edit? %>
+					<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'submit' %>
+				<% end %>
+			</div>
+
+			<div id="info-block" class="full_width">
+				<div id="story-sidebar">
+			    <%= render(:partial => 'sidebar') %>
+				</div>
+				<br/>
+				<% if @story.story_images.count > 0 %>
+			  	<%= render(:partial => 'image_sidebar') %>
+				<% end %>
+			</div>
 		</div>
 
-		<div id="sidebar_block" class="grid_3 full_width">
-	    <%= render(:partial => 'sidebar') %>
-			<br/>
-			<% if @story.story_images.count > 0 %>
-		  	<%= render(:partial => 'image_sidebar') %>
-			<% end %>
+	  <div id="lower-block" class="full_width hide">
+			</br>
+			<div id="lower-info-block" class="grid_4">
+				<div id="story-lower">
+			    <%= render(:partial => 'sidebar') %>
+				</div>
+			</div>
+			<div id="lower-image-block" class="grid_11">
+				<% if @story.story_images.count > 0 %>
+			  	<%= render(:partial => 'image_sidebar') %>
+				<% end %>
+			</div>	
 		</div>
   </div>
-
 </div>

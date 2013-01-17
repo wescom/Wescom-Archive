@@ -7,11 +7,11 @@
 <div class="inner-box clearfix">
   <div id="story-content" class="grid_15">
 		<%= form_for @story, :url => story_path do |form| %>
-			<div id="story-edit">
+			<div id="story-edit" class="clearfix">
 				<%= render :partial => 'form', :object => form %>
 			</div>
-			<div class="grid_15">
-				<div class="grid_4">
+			<div class="full_width">
+				<div>
 					<%= form.submit "Update", :class => 'submit small'%>
 					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
 				</div>
