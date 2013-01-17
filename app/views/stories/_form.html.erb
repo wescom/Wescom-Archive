@@ -50,7 +50,8 @@
 			<%= form.select :section_id, @sections.collect { |c| [c.name, c.id] }, {}, :class => 'story_field small' %>
 
 			<%= form.label :page, "Page", :class => "story_label" %>
-		  <%= form.text_field :page, :class => "story_field larger" %>
+		  <%= form.text_field :page, :class => "story_field larger", 
+													:type => "number", :min => "1", :max => "100" %>
 
 			<%= form.label :project_group, "Project Group", :class => "story_label" %>
 		  <%= form.text_field :project_group, :class => "story_field full" %>
