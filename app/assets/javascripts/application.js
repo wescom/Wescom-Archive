@@ -135,7 +135,7 @@ $(document).ready(function(){
 
 	// Advanced Search
   $("#advanced-search").hide();
-  $(".short_date_picker").datepicker();
+  $(".short_date_picker").datepicker({ changeMonth: true, changeYear: true });
 	$("#sidebar_today").hide();
 
   $(".toggle_hide").click(function () {
