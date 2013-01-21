@@ -83,9 +83,10 @@ namespace :deploy do
   end 
 end
 
-#after 'deploy:update_code' do
-#  run_rake "assets:precompile"
-#end
+after 'deploy:update_code' do
+  run "cd #{current_path}; bundle install"
+  run_rake "assets:precompile"
+end
 
 def run_rake(cmd)
   run "cd #{current_path}; #{rake} #{cmd}"
