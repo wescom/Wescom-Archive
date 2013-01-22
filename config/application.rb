@@ -34,6 +34,13 @@ module Wescomarchive
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets  
-    config.assets.version = '2.0'
+    config.assets.version = '2.1'
+    
+    if defined?(Bundler)
+      # If you precompile assets before deploying to production, use this line
+      Bundler.require *Rails.groups(:assets => %w(development test))
+      # If you want your assets lazily compiled in production, use this line
+      # Bundler.require(:default, :assets, Rails.env)
+    end
   end
 end
