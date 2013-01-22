@@ -1,5 +1,5 @@
 $(document).ready(function(){
- 
+
 	// Screen Resizing - Hide/Show Table Columns
 	if (parseInt($('#table-block').css("width"))) {
 		//alert('Screen size: ' + parseInt($('#table-block').css("width")));
