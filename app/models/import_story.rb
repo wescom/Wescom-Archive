@@ -179,6 +179,7 @@ class ImportStory < ActiveRecord::Base
       return_string.gsub! '&#x2022', '*'
       return_string.gsub! '&#x2030', "..."
       return_string.gsub! '&#x2044', "/"
+      return_string.gsub! '&#x201d', '"'
       return_string
     else
       string
