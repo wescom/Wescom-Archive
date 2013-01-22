@@ -99,7 +99,7 @@ namespace :deploy do
     top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
     run "cd #{shared_path}; tar -zxvf assets.tar.gz"
     run_locally "rm public/assets.tar.gz"
-    run_locally "rm -rf public/assets"
+#    run_locally "rm -rf public/assets"
 
     create_symlink
     restart
