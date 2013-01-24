@@ -39,22 +39,17 @@ role :db,  ARCHIVE3, :primary => true
 namespace :deploy do
   desc "Deploy Wescom Archive"
   task :default do
-    update
+    update_code
+    finalize_update
     restart
-  end
-
-  task :update do
-    transaction do
-      update_code
-    end
   end
 
   desc "Update deployed code"
   task :update_code do
-    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
-    finalize_update
+#    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
   end
 
+  desc "Finialize update"
   task :finalize_update do
     run <<-CMD
       rm -rf #{latest_release}/log #{latest_release}/public/system #{latest_release}/tmp/pids &&
@@ -90,20 +85,21 @@ namespace :deploy do
     CMD
   end
 
-  task :assets do
-    update_code
-    ln_assets
+#  task :assets do
+#    update_code
+#    ln_assets
 
-    run_locally "rake assets:precompile"
-    run_locally "cd public; tar -zcvf assets.tar.gz assets"
-    top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
-    run "cd #{shared_path}; tar -zxvf assets.tar.gz"
-    run_locally "rm public/assets.tar.gz"
+#    run_locally "rake assets:precompile"
+#    run_locally "cd public; tar -zcvf assets.tar.gz assets"
+#    top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
+#    run "cd #{shared_path}; tar -zxvf assets.tar.gz"
+#    run_locally "rm public/assets.tar.gz"
 #    run_locally "rm -rf public/assets"
 
-    create_symlink
-    restart
-  end
+#    create_symlink
+#    restart
+#  end
+
 end
 
 #after 'deploy:update_code' do
