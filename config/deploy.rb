@@ -6,7 +6,7 @@ set :scm,         :git
 set :scm_username,    "wescomarchive"     # Git user
 set :scm_passphrase,  "Go2cmdarchive"  # Git password
 set :branch,      "origin/master"
-set :deploy_via,  :remote_cache
+#set :deploy_via,  :remote_cache
 #set :deploy_via,  :copy
 
 set :user,      "shoffmann"  # The server's user for deploys
@@ -39,14 +39,20 @@ role :db,  ARCHIVE3, :primary => true
 namespace :deploy do
   desc "Deploy Wescom Archive"
   task :default do
-    update_code
-    finalize_update
+    update
     restart
+  end
+
+  task :update do
+    transaction do
+      update_code
+    end
   end
 
   desc "Update deployed code"
   task :update_code do
-#    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
+    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
+    finalize_update
   end
 
   desc "Finialize update"
