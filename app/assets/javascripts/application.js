@@ -1,3 +1,5 @@
+//= require_directory .
+
 $(document).ready(function(){
 
 	// Screen Resizing - Hide/Show Table Columns
