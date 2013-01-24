@@ -6,8 +6,8 @@ set :scm,         :git
 set :scm_username,    "wescomarchive"     # Git user
 set :scm_passphrase,  "Go2cmdarchive"  # Git password
 set :branch,      "origin/master"
-#set :deploy_via,  :remote_cache
-set :deploy_via,  :copy
+set :deploy_via,  :remote_cache
+#set :deploy_via,  :copy
 
 set :user,      "shoffmann"  # The server's user for deploys
 set :group,     "archive"
@@ -99,7 +99,7 @@ namespace :deploy do
     top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
     run "cd #{shared_path}; tar -zxvf assets.tar.gz"
     run_locally "rm public/assets.tar.gz"
-    run_locally "rm -rf public/assets"
+#    run_locally "rm -rf public/assets"
 
     create_symlink
     restart
