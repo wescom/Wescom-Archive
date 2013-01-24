@@ -31,7 +31,7 @@ module Wescomarchive
     config.filter_parameters += [:password]
 
     # Enable the asset pipeline
-    config.assets.enabled = true
+    config.assets.enabled = false
     config.assets.precompile += ['*.css', '*.js'] 
 
     # Version of your assets, change this if you want to expire all your assets  
