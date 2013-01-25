@@ -1,5 +1,10 @@
 class StoryImagesController < ApplicationController
   
+  def index
+    @images = StoryImage.paginate(:page => params[:page], :order=> "image_updated_at DESC")
+    @total_images_count = StoryImage.count(:all)
+  end
+
   def show
     @image = StoryImage.find(params[:id])
     render :layout => "plain"

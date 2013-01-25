@@ -1,0 +1,18 @@
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+<h1>Story Images</h1>
+<h2><%= @total_images_count %> archived images</h2>
+
+<div class="inner-box clearfix">
+	<div id="image-block" class="full_width">
+		<% if @images %>
+			<div id="image-gallery" class="full_width">
+				<% for image in @images %>
+					<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+							{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+</div>
