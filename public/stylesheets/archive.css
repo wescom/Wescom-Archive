@@ -799,3 +799,21 @@ img.image_large {height:auto;width:450px;}
 #page-content form select.medium { width: 40%; min-width: 200px; height: 25px;}
 #page-content form select.large { width: 50%; min-width: 200px; height: auto;}
 
+/* Story Image Layout */
+#image-gallery {
+   /* Prevent vertical gaps */
+   line-height: 0;
+   
+   -webkit-column-count: 5;
+   -webkit-column-gap:   0px;
+   -moz-column-count:    5;
+   -moz-column-gap:      0px;
+   column-count:         5;
+   column-gap:           0px;
+   
+}
+#image-gallery img {
+  /* Just in case there are inline attributes */
+  width: 100% !important;
+  height: auto !important;
+}
