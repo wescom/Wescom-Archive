@@ -10,7 +10,7 @@
 			<div id="image-gallery" class="full_width">
 				<% for image in @images %>
 					<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-							{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+							{:action => 'show', :controller => 'story_images', :id => image } %>
 				<% end %>
 			</div>
 		<% end %>
