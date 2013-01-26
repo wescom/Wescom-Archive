@@ -46,13 +46,13 @@
 		</div>
 	<% end %>
 	
-	<div id="image_edit" class="full_width">
+	<div id="image_edit" class="grid_16">
 		<% if admin? || edit? %>
 			<%= button_to "Delete Image", story_image_path(@image), 
 					:method => :delete, 
 					:confirm => "Are you sure you want to delete image from story?",
 					:action => 'destroy',
-					:class => 'image-delete' %>
+					:class => 'image-delete float_right' %>
 		<% end %>
 	</div>
 </div>
