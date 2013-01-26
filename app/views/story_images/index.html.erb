@@ -7,12 +7,10 @@
 <div class="inner-box clearfix">
 	<div id="image-block" class="full_width">
 		<% if @images %>
-			<div id="image-gallery" class="full_width">
-				<% for image in @images %>
-					<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-							{:action => 'show', :controller => 'story_images', :id => image } %>
-				<% end %>
+			<div id="images" class="full_width clearfix">
+				<%= render :partial => 'image', :collection => @images %>
 			</div>
+			<%= will_paginate @images %></div>
 		<% end %>
 	</div>
 </div>
