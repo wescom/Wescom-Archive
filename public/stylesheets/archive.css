@@ -800,7 +800,7 @@ img.image_large {height:auto;width:450px;}
 #page-content form select.large { width: 50%; min-width: 200px; height: auto;}
 
 /* Story Image Layout */
-#image-gallery {
+#images {
    /* Prevent vertical gaps */
    line-height: 0;
    
@@ -812,7 +812,7 @@ img.image_large {height:auto;width:450px;}
    column-gap:           0px;
    
 }
-#image-gallery img {
+#images img {
   /* Just in case there are inline attributes */
   width: 100% !important;
   height: auto !important;
