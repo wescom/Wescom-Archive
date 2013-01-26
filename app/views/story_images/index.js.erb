@@ -1,4 +1,4 @@
-$('#images').append('<%= j render :partial => 'image', :collection => @images %>');
+$('#image-gallery').append('<%= j render :partial => 'image', :collection => @images %>');
 <% if @images.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate(@images) %>');
 <% else %>

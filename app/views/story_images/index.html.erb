@@ -7,7 +7,7 @@
 <div class="inner-box clearfix">
 	<div id="image-block" class="full_width">
 		<% if @images %>
-			<div id="images" class="full_width clearfix">
+			<div id="image-gallery" class="full_width clearfix">
 				<%= render :partial => 'image', :collection => @images %>
 			</div>
 			<%= will_paginate @images %></div>
