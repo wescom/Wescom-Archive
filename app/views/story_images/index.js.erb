@@ -1,3 +1,4 @@
+$('#image-gallery').append('<div id="image-gallery-break"></div>');
 $('#image-gallery').append('<%= j render :partial => 'image', :collection => @images %>');
 <% if @images.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate(@images) %>');
