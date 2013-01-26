@@ -16,6 +16,10 @@
 		</div>
 
 		<div id="image_info" class="grid_8 clearfix">
+			<div class="image-attached-story">
+				Attached Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+			</div>
+
 			<div class="image-head">Print Caption:</div>
 			<div class="image-info-box indent">
 				<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>

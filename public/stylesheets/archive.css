@@ -719,6 +719,11 @@ img.image_large {height:auto;width:450px;}
 	margin-top: 20px;
 }
 
+.image-attached-story, .image-attached-story a {
+	font-weight: bold;
+	margin: 20px 0px 20px 0px;
+}
+
 .image-field {
 	font-weight: 600;
 	font-style: normal;
