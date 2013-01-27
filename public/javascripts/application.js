@@ -152,9 +152,13 @@ $(document).ready(function(){
 	$('a[rel*=facebox]').facebox();
 	
 	// Image Gallery
-	$('#image-gallery').masonry({
+	var $container = $('#image-gallery');
+
+	$container.imagesLoaded( function(){
+	  $container.masonry({
     itemSelector : '.image_gallery',
 //    columnWidth : 250
-  });
+		});
+	});
 });
  
