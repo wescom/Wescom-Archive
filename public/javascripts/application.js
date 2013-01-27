@@ -151,5 +151,10 @@ $(document).ready(function(){
 	// Modal boxes - to all links with rel="facebox"
 	$('a[rel*=facebox]').facebox();
 	
+	// Image Gallery
+	$('#image-gallery').masonry({
+    itemSelector : '.image_gallery',
+//    columnWidth : 250
+  });
 });
  

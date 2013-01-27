@@ -699,6 +699,7 @@ img.image_thumb {height:20px;width:auto;}
 img.image_small {height:auto;width:75px;}
 img.image_medium {height:auto;width:150px;}
 img.image_large {height:auto;width:450px;}
+img.image_gallery_size {height:auto;width:300px;}
 
 /* Image Content */
 #image-content {
@@ -820,8 +821,8 @@ img.image_large {height:auto;width:450px;}
 
 #image-gallery img {
   /* Just in case there are inline attributes */
-  width: 100% !important;
-  height: auto !important;
+/*  width: 100% !important;
+  height: auto !important;*/
 }
 
 #image-gallery-break {
