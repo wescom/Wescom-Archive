@@ -7,8 +7,8 @@
 // Uses JQuery Masonry script to layout images in gallery. Images flow in row 1 then row 2 (filling holes)
 // http://masonry.desandro.com/index.html
 var $boxes = $('<%= j render :partial => 'image', :collection => @images %>');
+$('#image-gallery').masonry('reload');
 $('#image-gallery').append( $boxes ).masonry( 'appended', $boxes, true );
-
 
 <% if @images.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate(@images) %>');

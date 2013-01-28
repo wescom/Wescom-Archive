@@ -746,7 +746,6 @@ img.image_thumb {height:20px;width:auto;}
 img.image_small {height:auto;width:75px;}
 img.image_medium {height:auto;width:150px;}
 img.image_large {height:auto;width:450px;}
-img.image_gallery_size {height:auto;width:300px;}
 
 /* Image Content */
 #image-content {
@@ -852,8 +851,23 @@ img.image_gallery_size {height:auto;width:300px;}
 #page-content form select.medium { width: 40%; min-width: 200px; height: 25px;}
 #page-content form select.large { width: 50%; min-width: 200px; height: auto;}
 
-/* Image Gallery Layout */
-#image-gallery {
+/* Image Gallery Layout using Masonry */
+img.image_gallery_size {
+	height:auto;
+	width:300px;
+}
+
+#image_gallery_whitespace {height: 200px;}
+
+#image-gallery-break {
+  /* Cause break within gallery for pages */
+	-moz-column-span: all;
+	-webkit-column-span: all;
+	column-span: all;
+}
+
+/* Image gallery layout using CSS only */
+#image-gallery2 {
    /* Prevent vertical gaps */
    line-height: 0;
    
@@ -866,42 +880,35 @@ img.image_gallery_size {height:auto;width:300px;}
    
 }
 
-#image-gallery img {
+#image-gallery2 img {
   /* Just in case there are inline attributes */
 /*  width: 100% !important;
   height: auto !important;*/
 }
 
-#image-gallery-break {
-  /* Cause break within gallery for pages */
-	-moz-column-span: all;
-	-webkit-column-span: all;
-	column-span: all;
-}
-
 @media (max-width: 1200px) {
-  #image-gallery {
+  #image-gallery2 {
   -moz-column-count:    4;
   -webkit-column-count: 4;
   column-count:         4;
   }
 }
 @media (max-width: 1000px) {
-  #image-gallery {
+  #image-gallery2 {
   -moz-column-count:    3;
   -webkit-column-count: 3;
   column-count:         3;
   }
 }
 @media (max-width: 800px) {
-  #image-gallery {
+  #image-gallery2 {
   -moz-column-count:    2;
   -webkit-column-count: 2;
   column-count:         2;
   }
 }
 @media (max-width: 400px) {
-  #image-gallery {
+  #image-gallery2 {
   -moz-column-count:    1;
   -webkit-column-count: 1;
   column-count:         1;
