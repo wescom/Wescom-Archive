@@ -3,7 +3,7 @@ class StoryImagesController < ApplicationController
   def index
     @images = StoryImage.paginate(:page => params[:page], 
                                   :order=> "image_updated_at DESC", 
-                                  :per_page => 25)
+                                  :per_page => 15)
     @total_images_count = StoryImage.count(:all)
   end
 
