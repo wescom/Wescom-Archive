@@ -856,6 +856,7 @@ img.image_gallery_size {
 	height:auto;
 	width:300px;
 }
+
 .fetching_images_text {
 	width: 100%; 
 	font: bold 1.5em Arial, Tahoma, sans-serif;
@@ -863,11 +864,13 @@ img.image_gallery_size {
 	text-align: center;
 	padding-top: 50px;
 }
+
 img.spinner {
 		display: block;
     margin-left: auto;
     margin-right: auto
 }
+
 #image_gallery_whitespace {height: 500px;}
 
 #image-gallery-break {
