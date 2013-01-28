@@ -1,5 +1,5 @@
 jQuery(function() {
-  if ($('.pagination').length) {
+  if ($('#gallery_paginate .pagination').length) {
     $(window).scroll(function() {
       var url;
       url = $('.pagination .next_page').attr('href');

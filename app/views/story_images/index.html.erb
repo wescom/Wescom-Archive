@@ -11,7 +11,7 @@
 			<div id="image-gallery" class="full_width clearfix">
 				<%= render :partial => 'image', :collection => @images %>
 			</div>
-			<%= will_paginate @images %></div>
+			<div id="gallery_paginate"><%= will_paginate @images %></div>
 		<% end %>
 	</div>
 </div>

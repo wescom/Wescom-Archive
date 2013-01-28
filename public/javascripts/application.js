@@ -153,12 +153,12 @@ $(document).ready(function(){
 	
 	// Image Gallery
 	var $container = $('#image-gallery');
-
 	$container.imagesLoaded( function(){
 	  $container.masonry({
     itemSelector : '.image_gallery',
 //    columnWidth : 250
 		});
 	});
+
 });
  
