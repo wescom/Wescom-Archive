@@ -3,8 +3,8 @@
     <li><%= link_to "Home", {:controller => 'home', :action => 'index'} %></li>
     <li><%= link_to "Today", search_today_url(:papername => "All") %></li>
   	<li class="current"><%= link_to "Search", {:controller => 'search', :action => 'index'} %></li>
+		<li><%= link_to "Image Gallery", story_images_url %></li>
 		<% if admin? %>
-			<li><%= link_to "Image Gallery", story_images_url %></li>
 			<li><%= link_to "Users", users_url %></li>
 		<% end %>
     <!--<li id="nav-search-box">
