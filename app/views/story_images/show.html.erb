@@ -5,6 +5,7 @@
 <div id="image-content" class="grid_16">
 	<div class="image-header-bar ">
 		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
+		<%= @image.publish_status %>
 	</div>
 
 	<% if @image.media_type == "PagePDF" %>
@@ -17,7 +18,19 @@
 
 		<div id="image_info" class="grid_8 clearfix">
 			<div class="image-attached-story">
-				Attached Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+				<% if @image.publish_status == "Published" %>
+					Published in Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+				<% else %>
+					<% if @image.publish_status == "Attached" %>
+						Attached to Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+					<% else %>
+						<% if @image.publish_status == "PagePDF" %>
+							PDF of Page for Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+						<% else %>
+							Story: <%= link_to text_for_story_link(@image.story), @image.story %>
+						<% end %>
+					<% end %>
+				<% end %>
 			</div>
 
 			<div class="image-head">Print Caption:</div>
