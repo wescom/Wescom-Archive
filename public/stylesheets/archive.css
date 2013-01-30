@@ -166,12 +166,10 @@ html .clearfix {
 }
 
 #page-navigation ul li a:hover {
-  color: #ff6600;
+/*  color: #6da9d2;*/
+	text-decoration:underline;
 }
 
-/*
-#page-navigation ul li.current a {
-*/
 #search-page .search,
 #story-page .search,
 #today-page .today,
