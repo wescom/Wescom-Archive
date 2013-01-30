@@ -1,18 +1,24 @@
 <%= content_for :title do %>
   <%= "#{params[:search_query]} - " if params[:search_query] -%>
 <% end %>
-<h1>Story Images</h1>
-<h2><%= @total_images_count %> archived images</h2>
 
-<div class="inner-box clearfix">
-	<div id="image-block" class="full_width">
-		<h3>Click images to view info ...</h3>
-		<% if @images %>
-			<div id="image-gallery" class="full_width clearfix">
-				<%= render :partial => 'image', :collection => @images %>
+<div id="image-gallery-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>Story Images</h1>
+		<h2><%= @total_images_count %> archived images</h2>
+
+		<div class="inner-box clearfix">
+			<div id="image-block" class="full_width">
+				<h3>Click images to view info ...</h3>
+				<% if @images %>
+					<div id="image-gallery" class="full_width clearfix">
+						<%= render :partial => 'image', :collection => @images %>
+					</div>
+					<div id="gallery_paginate"><%= will_paginate @images %></div>
+					<div id="image_gallery_whitespace"></div>
+				<% end %>
 			</div>
-			<div id="gallery_paginate"><%= will_paginate @images %></div>
-			<div id="image_gallery_whitespace"></div>
-		<% end %>
+		</div>
 	</div>
 </div>

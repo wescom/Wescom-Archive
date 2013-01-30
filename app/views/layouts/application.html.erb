@@ -24,16 +24,13 @@
       <div id="branding">
         <h1>Wescom <span>| Archive</span></h1>
       </div>
-      <%= render(:partial => "home/pagenav") %>
-      <div id="page-content" class="clearfix">
 <!--
         <%- flash.each do |name, msg| -%>
           <%= content_tag :div, msg, :id => "flash_#{name}" %>
         <%- end -%>
 -->
-        <%= yield %>
+      <%= yield %>
 
-      </div>
       <div id="page-footer">
         <p><strong>Wescom Archive</strong> - &copy; Copyright 2006-<%= Date.today.year %> - <a href="http://www.bendbulletin.com">Western Communications</a>.<br /></p>
       </div>

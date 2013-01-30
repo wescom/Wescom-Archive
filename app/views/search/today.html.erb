@@ -1,47 +1,52 @@
-<h1>
-	Today
-</h1>
-	<%= form_tag search_today_path, :method => 'get' do %>
-		<%= submit_tag "Go", :class => 'today_submit float_right'%>
-		<% if @publication %>
-			<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
-							selected = @publication.name), :class => 'today_publication float_right' %>
-		<% else %>
-			<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
-							:class => 'today_publication float_right' %>
-		<% end %>
-	<% end %>
+<div id="today-page">
+  <%= render(:partial => "home/pagenav") %>
+  <div id="page-content" class="clearfix">
+		<h1>
+			Today
+		</h1>
+			<%= form_tag search_today_path, :method => 'get' do %>
+				<%= submit_tag "Go", :class => 'today_submit float_right'%>
+				<% if @publication %>
+					<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
+									selected = @publication.name), :class => 'today_publication float_right' %>
+				<% else %>
+					<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
+									:class => 'today_publication float_right' %>
+				<% end %>
+			<% end %>
 
-<h2>
-	Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
-	<span>(<%= @total_stories_count %> archived stories - <%= Date.today.strftime('%m/%d/%y') %>)</span>
-</h2>
+		<h2>
+			Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
+			<span>(<%= @total_stories_count %> archived stories - <%= Date.today.strftime('%m/%d/%y') %>)</span>
+		</h2>
 
-<div class="inner-box clearfix">
-  <div id="form-block" class="grid_15">
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
 
-	  <div id="table-block">
-			<div id="table-paginate" class="full_width">
-      	<div class="float_right"><%= will_paginate @stories %></div>
+			  <div id="table-block">
+					<div id="table-paginate" class="full_width">
+		      	<div class="float_right"><%= will_paginate @stories %></div>
+					</div>
+			    <table cellspacing="0" cellpadding="0">
+			      <tbody>
+			        <tr class="header">
+								<td>Headline</td>
+								<td>Byline</td>
+								<td>Section</td>
+								<td>PubDate</td>
+								<td>System</td>
+								<td>Status</td>
+								<td>Actions</td>
+			        </tr>
+			        <%= render :partial => 'story_fragment', :collection => @stories %>
+			      </tbody>
+			    </table>
+					<div id="table-paginate" class="full_width">
+		      	<div class="float_right"><%= will_paginate @stories %></div>
+					</div>
+			  </div>
+
 			</div>
-	    <table cellspacing="0" cellpadding="0">
-	      <tbody>
-	        <tr class="header">
-						<td>Headline</td>
-						<td>Byline</td>
-						<td>Section</td>
-						<td>PubDate</td>
-						<td>System</td>
-						<td>Status</td>
-						<td>Actions</td>
-	        </tr>
-	        <%= render :partial => 'story_fragment', :collection => @stories %>
-	      </tbody>
-	    </table>
-			<div id="table-paginate" class="full_width">
-      	<div class="float_right"><%= will_paginate @stories %></div>
-			</div>
-	  </div>
-
+		</div>
 	</div>
 </div>

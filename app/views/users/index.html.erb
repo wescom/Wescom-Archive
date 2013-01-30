@@ -1,28 +1,33 @@
-<h1>Users</h1>
+<div id="users-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>Users</h1>
 
-<div class="inner-box clearfix">
-  <div id="form-block" class="grid_15">
-	  <% if @users %>
-	    <div id="table-block" class="grid_15">
-	      <% unless @users.nil? %>
-	        <table cellspacing="0" cellpadding="0">
-	          <tbody>
-	            <tr class="header">
-	              <td>Username</td>
-	              <td>Name</td>
-	              <td>Created</td>
-	              <td>Last Activity</td>
-	              <td>Role</td>
-	              <td></td>
-	            </tr>
-	            <%= render :partial => 'table_row', :collection => @users %>
-	          </tbody>
-	        </table>
-	      <% end %>
-				<div id="table-paginate" class="full_width">
-	      	<div class="float_right"><%= will_paginate @users %></div>
-				</div>
-	    </div>
-	  <% end %>
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+			  <% if @users %>
+			    <div id="table-block" class="grid_15">
+			      <% unless @users.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+			              <td>Username</td>
+			              <td>Name</td>
+			              <td>Created</td>
+			              <td>Last Activity</td>
+			              <td>Role</td>
+			              <td></td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @users %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @users %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
 	</div>
 </div>

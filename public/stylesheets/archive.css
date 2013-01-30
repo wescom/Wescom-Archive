@@ -169,7 +169,14 @@ html .clearfix {
   color: #ff6600;
 }
 
+/*
 #page-navigation ul li.current a {
+*/
+#search-page .search,
+#story-page .search,
+#today-page .today,
+#image-gallery-page .image-gallery,
+#users-page .users {
   background-color: #ff6600;
   color: #fff;
 }

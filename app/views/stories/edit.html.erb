@@ -2,22 +2,25 @@
   <%= "#{h @story.hl1} - " if @story.hl1 -%>
 <% end %>
 
-<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
+<div id="story-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
 
-<div class="inner-box clearfix">
-  <div id="story-content" class="grid_15">
-		<%= form_for @story, :url => story_path do |form| %>
-			<div id="story-edit" class="clearfix">
-				<%= render :partial => 'form', :object => form %>
-			</div>
-			<div class="full_width">
-				<div>
-					<%= form.submit "Update", :class => 'submit small'%>
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
-				</div>
-			</div>
-		<% end %>
-
-  </div>
-
+		<div class="inner-box clearfix">
+		  <div id="story-content" class="grid_15">
+				<%= form_for @story, :url => story_path do |form| %>
+					<div id="story-edit" class="clearfix">
+						<%= render :partial => 'form', :object => form %>
+					</div>
+					<div class="full_width">
+						<div>
+							<%= form.submit "Update", :class => 'submit small'%>
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+						</div>
+					</div>
+				<% end %>
+		  </div>
+		</div>
+	</div>
 </div>
