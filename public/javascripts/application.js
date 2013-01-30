@@ -148,6 +148,11 @@ $(document).ready(function(){
     return false;
   });
 
+  $(".taxonomy_head").click(function () {
+    $("#taxonomy").slideToggle("medium");
+    return false;
+  });
+
 	// Modal boxes - to all links with rel="facebox"
 	$('a[rel*=facebox]').facebox();
 	

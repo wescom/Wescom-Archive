@@ -718,6 +718,9 @@ input#search_query {
 	margin-bottom: 10px;
 }
 
+#story-sidebar p.taxonomy_head { cursor: pointer; }
+#story-sidebar #taxonomy { display: none; }
+
 #lower-block {
 	clear: both;
 }

@@ -48,11 +48,13 @@
 <% end %>
 
 <% if @story.keywords.count > 0 %>
- <p class='story-infohead2'>Taxonomy:</p>
+ <p class='story-infohead2 taxonomy_head'>Taxonomy:</p>
  <div id="story-info">
-	<% @story.keywords.each do |keyword| %>
-		<div class="indent"><%= keyword.text.downcase %></div>
-	<% end %>
+	<div id='taxonomy'>
+		<% @story.keywords.each do |keyword| %>
+			<div class="indent"><%= keyword.text.downcase %></div>
+		<% end %>
+	</div>
 </div>
 <% end %>
 
