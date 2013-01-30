@@ -135,7 +135,15 @@ $(document).ready(function(){
 
 	// Advanced Search
   $("#advanced-search").hide();
-  $(".short_date_picker").datepicker({ changeMonth: true, changeYear: true });
+  
+	var todays_date = new Date();
+	var max_year = (todays_date.getFullYear()+5);
+	$(".short_date_picker").datepicker({ 
+		changeMonth: true, 
+		changeYear: true,
+		yearRange: "1992:"+max_year
+	});
+	
 	$("#sidebar_today").hide();
 
   $(".toggle_hide").click(function () {
