@@ -11,6 +11,8 @@ class AuthController < ApplicationController
         identity = request.env[Rack::OpenID::RESPONSE].identity_url
         user = User.find_by_identity(identity) || User.create_with_openid(identity, openid_response)
         session[:user_id] = user.id
+        user.updated_at = Time.now
+        user.save
         redirect_to root_url
       else
         redirect_to root_url

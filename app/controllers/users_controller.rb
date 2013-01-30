@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :require_admin
 
   def index
-    @users = User.paginate(:page => params[:page], :order=> "email")
+    @users = User.paginate(:page => params[:page], :order=> "updated_at DESC")
   end
 
   def show
