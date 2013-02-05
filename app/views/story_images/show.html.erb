@@ -48,6 +48,10 @@
 			<div class="image-head">DTI Related Info:</div>
 			<div class="image-info-box indent">
 				<% if !@image.media_source.nil? %>
+					<a class="image-field">Media Name: </a><%= @image.media_name %><br/><% end %>
+				<% if !@image.media_source.nil? %>
+					<a class="image-field">ID: </a><%= @image.media_id %><br/><% end %>
+				<% if !@image.media_source.nil? %>
 					<a class="image-field">Original Filename: </a><%= @image.media_source %><br/><% end %>
 				<% if !@image.media_width.nil? and !@image.media_height.nil?%>
 					<a class="image-field">Image Size: </a><%= @image.media_width %>x<%= @image.media_height %><br/>
