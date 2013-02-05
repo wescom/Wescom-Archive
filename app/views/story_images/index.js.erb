@@ -9,6 +9,13 @@
 var $boxes = $('<%= j render :partial => 'image', :collection => @images %>');
 $('#image-gallery').masonry('reload');
 $('#image-gallery').append( $boxes ).masonry( 'appended', $boxes, true );
+$('.image_gallery_caption').hide();
+$(".image_gallery").mouseenter(function() {
+	$(this).find('.image_gallery_caption').fadeIn('fast');
+});
+$(".image_gallery").mouseleave (function() {
+	$(this).find('.image_gallery_caption').fadeOut('fast')
+});
 
 <% if @images.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate(@images) %>');

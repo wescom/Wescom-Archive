@@ -1,2 +1,5 @@
-<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_gallery_size image_gallery"), 
+<div class="image_gallery">
+<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_gallery_size"), 
 		{:action => 'show', :controller => 'story_images', :id => image } %>
+<div class="image_gallery_caption"><%= image.media_printcaption %></div>
+</div>

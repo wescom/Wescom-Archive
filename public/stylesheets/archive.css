@@ -860,9 +860,22 @@ img.image_large {height:auto;width:450px;}
 #page-content form select.large { width: 50%; min-width: 200px; height: auto;}
 
 /* Image Gallery Layout using Masonry */
-img.image_gallery_size {
-	height:auto;
-	width:300px;
+img.image_gallery_size, div.image_gallery_size {
+	height: auto;
+	width: 300px;
+}
+
+.image_gallery_caption {
+	background-color: #eeeeee;
+	font: 1.0em Arial, Tahoma, sans-serif;
+	color: #33393c;
+	border-radius: 10px;
+	opacity: 0.95;
+	padding: 10px;
+	z-index: 100;
+	overflow: hidden;
+	position: absolute;
+	margin-top: -5px;
 }
 
 .fetching_images_text {

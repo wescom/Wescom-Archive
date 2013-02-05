@@ -173,5 +173,13 @@ $(document).ready(function(){
 		});
 	});
 
+	$('.image_gallery_caption').hide();
+	$(".image_gallery").mouseenter(function() {
+		$(this).find('.image_gallery_caption').fadeIn('fast');
+	});
+	$(".image_gallery").mouseleave (function() {
+		$(this).find('.image_gallery_caption').fadeOut('fast')
+	});
+	
 });
- 
+
