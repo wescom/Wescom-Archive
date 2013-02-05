@@ -6,7 +6,7 @@
   <%= render(:partial => "home/pagenav") %>
   <div id="page-content" class="clearfix">
 		<h1>Search</h1>
-		<h2>Archive Search Form (<%= @total_stories_count %> archived stories)</h2>
+		<h2>Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</h2>
 
 		<div class="inner-box clearfix">
 
@@ -59,7 +59,8 @@
 			  <% if @stories %>
 			    <div id="table-block" class="full_width">
 						<div id="table-paginate" class="full_width">
-			      	Results: <%= @stories.results.total_pages * @stories.results.count %>
+			      	Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count,
+			 											:delimiter => ',') %>
 			      	<div class="float_right"><%= will_paginate @stories.hits %></div>
 						</div>
 			      <% unless @stories.nil? %>

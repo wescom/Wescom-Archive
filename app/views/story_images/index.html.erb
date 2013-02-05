@@ -6,7 +6,7 @@
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
 		<h1>Story Images</h1>
-		<h2><%= @total_images_count %> archived images</h2>
+		<h2><%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images</h2>
 
 		<div class="inner-box clearfix">
 			<div id="image-block" class="full_width">
