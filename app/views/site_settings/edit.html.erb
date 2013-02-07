@@ -24,7 +24,8 @@
 								</div>
 								<div class="setting_field clearfix">
 										<div class="setting_label">Announcement Text: </div>
-										<%= form.text_field :site_announcement, {:class => 'setting_value', :maxlength=>"256"} %>
+										<%= form.text_area :site_announcement, 
+											{:class => 'setting_value', :maxlength=>"256", :rows => "3"} %>
 								</div>
 						</div>
 						
