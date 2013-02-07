@@ -1006,6 +1006,7 @@ img.spinner {
 	width: 50%;
 	color: #000000;
 	min-height: 16px;
+	overflow:hidden;
 }
 
 #settings_block .setting_value_checkbox {
