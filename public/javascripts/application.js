@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	  $("#site_announcement").hide().delay(1000).slideDown('slow');
+	  $("#search_announcement").hide().delay(1000).slideDown('slow');
 
 	// Screen Resizing - Hide/Show Table Columns
 	if (parseInt($('#table-block').css("width"))) {

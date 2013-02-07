@@ -7,25 +7,17 @@ class SiteSettingsController < ApplicationController
   
   def edit
     @settings = SiteSettings.find(params[:id])
-
-    # No record exists so create the first one.
-#    if !@settings.present?
-#      @settings = SiteSettings.new
-#      @settings.save
-#      @settings = SiteSettings.find(:first)
-#      Rails.logger.info "**** Created initial SiteSettings record. "
-#    end
   end
 
   def update
     @settings = SiteSettings.find(params[:id])
     if params[:cancel_button]
-      redirect_to root_url
+      redirect_to site_settings_url
     else
       @settings.attributes=(params[:site_settings])
       if @settings.save
         flash[:notice] = "Site Settings updated"
-        redirect_to root_url
+        redirect_to site_settings_url
       else
         render :action => :edit
       end

@@ -1,27 +1,25 @@
-<h1>Home</h1>
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
 
-<h2>Stastistics<span>(daily paper statistics)</span></h2>
-<div class="inner-box clearfix">
+<div id="notice-page">
+  <%= render(:partial => "home/pagenav") %>
+  <div id="page-content" class="clearfix">
+		<% if @settings.show_site_announcement %>
+			<h1>Notice</h1>
+			<div class="inner-box clearfix">
+				<div id="story-block" class="full_width">
+					<div class="grid_4"><img src = "/images/Post-it.png" alt = "Post-it" /></div>
+					<div id="site_announcement" class="grid_9"><%= @settings.site_announcement %></div>
+				</div>
+			</div>
+		<% else%>
+			<h1>Welcome</h1>
+			<div class="inner-box clearfix">
+				<div id="story-block" class="full_width">
 
-  <%= render(:partial => "search/sidebar") %>
-
-  <div id="stats-graphs-block">
-    <h4>Stats Graphs</h4>
-    <div class="image-left">
-      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archived Per Day Graph") %> 
-      <div class="caption">Stories Archived Per Day</div>
-    </div>
-    <div class="image-right">
-      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archived Per Week Graph") %>
-      <div class="caption">Stories Archived Per Week</div>
-    </div>
-    <div class="image-left">
-      <%= image_tag("/images/test-graph.jpg", :alt => "Stories Archives Per Month Graph") %>
-      <div class="caption">Stories Archived Per Month</div>
-    </div>	
-    <div class="image-right">
-      <%= image_tag("/images/test-graph.jpg", :alt => "Total Stories Archives Graph" ) %>
-      <div class="caption">Total Stories Archived</div>
-    </div>
-  </div><!-- end stats-graphs-block -->
+				</div>
+			</div>
+		<% end %>
+	</div>
 </div>

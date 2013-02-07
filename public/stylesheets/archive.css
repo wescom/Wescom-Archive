@@ -121,11 +121,20 @@ html .clearfix {
   color: #6da9d2;
 }
 
-#site_announcement {
+#search_announcement {
 	font: 0.7em Arial, Tahoma, sans-serif;
 	float: right;
 	width: 60%;
 	background-color: #eeeeee;
+	color: #33393c;
+	border-radius: 5px;
+	padding: 5px 5px 5px 20px;
+}
+
+#site_announcement {
+	font: 1.7em Arial, Tahoma, sans-serif;
+	margin-top: 50px;
+	min-height: 400px;
 	color: #33393c;
 	border-radius: 5px;
 	padding: 5px 5px 5px 20px;
