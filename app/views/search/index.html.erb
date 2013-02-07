@@ -7,7 +7,7 @@
   <div id="page-content" class="clearfix">
 		<h1>Search
 			<% if @settings.show_site_announcement %>
-				<span id="site_announcement"><%= @settings.site_announcement %></span>
+				<span id="search_announcement"></span>
 			<% end %>
 		</h1>
 		<h2>Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</h2>
@@ -76,8 +76,8 @@
 			              <td class="section_col">Section</td>
 			              <td class="pubdate_col">PubDate</td>
 										<td class="system_col">System</td>
+										<td class="image_col">Images?</td>
 			              <td class="status_col">Status</td>
-										<% if admin? || edit? %><td class="action_col">Actions</td><% end %>
 			            </tr>
 			            <%= render :partial => 'story_fragment', :collection => @stories.results %>
 			          </tbody>
