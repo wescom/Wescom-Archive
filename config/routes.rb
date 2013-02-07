@@ -5,7 +5,7 @@ Wescomarchive::Application.routes.draw do
   resources :story_images
 
   resources :users, :only => [:index, :show, :edit, :update]
-  resources :site_settings
+  resources :site_settings, :only => [:index, :edit, :update]
 
   match "/home" => "home#index"
   match "/search" => "search#index"
