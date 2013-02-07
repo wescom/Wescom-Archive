@@ -30,6 +30,16 @@ module ApplicationHelper
     text.html_safe.gsub(/\W/, ' ')
   end
 
+  def text_for_image_link(image)
+    text = if !image.media_name.nil? and image.media_name.length > 0
+      image.media_name
+    else
+      image.media_id
+    end
+    # strip all nonalphanumberic characters 
+    text.html_safe.gsub(/\W/, '')
+  end
+
   def strip_subhead_tags(text)
     text.html_safe.gsub(/<p class="hl2_chapterhead">/, '<p>')
   end
