@@ -1,0 +1,40 @@
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+
+<div id="settings-page">
+  <%= render(:partial => "home/pagenav") %>
+  <div id="page-content" class="clearfix">
+		<h1>Global Settings</h1>
+		<h2>These settings control site-wide settings...</h2>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="full_width clearfix">
+				<div id="settings_block">
+					<%= form_for @settings, :url => site_setting_path do |form| %>
+
+						<div id="settings_inner_block">
+							<div class="setting_header">Site Announcement</div>
+							<div class="setting_body">
+								<div class="setting_field clearfix">
+									<div class="setting_label">Show? </div>
+									<div class="setting_value setting_value_checkbox">
+										<%= form.check_box :show_site_announcement, :class => 'medium' %>
+									</div>
+								</div>
+								<div class="setting_field clearfix">
+										<div class="setting_label">Announcement Text: </div>
+										<%= form.text_field :site_announcement, {:class => 'setting_value', :maxlength=>"256"} %>
+								</div>
+						</div>
+						
+						<div>
+							<%= form.submit "Update", :class => 'submit small'%>
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

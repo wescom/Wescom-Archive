@@ -2,6 +2,7 @@ class SearchController < ApplicationController
   before_filter :require_user
 
   def index
+    @settings = SiteSettings.find(:first)
     @publications = Publication.find(:all)
     @sections = Section.find(:all, :order => "name")
     if params[:search_query]

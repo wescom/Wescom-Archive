@@ -1,4 +1,5 @@
 class StoryImagesController < ApplicationController
+  before_filter :require_user
   
   def index
     @images = StoryImage.paginate(:page => params[:page], 

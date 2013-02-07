@@ -121,6 +121,16 @@ html .clearfix {
   color: #6da9d2;
 }
 
+#site_announcement {
+	font: 0.7em Arial, Tahoma, sans-serif;
+	float: right;
+	width: 60%;
+	background-color: #eeeeee;
+	color: #33393c;
+	border-radius: 5px;
+	padding: 5px 5px 5px 20px;
+}
+
 #login-box {
   position: relative;
   float: right;
@@ -174,7 +184,8 @@ html .clearfix {
 #story-page .search,
 #today-page .today,
 #image-gallery-page .image-gallery,
-#users-page .users {
+#users-page .users,
+#settings-page .settings {
   background-color: #ff6600;
   color: #fff;
 }
@@ -948,4 +959,55 @@ img.spinner {
   -webkit-column-count: 1;
   column-count:         1;
   }
+}
+
+/* Site Settings Page */
+#settings_block {
+	min-height: 400px;
+	font: normal 1.2em Arial, Tahoma, sans-serif;
+}
+
+#settings_block #settings_inner_block {
+	padding: 10px;
+	margin-top: 20px;
+	border: 1px solid #b9bdc1;	
+}
+
+#settings_block .setting_header {
+	font: normal 1.5em Arial, Tahoma, sans-serif;
+}
+
+#settings_block .setting_body {
+	margin: 10px 10px 10px 10px;
+	line-height: 1.5;
+}
+
+#settings_block .setting_field {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+#settings_block .setting_label {
+	font: bold 1.0em Arial, Tahoma, sans-serif;
+	display: block;
+	float: left;
+	margin-right:10px;
+	text-align: right;
+	width: 15%;
+	line-height: 25px;
+}
+
+#settings_block .setting_value {
+	font: normal 1.0em Arial, Tahoma, sans-serif;
+	text-align: left;
+	float: left;
+	padding: 5px;
+	border: 1px solid #b9bdc1;
+	width: 50%;
+	color: #797979;
+	min-height: 16px;
+}
+
+#settings_block .setting_value_checkbox {
+	border: none;
 }

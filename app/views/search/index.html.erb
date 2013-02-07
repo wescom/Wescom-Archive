@@ -5,7 +5,11 @@
 <div id="search-page">
   <%= render(:partial => "home/pagenav") %>
   <div id="page-content" class="clearfix">
-		<h1>Search</h1>
+		<h1>Search
+			<% if @settings.show_site_announcement %>
+				<span id="site_announcement"><%= @settings.site_announcement %></span>
+			<% end %>
+		</h1>
 		<h2>Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</h2>
 
 		<div class="inner-box clearfix">
