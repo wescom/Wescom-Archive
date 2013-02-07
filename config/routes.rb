@@ -15,5 +15,5 @@ Wescomarchive::Application.routes.draw do
   match "/logout" => "Auth#destroy"
   match "/setup" => "Auth#setup"
 
-  root :to => "search#index"
+  root :to => "home#index"
 end
