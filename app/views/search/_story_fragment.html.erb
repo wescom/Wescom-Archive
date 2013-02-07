@@ -34,15 +34,12 @@
 			<% end %>
 		<% end %>
 	</td>
-  <td class="false center status_col">Needs Review</td>
-  <td class="actions center action_col">
-		<% if admin? || edit? %>
-			<br/><a class="edit" href="#"><%= link_to "Edit", edit_story_path(story_fragment) %></a>
-			<a><%= button_to "Delete", story_path(story_fragment), 
-						:method => :delete, 
-						:confirm => "Are you sure you want to delete story? \n\n"+text_for_story_link(story_fragment),
-						:action => 'destroy',
-						:class => 'delete' %></a>
+	<td class="center system_col">
+		<% if story_fragment.story_images.published.length > 0 %>
+			<% story_fragment.story_images.first(1).each do |image| %>
+				<%= image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_small") %>
+			<% end %>
 		<% end %>
 	</td>
+	<td class="false center status_col">Needs Review</td>
 </tr>
