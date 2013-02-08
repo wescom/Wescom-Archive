@@ -1,13 +1,12 @@
 <div id="page-navigation" class="clearfix">	
   <ul>
-    <!--<li><%= link_to "Home", {:controller => 'home', :action => 'index'} %></li>-->
   	<li class="search"><%= link_to "Search", {:controller => 'search', :action => 'index'} %></li>
     <li class="today"><%= link_to "Today", search_today_url(:papername => "All") %></li>
 		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url %></li>
 		<% if admin? %>
 			<li class="users"><%= link_to "Users", users_url %></li>
 			<li class="settings"><%= link_to "Site Settings", site_settings_url %></li>
-		<% end %> 
+		<% end %>
     <!--<li id="nav-search-box">
       <input type="text" name="searchField1" id="searchfield_1" class="shortsearch" /> 
       <input type="button" class="submit" value="Search" onclick="location.href='form_success.html';" />
