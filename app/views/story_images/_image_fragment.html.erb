@@ -1,0 +1,57 @@
+<tr class="<%= cycle("alternate","") %>">
+	<td class="headline headline_col">
+		<%= link_to "Story Image - "+text_for_image_link(image_fragment), image_fragment %>
+		<p>
+			<% if image_fragment.media_printcaption && image_fragment.media_printcaption.length > 0 %>
+				<%= strip_subhead_tags(image_fragment.media_printcaption)[0..250].html_safe %>
+			<% else %>
+				<% if image_fragment.media_originalcaption %>
+					<%= strip_subhead_tags(image_fragment.media_originalcaption)[0..250].html_safe %>
+				<% end %>
+			<% end %>
+		</p>
+	</td>
+	<td>
+		<% if image_fragment.media_printproducer.present? %>
+			<%= image_fragment.media_printproducer %>
+		<% else %>
+			<%= image_fragment.media_byline if image_fragment.media_byline.present? %>
+		<% end %>
+	</td>
+  <td class="center section_col">
+		<% if image_fragment.story.present? %>
+			<% if !image_fragment.story.publication.nil? %>
+				<% if image_fragment.story.publication.name.strip == "The Bulletin" %>
+					<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
+				<% else %>
+					<% if image_fragment.story.publication.name.strip == "Redmond Spokesman" %>
+						<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
+					<% end %>
+				<% end %>
+			<% end %>
+			<br/>
+			<%= image_fragment.story.section.name if image_fragment.story.section %>
+			- <%= image_fragment.story.page if image_fragment.story.section %>
+		<% end %>
+	</td>
+  <td class="center pubdate_col">
+		<% if image_fragment.story.present? %>
+			<%= image_fragment.story.pubdate.strftime('%m/%d/%y') if image_fragment.story.pubdate.present? %>
+		<% end %>
+	</td>
+	<td class="center system_col">
+		<% if image_fragment.story.present? %>
+			<% if image_fragment.story.frontend_db == "DTI" %>
+				<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+			<% else %>
+				<% if image_fragment.story.frontend_db == "SII" %>
+					<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				<% end %>
+			<% end %>
+		<% end %>
+	</td>
+	<td class="center system_col">
+		<%= image_tag(image_fragment.image(:large), :alt=>"Story Image", :class=>"image_small") %>
+	</td>
+	<td class="false center status_col"></td>
+</tr>

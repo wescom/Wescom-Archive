@@ -1,0 +1,86 @@
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+
+<div id="search-images-page">
+  <%= render(:partial => "home/pagenav") %>
+  <div id="page-content" class="clearfix">
+		<h1>Search Images</h1>
+		<h2>Archive Search Form (<%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images)</h2>
+
+		<div class="inner-box clearfix">
+
+		  <div id="form-block" class="full_width clearfix">
+				<div id="search_block" class="grid_12">
+			    <%= form_tag search_images_path , :method => :get do %>
+			      <%= label_tag :search_query, "Search" %>
+			      <span id="search_input_field">
+			        <%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
+			        <%= submit_tag "Search", :class => 'submit'%>
+			      </span>
+			      <span class="hide"><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
+			      <div id="advanced-search">
+							<div id="search_pubdate">
+								<span>
+					        <%= label_tag :date_from_select, "From" %>
+					        <%= text_field_tag :date_from_select, params[:date_from_select], 
+														:class => 'small short_date_picker', 
+														:placeholder => "mm/dd/yyyy" %>
+								</span>
+								<span>
+					        <%= label_tag :date_to_select, "To" %>
+					        <%= text_field_tag :date_to_select, params[:date_to_select], 
+														:class => 'small short_date_picker', 
+														:placeholder => "mm/dd/yyyy" %>
+								</span>
+							</div>
+							<div id="search_paper_section">
+								<div>
+									<%= label_tag :pub_select, "Paper" %>
+									<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name', 
+														:selected => params[:pub_select]), {:include_blank => true, :class => 'large'} %>
+								</div>
+								<div>
+									<%= label_tag :section_select, "Section" %>
+									<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'name', 
+														:selected => params[:section_select]), {:include_blank => true, :class => 'large'} %>
+								</div>
+							</div>
+			      </div>
+			    <% end %>
+				</div>
+		  </div>
+	
+			<div id="story-block" class="full_width">
+			  <% if @images %>
+			    <div id="table-block" class="full_width">
+						<div id="table-paginate" class="full_width">
+			      	Results: <%= number_with_delimiter(@images.results.total_pages * @images.results.count,
+			 											:delimiter => ',') %>
+			      	<div class="float_right"><%= will_paginate @images.hits %></div>
+						</div>
+			      <% unless @images.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+										<td class="headline_col">Name, Caption</td>
+										<td class="byline_col">Byline</td>
+										<td class="section_col">Section</td>
+										<td class="pubdate_col">PubDate</td>
+										<td class="system_col">System</td>
+										<td class="image_col">Image</td>
+										<td> </td>
+			            </tr>
+			            <%= render :partial => 'image_fragment', :collection => @images.results %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @images.hits %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>

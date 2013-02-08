@@ -10,6 +10,7 @@ Wescomarchive::Application.routes.draw do
   match "/home" => "home#index"
   match "/search" => "search#index"
   match "/search/today" => "search#today"
+  match "/search_images" => "story_images#search"
 
   match "/login" => "Auth#create"
   match "/logout" => "Auth#destroy"
