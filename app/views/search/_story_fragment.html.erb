@@ -35,11 +35,7 @@
 		<% end %>
 	</td>
 	<td class="center system_col">
-		<% if story_fragment.story_images.published.length > 0 %>
-			<% story_fragment.story_images.first(1).each do |image| %>
-				<%= image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_small") %>
-			<% end %>
-		<% end %>
+
 	</td>
 	<td class="false center status_col">Needs Review</td>
 </tr>
