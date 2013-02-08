@@ -8,7 +8,6 @@ class SearchController < ApplicationController
     if params[:search_query]
       begin
         @stories = Story.search do
-#          keywords(params[:search_query])
           paginate(:page => params[:page])
           order_by :pubdate, :desc
           fulltext params[:search_query]
@@ -16,15 +15,12 @@ class SearchController < ApplicationController
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
           with :publication_id, params[:pub_select] if params[:pub_select].present?
           with :section_id, params[:section_select] if params[:section_select].present?
-#          facet(:publish_year)
-#          with(:publish_year, params[:year]) if params[:year].present?
         end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"
       end
     end
     @total_stories_count = Story.count(:all)
-    @publications = Publication.find(:all)
   end
 
   def today
