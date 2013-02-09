@@ -1,9 +1,10 @@
 <div id="page-navigation" class="clearfix">	
   <ul>
-  	<li class="search"><%= link_to "Search", {:controller => 'search', :action => 'index'} %></li>
-    <li class="today"><%= link_to "Today", search_today_url(:papername => "All") %></li>
+		<li class="search"><%= link_to "Search", {:controller => 'search', :action => 'index'} %></li>
+		<li class="today"><%= link_to "Today", search_today_url(:papername => "All") %></li>
 		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url %></li>
 		<% if admin? %>
+			<li class="search-images"><%= link_to "Search Images", search_images_url %></li>
 			<li class="users"><%= link_to "Users", users_url %></li>
 			<li class="settings"><%= link_to "Site Settings", site_settings_url %></li>
 		<% end %>
