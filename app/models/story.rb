@@ -26,23 +26,19 @@ class Story < ActiveRecord::Base
     text :sidebar_body
     text :project_group
 
-    integer :doc_id
+#    integer :doc_id
     integer :publication_id, :references => Publication
     integer :section_id, :references => Section
     integer :paper_id, :references => Paper
     
     time :pubdate
-    string :publish_year
+#    string :publish_year
 
     # keywords from DTI, mostly taxonomy
-    text :keywords do
-      keywords.map {|kw| kw.text}
-    end
+#    text :keywords do
+#      keywords.map {|kw| kw.text}
+#    end
 
-    # not used at this time
-    text :topics do
-      topics.map {|tp| tp.text}
-    end
   end
   
   def publish_year
