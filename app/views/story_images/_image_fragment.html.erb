@@ -1,6 +1,6 @@
 <tr class="<%= cycle("alternate","") %>">
 	<td class="headline headline_col">
-		<%= link_to "Story Image - "+text_for_image_link(image_fragment), image_fragment %>
+		<%= link_to text_for_image_link(image_fragment), image_fragment %>
 		<p>
 			<% if image_fragment.media_printcaption && image_fragment.media_printcaption.length > 0 %>
 				<%= strip_subhead_tags(image_fragment.media_printcaption)[0..250].html_safe %>
