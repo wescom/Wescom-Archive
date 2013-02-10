@@ -34,10 +34,12 @@ class Story < ActiveRecord::Base
     time :pubdate
     string :publish_year
 
+    # keywords from DTI, mostly taxonomy
     text :keywords do
       keywords.map {|kw| kw.text}
     end
 
+    # not used at this time
     text :topics do
       topics.map {|tp| tp.text}
     end
