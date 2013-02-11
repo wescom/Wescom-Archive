@@ -18,7 +18,7 @@
 			        <%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
 			        <%= submit_tag "Search", :class => 'submit'%>
 			      </span>
-			      <span class="hide"><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
+			      <span class=""><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
 			      <div id="advanced-search">
 							<div id="search_pubdate">
 								<span>
@@ -65,10 +65,10 @@
 			            <tr class="header">
 										<td class="headline_col">Name, Caption</td>
 										<td class="byline_col">Byline</td>
-										<td class="section_col">Section</td>
+										<td class="section_col center">Section</td>
 										<td class="pubdate_col">PubDate</td>
 										<td class="system_col">System</td>
-										<td class="image_col">Image</td>
+										<td class="image_col center">Image</td>
 										<td> </td>
 			            </tr>
 			            <%= render :partial => 'image_fragment', :collection => @images.results %>
