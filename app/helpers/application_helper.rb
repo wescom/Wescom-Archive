@@ -22,12 +22,12 @@ module ApplicationHelper
     elsif !story.hl2.nil? and story.hl2.length > 0
       story.hl2
     elsif !story.copy.nil? and story.copy.length > 0
-      truncate(story.copy.gsub(/<.*?>/, ''), :length => 50)
+      "No Headline. Copy: "+truncate(story.copy.gsub(/<.*?>/, ''), :length => 75)
     else
       story.doc_name
     end
     # strip all nonalphanumberic characters 
-    text.html_safe.gsub(/\W/, ' ')
+#    text.html_safe.gsub(/\W/, ' ')
   end
 
   def text_for_image_link(image)
