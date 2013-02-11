@@ -50,4 +50,12 @@ class Story < ActiveRecord::Base
   def self.order_by_section_page
     includes(:section).order('sections.name').order('page')
   end
+  
+  def section_name
+    self.section.name
+  end
+  
+  def publication_name
+    self.publication.name
+  end
 end
