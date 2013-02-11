@@ -21,7 +21,8 @@ class StoryImagesController < ApplicationController
           order_by :story_pubdate, :desc
           order_by :story_publication_name, :asc
           order_by :story_section_name, :asc
-#          with :publication_id, params[:pub_select] if params[:pub_select].present?
+          with :story_publication_id, params[:pub_select] if params[:pub_select].present?
+          with :story_section_id, params[:section_select] if params[:section_select].present?
       end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"

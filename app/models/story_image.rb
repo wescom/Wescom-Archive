@@ -26,6 +26,12 @@ class StoryImage < ActiveRecord::Base
     string :story_section_name do
       story.section_name if story.section_name
     end
+    integer :story_publication_id do
+      story.publication_id if story.publication_name
+    end
+    integer :story_section_id do
+      story.section_id if story.section_name
+    end
     time :story_pubdate do
       story.pubdate if story
     end
