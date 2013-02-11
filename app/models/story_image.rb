@@ -38,8 +38,8 @@ class StoryImage < ActiveRecord::Base
 
   end
 
-  def self.order_by_pubdate_section_page
-    includes(:story,:section).order('stories.pubate').order('sections.name').order('page')
+  def self.order_by_pubdate
+    includes(:story).order('stories.pubdate desc')
   end
 
 
