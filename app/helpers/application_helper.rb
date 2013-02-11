@@ -37,7 +37,7 @@ module ApplicationHelper
       image.media_id
     end
     # strip all nonalphanumberic characters 
-    text.html_safe.gsub(/\W/, '')
+#    text.html_safe.gsub(/\W/, '')
   end
 
   def strip_subhead_tags(text)
