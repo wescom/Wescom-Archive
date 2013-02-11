@@ -19,7 +19,8 @@
 		<div id="image_info" class="grid_8 clearfix">
 			<div class="image-attached-story">
 				<% if @image.publish_status == "Published" %>
-					Published in Story: 
+					Published On <%= @image.story.pubdate.strftime('%m/%d/%y') if @image.story.pubdate.present? %>
+					in Story : 
 				<% else %>
 					<% if @image.publish_status == "Attached" %>
 						Attached to Story: 
@@ -31,7 +32,9 @@
 						<% end %>
 					<% end %>
 				<% end %>
-				<%= link_to text_for_story_link(@image.story), @image.story if @image.story.present? %>
+				<%= link_to text_for_story_link(@image.story), @image.story if @image.story.present? %><br/>
+				<%= "Section: "+@image.story.section_name if @image.story.section_name.present? %><br/>
+				<%= "Page: "+@image.story.page if @image.story.page.to_i > 0 %>
 			</div>
 
 			<div class="image-head">Print Caption:</div>
