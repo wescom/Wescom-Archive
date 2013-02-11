@@ -15,11 +15,14 @@ class StoryImagesController < ApplicationController
     @sections = Section.find(:all, :order => "name")
     if params[:search_query]
       begin
-        @images = StoryImage.search do
+        @images = StoryImage.search(:include => [:story]) do
           paginate(:page => params[:page])
           fulltext params[:search_query]
-          order_by :score, :desc
-        end
+          order_by :story_pubdate, :desc
+          order_by :story_publication_name, :asc
+          order_by :story_section_name, :asc
+#          with :publication_id, params[:pub_select] if params[:pub_select].present?
+      end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"
       end

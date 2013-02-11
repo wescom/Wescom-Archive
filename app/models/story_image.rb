@@ -10,6 +10,7 @@ class StoryImage < ActiveRecord::Base
       :default_url => '/images/no-image.jpg'
 
   searchable :auto_index => true, :auto_remove => true do
+    # Search fields
     text :media_printcaption
     text :media_originalcaption
     text :media_printproducer, :default_boost => 2.0
@@ -17,6 +18,18 @@ class StoryImage < ActiveRecord::Base
     text :media_name, :default_boost => 3.0
     text :media_project_group, :default_boost => 3.0
     text :publish_status
+
+    # Sort fields - must use 'string' instead of 'text'
+    string :story_publication_name do
+      story.publication_name if story.publication_name
+    end
+    string :story_section_name do
+      story.section_name if story.section_name
+    end
+    time :story_pubdate do
+      story.pubdate if story
+    end
+
   end
 
   def self.order_by_pubdate_section_page
