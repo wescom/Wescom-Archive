@@ -31,7 +31,7 @@
 			<% end %>
 			<br/>
 			<%= image_fragment.story.section.name if image_fragment.story.section %>
-			- <%= image_fragment.story.page if image_fragment.story.section %>
+			<%= "- "+image_fragment.story.page if image_fragment.story.page.to_i > 0 %>
 		<% end %>
 	</td>
   <td class="center pubdate_col">
