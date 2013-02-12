@@ -20,7 +20,7 @@
 			<% end %>
 		<% end %><br/>
 		<%= story_fragment.section.name if story_fragment.section %>
-		- <%= story_fragment.page if story_fragment.section %>
+		<%= "- "+story_fragment.page if story_fragment.page.to_i > 0 %>
 	</td>
   <td class="center pubdate_col">
 		<% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %>
