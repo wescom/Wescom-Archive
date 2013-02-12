@@ -26,10 +26,15 @@ class Story < ActiveRecord::Base
     text :sidebar_body
     text :project_group
 
-#    integer :doc_id
     integer :publication_id, :references => Publication
     integer :section_id, :references => Section
-    integer :paper_id, :references => Paper
+    string :story_publication_name do
+      publication_name
+    end
+    string :story_section_name do
+      section_name
+    end
+    integer :page
     
     time :pubdate
 #    string :publish_year
@@ -52,10 +57,10 @@ class Story < ActiveRecord::Base
   end
   
   def section_name
-    self.section.name
+    self.section.name if self.section.present?
   end
   
   def publication_name
-    self.publication.name
+    self.publication.name if self.publication.present?
   end
 end

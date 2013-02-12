@@ -9,8 +9,11 @@ class SearchController < ApplicationController
       begin
         @stories = Story.search do
           paginate(:page => params[:page])
-          order_by :pubdate, :desc
           fulltext params[:search_query]
+          order_by :pubdate, :desc
+          order_by :story_publication_name, :asc
+          order_by :story_section_name, :asc
+          order_by :page, :asc
           with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
           with :publication_id, params[:pub_select] if params[:pub_select].present?
