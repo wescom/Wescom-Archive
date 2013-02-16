@@ -35,7 +35,7 @@ class Story < ActiveRecord::Base
       section_name
     end
     integer :page
-    
+
     time :pubdate
 #    string :publish_year
 
@@ -45,7 +45,7 @@ class Story < ActiveRecord::Base
 #    end
 
   end
-  
+
   def publish_year
     if !pubdate.nil?
       pubdate.strftime("%Y")
