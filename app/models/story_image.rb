@@ -21,19 +21,19 @@ class StoryImage < ActiveRecord::Base
 
     # Sort fields - must use 'string' instead of 'text'
     string :story_publication_name do
-      story.publication_name if story.publication_name
+      story.publication_name if story.present?
     end
     string :story_section_name do
-      story.section_name if story.section_name
+      story.section_name if story.present?
     end
     integer :story_publication_id do
-      story.publication_id if story.publication_name
+      story.publication_id if story.present?
     end
     integer :story_section_id do
-      story.section_id if story.section_name
+      story.section_id if story.present?
     end
     time :story_pubdate do
-      story.pubdate if story
+      story.pubdate if story.present?
     end
 
   end
