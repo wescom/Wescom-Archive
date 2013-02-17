@@ -32,6 +32,9 @@ class StoryImage < ActiveRecord::Base
     integer :story_section_id do
       story.section_id if story.present?
     end
+    integer :story_page do
+      story.page if story.present?
+    end
     time :story_pubdate do
       story.pubdate if story.present?
     end

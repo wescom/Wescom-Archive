@@ -19,6 +19,7 @@ class StoryImagesController < ApplicationController
           order_by :story_pubdate, :desc
           order_by :story_publication_name, :asc
           order_by :story_section_name, :asc
+          order_by :story_page, :asc
           with(:story_pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:story_pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
           with :story_publication_id, params[:pub_select] if params[:pub_select].present?
