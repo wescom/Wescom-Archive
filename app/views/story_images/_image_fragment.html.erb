@@ -1,4 +1,7 @@
 <tr class="<%= cycle("alternate","") %>">
+	<td class="center image_col">
+		<%= image_tag(image_fragment.image(:large), :alt=>"Story Image", :class=>"image_small") %>
+	</td>
 	<td class="headline headline_col">
 		<%= link_to text_for_image_link(image_fragment), image_fragment %>
 		<p>
@@ -18,6 +21,7 @@
 			<%= image_fragment.media_byline if image_fragment.media_byline.present? %>
 		<% end %>
 	</td>
+  <td class="center status_col"><%= image_fragment.publish_status %></td>
   <td class="center section_col">
 		<% if image_fragment.story.present? %>
 			<% if !image_fragment.story.publication.nil? %>
@@ -49,9 +53,6 @@
 				<% end %>
 			<% end %>
 		<% end %>
-	</td>
-	<td class="center system_col">
-		<%= image_tag(image_fragment.image(:large), :alt=>"Story Image", :class=>"image_small") %>
 	</td>
 	<td class="false center status_col"></td>
 </tr>
