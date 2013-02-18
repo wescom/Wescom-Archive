@@ -2,6 +2,13 @@ $(document).ready(function(){
 
 	  $("#search_announcement").hide().delay(1000).slideDown('slow');
 
+	// Navigation Bar
+	$("ul li ul").hide();
+	$("ul li").click(function() {
+		$(this).find('ul').addClass("active").slideToggle();
+	});
+
+
 	// Screen Resizing - Hide/Show Table Columns
 	if (parseInt($('#table-block').css("width"))) {
 		//alert('Screen size: ' + parseInt($('#table-block').css("width")));

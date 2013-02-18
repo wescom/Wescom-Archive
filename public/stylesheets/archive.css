@@ -189,9 +189,25 @@ html .clearfix {
 	text-decoration:underline;
 }
 
+#page-navigation ul li {
+  font: bold 1.0em Arial, Tahoma, sans-serif;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+  padding: 4px 10px 4px 10px;
+}
+
+#page-navigation ul li:hover {
+/*  color: #6da9d2;*/
+	text-decoration:underline;
+	cursor: pointer;
+}
+
 #search-page .search,
 #story-page .search,
 #today-page .today,
+#search-images-page .search-images,
 #image-gallery-page .image-gallery,
 #users-page .users,
 #settings-page .settings {
