@@ -1,9 +1,9 @@
 == Wescom Archive ==
 
+This website allows full text searching of all stories and images published at The Bulletin from 1994-Present. Stories are ingested on a daily basis every morning and get added to the index on import. Indexing is handled by the Sunspot SOLR gem.
+
 Installation
 1) Configure Database.yml
-
-Ensure there is a news_stories directory in the applications directory
-2) Run rake db:migrate
-3) run script/server
+2) Run 'rake db:migrate'
+3) Run 'rails server'
 4) Enjoy
