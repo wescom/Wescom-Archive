@@ -10,7 +10,7 @@
 			<div class="inner-box clearfix">
 				<div id="story-block" class="full_width">
 					<div class="grid_4"><img src = "/images/Post-it.png" alt = "Post-it" /></div>
-					<div id="site_announcement" class="grid_9"><%= @settings.site_announcement %></div>
+					<div id="site_announcement" class="grid_9"><%= @settings.site_announcement.html_safe %></div>
 				</div>
 			</div>
 		<% else%>
