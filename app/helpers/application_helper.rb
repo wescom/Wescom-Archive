@@ -22,7 +22,7 @@ module ApplicationHelper
     elsif !story.hl2.nil? and story.hl2.length > 0
       story.hl2
     elsif !story.copy.nil? and story.copy.length > 0
-      "No Headline. Copy: "+truncate(story.copy.gsub(/<.*?>/, ''), :length => 75)
+      "No Headline. Story Copy: "+truncate(story.copy.gsub(/<.*?>/, ''), :length => 75)
     else
       story.doc_name
     end
