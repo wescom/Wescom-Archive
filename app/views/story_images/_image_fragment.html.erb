@@ -1,7 +1,7 @@
 <tr class="<%= cycle("alternate","") %>">
 	<td class="center image_col">
 		<%= link_to image_tag(image_fragment.image(:large), :alt=>"Story Image", :class=>"image_small"), 
-				{:action => 'show', :controller => 'story_images', :id => image_fragment }, :rel => 'facebox' %>
+				{:action => 'show', :controller => 'story_images', :id => image_fragment } %>
 	</td>
 	<td class="headline headline_col">
 		<%= link_to text_for_image_link(image_fragment), image_fragment %>
