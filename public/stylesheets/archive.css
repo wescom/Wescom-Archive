@@ -290,7 +290,7 @@ html .clearfix {
 #story-content h1 {
   font-style: normal;
   color: #33393c;
-  text-transform: capitalize;
+#  text-transform: capitalize;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
