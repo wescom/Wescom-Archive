@@ -4,7 +4,7 @@ class StoryImagesController < ApplicationController
   def index
     @publications = Publication.find(:all)
     @sections = Section.find(:all, :order => "name")
-    @images = StoryImage.order_by_pubdate.paginate(:page => params[:page], :per_page => 15)
+    @images = StoryImage.paginate(:page => params[:page], :per_page => 15).order("image_updated_at DESC")
     @total_images_count = StoryImage.count(:all)
   end
   
