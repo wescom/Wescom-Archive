@@ -6,7 +6,38 @@
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
 		<h1>Image Gallery</h1>
-		<h2><%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images</h2>
+		<h2 class="clearfix">
+			<div id="filter_images_block" class="full_width clear_fix">
+				<%= form_tag story_images_path , :method => :get do %>
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<td class="large"><%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images</td>
+							<td class="float_right extra_small">Date From:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_from_select, params[:date_from_select], 
+												:class => 'short_date_picker', 
+												:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="float_right extra_small">Date To:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_to_select, params[:date_to_select], 
+													:class => 'short_date_picker', 
+													:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td>
+								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name', 
+													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
+							</td>
+							<td>
+								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'name', 
+													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
+							</td>
+							<td><%= submit_tag "Filter", :class => 'submit'%></td>
+						</tbody>
+					</table>
+				<% end %>
+			</div>
+		</h2>
 
 		<div class="inner-box clearfix">
 			<div id="image-block" class="full_width">

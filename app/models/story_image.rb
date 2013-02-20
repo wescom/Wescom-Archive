@@ -69,4 +69,32 @@ class StoryImage < ActiveRecord::Base
     end
   end
 
+  def self.has_pubdate_in_range(date_from, date_to)
+    date_from = Date.strptime(date_from, "%m/%d/%Y")
+    date_to = Date.strptime(date_to, "%m/%d/%Y") 
+    if date_from.present? && date_to.present?
+      includes(:story).where("stories.pubdate >= ?", date_from).where("stories.pubdate <= ?", date_to)
+    else
+      if date_from.present?
+        includes(:story).where("stories.pubdate >= ?", date_from)
+      else
+        if date_to.present?
+          includes(:story).where("stories.pubdate <= ?", date_to)
+        else
+          return scoped
+        end
+      end
+    end
+  end
+
+  def self.has_section_id(id)
+    return scoped unless id.present?
+    includes(:story).where("stories.section_id = ?", id) if id
+  end
+
+  def self.has_publication_id(id)
+    return scoped unless id.present?
+    includes(:story).where("stories.publication_id = ?", id)
+  end
+
 end

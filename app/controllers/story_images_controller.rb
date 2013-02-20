@@ -4,8 +4,12 @@ class StoryImagesController < ApplicationController
   def index
     @publications = Publication.find(:all)
     @sections = Section.find(:all, :order => "name")
-    @images = StoryImage.paginate(:page => params[:page], :per_page => 15).order("image_updated_at DESC")
-    @total_images_count = StoryImage.count(:all)
+    @images = StoryImage.includes(:story)
+        .has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
+        .has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
+        .paginate(:page => params[:page], :per_page => 15)
+        .order("image_updated_at DESC")
+    @total_images_count = @images.count
   end
   
   def search

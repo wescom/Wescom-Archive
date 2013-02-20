@@ -530,6 +530,30 @@ input#search_query {
   color: #ff6600;
 }
 
+/* filter images block */
+#filter_images_block { vertical-align: middle; }
+#filter_images_block td { padding: 0px 10px; }
+#filter_images_block td.float_right { text-align: right; }
+#filter_images_block td.extra_small { width: 5%; }
+#filter_images_block td.smaller { width: 8%; }
+#filter_images_block td.small { width: 12%; }
+#filter_images_block td.medium { width: 16%; }
+#filter_images_block td.large { width: 22%; }
+#filter_images_block td.larger { width: 27%; }
+#filter_images_block td.big { width: 32%; }
+#filter_images_block td.biggest { width: 42%; }
+#filter_images_block td.full { width: 95%; }
+
+#page-content #filter_images_block form input {
+	font: normal 1.0em Arial, Tahoma, sans-serif;
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+}
+
+#page-content #filter_images_block form select {
+	font: normal 1.1em Arial, Tahoma, sans-serif;
+	margin: 0px 0px 0px 10px;
+}
 #sidebar_edit_block {
 	margin-top: 20px;
 }
