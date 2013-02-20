@@ -5,7 +5,7 @@ class StoryImagesController < ApplicationController
     @publications = Publication.find(:all)
     @sections = Section.find(:all, :order => "name")
 #.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
-#.has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
+.has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
     @images = StoryImage.includes(:story)
         .paginate(:page => params[:page], :per_page => 15)
         .order("image_updated_at DESC")
