@@ -70,8 +70,8 @@ class StoryImage < ActiveRecord::Base
   end
 
   def self.has_pubdate_in_range(date_from, date_to)
-    date_from = Date.strptime(date_from, "%m/%d/%Y")
-    date_to = Date.strptime(date_to, "%m/%d/%Y") 
+    date_from = Date.strptime(date_from, "%m/%d/%Y") if date_from.length > 0
+    date_to = Date.strptime(date_to, "%m/%d/%Y") if date_to.length > 0
     if date_from.present? && date_to.present?
       includes(:story).where("stories.pubdate >= ?", date_from).where("stories.pubdate <= ?", date_to)
     else
