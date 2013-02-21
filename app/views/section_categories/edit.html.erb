@@ -2,7 +2,7 @@
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
 		<h1>
-			section_categories: <%= @section_categories.name %>
+			Section Category: <%= @section_categories.name %>
 			<span class="float_right"><%= button_to "Delete Section", section_category_path(@section_categories), 
 										:method => :delete, 
 										:confirm => "Are you sure you want to delete Section Category?",
