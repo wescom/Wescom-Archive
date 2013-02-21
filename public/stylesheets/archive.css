@@ -288,6 +288,13 @@ html .clearfix {
   border-bottom: 1px solid #33393c;
 }
 
+#page-content h1 span {
+  font: bold italic 0.1em Georgia, "Times New Roman", Times, serif;
+  color: #33393c;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
 #story-content h1 {
   font-style: normal;
   color: #33393c;

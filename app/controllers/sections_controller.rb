@@ -1,6 +1,6 @@
 class SectionsController < ApplicationController
   def index
-    @sections = Section.paginate(:page => params[:page], :per_page => 60, :order=> "name")
+    @sections = Section.paginate(:page => params[:page], :per_page => 60).order(:category).order(:name)
   end
 
   def show
@@ -18,6 +18,17 @@ class SectionsController < ApplicationController
       redirect_to sections_url
     else
       render :action => :edit
+    end
+  end
+  
+  def destroy
+    @section = Section.find(params[:id])
+    if @section.destroy
+      flash[:notice] = "Story Killed!"
+      redirect_to sections_path
+    else
+      flash[:error] = "Story Deletion Failed"
+      redirect_to sections_path
     end
   end
 

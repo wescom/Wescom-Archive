@@ -1,21 +1,24 @@
 <div id="sections-page">
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
-		<%= form_for @section, :url => section_path do |form| %>
-			<h1>
-				Section: <%= @section.name %>
-			</h1>
-	
-			<div class="inner-box clearfix">
-			  <div id="form-block" class="grid_15">
-					ID: <%= @section.id %><br/>
-					<%= form.label :name, "Name", :class => "story_label" %>
-				  <%= form.text_field :name, :class => "story_field medium" %>
+		<h1>
+			Section: <%= @section.name %>
+			<span class="float_right"><%= button_to "Delete Section", section_path(@section), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete section?",
+										:action => 'destroy' %></span>
+		</h1>
 
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @section, :url => section_path do |form| %>
+					Name: <%= form.text_field :name, :class => "large" %>
+					Category: <%= form.select :category, ['Editorial', 'Special Pubs', 'Other'], {}, :class=>'medium' %>
+					<br/>
 					<%= form.submit "Update", :class => 'submit small'%>
 					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
-				</div>
+				<% end %>
 			</div>
-		<% end %>
+		</div>
 	</div>
 </div>
