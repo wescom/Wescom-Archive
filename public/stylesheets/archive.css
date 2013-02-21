@@ -210,6 +210,7 @@ html .clearfix {
 #search-images-page .search-images,
 #image-gallery-page .image-gallery,
 #users-page .users,
+#sections-page .sections,
 #settings-page .settings {
   background-color: #ff6600;
   color: #fff;
