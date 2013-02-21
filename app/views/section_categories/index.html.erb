@@ -1,0 +1,32 @@
+<div id="section-category-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Section Categories
+			<span class="float_right"><%= link_to "New Category", new_section_category_path %></span>
+		</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+			  <% if @section_categories %>
+			    <div id="table-block" class="grid_15">
+			      <% unless @section_categories.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+			              <td>ID</td>
+			              <td>Name</td>
+			              <td>Created</td>
+			              <td>Updated</td>
+			              <td class="center">Action</td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @section_categories %>
+			          </tbody>
+			        </table>
+			      <% end %>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>

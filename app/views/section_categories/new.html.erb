@@ -1,0 +1,22 @@
+<div id="section-category-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>New Section Category</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @section_categories, :url => section_categories_path do |form| %>
+					<div id="story-edit" class="clearfix">
+						<%= render :partial => 'form', :object => form %>
+					</div>
+					<div class="full_width">
+						<div>
+							<%= form.submit "Update", :class => 'submit small'%>
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
