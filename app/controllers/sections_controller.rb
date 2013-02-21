@@ -1,6 +1,6 @@
 class SectionsController < ApplicationController
   def index
-    @sections = Section.paginate(:page => params[:page], :per_page => 60).order(:category).order(:name)
+    @sections = Section.paginate(:page => params[:page], :per_page => 60).order_by_category_plus_name
   end
 
   def show
@@ -9,6 +9,7 @@ class SectionsController < ApplicationController
 
   def edit
     @section = Section.find(params[:id])
+    @section_categories = SectionCategory.find(:all, :order => "name")
   end
 
   def update
