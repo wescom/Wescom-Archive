@@ -3,7 +3,7 @@ class StoryImagesController < ApplicationController
   
   def index
     @publications = Publication.find(:all)
-    @sections = Section.find(:all, :order => "name")
+    @sections = Section.order(:category).order(:name).find(:all)
     @images = StoryImage
         .has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
         .has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
@@ -14,7 +14,7 @@ class StoryImagesController < ApplicationController
   
   def search
     @publications = Publication.find(:all)
-    @sections = Section.find(:all, :order => "name")
+    @sections = Section.order(:category).order(:name).find(:all)
     if params[:search_query]
       begin
         @images = StoryImage.search(:include => [:story]) do

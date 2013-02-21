@@ -29,7 +29,7 @@
 													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
 							</td>
 							<td>
-								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'name', 
+								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'category_plus_name', 
 													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
 							</td>
 							<td><%= submit_tag "Filter", :class => 'submit'%></td>

@@ -19,13 +19,13 @@ class StoriesController < ApplicationController
   def edit
     @story = Story.find(params[:id])
     @papers = Paper.find(:all, :order => "name")
-    @sections = Section.find(:all, :order => "name")
+    @sections = Section.order(:category).order(:name).find(:all)
   end
 
   def update
     @story = Story.find(params[:id])
     @papers = Paper.find(:all, :order => "name")
-    @sections = Section.find(:all, :order => "name")
+    @sections = Section.order(:category).order(:name).find(:all)
 
     if params[:cancel_button]
       redirect_to story_path

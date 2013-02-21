@@ -4,7 +4,7 @@ class SearchController < ApplicationController
   def index
     @settings = SiteSettings.find(:first)
     @publications = Publication.find(:all)
-    @sections = Section.find(:all, :order => "name")
+    @sections = Section.order(:category).order(:name).find(:all)
     if params[:search_query]
       begin
         @stories = Story.search do
