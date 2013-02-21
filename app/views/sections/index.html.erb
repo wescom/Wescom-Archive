@@ -7,6 +7,9 @@
 		  <div id="form-block" class="grid_15">
 			  <% if @sections %>
 			    <div id="table-block" class="grid_15">
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @sections %></div>
+						</div>
 			      <% unless @sections.nil? %>
 			        <table cellspacing="0" cellpadding="0">
 			          <tbody>
