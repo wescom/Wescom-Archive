@@ -63,4 +63,19 @@ class Story < ActiveRecord::Base
   def publication_name
     self.publication.name if self.publication.present?
   end
+  
+  def self.has_pubdate_in_range(date_from, date_to)  
+    return scoped unless date_from.present? AND date_to.present?
+    where("pubdate >= ? AND pubdate <= ?", date_from, date_to)  
+  end
+
+  def self.has_section_id(id)
+    return scoped unless id.present?
+    where("section_id = ?", id) if id
+  end
+
+  def self.has_publication_id(id)
+    return scoped unless id.present?
+    where("publication_id = ?", id)
+  end
 end

@@ -1,0 +1,7 @@
+<tr>
+	<td><%= table_row.id %></td>
+	<td><%= table_row.name %></td>	
+	<td><%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %></td>
+	<td><%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %></td>
+	<td><%= link_to "Edit", edit_section_path(table_row) %></td>
+</tr>
