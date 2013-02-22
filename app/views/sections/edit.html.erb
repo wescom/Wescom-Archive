@@ -12,7 +12,9 @@
 		<div class="inner-box clearfix">
 		  <div id="form-block" class="grid_15">
 				<%= form_for @section, :url => section_path do |form| %>
-					Name: <%= form.text_field :name, :class => "large" %>
+					<% if admin? %>
+						Name: <%= form.text_field :name, :class => "large" %>
+					<% end %>
 					Category: <%= form.select :section_category_id, @section_categories.collect { |c| [c.name, c.id] }, {}, :class => 'medium' %>
 					<br/>
 					<%= form.submit "Update", :class => 'submit small'%>
