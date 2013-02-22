@@ -332,6 +332,7 @@ html .clearfix {
 #page-content .inner-box {
   background-color: #fff;
   padding: 1.5957%;
+	min-height: 300px;
 }
 
 #page-content .margin-top {
