@@ -6,64 +6,47 @@
   <%= render(:partial => "home/pagenav") %>
   <div id="page-content" class="clearfix">
 		<h1>Search Stories
-			<% if @settings.show_site_announcement %>
-				<span id="search_announcement"></span>
-			<% end %>
+			<span class="float_right">Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</span>
 		</h1>
-		<h2>Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</h2>
+		<h2 class="clearfix">
+			<div id="filter_stories_block" class="full_width clear_fix">
+				<%= form_tag search_path, :method => :get do %>
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<td><%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %></td>
+							<td class="float_right extra_small">Date From:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_from_select, params[:date_from_select], 
+												:class => 'short_date_picker center', 
+												:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="float_right extra_small">Date To:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_to_select, params[:date_to_select], 
+													:class => 'short_date_picker center', 
+													:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="medium">
+								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name', 
+													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
+							</td>
+							<td class="medium">
+								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'category_plus_name', 
+													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
+							</td>
+							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
+						</tbody>
+					</table>
+				<% end %>
+			</div>
+		</h2>
 
 		<div class="inner-box clearfix">
-
-		  <div id="form-block" class="full_width clearfix">
-				<div id="search_block" class="grid_12">
-			    <%= form_tag search_path , :method => :get do %>
-			      <%= label_tag :search_query, "Search" %>
-			      <span id="search_input_field">
-			        <%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
-			        <%= submit_tag "Search", :class => 'submit'%>
-			      </span>
-			      <span><p>Advanced Options  (<a href="#" class="toggle_hide">Show/Hide</a>)</p></span>
-			      <div id="advanced-search">
-							<div id="search_pubdate">
-								<span>
-					        <%= label_tag :date_from_select, "From" %>
-					        <%= text_field_tag :date_from_select, params[:date_from_select], 
-														:class => 'small short_date_picker', 
-														:placeholder => "mm/dd/yyyy" %>
-								</span>
-								<span>
-					        <%= label_tag :date_to_select, "To" %>
-					        <%= text_field_tag :date_to_select, params[:date_to_select], 
-														:class => 'small short_date_picker', 
-														:placeholder => "mm/dd/yyyy" %>
-								</span>
-							</div>
-							<div id="search_paper_section">
-								<div>
-									<%= label_tag :pub_select, "Paper" %>
-									<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name', 
-														:selected => params[:pub_select]), {:include_blank => true, :class => 'large'} %>
-								</div>
-								<div>
-									<%= label_tag :section_select, "Section" %>
-									<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'category_plus_name', 
-														:selected => params[:section_select]), {:include_blank => true, :class => 'large'} %>
-								</div>
-							</div>
-			      </div>
-			    <% end %>
-				</div>
-		
-				<div id="sidebar" class="grid_4">
-				  <%= render(:partial => 'sidebar') %>
-				</div>
-		  </div>
-	
 			<div id="story-block" class="full_width">
 			  <% if @stories %>
 			    <div id="table-block" class="full_width">
 						<div id="table-paginate" class="full_width">
-			      	Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count,
+			      	Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count,
 			 											:delimiter => ',') %>
 			      	<div class="float_right"><%= will_paginate @stories.hits %></div>
 						</div>
