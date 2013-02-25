@@ -61,6 +61,9 @@
 										<td class="system_col center">System</td>
 										<td class="image_col center">Images?</td>
 										<td class="status_col center">Status</td>
+										<% if admin? and @settings.show_delete_button %>
+											<td class="action_col center">Action</td>
+										<% end %>
 			            </tr>
 			            <%= render :partial => 'story_fragment', :collection => @stories.results %>
 			          </tbody>

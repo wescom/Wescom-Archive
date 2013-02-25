@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221230106) do
+ActiveRecord::Schema.define(:version => 20130225214526) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20130221230106) do
     t.boolean  "show_site_announcement"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.boolean  "show_delete_button"
   end
 
   create_table "stories", :force => true do |t|

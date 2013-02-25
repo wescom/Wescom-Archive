@@ -48,4 +48,15 @@ class SearchController < ApplicationController
     end
     @total_stories_count = @stories.count
   end
+  
+  def destroy
+    @stories = Story.find(params[:id])
+    if @stories.destroy
+      flash[:notice] = "Story Killed!"
+      redirect_to stories_path
+    else
+      flash[:error] = "Story Deletion Failed"
+      redirect_to stories_path
+    end
+  end
 end

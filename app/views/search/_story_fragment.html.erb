@@ -40,4 +40,12 @@
 		<% end %>
 	</td>
 	<td class="false center status_col">Needs Review</td>
+	<% if admin? and @settings.show_delete_button %>
+		<td class="false center action_col">
+			<%= button_to "Delete", story_path(story_fragment), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete story?",
+										:action => 'destroy' %>
+		</td>
+	<% end %>
 </tr>

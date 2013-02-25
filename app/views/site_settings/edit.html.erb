@@ -14,8 +14,14 @@
 					<%= form_for @settings, :url => site_setting_path do |form| %>
 
 						<div id="settings_inner_block">
-							<div class="setting_header">Site Announcement</div>
+							<div class="setting_header">Settings</div>
 							<div class="setting_body">
+								<div class="setting_field clearfix">
+									<div class="setting_label">Show Story Delete Button? </div>
+									<div class="setting_value setting_value_checkbox">
+										<%= form.check_box :show_delete_button, :class => 'medium' %>
+									</div>
+								</div>
 								<div class="setting_field clearfix">
 									<div class="setting_label">Show? </div>
 									<div class="setting_value setting_value_checkbox">
