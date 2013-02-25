@@ -4,23 +4,41 @@
 		<h1>
 			Today's Stories
 		</h1>
-			<%= form_tag search_today_path, :method => 'get' do %>
-				<%= submit_tag "Go", :class => 'today_submit float_right'%>
-				<% if @publication %>
-					<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
-									selected = @publication.name), :class => 'today_publication float_right' %>
-				<% else %>
-					<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
-									:class => 'today_publication float_right' %>
-				<% end %>
-			<% end %>
 
-		<h2>
-			Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
-			<span>
-				(<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories
-				 - <%= Date.today.strftime('%m/%d/%y') %>)
-			</span>
+		<h2 class="clearfix">
+			<div id="filter_stories_block" class="full_width clear_fix">
+				<%= form_tag search_today_path, :method => :get do %>
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<td class="largest">
+								Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
+								<span>
+									(<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories
+									 - <%= params[:paperdate] %>)
+							</td>
+							<td class="small"></td>
+							<td class="small"></td>
+							<td class="float_right extra_small">Date:</td>
+							<td class="smaller">
+								<%= text_field_tag :paperdate, params[:paperdate], 
+												:class => 'short_date_picker center', 
+												:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="medium">
+								<% if @publication %>
+									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
+													selected = @publication.name), 
+													{:class => 'today_publication float_right', :include_blank => true} %>
+								<% else %>
+									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
+													{:class => 'today_publication float_right', :include_blank => true} %>
+								<% end %>
+							</td>
+							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
+						</tbody>
+					</table>
+				<% end %>
+			</div>
 		</h2>
 
 		<div class="inner-box clearfix">

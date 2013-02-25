@@ -29,13 +29,19 @@ class SearchController < ApplicationController
   def today
     @publications = Publication.find(:all)
     @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
-    if params[:papername] == "All"
-      @stories = Story.where('DATE(pubdate) = ?', Date.today).paginate(
+    if params[:paperdate].nil?
+      Rails.logger.info "******** Date is nil"
+      params[:paperdate] = Date.today.strftime('%m/%d/%Y')
+    end
+    if params[:papername] == "All" or params[:papername] == ""
+      @stories = Story.where('DATE(pubdate) = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"))
+                            .paginate(
                               :page => params[:page], 
                               :per_page => 30, 
                               :order => "Pubdate DESC").order_by_section_page
     else
-      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.today, @publication.id).paginate(
+      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"), @publication.id)
+                            .paginate(
                               :page => params[:page], 
                               :per_page => 30, 
                               :order => "Pubdate DESC").order_by_section_page
