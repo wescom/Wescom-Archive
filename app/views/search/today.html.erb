@@ -11,10 +11,7 @@
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
 							<td class="largest">
-								Today's Stories <% if !@publication.nil? %> in <%= @publication.name %><% end %>
-								<span>
-									(<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories
-									 - <%= params[:paperdate] %>)
+									<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories
 							</td>
 							<td class="small"></td>
 							<td class="small"></td>
