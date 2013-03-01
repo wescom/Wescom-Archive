@@ -13,6 +13,8 @@ class ImportStory < ActiveRecord::Base
     self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
     self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
     self.raw_xml = cleanup_hedline_tags(self.raw_xml)
+    self.raw_xml = cleanup_body_tags(self.raw_xml)
+puts self.raw_xml
     cracked = Crack::XML.parse(self.raw_xml)
     if cracked["nitf"]['head']['original_storyid']
       self.correction = true 
@@ -284,4 +286,9 @@ class ImportStory < ActiveRecord::Base
     string
   end
 
+  def cleanup_body_tags(string)    # replace hl2 tags within <p>{"hl2_chapterhead"=>"
+    string.gsub! '<hl2>', '<p>{"hl2_chapterhead"=>"'
+    string.gsub! '</hl2>', '</p>'
+    string
+  end
 end
