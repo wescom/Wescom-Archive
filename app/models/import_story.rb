@@ -14,7 +14,7 @@ class ImportStory < ActiveRecord::Base
     self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
     self.raw_xml = cleanup_hedline_tags(self.raw_xml)
     self.raw_xml = cleanup_body_tags(self.raw_xml)
-puts self.raw_xml
+
     cracked = Crack::XML.parse(self.raw_xml)
     if cracked["nitf"]['head']['original_storyid']
       self.correction = true 
