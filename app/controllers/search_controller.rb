@@ -27,6 +27,7 @@ class SearchController < ApplicationController
   end
 
   def today
+    @settings = SiteSettings.find(:first)
     @publications = Publication.find(:all)
     @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
     if params[:paperdate].nil?
