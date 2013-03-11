@@ -45,7 +45,7 @@
 						<% @pdf_images.each do |pdf| %>
 							<div id="pdf-gallery-item" class="grid_2">
 								<div class="center">
-									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf_image_path(pdf) %>
+									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
 								</div>
 								<div>
 									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') %></div>

@@ -10,7 +10,7 @@ namespace :wescom do
     def get_files
       find_date = Date.today.strftime('%d-%m-%Y')
       puts "Searching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
-      #find_date = "02-03-2013"
+      find_date = "10-03-2013"
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf","bend-bulletin",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
@@ -88,7 +88,7 @@ namespace :wescom do
     end
 
     def get_page(filename)
-      array_of_numbers = filename.split(/\D{1,2}/)
+      array_of_numbers = filename.split(/\D{1,3}/)
       return array_of_numbers[1].to_i
     end
 
