@@ -1,5 +1,6 @@
 class PdfImagesController < ApplicationController
   def index
+    @settings = SiteSettings.find(:first)
     @publications = Publication.find(:all)
 
     scope = PdfImage

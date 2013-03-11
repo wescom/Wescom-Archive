@@ -49,7 +49,9 @@
 			              <td class="center">Publication</td>
 			              <td class="center">Section</td>
 			              <td class="center">Page</td>
-			              <td class="center">Action</td>
+										<% if admin? and @settings.show_delete_button %>
+											<td class="action_col center">Action</td>
+										<% end %>
 			            </tr>
 			            <%= render :partial => 'table_row', :collection => @pdf_images %>
 			          </tbody>
