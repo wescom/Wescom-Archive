@@ -33,34 +33,34 @@
 		</h2>
 
 		<div class="inner-box clearfix">
-		  <div id="pdf-block" class="grid_15">
+		  <div id="pdf-block" class="full_width">
 			  <% if @pdf_images %>
-			    <div id="table-block" class="grid_15">
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @pdf_images %></div>
-						</div>
-			      <% unless @pdf_images.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-			              <td> </td>
-			              <td>Filename</td>
-			              <td class="center">PubDate</td>
-			              <td class="center">Publication</td>
-			              <td class="center">Section</td>
-			              <td class="center">Page</td>
-										<% if admin? and @settings.show_delete_button %>
-											<td class="action_col center">Action</td>
-										<% end %>
-			            </tr>
-			            <%= render :partial => 'table_row', :collection => @pdf_images %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @pdf_images %></div>
-						</div>
-			    </div>
+					<div id="table-paginate" class="full_width clearfix">
+		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+					</div>
+					<div id="pdf-gallery" class="full_width clearfix">
+						<% @pdf_images.each do |pdf| %>
+							<div id="pdf-gallery-item" class="grid_2">
+								<div class="center">
+									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf_image_path(pdf) %>
+								</div>
+								<div>
+									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') %></div>
+									<div class="center"><%= pdf.publication %> <%= pdf.section_letter %><%= pdf.page %></div>
+									<% if admin? and @settings.show_delete_button %>
+										<div class="center"><%= button_to "Delete", pdf_image_path(pdf), 
+																	:method => :delete, 
+																	:confirm => "Are you sure you want to delete PDF?",
+																	:action => 'destroy' %>
+										</div>
+									<% end %>
+								</div>
+							</div>
+						<% end %>
+					</div>
+					<div id="table-paginate" class="full_width">
+		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+					</div>
 			  <% end %>
 			</div>
 		</div>

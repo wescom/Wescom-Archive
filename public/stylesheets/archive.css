@@ -657,6 +657,7 @@ input#search_query {
 .float_left { float: left;}
 .float_right { float: right;}
 .indent { margin: 0px 0px 0px 10%;}
+.center {text-align: center;}
 
 /* Story Content */
 #story-block {
@@ -828,6 +829,9 @@ img.image_thumb {height:20px;width:auto;}
 img.image_small {height:auto;width:75px;}
 img.image_medium {height:auto;width:150px;}
 img.image_large {height:auto;width:450px;}
+
+#pdf-gallery {padding: 20px 0px 20px 0px}
+#pdf-gallery-item {padding: 0px 0px 20px 0px}
 
 /* Image Content */
 #image-content {
