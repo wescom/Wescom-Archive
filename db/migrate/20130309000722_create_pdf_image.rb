@@ -12,6 +12,10 @@ class CreatePdfImage < ActiveRecord::Migration
       t.string  :section_name
       t.integer :page
     end
+    add_index :pdf_images, :pubdate
+    add_index :pdf_images, :publication
+    add_index :pdf_images, :section_letter
+    add_index :pdf_images, :page
   end
 
   def self.down

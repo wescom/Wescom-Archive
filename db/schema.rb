@@ -49,6 +49,11 @@ ActiveRecord::Schema.define(:version => 20130309000722) do
     t.integer  "page"
   end
 
+  add_index "pdf_images", ["page"], :name => "index_pdf_images_on_page"
+  add_index "pdf_images", ["pubdate"], :name => "index_pdf_images_on_pubdate"
+  add_index "pdf_images", ["publication"], :name => "index_pdf_images_on_publication"
+  add_index "pdf_images", ["section_letter"], :name => "index_pdf_images_on_section_letter"
+
   create_table "publications", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
