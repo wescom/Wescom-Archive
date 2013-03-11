@@ -11,7 +11,8 @@ namespace :wescom do
       find_date = Date.today.strftime('%d-%m-%Y')
       puts "Searching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
       #find_date = "02-03-2013"
-      pdf_files = File.join("/","pdf-storage","archive-pdf","bend-bulletin","2013",'**','*'+find_date+'{*.PDF,*.pdf}')
+      #pdf_files = File.join("/","pdf-storage","archive-pdf","bend-bulletin","2013",'**','*'+find_date+'{*.PDF,*.pdf}')
+      pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf","bend-bulletin","2013",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
       pdf_files
