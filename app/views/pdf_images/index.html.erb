@@ -1,0 +1,66 @@
+<div id="pdf-images-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>PDF Images</h1>
+		<h2 class="clearfix">
+			<div id="filter_images_block" class="full_width clear_fix">
+				<%= form_tag pdf_images_path , :method => :get do %>
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<td class="large"></td>
+							<td class="float_right extra_small">Date From:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_from_select, params[:date_from_select], 
+												:class => 'short_date_picker center', 
+												:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="float_right extra_small">Date To:</td>
+							<td class="smaller">
+								<%= text_field_tag :date_to_select, params[:date_to_select], 
+													:class => 'short_date_picker center', 
+													:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="float_right extra_small">Page#:</td>
+							<td class="extra_small">
+								<%= text_field_tag :pagenum, params[:pagenum], 
+												:class => 'small' %>
+							</td>
+							<td class="smaller"><%= submit_tag "Filter", :class => 'submit'%></td>
+						</tbody>
+					</table>
+				<% end %>
+			</div>
+		</h2>
+
+		<div class="inner-box clearfix">
+		  <div id="pdf-block" class="grid_15">
+			  <% if @pdf_images %>
+			    <div id="table-block" class="grid_15">
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+						</div>
+			      <% unless @pdf_images.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+			              <td> </td>
+			              <td>Filename</td>
+			              <td class="center">PubDate</td>
+			              <td class="center">Publication</td>
+			              <td class="center">Section</td>
+			              <td class="center">Page</td>
+			              <td class="center">Action</td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @pdf_images %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>

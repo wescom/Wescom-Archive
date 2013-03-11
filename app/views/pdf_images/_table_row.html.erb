@@ -1,0 +1,17 @@
+<tr>
+	<td class="center">
+<!--		<%= link_to image_tag(table_row.image(:large), :alt=>"PDF Image", :class=>"image_small"), pdf_image_path(table_row) %> -->
+		<%= link_to image_tag(table_row.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf_image_path(table_row) %>
+			
+	</td>
+	<td><%= table_row.image_file_name %></td>	
+	<td class="center"><%= table_row.pubdate.strftime('%m/%d/%Y') %></td>
+	<td class="center"><%= table_row.publication %></td>
+	<td class="center"><%= table_row.section_letter %></td>
+	<td class="center"><%= table_row.page %></td>
+	<td class="center"><%= button_to "Delete", pdf_image_path(table_row), 
+								:method => :delete, 
+								:confirm => "Are you sure you want to delete PDF?",
+								:action => 'destroy' %>
+	</td>
+</tr>

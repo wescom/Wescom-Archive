@@ -212,6 +212,7 @@ html .clearfix {
 #users-page .users,
 #sections-page .sections,
 #section-category-page .section_categories,
+#pdf-images-page .pdf-images,
 #settings-page .settings {
   background-color: #ff6600;
   color: #fff;

@@ -5,6 +5,7 @@ Wescomarchive::Application.routes.draw do
   resources :stories
   resources :correction_links
   resources :story_images
+  resources :pdf_images
 
   resources :users, :only => [:index, :show, :edit, :update]
   resources :site_settings, :only => [:index, :edit, :update]

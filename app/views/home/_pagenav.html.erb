@@ -7,6 +7,7 @@
 		<% if admin? or edit? %>
 			<li class="admin"><a> Administration </a>
 				<ul>
+					<li class="pdf-images"><%= link_to "PDF Pages", pdf_images_url %></li>
 					<li class="sections"><%= link_to "Sections", sections_url %></li>
 					<li class="section_categories"><%= link_to "Section Categories", section_categories_url %></li>
 					<% if admin? %>
