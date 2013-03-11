@@ -10,6 +10,9 @@ class PdfImagesController < ApplicationController
     if (params[:date_to_select].present?)
       scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
     end
+    if (params[:sectionletter].present?)
+      scope = scope.where('section_letter = ?', params[:sectionletter])
+    end
     if (params[:pagenum].present?)
       scope = scope.where('page = ?', params[:pagenum])
     end

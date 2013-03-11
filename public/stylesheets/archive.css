@@ -545,6 +545,7 @@ input#search_query {
 #filter_images_block, #filter_stories_block { vertical-align: middle; }
 #filter_images_block td, #filter_stories_block td { padding: 0px 10px; }
 #filter_images_block td.float_right, #filter_stories_block td.float_right { text-align: right; }
+#filter_images_block td.tiny, #filter_stories_block td.tiny { width: 2%; }
 #filter_images_block td.extra_small, #filter_stories_block td.extra_small { width: 5%; }
 #filter_images_block td.smaller, #filter_stories_block td.smaller { width: 8%; }
 #filter_images_block td.small, #filter_stories_block td.small { width: 12%; }
@@ -913,6 +914,7 @@ img.image_large {height:auto;width:450px;}
 	padding: 4px;
 }
 
+#page-content form input.tiny { width: 3%; }
 #page-content form input.extra_small { width: 6%; }
 #page-content form input.smaller { width: 8%; }
 #page-content form input.small { width: 12%; }

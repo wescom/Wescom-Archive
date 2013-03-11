@@ -20,12 +20,15 @@
 													:class => 'short_date_picker center', 
 													:placeholder => "mm/dd/yyyy" %>
 							</td>
-							<td class="float_right extra_small">Page#:</td>
-							<td class="extra_small">
-								<%= text_field_tag :pagenum, params[:pagenum], 
-												:class => 'small' %>
+							<td class="float_right extra_small">Section Letter:</td>
+							<td class="tiny">
+								<%= text_field_tag :sectionletter, params[:sectionletter] %>
 							</td>
-							<td class="smaller"><%= submit_tag "Filter", :class => 'submit'%></td>
+							<td class="float_right extra_small">Page #:</td>
+							<td class="tiny">
+								<%= text_field_tag :pagenum, params[:pagenum] %>
+							</td>
+							<td class="smaller"><%= submit_tag "Filter", :class => 'submit float_right'%></td>
 						</tbody>
 					</table>
 				<% end %>
