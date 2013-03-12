@@ -198,8 +198,6 @@ $(document).ready(function(){
 		closed: true,
 		autoCenter: true,
 		arrows: true,
-		next: '#custom-next',
-		prev: '#custom-prev'
 	});
 	
 });
