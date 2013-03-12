@@ -33,7 +33,7 @@ class PdfImagesController < ApplicationController
     if (params[:pagenum].present?)
       scope = scope.where('page = ?', params[:pagenum])
     end
-    @pdf_images = scope.order_by_pubdate_section_page
+    @pdf_images = scope.paginate(:page => params[:page], :per_page => 50).order_by_pubdate_section_page
   end
 
   def show
