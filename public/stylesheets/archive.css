@@ -544,6 +544,7 @@ input#search_query {
 /* filter images block */
 #filter_images_block, #filter_stories_block { vertical-align: middle; }
 #filter_images_block td, #filter_stories_block td { padding: 0px 10px; }
+#filter_images_block td a { color: white; }
 #filter_images_block td.float_right, #filter_stories_block td.float_right { text-align: right; }
 #filter_images_block td.tiny, #filter_stories_block td.tiny { width: 2%; }
 #filter_images_block td.extra_small, #filter_stories_block td.extra_small { width: 5%; }
@@ -833,6 +834,7 @@ img.image_large {height:auto;width:450px;}
 
 #pdf-gallery {padding: 20px 0px 20px 0px}
 #pdf-gallery-item {padding: 0px 0px 20px 0px}
+#mybook img{height:900px;width:auto%;}
 
 /* Image Content */
 #image-content {

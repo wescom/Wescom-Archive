@@ -19,6 +19,23 @@ class PdfImagesController < ApplicationController
     @pdf_images = scope.paginate(:page => params[:page], :per_page => 16).order_by_pubdate_section_page
   end
 
+  def book
+    scope = PdfImage
+    if (params[:date_from_select].present?)
+      scope = scope.where('DATE(pubdate) >= ?', Date.strptime(params[:date_from_select], "%m/%d/%Y"))
+    end
+    if (params[:date_to_select].present?)
+      scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
+    end
+    if (params[:sectionletter].present?)
+      scope = scope.where('section_letter = ?', params[:sectionletter])
+    end
+    if (params[:pagenum].present?)
+      scope = scope.where('page = ?', params[:pagenum])
+    end
+    @pdf_images = scope.order_by_pubdate_section_page
+  end
+
   def show
     @pdf_image = PdfImage.find(params[:id])
     render :layout => "plain"

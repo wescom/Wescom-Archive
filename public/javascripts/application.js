@@ -190,5 +190,17 @@ $(document).ready(function(){
 		$(this).find('.image_gallery_caption').fadeOut('fast')
 	});
 	
+	// PDF Pages Booklet View
+	$('#mybook').booklet({ 
+		width: '70%',
+		height: 920,
+		pageNumbers: false,
+		closed: true,
+		autoCenter: true,
+		arrows: true,
+		next: '#custom-next',
+		prev: '#custom-prev'
+	});
+	
 });
 

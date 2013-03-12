@@ -4,10 +4,10 @@
 		<h1>PDF Pages</h1>
 		<h2 class="clearfix">
 			<div id="filter_images_block" class="full_width clear_fix">
-				<%= form_tag pdf_images_path , :method => :get do %>
+				<%= form_tag book_pdf_images_path , :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td class="large"><%= link_to "Book View", book_pdf_images_path %></td>
+							<td class="large"><%= link_to "Grid View", pdf_images_path %></td>
 							<td class="float_right extra_small">Date From:</td>
 							<td class="smaller">
 								<%= text_field_tag :date_from_select, params[:date_from_select], 
@@ -38,31 +38,13 @@
 		<div class="inner-box clearfix">
 		  <div id="pdf-block" class="full_width">
 			  <% if @pdf_images %>
-					<div id="table-paginate" class="full_width clearfix">
-		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
-					</div>
-					<div id="pdf-gallery" class="full_width clearfix">
+					<div id="mybook">
 						<% @pdf_images.each do |pdf| %>
-							<div id="pdf-gallery-item" class="grid_2">
-								<div class="center">
-									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
-								</div>
-								<div>
-									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') %></div>
-									<div class="center"><%= pdf.publication %> <%= pdf.section_letter %><%= pdf.page %></div>
-									<% if admin? and @settings.show_delete_button %>
-										<div class="center"><%= button_to "Delete", pdf_image_path(pdf), 
-																	:method => :delete, 
-																	:confirm => "Are you sure you want to delete PDF?",
-																	:action => 'destroy' %>
-										</div>
-									<% end %>
-								</div>
+							<div>
+								<h3><%= pdf.pubdate.strftime('%m/%d/%Y') %> - <%= pdf.section_letter %><%= pdf.page %></h3>
+								<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image"), pdf.image.url %>
 							</div>
 						<% end %>
-					</div>
-					<div id="table-paginate" class="full_width">
-		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
 					</div>
 			  <% end %>
 			</div>
