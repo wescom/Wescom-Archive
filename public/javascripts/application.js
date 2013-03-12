@@ -193,7 +193,7 @@ $(document).ready(function(){
 	// PDF Pages Booklet View
 	$('#mybook').booklet({ 
 		width: '70%',
-		height: 920,
+		height: 750,
 		pageNumbers: false,
 		closed: true,
 		autoCenter: true,
