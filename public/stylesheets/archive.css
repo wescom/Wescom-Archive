@@ -929,6 +929,7 @@ img.image_large {height:auto;width:450px;}
 #page-content form input.full { width: 95%; }
 
 #page-content form input.date_picker { width: 11%;}
+div.ui-datepicker { z-index: 999 !important}
 
 #page-content form textarea {padding:0.5%; overflow: scroll; }
 #page-content form textarea.small { width: 95%; height: 150px; }
