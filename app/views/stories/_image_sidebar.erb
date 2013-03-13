@@ -33,17 +33,17 @@
 		<% end %>
 	</div>
 
-	<div class="clearfix">
-		<p class='image-head1'>PDF Pages</p>
-		<ul id="image-body">
-			<% if @pdf_image.present? %>
+	<% if @pdf_image.present? %>
+		<div class="clearfix">
+			<p class='image-head1'>PDF Pages</p>
+			<ul id="image-body">
 				<li>
 					<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
 							pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y') , 
 															:date_to_select=>@story.pubdate.strftime('%m/%d/%Y')) %>
 				</li>
-			<% end %>
-		</ul>
-	</div>
+			</ul>
+		</div>
+	<% end %>
 
 </div>
