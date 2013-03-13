@@ -33,22 +33,17 @@
 		<% end %>
 	</div>
 
-<!-- 
 	<div class="clearfix">
-		<% if @story.story_images.pagepdf.length > 0 %>
-			<p class='image-head1'>Published Page</p>
-			<% @story.story_images.pagepdf.each do |image| %>
-				<ul id="image-body">
-					<li>
-						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-						<p class="image-info">
-							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-						</p>
-					</li>
-				</ul>
+		<p class='image-head1'>PDF Pages</p>
+		<ul id="image-body">
+			<% if @pdf_image.present? %>
+				<li>
+					<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+							pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y') , 
+															:date_to_select=>@story.pubdate.strftime('%m/%d/%Y')) %>
+				</li>
 			<% end %>
-		<% end %>
+		</ul>
 	</div>
--->
+
 </div>

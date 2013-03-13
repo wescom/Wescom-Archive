@@ -609,7 +609,7 @@ input#search_query {
 }
 
 #sidebar ul li a {
-  background-color: #f2f2e8;
+  /* background-color: #f2f2e8; */
 }
 
 #sidebar ul li a:hover, #lower-block ul li a:hover {

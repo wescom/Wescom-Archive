@@ -3,6 +3,7 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
+    @pdf_image = PdfImage.where(:pubdate=>@story.pubdate).order_by_pubdate_section_page.first
 
     respond_to do |format|
       format.html # show.html.erb
