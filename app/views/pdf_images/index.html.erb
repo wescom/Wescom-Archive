@@ -7,7 +7,12 @@
 				<%= form_tag pdf_images_path , :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td class="large"><%= link_to "Book View", book_pdf_images_path %></td>
+							<td class="large">
+								<%= link_to "Book View", book_pdf_images_path(:date_from_select=>params[:date_from_select], 
+																															:date_to_select=>params[:date_to_select], 
+																															:sectionletter=>params[:sectionletter], 
+																															:pagenum=>params[:pagenum]) %>
+							</td>
 							<td class="float_right extra_small">Date From:</td>
 							<td class="smaller">
 								<%= text_field_tag :date_from_select, params[:date_from_select], 
