@@ -10,8 +10,8 @@ namespace :wescom do
     def get_files
       find_date = Date.today.strftime('%d-%m-%Y')
       puts "Searching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
-      #find_date = "-04-2013"
-      pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf","bend-bulletin",'**','*'+find_date+'{*.PDF,*.pdf}')
+      #find_date = "01-03-2013"
+      pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
       pdf_files
@@ -77,6 +77,7 @@ namespace :wescom do
     def get_section_letter(filename)
       array_of_letters = filename.split(/\d/)
       section_letter = array_of_letters[0]
+      #puts "section_letter: "+section_letter
       return section_letter
     end
 
@@ -84,12 +85,17 @@ namespace :wescom do
       array_of_letters = filename.split(/\d+/)
       array_of_letters[1].gsub! "_", ""
       section_name = array_of_letters[1]
+      #puts "section_name: "+section_name
       return section_name
     end
 
     def get_page(filename)
       array_of_numbers = filename.split(/\D{1,3}/)
-      return array_of_numbers[1].to_i
+      if array_of_numbers[1].to_i == 0
+        return array_of_numbers[0].to_i
+      else
+        return array_of_numbers[1].to_i
+      end
     end
     
     import_files
