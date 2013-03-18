@@ -8,7 +8,7 @@ namespace :wescom do
       #puts "counts: "+counts.to_yaml
 
       # Keep only those pairs that have more than one record, thus duplicates
-      dupes = counts.select{|attrs, count| count > 4}
+      dupes = counts.select{|attrs, count| count > 1}
       #puts "dupes: "+dupes.to_yaml
 
       # Map objects by the attributes we have.
