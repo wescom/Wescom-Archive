@@ -23,12 +23,16 @@ class PdfImagesController < ApplicationController
   end
 
   def book
+    @publications = Publication.find(:all)
     scope = PdfImage
     if (params[:date_from_select].present?)
       scope = scope.where('DATE(pubdate) >= ?', Date.strptime(params[:date_from_select], "%m/%d/%Y"))
     end
     if (params[:date_to_select].present?)
       scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
+    end
+    if (params[:publication].present?)
+      scope = scope.where('publication = ?', params[:publication])
     end
     if (params[:sectionletter].present?)
       scope = scope.where('section_letter = ?', params[:sectionletter])

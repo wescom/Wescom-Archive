@@ -10,6 +10,7 @@
 							<td class="large">
 								<%= link_to "Grid View", pdf_images_path(:date_from_select=>params[:date_from_select], 
 																															:date_to_select=>params[:date_to_select], 
+																															:publication=>params[:publication], 
 																															:sectionletter=>params[:sectionletter], 
 																															:pagenum=>params[:pagenum]) %>
 							</td>
@@ -24,6 +25,10 @@
 								<%= text_field_tag :date_to_select, params[:date_to_select], 
 													:class => 'short_date_picker center', 
 													:placeholder => "mm/dd/yyyy" %>
+							</td>
+							<td class="medium">
+								<%= select_tag 'publication', options_from_collection_for_select(@publications, 'name', 'name', 
+													:selected => params[:publication]), {:prompt => "- Select Publication -"} %>
 							</td>
 							<td class="float_right extra_small">Section Letter:</td>
 							<td class="tiny">
