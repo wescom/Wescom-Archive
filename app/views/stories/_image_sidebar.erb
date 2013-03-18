@@ -39,8 +39,9 @@
 			<ul id="image-body">
 				<li>
 					<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-							pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y') , 
-															:date_to_select=>@story.pubdate.strftime('%m/%d/%Y')) %>
+							pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y'), 
+															:date_to_select=>@story.pubdate.strftime('%m/%d/%Y'),
+															:publication=>@story.publication.name) %>
 				</li>
 			</ul>
 		</div>
