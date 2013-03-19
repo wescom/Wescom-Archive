@@ -1,6 +1,6 @@
 <tr>
-	<td></td>
 	<td><%= table_row.name %></td>	
+	<td><%= table_row.publication_type.name if table_row.publication_type.present? %></td>
 	<td><%= table_row.location.name if table_row.location.present? %></td>	
 	<td>
 		<% if table_row.created_at? %>

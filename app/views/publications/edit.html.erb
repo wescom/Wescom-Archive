@@ -15,7 +15,10 @@
 					<% if admin? %>
 						Name: <%= form.text_field :name, :class => "large" %>
 					<% end %>
-					Location: <%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, {}, :class => 'medium' %>
+					Publication Type: 
+					<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] }, {}, :class => 'small' %>
+					Location: 
+					<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, {}, :class => 'small' %>
 					<br/>
 					<%= form.submit "Update", :class => 'submit small'%>
 					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
