@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20130319220034) do
 
   create_table "publication_types", :force => true do |t|
     t.string   "name"
+    t.integer  "sort_order"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
