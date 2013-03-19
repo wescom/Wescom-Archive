@@ -1,35 +1,33 @@
-<div id="locations-page">
+<div id="publications-page">
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
 		<h1>
-			Locations
-			<span class="float_right"><%= link_to "New Location", new_location_path %></span>
+			Publications
 		</h1>
 
 		<div class="inner-box clearfix">
 		  <div id="form-block" class="grid_15">
-			  <% if @locations %>
+			  <% if @publications %>
 			    <div id="table-block" class="grid_15">
 						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @locations %></div>
+			      	<div class="float_right"><%= will_paginate @publications %></div>
 						</div>
-			      <% unless @locations.nil? %>
+			      <% unless @publications.nil? %>
 			        <table cellspacing="0" cellpadding="0">
 			          <tbody>
 			            <tr class="header">
 			              <td>ID</td>
 			              <td>Name</td>
-										<td>Publications</td>
 			              <td>Created</td>
 			              <td>Updated</td>
 			              <td class="center">Action</td>
 			            </tr>
-			            <%= render :partial => 'table_row', :collection => @locations %>
+			            <%= render :partial => 'table_row', :collection => @publications %>
 			          </tbody>
 			        </table>
 			      <% end %>
 						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @locations %></div>
+			      	<div class="float_right"><%= will_paginate @publications %></div>
 						</div>
 			    </div>
 			  <% end %>
