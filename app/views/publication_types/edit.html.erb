@@ -1,0 +1,25 @@
+<div id="publication_types-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Publication Type: <%= @publication_type.name %>
+			<span class="float_right"><%= button_to "Delete Publication Type", publication_type_path(@publication_type), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete publication type?",
+										:action => 'destroy' %></span>
+		</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @publication_type, :url => publication_type_path do |form| %>
+					<% if admin? %>
+						Name: <%= form.text_field :name, :class => "large" %>
+					<% end %>
+					<br/>
+					<%= form.submit "Update", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

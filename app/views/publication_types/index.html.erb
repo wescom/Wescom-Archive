@@ -1,0 +1,38 @@
+<div id="publication-types-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Publication Types
+			<span class="float_right"><%= link_to "New Publication Type", new_publication_type_path %></span>
+		</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+			  <% if @publication_types %>
+			    <div id="table-block" class="grid_15">
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @publication_types %></div>
+						</div>
+			      <% unless @publication_types.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+			              <td>ID</td>
+			              <td>Name</td>
+			              <td>Created</td>
+			              <td>Updated</td>
+			              <td class="center">Action</td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @publication_types %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @publication_types %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>

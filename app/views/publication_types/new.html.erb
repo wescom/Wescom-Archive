@@ -1,0 +1,17 @@
+<div id="publication-types-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>New Publication Type</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @publication_type, :url => publication_types_path do |form| %>
+						Name: <%= form.text_field :name, :class => "large", :autofocus => true %>
+					<br/>
+					<%= form.submit "Create", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

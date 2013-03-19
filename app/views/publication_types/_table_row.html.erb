@@ -1,0 +1,16 @@
+<tr>
+	<td><%= table_row.id %></td>
+	<td><%= table_row.name %></td>	
+	<td>
+		<% if table_row.created_at? %>
+			<%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %>
+		<% end %>
+	</td>
+	<td>
+		<% if table_row.updated_at? %>
+			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
+		<% end %>
+	</td>
+	<td class="center"><%= link_to "Edit", edit_publication_type_path(table_row) %>
+
+</tr>

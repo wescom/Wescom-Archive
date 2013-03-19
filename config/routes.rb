@@ -1,6 +1,7 @@
 Wescomarchive::Application.routes.draw do
   resources :locations
   resources :publications
+  resources :publication_types
   resources :papers
   resources :sections
   resources :section_categories
