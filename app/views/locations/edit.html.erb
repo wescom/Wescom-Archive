@@ -1,0 +1,25 @@
+<div id="locations-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Section: <%= @location.name %>
+			<span class="float_right"><%= button_to "Delete Section", location_path(@location), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete location?",
+										:action => 'destroy' %></span>
+		</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @location, :url => location_path do |form| %>
+					<% if admin? %>
+						Name: <%= form.text_field :name, :class => "large" %>
+					<% end %>
+					<br/>
+					<%= form.submit "Update", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

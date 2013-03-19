@@ -8,6 +8,7 @@
 		<% if admin? or edit? %>
 			<li class="admin"><a> Administration </a>
 				<ul>
+					<li class="locations"><%= link_to "Locations", locations_url %></li>
 					<li class="sections"><%= link_to "Sections", sections_url %></li>
 					<li class="section_categories"><%= link_to "Section Categories", section_categories_url %></li>
 					<% if admin? %>

@@ -1,0 +1,38 @@
+<div id="locations-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Locations
+			<span class="float_right"><%= link_to "New General Ledger Account", new_location_path %></span>
+		</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+			  <% if @locations %>
+			    <div id="table-block" class="grid_15">
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @locations %></div>
+						</div>
+			      <% unless @locations.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+			              <td>ID</td>
+			              <td>Name</td>
+			              <td>Created</td>
+			              <td>Updated</td>
+			              <td class="center">Action</td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @locations %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @locations %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>
