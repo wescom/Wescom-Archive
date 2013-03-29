@@ -2,6 +2,7 @@ class Story < ActiveRecord::Base
   belongs_to :publication
   belongs_to :section
   belongs_to :paper
+  belongs_to :plan
 
   has_and_belongs_to_many :keywords
   has_many :story_topics

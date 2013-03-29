@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319224214) do
+ActiveRecord::Schema.define(:version => 20130328234555) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(:version => 20130319224214) do
   add_index "pdf_images", ["pubdate"], :name => "index_pdf_images_on_pubdate"
   add_index "pdf_images", ["publication"], :name => "index_pdf_images_on_publication"
   add_index "pdf_images", ["section_letter"], :name => "index_pdf_images_on_section_letter"
+
+  create_table "plans", :force => true do |t|
+    t.string   "pub_name"
+    t.string   "section_name"
+    t.string   "import_pub_name"
+    t.string   "import_section_name"
+    t.string   "publication_type_id"
+    t.string   "location_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "publication_types", :force => true do |t|
     t.string   "name"
@@ -117,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20130319224214) do
     t.text     "sidebar_body"
     t.string   "project_group"
     t.string   "frontend_db"
+    t.integer  "plan_id"
   end
 
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"

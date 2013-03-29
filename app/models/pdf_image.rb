@@ -1,4 +1,5 @@
 class PdfImage < ActiveRecord::Base
+  belongs_to :plan
 
   has_attached_file :image, 
       :styles => { 

@@ -1,0 +1,19 @@
+<tr>
+	<td><%= table_row.location.name unless table_row.location.nil? %></td>	
+	<td><%= table_row.publication_type.name unless table_row.publication_type.nil? %></td>	
+	<td><%= table_row.pub_name %></td>	
+	<td><%= table_row.section_name %></td>	
+	<td><%= table_row.import_pub_name %></td>	
+	<td><%= table_row.import_section_name %></td>	
+	<td>
+		<% if table_row.created_at? %>
+			<%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %>
+		<% end %>
+	</td>
+	<td>
+		<% if table_row.updated_at? %>
+			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
+		<% end %>
+	</td>
+	<td class="center"><%= link_to "Edit", edit_plan_path(table_row) %>
+</tr>

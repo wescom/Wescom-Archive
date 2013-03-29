@@ -1,0 +1,43 @@
+<div id="plans-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>
+			Plans
+		</h1>
+		<p>Plans are used to link stories and pages to their corresponding plan data, such as publication, section and location. Stories and pages are imported into the Archive with a pub and section based on the originating news system. This does not always work for an organized Archive. These plans allow an admin user to use the imported data and assign the plan to correct info to be used for searching and filtering within the Archive.</p>
+		<p>Each plan should be assigned to a Location and Publication Type, along with a correct Publication and Section (if applicable).</p>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+			  <% if @plans %>
+			    <div id="table-block" class="grid_15">
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @plans %></div>
+						</div>
+			      <% unless @plans.nil? %>
+			        <table cellspacing="0" cellpadding="0">
+			          <tbody>
+			            <tr class="header">
+										<td>Location</td>
+										<td>Pub Type</td>
+			              <td>Publication</td>
+			              <td>Section</td>
+			              <td>Import Pub Name</td>
+			              <td>Import Sect Name</td>
+			              <td>Created</td>
+			              <td>Updated</td>
+			              <td class="center">Action</td>
+			            </tr>
+			            <%= render :partial => 'table_row', :collection => @plans %>
+			          </tbody>
+			        </table>
+			      <% end %>
+						<div id="table-paginate" class="full_width">
+			      	<div class="float_right"><%= will_paginate @plans %></div>
+						</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>
+	</div>
+</div>
