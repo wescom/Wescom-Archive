@@ -68,6 +68,18 @@ namespace :wescom do
           else
             if pub_folder == "bend-conickel"
               publication = "The Nickel"
+            else
+              if pub_folder == "bend-comarket"
+                publication = "CO Marketplace"
+              else
+                if pub_folder == "bend-misc"
+                  publication = "The Bulletin"
+                else
+                  if pub_folder == "pulse"
+                    publication = "Pulse"
+                  end
+                end
+              end
             end
           end
         end
