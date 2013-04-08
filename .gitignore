@@ -11,7 +11,7 @@ doc/
 db/sphinx/**/*
 solr/lib/*
 solr/data/*
-solr/pids/
+solr/pids/*
 .sass-cache/
 sii_data/
 public/system/
