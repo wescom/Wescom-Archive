@@ -8,9 +8,9 @@
 		<p>Each plan should be assigned to a Location and Publication Type, along with a correct Publication and Section (if applicable).</p>
 
 		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
+		  <div id="form-block" class="full_width">
 			  <% if @plans %>
-			    <div id="table-block" class="grid_15">
+			    <div id="table-block" class="full_width">
 						<div id="table-paginate" class="full_width">
 			      	<div class="float_right"><%= will_paginate @plans %></div>
 						</div>
@@ -26,6 +26,8 @@
 			              <td>Import Sect Name</td>
 			              <td>Created</td>
 			              <td>Updated</td>
+										<td class="center">Sample Stories</td>
+										<td class="center">Sample PDFs</td>
 			              <td class="center">Action</td>
 			            </tr>
 			            <%= render :partial => 'table_row', :collection => @plans %>

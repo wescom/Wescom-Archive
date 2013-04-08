@@ -1,7 +1,9 @@
 class PdfImagesController < ApplicationController
   def index
     @settings = SiteSettings.find(:first)
-    @publications = Publication.find(:all)
+    @locations = Location.find(:all)
+    @pub_types = PublicationType.find(:all)
+    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq
 
     scope = PdfImage
     if (params[:date_from_select].present?)
@@ -10,8 +12,14 @@ class PdfImagesController < ApplicationController
     if (params[:date_to_select].present?)
       scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
     end
+    if (params[:location].present?)
+      scope = scope.includes('plan').where('plans.location_id = ?', params[:location])
+    end
+    if (params[:pub_type].present?)
+      scope = scope.includes('plan').where('plans.publication_type_id = ?', params[:pub_type])
+    end
     if (params[:publication].present?)
-      scope = scope.where('publication = ?', params[:publication])
+      scope = scope.includes('plan').where('plans.pub_name = ?', params[:publication])
     end
     if (params[:sectionletter].present?)
       scope = scope.where('section_letter = ?', params[:sectionletter])
@@ -24,6 +32,10 @@ class PdfImagesController < ApplicationController
 
   def book
     @publications = Publication.find(:all)
+    @locations = Location.find(:all)
+    @pub_types = PublicationType.find(:all)
+    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq
+
     scope = PdfImage
     if (params[:date_from_select].present?)
       scope = scope.where('DATE(pubdate) >= ?', Date.strptime(params[:date_from_select], "%m/%d/%Y"))
@@ -31,8 +43,14 @@ class PdfImagesController < ApplicationController
     if (params[:date_to_select].present?)
       scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
     end
+    if (params[:location].present?)
+      scope = scope.includes('plan').where('plans.location_id = ?', params[:location])
+    end
+    if (params[:pub_type].present?)
+      scope = scope.includes('plan').where('plans.publication_type_id = ?', params[:pub_type])
+    end
     if (params[:publication].present?)
-      scope = scope.where('publication = ?', params[:publication])
+      scope = scope.includes('plan').where('plans.pub_name = ?', params[:publication])
     end
     if (params[:sectionletter].present?)
       scope = scope.where('section_letter = ?', params[:sectionletter])
