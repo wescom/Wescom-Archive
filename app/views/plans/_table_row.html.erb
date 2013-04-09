@@ -15,15 +15,5 @@
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td class="center">
-		<% table_row.stories.limit(2).each do |story| %>
-			<%= link_to "Sample", story_path(story) %>
-		<% end %>
-	</td>
-	<td class="center">
-		<% table_row.pdf_images.limit(2).each do |pdf| %>
-			<%= link_to "Sample", pdf_image_path(pdf) %>
-		<% end %>
-	</td>
 	<td class="center"><%= link_to "Edit", edit_plan_path(table_row) %></td>
 </tr>

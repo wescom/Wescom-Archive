@@ -8,13 +8,37 @@
 		<div class="inner-box clearfix">
 		  <div id="form-block" class="grid_15">
 				<%= form_for @plan, :url => plan_path do |form| %>
-					Location: 
-					<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
-							{:prompt => "- Select Location -"}, :class => 'small' %>
-					Publication Type: 
-					<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
-							{:prompt => "- Select Publication Type -"}, :class => 'small' %>
-					<br/>
+					<div class="full_width clearfix">
+						<div class="grid_10">
+							Location: 
+							<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
+									{:prompt => "- Select Location -"}, :class => 'small' %>
+							Publication Type: 
+							<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
+									{:prompt => "- Select Publication Type -"}, :class => 'small' %>
+						</div>
+						<div class="grid_6">
+							<h3>Sample Records attached to this plan:</h3>
+							<div class="indent">
+								</br>
+								<div class="grid_3 float_left">
+									<% if @stories.present? %>
+										<% @stories.each do |sample| %>
+											<p><%= link_to "Story", story_path(sample) %></p>
+										<% end %>
+									<% end %>
+								</div>
+								<div class="grid_3 float_left">
+									<% if @pdfs.present? %>
+										<% @pdfs.each do |sample| %>
+											<p><%= link_to "PDF", pdf_image_path(sample) %></p>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+						</div>
+					</div>
+					</br>
 					<div class="full_width clearfix">
 						<div class="grid_6">
 							<h2>Pub and Section from imported story data file</h2><br/>
