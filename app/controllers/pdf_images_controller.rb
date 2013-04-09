@@ -1,9 +1,9 @@
 class PdfImagesController < ApplicationController
   def index
     @settings = SiteSettings.find(:first)
-    @locations = Location.find(:all)
-    @pub_types = PublicationType.find(:all)
-    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'name')
+    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq.order('pub_name')
 
     scope = PdfImage
     if (params[:date_from_select].present?)
@@ -32,9 +32,9 @@ class PdfImagesController < ApplicationController
 
   def book
     @publications = Publication.find(:all)
-    @locations = Location.find(:all)
-    @pub_types = PublicationType.find(:all)
-    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'name')
+    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq.order('pub_name')
 
     scope = PdfImage
     if (params[:date_from_select].present?)
