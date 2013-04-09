@@ -1,19 +1,23 @@
 <div id="pdf-images-page">
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
-		<h1>PDF Pages</h1>
+		<h1>
+			PDF Pages
+			<span>&nbsp;&nbsp;(<%= link_to "Grid View ", 
+															pdf_images_path(:date_from_select=>params[:date_from_select], 
+																										:date_to_select=>params[:date_to_select], 
+																										:location=>params[:location], 
+																										:pub_type=>params[:pub_type], 
+																										:publication=>params[:publication], 
+																										:sectionletter=>params[:sectionletter], 
+																										:pagenum=>params[:pagenum]) %>/ Book View)</span>
+		</h1>
 		<h2 class="clearfix">
 			<div id="filter_images_block" class="full_width clear_fix">
 				<%= form_tag book_pdf_images_path , :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td class="large">
-								<%= link_to "Grid View", pdf_images_path(:date_from_select=>params[:date_from_select], 
-																															:date_to_select=>params[:date_to_select], 
-																															:publication=>params[:publication], 
-																															:sectionletter=>params[:sectionletter], 
-																															:pagenum=>params[:pagenum]) %>
-							</td>
+							<td class="small"></td>
 							<td class="float_right extra_small">Date From:</td>
 							<td class="smaller">
 								<%= text_field_tag :date_from_select, params[:date_from_select], 
@@ -27,7 +31,18 @@
 													:placeholder => "mm/dd/yyyy" %>
 							</td>
 							<td class="medium">
-								<%= select_tag 'publication', options_from_collection_for_select(@publications, 'name', 'name', 
+								<%= select_tag 'location', 
+													options_from_collection_for_select(@locations, 'id', 'name', 
+													:selected => params[:location]), {:prompt => "- Select Location -"} %>
+							</td>
+							<td class="medium">
+								<%= select_tag 'pub_type', 
+													options_from_collection_for_select(@pub_types, 'id', 'name', 
+													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
+							</td>
+							<td class="medium">
+								<%= select_tag 'publication', 
+													options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
 													:selected => params[:publication]), {:prompt => "- Select Publication -"} %>
 							</td>
 							<td class="float_right extra_small">Section Letter:</td>
