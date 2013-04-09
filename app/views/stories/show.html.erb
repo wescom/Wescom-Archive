@@ -16,7 +16,7 @@
 			    <% end %>
 			    <% if @story.byline and @story.byline.length > 0 %>
 			      <h4>By: <%= @story.byline.html_safe %>
-							<% if @story.paper %>, <%= @story.paper.name.html_safe %> <% end %>
+							<% if @story.paper %>, <%= @story.paper.name.html_safe if @story.paper.present? %> <% end %>
 						</h4>
 			    <% end %>
 				</div>
