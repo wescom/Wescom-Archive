@@ -74,7 +74,7 @@
 								</div>
 								<div>
 									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') %></div>
-									<div class="center"><%= pdf.publication %> <%= pdf.section_letter %><%= pdf.page %></div>
+									<div class="center"><%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %></div>
 									<% if admin? and @settings.show_delete_button %>
 										<div class="center"><%= button_to "Delete", pdf_image_path(pdf), 
 																	:method => :delete, 
