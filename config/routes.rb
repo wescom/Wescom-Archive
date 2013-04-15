@@ -3,9 +3,8 @@ Wescomarchive::Application.routes.draw do
   resources :publications
   resources :publication_types
   resources :plans do
-    get 'pubs_for_pub_type', :on => :collection
+    get 'pubs_for_pub_type_and_location', :on => :collection
   end
-#  match "/plans/pubs_for_pub_type/:id" => "plans#pubs_for_pub_type"
   resources :papers
   resources :sections
   resources :section_categories

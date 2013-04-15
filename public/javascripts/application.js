@@ -211,12 +211,31 @@ $(document).ready(function(){
 		arrows: true,
 	});
 	
+	// Filter publication by location
+	$('select#location').change(function() {
+		var location = $('select#location').val();
+		var pub_type = $('select#pub_type').val();
+		// Send the request and update publication dropdown 
+		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
+			// Clear all options from publication select 
+			$("select#publication option").remove();
+			//put in a empty default line
+			var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
+			$(row).appendTo("select#publication");
+			// Fill publication select 
+			for (var i = 0; i < data.length; i++) {
+				row = "<option value=\"" + data[i].plan.pub_name + "\">" + data[i].plan.pub_name + "</option>";
+				$(row).appendTo("select#publication");
+			}
+		});
+	});
+
 	// Filter publication by pub_type
 	$('select#pub_type').change(function() {
-		var pub_type = $(this).val();
-
+		var location = $('select#location').val();
+		var pub_type = $('select#pub_type').val();
 		// Send the request and update publication dropdown 
-		jQuery.getJSON('/plans/pubs_for_pub_type/',{pub_type: pub_type, ajax: 'true'}, function(data){
+		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
 			// Clear all options from publication select 
 			$("select#publication option").remove();
 			//put in a empty default line

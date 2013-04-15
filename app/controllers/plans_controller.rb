@@ -44,17 +44,20 @@ class PlansController < ApplicationController
     end
   end
   
-  def pubs_for_pub_type
-    if params[:pub_type].nil? or params[:pub_type] == ""
-      @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
-    else
-      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type]).uniq.order('pub_name')
+  def pubs_for_pub_type_and_location
+    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
+    if !(params[:location].nil? or params[:location] == "")
+      scope = scope.where(:location_id => params[:location])
     end
+    if !(params[:pub_type].nil? or params[:pub_type] == "")
+      scope = scope.where(:publication_type_id => params[:pub_type])
+    end
+    scope = scope.uniq.order('pub_name')
     #Rails.logger.info @publications.to_yaml
 
     respond_to do |format|
       format.html
-      format.json  { render :json => @publications }
+      format.json  { render :json => scope }
     end
   end
 end
