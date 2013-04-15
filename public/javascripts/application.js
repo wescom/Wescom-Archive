@@ -213,10 +213,10 @@ $(document).ready(function(){
 	
 	// Filter publication by pub_type
 	$('select#pub_type').change(function() {
-		var pub_type_id = $(this).val();
+		var pub_type = $(this).val();
 
 		// Send the request and update publication dropdown 
-		jQuery.getJSON('/plans/pubs_for_pub_type/',{pub_type_id: pub_type_id, ajax: 'true'}, function(data){
+		jQuery.getJSON('/plans/pubs_for_pub_type/',{pub_type: pub_type, ajax: 'true'}, function(data){
 			// Clear all options from publication select 
 			$("select#publication option").remove();
 			//put in a empty default line

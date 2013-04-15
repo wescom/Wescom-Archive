@@ -45,10 +45,10 @@ class PlansController < ApplicationController
   end
   
   def pubs_for_pub_type
-    if params[:pub_type_id].nil? or params[:pub_type_id] == ""
+    if params[:pub_type].nil? or params[:pub_type] == ""
       @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
     else
-      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type_id]).uniq.order('pub_name')
+      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type]).uniq.order('pub_name')
     end
     #Rails.logger.info @publications.to_yaml
 
