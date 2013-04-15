@@ -172,6 +172,17 @@ $(document).ready(function(){
 
 	// Modal boxes - to all links with rel="facebox"
 	$('a[rel*=facebox]').facebox();
+
+	$(".location_plans").hide();
+  $("#toggle_pubs").click(function () {
+    $(".location_plans").toggle("slow");
+		if ($(this).html() == "(show pubs)") {
+			document.getElementById("toggle_pubs").innerHTML = '(hide pubs)';
+		} else {
+			document.getElementById("toggle_pubs").innerHTML = '(show pubs)';
+		}
+    return false;
+  });
 	
 	// Image Gallery
 	var $container = $('#image-gallery');

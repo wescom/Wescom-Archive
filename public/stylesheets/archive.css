@@ -78,6 +78,12 @@ a {
 
 a:hover {
   text-decoration: none;
+	cursor: pointer;
+}
+
+#toggle_pubs {
+  font: italic 1.0em Georgia, "Times New Roman", Times, serif;
+  color: #6da9d2;
 }
 
 .hide {
