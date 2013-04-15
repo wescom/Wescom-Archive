@@ -3,7 +3,11 @@ class PdfImagesController < ApplicationController
     @settings = SiteSettings.find(:first)
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
-    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq.order('pub_name')
+    if params[:pub_type].nil? or params[:pub_type] == ""
+      @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+    else
+      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type]).uniq.order('pub_name')
+    end
 
     scope = PdfImage
     if (params[:date_from_select].present?)
@@ -34,7 +38,11 @@ class PdfImagesController < ApplicationController
     @publications = Publication.find(:all)
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
-    @publications = Plan.where("pub_name is not null and pub_name<>''").select(:pub_name).uniq.order('pub_name')
+    if params[:pub_type].nil? or params[:pub_type] == ""
+      @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+    else
+      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type]).uniq.order('pub_name')
+    end
 
     scope = PdfImage
     if (params[:date_from_select].present?)
@@ -76,5 +84,5 @@ class PdfImagesController < ApplicationController
       redirect_to pdf_images_path
     end
   end
-
+  
 end
