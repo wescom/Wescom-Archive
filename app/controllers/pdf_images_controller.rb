@@ -39,14 +39,17 @@ class PdfImagesController < ApplicationController
   end
 
   def book
-    @publications = Publication.find(:all)
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
-    if params[:pub_type].nil? or params[:pub_type] == ""
-      @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
-    else
-      @publications = Plan.select(:pub_name).where(:publication_type_id => params[:pub_type]).uniq.order('pub_name')
+
+    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
+    if !(params[:location].nil? or params[:location] == "")
+      scope = scope.where(:location_id => params[:location])
     end
+    if !(params[:pub_type].nil? or params[:pub_type] == "")
+      scope = scope.where(:publication_type_id => params[:pub_type])
+    end
+    @publications = scope.uniq.order('pub_name')
 
     scope = PdfImage
     if (params[:date_from_select].present?)
