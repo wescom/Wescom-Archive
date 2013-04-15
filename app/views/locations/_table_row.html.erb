@@ -14,14 +14,16 @@
 	</td>
 	<td class="center"><%= link_to "Edit", edit_location_path(table_row) %>
 
-	<% table_row.publications.each do |pub| %>
+	<% table_row.plans.each do |plan| %>
 		<tr>
 			<td></td>
 			<td></td>
-			<td><%= pub.name %></td>	
+			<td>
+				<%= plan.pub_name %>
+				<% if plan.section_name.present? %>- <%= plan.section_name %><% end %>
+			</td>
 			<td></td>
-			<td></td>
-			<td class="center"><%= link_to "Edit", edit_publication_path(pub) %>
+			<td class="center"><%= link_to "Edit", edit_plan_path(plan) %>
 		</tr>
 	<% end %>
 </tr>
