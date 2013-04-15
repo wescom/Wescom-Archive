@@ -6,14 +6,19 @@
 	<td><%= table_row.import_pub_name %></td>	
 	<td><%= table_row.import_section_name %></td>	
 	<td>
-		<% if table_row.created_at? %>
-			<%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %>
-		<% end %>
-	</td>
-	<td>
 		<% if table_row.updated_at? %>
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td class="center"><%= link_to "Edit", edit_plan_path(table_row) %></td>
+	<td class="center"><%= table_row.stories.count %></td>
+	<td class="center"><%= table_row.pdf_images.count %></td>
+	<td class="center">
+		<%= link_to "Edit", edit_plan_path(table_row) %>
+		<% if table_row.stories.count == 0 and table_row.pdf_images.count == 0 %>
+			<%= button_to "Delete", plan_path(table_row), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete plan?",
+										:action => 'destroy' %>
+		<% end %>
+	</td>
 </tr>
