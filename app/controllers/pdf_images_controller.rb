@@ -3,6 +3,7 @@ class PdfImagesController < ApplicationController
     @settings = SiteSettings.find(:first)
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
 
     scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
     if !(params[:location].nil? or params[:location] == "")
@@ -41,6 +42,7 @@ class PdfImagesController < ApplicationController
   def book
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
 
     scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
     if !(params[:location].nil? or params[:location] == "")
