@@ -21,17 +21,18 @@
 							<h3>Sample Records attached to this plan:</h3>
 							<div class="indent">
 								</br>
-								<div class="grid_3 float_left">
+								<div class="grid_6 float_left">
 									<% if @stories.present? %>
 										<% @stories.each do |sample| %>
 											<p><%= link_to "Story", story_path(sample) %></p>
 										<% end %>
 									<% end %>
+									<% select_tag "list[]", options_from_collection_for_select(@stories, "id", "name") %>
 								</div>
-								<div class="grid_3 float_left">
+								<div class="grid_6 float_left">
 									<% if @pdfs.present? %>
 										<% @pdfs.each do |sample| %>
-											<p><%= link_to "PDF", pdf_image_path(sample) %></p>
+											<p><%= link_to "PDF", pdf_image_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %></p>
 										<% end %>
 									<% end %>
 								</div>
@@ -46,16 +47,21 @@
 								<div class="indent">
 									Imported Publication Name: <%= form.text_field :import_pub_name %>
 									Imported Section Name: <%= form.text_field :import_section_name %>
+									Imported Section Letter: <%= form.text_field :import_section_letter %>
 								</div>
 							<% else %>
 								<div class="indent">
 									Imported Publication Name: <% form.text_field :import_pub_name %>
 									Imported Section Name: <% form.text_field :import_section_name %>
+									Imported Section Letter: <% form.text_field :import_section_letter %>
 								</div>
 							<% end %>
 						</div>
 						<div class="grid_2">
 							<br/><br/><br/><br/><br/>
+							===============><br/>
+							===============><br/>
+							<br/><br/>
 							===============><br/>
 							===============><br/>
 							<br/><br/>

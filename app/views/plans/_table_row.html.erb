@@ -5,7 +5,8 @@
 	<td><%= table_row.section_name %></td>	
 	<td><%= table_row.import_pub_name %></td>	
 	<td><%= table_row.import_section_name %></td>	
-	<td>
+	<td class="center"><%= table_row.import_section_letter %></td>	
+	<td class="center">
 		<% if table_row.updated_at? %>
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>

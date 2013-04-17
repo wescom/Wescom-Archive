@@ -12,6 +12,7 @@ db/sphinx/**/*
 solr/lib/*
 solr/data/*
 solr/pids/*
+solr/pids/development/sunspot-solr-development.pid
 .sass-cache/
 sii_data/
 public/system/

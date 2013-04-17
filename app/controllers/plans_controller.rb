@@ -11,8 +11,8 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @locations = Location.find(:all, :order => "name")
     @publication_types = PublicationType.find(:all, :order => "sort_order")
-    @pdfs = @plan.pdf_images.limit(3).order('page')
-    @stories = @plan.stories.limit(3).order('page')
+    @pdfs = @plan.pdf_images.limit(5).order('page')
+    @stories = @plan.stories.limit(5).order('page')
   end
 
   def update
