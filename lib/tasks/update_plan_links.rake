@@ -3,8 +3,7 @@ namespace :wescom do
   desc "Update PDF links to Plans"
   task :update_pdf_plans  => :environment do
     def update_pdf_links
-#      pdf_images = PdfImage.where('plan_id is null')
-      pdf_images = PdfImage.find(:all)
+      pdf_images = PdfImage.where('plan_id is null')
       pdf_images.each do |pdf|
         puts "PDF Record =  "+"#"+pdf.id.to_s + " - " + pdf.image_file_name unless pdf.image_file_name.nil?
         pdf.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(pdf.publication,pdf.section_name,pdf.section_letter)

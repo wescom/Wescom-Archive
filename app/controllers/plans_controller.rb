@@ -11,16 +11,16 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @locations = Location.find(:all, :order => "name")
     @publication_types = PublicationType.find(:all, :order => "sort_order")
-    @pdfs = @plan.pdf_images.limit(5).order('page')
-    @stories = @plan.stories.limit(5).order('page')
+    @pdfs = @plan.pdf_images.order('page')
+    @stories = @plan.stories.order('page')
   end
 
   def update
     @plan = Plan.find(params[:id])
     @locations = Location.find(:all, :order => "name")
     @publication_types = PublicationType.find(:all, :order => "sort_order")
-    @pdfs = @plan.pdf_images.limit(3).order('page')
-    @stories = @plan.stories.limit(3).order('page')
+    @pdfs = @plan.pdf_images.order('page')
+    @stories = @plan.stories.order('page')
     if params[:cancel_button]
       redirect_to plans_path
     else

@@ -1041,6 +1041,17 @@ img.spinner {
   }
 }
 
+/* Plans */
+#plan_sample_block {
+	border: 1px solid #b9bdc1;
+	height: 200px;
+	overflow: scroll;
+}
+
+.plan_sample {
+	margin: 10px 15px 10px 15px;
+}
+
 /* Site Settings Page */
 #settings_block {
 	min-height: 400px;

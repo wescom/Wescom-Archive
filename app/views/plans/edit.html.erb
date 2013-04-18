@@ -9,7 +9,7 @@
 		  <div id="form-block" class="grid_15">
 				<%= form_for @plan, :url => plan_path do |form| %>
 					<div class="full_width clearfix">
-						<div class="grid_10">
+						<div class="grid_8">
 							Location: 
 							<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
 									{:prompt => "- Select Location -"}, :class => 'small' %>
@@ -17,21 +17,29 @@
 							<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
 									{:prompt => "- Select Publication Type -"}, :class => 'small' %>
 						</div>
-						<div class="grid_6">
+						<div class="grid_8">
 							<h3>Sample Records attached to this plan:</h3>
-							<div class="indent">
+							<div id="plan_sample_block">
 								</br>
-								<div class="grid_6 float_left">
+								<div class="full_width clearfix">
 									<% if @stories.present? %>
 										<% @stories.each do |sample| %>
-											<p><%= link_to "Story", story_path(sample) %></p>
+											<div class="float_left plan_sample">
+												<p><%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %></p>
+											</div>
 										<% end %>
 									<% end %>
 								</div>
-								<div class="grid_6 float_left">
+								<div class="full_width clearfix">
 									<% if @pdfs.present? %>
 										<% @pdfs.each do |sample| %>
-											<p><%= link_to "PDF", pdf_image_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %></p>
+											<div class="float_left plan_sample">
+												<%= sample.pubdate %>, p.<%= sample.page %>
+												<br/>
+												<div class="center">
+													<%= link_to image_tag(sample.image(:large), :alt=>"PagePDF", :class=>"image_small"), pdf_image_path(sample) %>
+												</div>
+											</div>
 										<% end %>
 									<% end %>
 								</div>
