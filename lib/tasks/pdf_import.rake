@@ -10,7 +10,7 @@ namespace :wescom do
     def get_files
       find_date = Date.today.strftime('%d-%m-%Y')
       puts "Searching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
-      find_date = "C01_BULL PAPR_11-03-2013"
+      #find_date = "C01_BULL PAPR_11-03-2013"
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
