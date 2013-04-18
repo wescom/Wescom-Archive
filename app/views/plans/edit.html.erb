@@ -27,7 +27,6 @@
 											<p><%= link_to "Story", story_path(sample) %></p>
 										<% end %>
 									<% end %>
-									<% select_tag "list[]", options_from_collection_for_select(@stories, "id", "name") %>
 								</div>
 								<div class="grid_6 float_left">
 									<% if @pdfs.present? %>
