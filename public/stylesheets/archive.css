@@ -1048,7 +1048,12 @@ img.spinner {
 	overflow: scroll;
 }
 
-.plan_sample {
+.story_sample {
+	margin: 10px 10px 10px 10px;
+	height: 20px;
+}
+
+.pdf_sample {
 	margin: 10px 15px 10px 15px;
 	height: 150px;
 }

@@ -24,8 +24,14 @@
 								<div class="full_width clearfix">
 									<% if @stories.present? %>
 										<% @stories.each do |sample| %>
-											<div class="float_left plan_sample">
-												<p><%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %></p>
+											<div class="float_left story_sample">
+												<%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %>
+												<div class="center">
+													<%= link_to "PDFs", 
+																			pdf_images_path(:date_from_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+																											:date_to_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+																											:pagenum=>sample.page) %>
+												</div>
 											</div>
 										<% end %>
 									<% end %>
@@ -33,7 +39,7 @@
 								<div class="full_width clearfix">
 									<% if @pdfs.present? %>
 										<% @pdfs.each do |sample| %>
-											<div class="float_left plan_sample">
+											<div class="float_left pdf_sample">
 												<%= sample.pubdate %>, p.<%= sample.page %>
 												<br/>
 												<div class="center">
