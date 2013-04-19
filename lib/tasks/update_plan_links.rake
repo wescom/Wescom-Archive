@@ -21,12 +21,13 @@ namespace :wescom do
   desc "Update Story links to Plans"
   task :update_story_plans  => :environment do
     def update_pdf_links
-      stories = Story.where('plan_id is null and frontend_db = "DTI"')
+      stories = Story.where('frontend_db = "DTI"')
+      #stories = Story.where('plan_id is null and frontend_db = "DTI"')
       stories.each do |story|
         story_pub = story.publication.nil? ? "" : story.publication.name
         story_section = story.section.nil? ? "" : story.section.name
         puts "Story Record =  "+"#"+story.id.to_s + ", " + story_pub + ", " + story_section
-        story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name(story_pub,story_section)
+        story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(story_pub,story_section,'')
         puts "  Plan #"+story.plan.id.to_s+", "+story.plan.import_pub_name+", "+story.plan.import_section_name
         story.save
       end
