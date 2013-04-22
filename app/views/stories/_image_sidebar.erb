@@ -33,7 +33,7 @@
 		<% end %>
 	</div>
 
-	<% if @pdf_image.present? %>
+	<% if @pdf_image.present? and @story.publication.present? %>
 		<div class="clearfix">
 			<p class='image-head1'>PDF Pages</p>
 			<ul id="image-body">
