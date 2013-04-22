@@ -27,10 +27,12 @@
 											<div class="float_left story_sample">
 												<%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %>
 												<div class="center">
-													<%= link_to "PDFs", 
-																			pdf_images_path(:date_from_select=>sample.pubdate.strftime('%m/%d/%Y'), 
-																											:date_to_select=>sample.pubdate.strftime('%m/%d/%Y'), 
-																											:pagenum=>sample.page) %>
+													<% if sample.pubdate.present? %>
+														<%= link_to "PDFs", 
+																				pdf_images_path(:date_from_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+																												:date_to_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+																												:pagenum=>sample.page) %>
+													<% end %>
 												</div>
 											</div>
 										<% end %>
