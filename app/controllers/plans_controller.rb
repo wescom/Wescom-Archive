@@ -7,6 +7,29 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
   end
 
+  def new
+    @plan = Plan.new
+    @locations = Location.find(:all, :order => "name")
+    @publication_types = PublicationType.find(:all, :order => "sort_order")
+  end
+
+  def create
+    @locations = Location.find(:all, :order => "name")
+    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    if params[:cancel_button]
+      redirect_to plans_path
+    else
+      @plan = Plan.new(params[:plan])
+      if @plan.save
+        flash[:notice] = "Plan Created"
+        redirect_to plans_path
+      else
+        flash[:error] = "Plan Creation Failed"
+        render :action => :new
+      end
+    end    
+  end
+  
   def edit
     @plan = Plan.find(params[:id])
     @locations = Location.find(:all, :order => "name")

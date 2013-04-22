@@ -1,0 +1,65 @@
+<div id="planss-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>New Plan</h1>
+
+		<div class="inner-box clearfix">
+		  <div id="form-block" class="grid_15">
+				<%= form_for @plan, :url => plans_path do |form| %>
+					<div class="full_width clearfix">
+						<div class="grid_8">
+							Location: 
+							<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
+									{:prompt => "- Select Location -"}, :class => 'small' %>
+							Publication Type: 
+							<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
+									{:prompt => "- Select Publication Type -"}, :class => 'small' %>
+						</div>
+					</div>
+					<br/>
+					<div class="full_width clearfix">
+						<div class="grid_6">
+							<h2>Pub and Section from imported story data file</h2><br/>
+							<% if admin? %>
+								<div class="indent">
+									Imported Publication Name: <%= form.text_field :import_pub_name %>
+									Imported Section Name: <%= form.text_field :import_section_name %>
+									Imported Section Letter: <%= form.text_field :import_section_letter %>
+								</div>
+							<% else %>
+								<div class="indent">
+									Imported Publication Name: <% form.text_field :import_pub_name %>
+									Imported Section Name: <% form.text_field :import_section_name %>
+									Imported Section Letter: <% form.text_field :import_section_letter %>
+								</div>
+							<% end %>
+						</div>
+						<div class="grid_2">
+							<br/><br/><br/><br/><br/>
+							===============><br/>
+							===============><br/>
+							<br/><br/>
+							===============><br/>
+							===============><br/>
+							<br/><br/>
+							===============><br/>
+							===============><br/>
+						</div>
+						<div class="grid_8">
+							<h2>Pub and Section to use within this Archive for searching</h2><br/>
+							<div class="indent">
+								Publication Name: <%= form.text_field :pub_name, 
+										:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)" %>
+								Section Name: <%= form.text_field :section_name, 
+										:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)" %>
+							</div>
+						</div>
+					</div>
+					<br/>
+					<%= form.submit "Create", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
