@@ -24,7 +24,7 @@
 		<% end %>
 		<% if story_fragment.plan.present? %>
 			<%= story_fragment.plan.section_name %>
-			<%= " - " if !story_fragment.plan.section_name.nil? and story_fragment.plan.section_name.length > 0 %>
+			<%= " - " if !story_fragment.plan.section_name.nil? and story_fragment.plan.section_name.length > 0 and story_fragment.page.to_i > 0 %>
 			<%= "p." + story_fragment.page if story_fragment.page.to_i > 0 %>
 		<% end %>
 	</td>
