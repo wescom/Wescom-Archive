@@ -8,19 +8,25 @@
 			<% end %>
 		<% end %>
   </td>
-  <td class="byline_col"><%= story_fragment.byline if story_fragment.byline %></p></td>
+  <td class="center byline_col"><%= story_fragment.byline if story_fragment.byline %></td>
   <td class="center section_col">
-		<% if !story_fragment.publication.nil? %>
-			<% if story_fragment.publication.name.strip == "The Bulletin" %>
+		<% if story_fragment.plan.pub_name.present? %>
+			<% if story_fragment.plan.pub_name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
 			<% else %>
-				<% if story_fragment.publication.name.strip == "Redmond Spokesman" %>
+				<% if story_fragment.plan.pub_name.strip == "Redmond Spokesman" %>
 					<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
+				<% else %>
+					<%= story_fragment.plan.pub_name %>
 				<% end %>
 			<% end %>
-		<% end %><br/>
-		<%= story_fragment.section.name if story_fragment.section %>
-		<%= "- "+story_fragment.page if story_fragment.page.to_i > 0 %>
+			<br/>
+		<% end %>
+		<% if story_fragment.plan.present? %>
+			<%= story_fragment.plan.section_name %>
+			<%= " - " if !story_fragment.plan.section_name.nil? and story_fragment.plan.section_name.length > 0 %>
+			<%= "p." + story_fragment.page if story_fragment.page.to_i > 0 %>
+		<% end %>
 	</td>
   <td class="center pubdate_col">
 		<% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %>
