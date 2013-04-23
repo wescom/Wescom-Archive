@@ -3,13 +3,8 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
-    if @story.publication.present?
-      pub = (@story.publication.name == "The Bulletin" ? "The Bulletin" : "Redmond Spokesman")
-    else
-      pub = "The Bulletin"
-    end
     if @story.plan.present?
-      @pdf_image = PdfImage.where(:pubdate=>@story.pubdate).where(:publication=>@story.plan.pub_name).order_by_pubdate_section_page.first
+      @pdf_image = PdfImage.includes('plan').where(:pubdate=>@story.pubdate).where('plans.pub_name = ?',@story.plan.pub_name).order_by_pubdate_section_page.first
     end
 
     respond_to do |format|
