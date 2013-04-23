@@ -57,6 +57,10 @@ class Story < ActiveRecord::Base
     includes(:section).order('sections.name').order('page')
   end
   
+  def self.order_by_pub_section_page
+    includes(:plan).order('pub_name').order('section_name').order('page')
+  end
+  
   def section_name
     self.section.name if self.section.present?
   end

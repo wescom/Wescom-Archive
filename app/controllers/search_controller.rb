@@ -39,13 +39,13 @@ class SearchController < ApplicationController
                             .paginate(
                               :page => params[:page], 
                               :per_page => 30, 
-                              :order => "Pubdate DESC").order_by_section_page
+                              :order => "Pubdate DESC").order_by_pub_section_page
     else
       @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"), @publication.id)
                             .paginate(
                               :page => params[:page], 
                               :per_page => 30, 
-                              :order => "Pubdate DESC").order_by_section_page
+                              :order => "Pubdate DESC").order_by_pub_section_page
     end
     @total_stories_count = @stories.count
   end
