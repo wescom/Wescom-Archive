@@ -58,7 +58,7 @@ namespace :wescom do
         story.section = Section.find_or_create_by_name(dti_story.section) unless dti_story.section.nil?
         # new storage of pub and section goes into the Plan table
         if !dti_story.publication.nil? and !dti_story.section.nil?
-          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name(dti_story.publication,dti_story.section)
+          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.publication,dti_story.section,"")
         end
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
         story.sidebar_body = dti_story.sidebar_body unless dti_story.sidebar_body.nil?
