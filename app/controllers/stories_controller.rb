@@ -8,7 +8,9 @@ class StoriesController < ApplicationController
     else
       pub = "The Bulletin"
     end
-    @pdf_image = PdfImage.where(:pubdate=>@story.pubdate).where(:publication=>pub).order_by_pubdate_section_page.first
+    if @story.plan.present?
+      @pdf_image = PdfImage.where(:pubdate=>@story.pubdate).where(:publication=>@story.plan.pub_name).order_by_pubdate_section_page.first
+    end
 
     respond_to do |format|
       format.html # show.html.erb
