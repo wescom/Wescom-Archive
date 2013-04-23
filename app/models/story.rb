@@ -58,7 +58,7 @@ class Story < ActiveRecord::Base
   end
   
   def self.order_by_pub_section_page
-    includes(:plan).order('pub_name').order('section_name').order('page')
+    includes(:plan).order('plans.pub_name').order('plans.section_name').order('page')
   end
   
   def section_name
