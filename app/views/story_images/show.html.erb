@@ -32,7 +32,10 @@
 					<% end %>
 				<% end %>
 				Story : <%= link_to text_for_story_link(@image.story), @image.story if @image.story.present? %><br/>
-				<%= "Section: "+@image.story.section_name if @image.story.section_name.present? %><br/>
+				<% if @image.story.plan %>
+					<%= "Publication: "+@image.story.plan.pub_name if @image.story.plan.pub_name.present? %><br/>
+					<%= "Section: "+@image.story.plan.section_name if @image.story.plan.section_name.present? %><br/>
+				<% end %>
 				<%= "Page: "+@image.story.page if @image.story.page.to_i > 0 %>
 			</div>
 

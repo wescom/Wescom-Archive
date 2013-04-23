@@ -24,19 +24,22 @@
 	</td>
   <td class="center status_col"><%= image_fragment.publish_status %></td>
   <td class="center section_col">
-		<% if image_fragment.story.present? %>
-			<% if !image_fragment.story.publication.nil? %>
-				<% if image_fragment.story.publication.name.strip == "The Bulletin" %>
-					<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
+		<% if image_fragment.story.plan.pub_name.present? %>
+			<% if image_fragment.story.plan.pub_name.strip == "The Bulletin" %>
+				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
+			<% else %>
+				<% if image_fragment.story.plan.pub_name.strip == "Redmond Spokesman" %>
+					<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
 				<% else %>
-					<% if image_fragment.story.publication.name.strip == "Redmond Spokesman" %>
-						<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
-					<% end %>
+					<%= image_fragment.story.plan.pub_name %>
 				<% end %>
 			<% end %>
 			<br/>
-			<%= image_fragment.story.section.name if image_fragment.story.section %>
-			<%= "- "+image_fragment.story.page if image_fragment.story.page.to_i > 0 %>
+		<% end %>
+		<% if image_fragment.story.plan.present? %>
+			<%= image_fragment.story.plan.section_name %>
+			<%= " - " if !image_fragment.story.plan.section_name.nil? and image_fragment.story.plan.section_name.length > 0 and image_fragment.story.page.to_i > 0 %>
+			<%= "p." + image_fragment.story.page if image_fragment.story.page.to_i > 0 %>
 		<% end %>
 	</td>
   <td class="center pubdate_col">
