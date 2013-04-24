@@ -10,7 +10,6 @@ class PdfImage < ActiveRecord::Base
       :default_url => '/images/no-image.jpg'
 
   def self.order_by_pubdate_section_page
-    order('pubdate DESC').order('section_letter').order('page')
+    includes('plan').order('pubdate DESC').order('plans.pub_name').order('plans.section_name').order('section_letter').order('page')
   end
-
 end
