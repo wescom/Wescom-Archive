@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130417020820) do
+ActiveRecord::Schema.define(:version => 20130425192603) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20130417020820) do
     t.string   "publish_status"
   end
 
+  add_index "story_images", ["image_updated_at"], :name => "index_story_images_on_image_updated_at"
   add_index "story_images", ["story_id"], :name => "index_story_images_on_story_id"
 
   create_table "story_topics", :force => true do |t|
