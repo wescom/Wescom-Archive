@@ -8,7 +8,7 @@ class StoryImagesController < ApplicationController
         .has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
         .has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
         .paginate(:page => params[:page], :per_page => 15)
-        .order("image_updated_at DESC")
+        .order_by_pubdate
     @total_images_count = @images.count
   end
   
