@@ -10,7 +10,7 @@
   </td>
   <td class="center byline_col"><%= story_fragment.byline if story_fragment.byline %></td>
   <td class="center section_col">
-		<% if story_fragment.plan.pub_name.present? %>
+		<% if story_fragment.plan.present? %>
 			<% if story_fragment.plan.pub_name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
 			<% else %>
