@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425192603) do
+ActiveRecord::Schema.define(:version => 20130426221328) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -75,6 +75,11 @@ ActiveRecord::Schema.define(:version => 20130425192603) do
     t.datetime "updated_at",            :null => false
     t.string   "import_section_letter"
   end
+
+  add_index "plans", ["location_id"], :name => "index_plans_on_location_id"
+  add_index "plans", ["pub_name"], :name => "index_plans_on_pub_name"
+  add_index "plans", ["publication_type_id"], :name => "index_plans_on_publication_type_id"
+  add_index "plans", ["section_name"], :name => "index_plans_on_section_name"
 
   create_table "publication_types", :force => true do |t|
     t.string   "name"
