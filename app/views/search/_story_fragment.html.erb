@@ -11,10 +11,10 @@
   <td class="center byline_col"><%= story_fragment.byline if story_fragment.byline %></td>
   <td class="center section_col">
 		<% if story_fragment.plan.present? %>
-			<% if story_fragment.plan.pub_name.strip == "The Bulletin" %>
+			<% if story_fragment.plan.pub_name.present? and story_fragment.plan.pub_name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
 			<% else %>
-				<% if story_fragment.plan.pub_name.strip == "Redmond Spokesman" %>
+				<% if story_fragment.plan.pub_name.present? and story_fragment.plan.pub_name.strip == "Redmond Spokesman" %>
 					<%= image_tag('/images/spokesman.jpg', :alt=>"spokesman", :class=>"image_thumb") %>
 				<% else %>
 					<%= story_fragment.plan.pub_name %>
