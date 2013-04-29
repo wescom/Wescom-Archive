@@ -28,8 +28,11 @@ class SearchController < ApplicationController
 
   def today
     @settings = SiteSettings.find(:first)
-    @publications = Publication.find(:all)
-    @publication = Publication.find(:first, :conditions => ['name = ?', params[:papername]])
+
+    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
+    @publications = scope.uniq.order('pub_name')
+    @publication = Plan.find(:first, :conditions => ['pub_name = ?', params[:papername]])
+
     if params[:paperdate].nil?
       Rails.logger.info "******** Date is nil"
       params[:paperdate] = Date.today.strftime('%m/%d/%Y')
@@ -41,7 +44,7 @@ class SearchController < ApplicationController
                               :per_page => 30, 
                               :order => "Pubdate DESC").order_by_pub_section_page
     else
-      @stories = Story.where('DATE(pubdate) = ? and publication_id = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"), @publication.id)
+      @stories = Story.where('DATE(pubdate) = ? and plans.pub_name = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"), params[:papername])
                             .paginate(
                               :page => params[:page], 
                               :per_page => 30, 

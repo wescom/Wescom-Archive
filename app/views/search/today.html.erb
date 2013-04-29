@@ -23,12 +23,12 @@
 							</td>
 							<td class="medium">
 								<% if @publication %>
-									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name', 
-													selected = @publication.name), 
-													{:class => 'today_publication float_right', :include_blank => true} %>
+									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
+													selected = @publication.pub_name),
+													{:prompt => "- Select Publication -", :class => 'today_publication float_right'} %>
 								<% else %>
-									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'name', 'name'), 
-													{:class => 'today_publication float_right', :include_blank => true} %>
+									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name'), 
+													{:prompt => "- Select Publication -", :class => 'today_publication float_right'} %>
 								<% end %>
 							</td>
 							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>

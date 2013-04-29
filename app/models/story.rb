@@ -62,11 +62,13 @@ class Story < ActiveRecord::Base
   end
   
   def section_name
-    self.section.name if self.section.present?
+    #self.section.name if self.section.present?
+    self.plan.section_name if self.plan.present?
   end
   
   def publication_name
-    self.publication.name if self.publication.present?
+    #self.publication.name if self.publication.present?
+    self.plan.pub_name if self.plan.present?
   end
   
   def self.has_pubdate_in_range(date_from, date_to)  
