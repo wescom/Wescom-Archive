@@ -8,7 +8,7 @@
 																										:date_to_select=>params[:date_to_select], 
 																										:location=>params[:location], 
 																										:pub_type=>params[:pub_type], 
-																										:publication=>params[:publication], 
+																										:pub_select=>params[:pub_select], 
 																										:sectionletter=>params[:sectionletter], 
 																										:pagenum=>params[:pagenum]) %>/ Book View)</span>
 		</h1>
@@ -41,9 +41,9 @@
 													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
 							</td>
 							<td class="medium">
-								<%= select_tag 'publication', 
+								<%= select_tag 'pub_select', 
 													options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-													:selected => params[:publication]), {:prompt => "- Select Publication -"} %>
+													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
 							</td>
 							<td class="float_right extra_small"> Section Letter:</td>
 							<td class="extra_small">

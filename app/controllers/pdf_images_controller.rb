@@ -27,8 +27,8 @@ class PdfImagesController < ApplicationController
     if (params[:pub_type].present?)
       scope = scope.includes('plan').where('plans.publication_type_id = ?', params[:pub_type])
     end
-    if (params[:publication].present?)
-      scope = scope.includes('plan').where('plans.pub_name = ?', params[:publication])
+    if (params[:pub_select].present?)
+      scope = scope.includes('plan').where('plans.pub_name = ?', params[:pub_select])
     end
     if (params[:sectionletter].present?)
       scope = scope.where('section_letter = ?', params[:sectionletter])
@@ -66,8 +66,8 @@ class PdfImagesController < ApplicationController
     if (params[:pub_type].present?)
       scope = scope.includes('plan').where('plans.publication_type_id = ?', params[:pub_type])
     end
-    if (params[:publication].present?)
-      scope = scope.includes('plan').where('plans.pub_name = ?', params[:publication])
+    if (params[:pub_select].present?)
+      scope = scope.includes('plan').where('plans.pub_name = ?', params[:pub_select])
     end
     if (params[:sectionletter].present?)
       scope = scope.where('section_letter = ?', params[:sectionletter])

@@ -3,6 +3,8 @@ class SearchController < ApplicationController
 
   def index
     @settings = SiteSettings.find(:first)
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'sort_order')
     @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
     @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
     if params[:search_query]

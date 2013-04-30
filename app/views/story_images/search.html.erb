@@ -13,7 +13,7 @@
 				<%= form_tag search_images_path, :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td><%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %></td>
+							<td class="largest"><%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %></td>
 							<td class="float_right extra_small">Date From:</td>
 							<td class="smaller">
 								<%= text_field_tag :date_from_select, params[:date_from_select], 
@@ -26,14 +26,24 @@
 													:class => 'short_date_picker center', 
 													:placeholder => "mm/dd/yyyy" %>
 							</td>
+							<td class="tiny"></td>
+							<td class="medium">
+								<%= select_tag 'location', 
+													options_from_collection_for_select(@locations, 'id', 'name', 
+													:selected => params[:location]), {:prompt => "- Select Location -"} %>
+								<br/>
+								<%= select_tag 'pub_type', 
+													options_from_collection_for_select(@pub_types, 'id', 'name', 
+													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
+							</td>
 							<td class="medium">
 								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
 													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-							</td>
-							<td class="medium">
+								<br/>
 								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
 													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
 							</td>
+							<td class="tiny"></td>
 							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
 						</tbody>
 					</table>

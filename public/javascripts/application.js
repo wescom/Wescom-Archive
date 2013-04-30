@@ -211,40 +211,40 @@ $(document).ready(function(){
 		arrows: true,
 	});
 	
-	// Filter publication by location
+	// Filter pub_select by location
 	$('select#location').change(function() {
 		var location = $('select#location').val();
 		var pub_type = $('select#pub_type').val();
-		// Send the request and update publication dropdown 
+		// Send the request and update pub_select dropdown 
 		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
-			// Clear all options from publication select 
-			$("select#publication option").remove();
+			// Clear all options from pub_select 
+			$("select#pub_select option").remove();
 			//put in a empty default line
 			var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
-			$(row).appendTo("select#publication");
-			// Fill publication select 
+			$(row).appendTo("select#pub_select");
+			// Fill pub_select
 			for (var i = 0; i < data.length; i++) {
 				row = "<option value=\"" + data[i].plan.pub_name + "\">" + data[i].plan.pub_name + "</option>";
-				$(row).appendTo("select#publication");
+				$(row).appendTo("select#pub_select");
 			}
 		});
 	});
 
-	// Filter publication by pub_type
+	// Filter pub_select by pub_type
 	$('select#pub_type').change(function() {
 		var location = $('select#location').val();
 		var pub_type = $('select#pub_type').val();
-		// Send the request and update publication dropdown 
+		// Send the request and update pub_select dropdown 
 		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
-			// Clear all options from publication select 
-			$("select#publication option").remove();
+			// Clear all options from pub_select 
+			$("select#pub_select option").remove();
 			//put in a empty default line
 			var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
-			$(row).appendTo("select#publication");
-			// Fill publication select 
+			$(row).appendTo("select#pub_select");
+			// Fill pub_select 
 			for (var i = 0; i < data.length; i++) {
 				row = "<option value=\"" + data[i].plan.pub_name + "\">" + data[i].plan.pub_name + "</option>";
-				$(row).appendTo("select#publication");
+				$(row).appendTo("select#pub_select");
 			}
 		});
 	});
