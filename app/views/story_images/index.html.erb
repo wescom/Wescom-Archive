@@ -25,11 +25,11 @@
 													:placeholder => "mm/dd/yyyy" %>
 							</td>
 							<td class="medium">
-								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'id', 'name', 
+								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
 													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
 							</td>
 							<td class="medium">
-								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'id', 'category_plus_name', 
+								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
 													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
 							</td>
 							<td class="smaller"><%= submit_tag "Filter", :class => 'submit'%></td>

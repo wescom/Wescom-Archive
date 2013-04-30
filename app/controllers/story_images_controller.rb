@@ -2,19 +2,21 @@ class StoryImagesController < ApplicationController
   before_filter :require_user
   
   def index
-    @publications = Publication.find(:all)
-    @sections = Section.order_by_category_plus_name.find(:all)
-    @images = StoryImage
-        .has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
-        .has_publication_id(params[:pub_select]).has_section_id(params[:section_select])
-        .paginate(:page => params[:page], :per_page => 15)
-        .order("image_updated_at DESC")
+    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+    @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
+
+    scope = StoryImage
+    scope = scope.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
+    scope = scope.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
+    scope = scope.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
+    @images = scope.paginate(:page => params[:page], :per_page => 15).order("image_updated_at DESC")
+
     @total_images_count = @images.count
   end
   
   def search
-    @publications = Publication.find(:all)
-    @sections = Section.order_by_category_plus_name.find(:all)
+    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+    @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
     if params[:search_query]
       begin
         @images = StoryImage.search(:include => [:story]) do
@@ -26,8 +28,8 @@ class StoryImagesController < ApplicationController
           order_by :story_page, :asc
           with(:story_pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:story_pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
-          with :story_publication_id, params[:pub_select] if params[:pub_select].present?
-          with :story_section_id, params[:section_select] if params[:section_select].present?
+          with :story_publication_name, params[:pub_select] if params[:pub_select].present?
+          with :story_section_name, params[:section_select] if params[:section_select].present?
       end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"

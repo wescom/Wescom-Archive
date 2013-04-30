@@ -3,8 +3,8 @@ class SearchController < ApplicationController
 
   def index
     @settings = SiteSettings.find(:first)
-    @publications = Publication.find(:all)
-    @sections = Section.order_by_category_plus_name.find(:all)
+    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+    @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
     if params[:search_query]
       begin
         @stories = Story.search do
@@ -16,8 +16,8 @@ class SearchController < ApplicationController
           order_by :page, :asc
           with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
-          with :publication_id, params[:pub_select] if params[:pub_select].present?
-          with :section_id, params[:section_select] if params[:section_select].present?
+          with :story_publication_name, params[:pub_select] if params[:pub_select].present?
+          with :story_section_name, params[:section_select] if params[:section_select].present?
         end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"
@@ -29,8 +29,7 @@ class SearchController < ApplicationController
   def today
     @settings = SiteSettings.find(:first)
 
-    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
-    @publications = scope.uniq.order('pub_name')
+    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
     @publication = Plan.find(:first, :conditions => ['pub_name = ?', params[:papername]])
 
     if params[:paperdate].nil?

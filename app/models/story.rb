@@ -14,7 +14,6 @@ class Story < ActiveRecord::Base
   has_many :story_images, :dependent => :destroy
 
   validates :pubdate, :presence => true, :on => :update
-  validates :section_id, :presence => true, :on => :update
   validates :page, :presence => true, :numericality => true, :on => :update
 
   searchable :auto_index => true, :auto_remove => true do
@@ -27,8 +26,6 @@ class Story < ActiveRecord::Base
     text :sidebar_body
     text :project_group
 
-    integer :publication_id, :references => Publication
-    integer :section_id, :references => Section
     string :story_publication_name do
       publication_name
     end
@@ -38,12 +35,6 @@ class Story < ActiveRecord::Base
     integer :page
 
     time :pubdate
-#    string :publish_year
-
-    # keywords from DTI, mostly taxonomy
-#    text :keywords do
-#      keywords.map {|kw| kw.text}
-#    end
 
   end
 
@@ -53,21 +44,15 @@ class Story < ActiveRecord::Base
     end
   end
   
-  def self.order_by_section_page
-    includes(:section).order('sections.name').order('page')
-  end
-  
   def self.order_by_pub_section_page
     includes(:plan).order('plans.pub_name').order('plans.section_name').order('page')
   end
   
   def section_name
-    #self.section.name if self.section.present?
     self.plan.section_name if self.plan.present?
   end
   
   def publication_name
-    #self.publication.name if self.publication.present?
     self.plan.pub_name if self.plan.present?
   end
   
@@ -76,13 +61,4 @@ class Story < ActiveRecord::Base
     where("pubdate >= ? AND pubdate <= ?", date_from, date_to)  
   end
 
-  def self.has_section_id(id)
-    return scoped unless id.present?
-    where("section_id = ?", id) if id
-  end
-
-  def self.has_publication_id(id)
-    return scoped unless id.present?
-    where("publication_id = ?", id)
-  end
 end

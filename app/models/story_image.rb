@@ -21,16 +21,10 @@ class StoryImage < ActiveRecord::Base
 
     # Sort fields - must use 'string' instead of 'text'
     string :story_publication_name do
-      story.publication_name if story.present?
+      story.plan.pub_name if story.present? and story.plan.present?
     end
     string :story_section_name do
-      story.section_name if story.present?
-    end
-    integer :story_publication_id do
-      story.publication_id if story.present?
-    end
-    integer :story_section_id do
-      story.section_id if story.present?
+      story.plan.section_name if story.present? and story.plan.present?
     end
     integer :story_page do
       story.page if story.present?
@@ -87,14 +81,14 @@ class StoryImage < ActiveRecord::Base
     end
   end
 
-  def self.has_section_id(id)
-    return scoped unless id.present?
-    includes(:story).where("stories.section_id = ?", id) if id
+  def self.has_section_name(name)
+    return scoped unless name.present?
+    includes(:story).where("stories.section_name = ?", name) if name
   end
 
-  def self.has_publication_id(id)
-    return scoped unless id.present?
-    includes(:story).where("stories.publication_id = ?", id)
+  def self.has_publication_name(name)
+    return scoped unless name.present?
+    includes(:story).where("stories.publication_name = ?", name) if name
   end
 
 end
