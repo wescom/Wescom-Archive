@@ -20,6 +20,12 @@ class StoryImage < ActiveRecord::Base
     text :publish_status
 
     # Sort fields - must use 'string' instead of 'text'
+    integer :story_location_id do
+      story.plan.location_id if story.present? and story.plan.present?
+    end
+    integer :story_pub_type_id do
+      story.plan.publication_type_id if story.present? and story.plan.present?
+    end
     string :story_publication_name do
       story.plan.pub_name if story.present? and story.plan.present?
     end

@@ -18,6 +18,8 @@ class SearchController < ApplicationController
           order_by :page, :asc
           with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+          with :story_location_id, params[:location] if params[:location].present?
+          with :story_pub_type_id, params[:pub_type] if params[:pub_type].present?
           with :story_publication_name, params[:pub_select] if params[:pub_select].present?
           with :story_section_name, params[:section_select] if params[:section_select].present?
         end

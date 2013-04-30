@@ -17,6 +17,7 @@ class Story < ActiveRecord::Base
   validates :page, :presence => true, :numericality => true, :on => :update
 
   searchable :auto_index => true, :auto_remove => true do
+    # Search fields
     text :hl1, :default_boost => 2.0, :stored => true
     text :hl2, :stored => true
     text :page
@@ -26,6 +27,13 @@ class Story < ActiveRecord::Base
     text :sidebar_body
     text :project_group
 
+    # Sort fields - must use 'string' instead of 'text'
+    integer :story_location_id do
+      plan.location_id if plan.present?
+    end
+    integer :story_pub_type_id do
+      plan.publication_type_id if plan.present?
+    end
     string :story_publication_name do
       publication_name
     end
