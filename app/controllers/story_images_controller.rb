@@ -7,7 +7,11 @@ class StoryImagesController < ApplicationController
     @publications = @publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
     @publications = @publications.select(:pub_name).uniq.order('pub_name')
 
-    @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
+    @sections = Plan.where("section_name is not null and section_name<>''")
+    @sections = @sections.where(:location_id => params[:location]) if params[:location].present?
+    @sections = @sections.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
+    @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
+    @sections = @sections.select(:section_name).uniq.order('section_name')
 
     scope = StoryImage
     scope = scope.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
@@ -27,7 +31,12 @@ class StoryImagesController < ApplicationController
     @publications = @publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
     @publications = @publications.select(:pub_name).uniq.order('pub_name')
 
-    @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
+    @sections = Plan.where("section_name is not null and section_name<>''")
+    @sections = @sections.where(:location_id => params[:location]) if params[:location].present?
+    @sections = @sections.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
+    @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
+    @sections = @sections.select(:section_name).uniq.order('section_name')
+
     if params[:search_query]
       begin
         @images = StoryImage.search(:include => [:story]) do
