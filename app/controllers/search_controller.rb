@@ -5,8 +5,14 @@ class SearchController < ApplicationController
     @settings = SiteSettings.find(:first)
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
-    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
+
+    @publications = Plan.where("pub_name is not null and pub_name<>''")
+    @publications = @publications.where(:location_id => params[:location]) if params[:location].present?
+    @publications = @publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
+    @publications = @publications.select(:pub_name).uniq.order('pub_name')
+
     @sections = Plan.select(:section_name).where("section_name is not null and section_name<>''").uniq.order('section_name')
+
     if params[:search_query]
       begin
         @stories = Story.search do
