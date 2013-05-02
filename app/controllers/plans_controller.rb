@@ -67,20 +67,22 @@ class PlansController < ApplicationController
     end
   end
   
-  def pubs_for_pub_type_and_location
-    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
-    if !(params[:location].nil? or params[:location] == "")
-      scope = scope.where(:location_id => params[:location])
-    end
-    if !(params[:pub_type].nil? or params[:pub_type] == "")
-      scope = scope.where(:publication_type_id => params[:pub_type])
-    end
-    scope = scope.uniq.order('pub_name')
-    #Rails.logger.info @publications.to_yaml
+  def publications_and_section_options
+    publications = Plan.where("pub_name is not null and pub_name<>''")
+    publications = publications.where(:location_id => params[:location]) if params[:location].present?
+    publications = publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
+    publications = publications.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
+    publications = publications.select(:pub_name).uniq.order('pub_name')
+
+    sections = Plan.where("section_name is not null and section_name<>''")
+    sections = sections.where(:location_id => params[:location]) if params[:location].present?
+    sections = sections.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
+    sections = sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
+    sections = sections.select(:section_name).uniq.order('section_name')
 
     respond_to do |format|
       format.html
-      format.json  { render :json => scope }
+      format.json  { render :json => {:publications => publications, :sections => sections} }
     end
   end
 end

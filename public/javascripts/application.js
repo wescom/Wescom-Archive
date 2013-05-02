@@ -211,40 +211,76 @@ $(document).ready(function(){
 		arrows: true,
 	});
 	
-	// Filter pub_select by location
+	// Filter pub_select and section_select by location
 	$('select#location').change(function() {
+			var location = $('select#location').val();
+			var pub_type = $('select#pub_type').val();
+			var pub_select = $('select#pub_select').val();
+			var section_select = $('select#section_select').val();
+			// Send the request and update select dropdowns
+			jQuery.getJSON('/plans/publications_and_section_options/',{pub_type: pub_type, location: location, pub_select: pub_select, ajax: 'true'}, function(data){
+				// update Publication list
+				$("select#pub_select option").remove();
+				var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
+				$(row).appendTo("select#pub_select");
+				for (var i = 0; i < data["publications"].length; i++) {
+					row = "<option value=\"" + data["publications"][i].plan.pub_name + "\">" + data["publications"][i].plan.pub_name + "</option>";
+					$(row).appendTo("select#pub_select");
+				}
+				// update Section list
+				$("select#section_select option").remove();
+				var row = "<option value=\"" + "" + "\">" + "- Select Section -" + "</option>";
+				$(row).appendTo("select#section_select");
+				for (var i = 0; i < data["sections"].length; i++) {
+					row = "<option value=\"" + data["sections"][i].plan.section_name + "\">" + data["sections"][i].plan.section_name + "</option>";
+					$(row).appendTo("select#section_select");
+				}
+			});
+		});
+
+	// Filter pub_select and section_select by pub_type
+	$('select#pub_type').change(function() {
 		var location = $('select#location').val();
 		var pub_type = $('select#pub_type').val();
-		// Send the request and update pub_select dropdown 
-		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
-			// Clear all options from pub_select 
+		var pub_select = $('select#pub_select').val();
+		var section_select = $('select#section_select').val();
+		// Send the request and update select dropdowns
+		jQuery.getJSON('/plans/publications_and_section_options/',{pub_type: pub_type, location: location, pub_select: pub_select, ajax: 'true'}, function(data){
+			// update Publication list
 			$("select#pub_select option").remove();
-			//put in a empty default line
 			var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
 			$(row).appendTo("select#pub_select");
-			// Fill pub_select
-			for (var i = 0; i < data.length; i++) {
-				row = "<option value=\"" + data[i].plan.pub_name + "\">" + data[i].plan.pub_name + "</option>";
+			for (var i = 0; i < data["publications"].length; i++) {
+				row = "<option value=\"" + data["publications"][i].plan.pub_name + "\">" + data["publications"][i].plan.pub_name + "</option>";
 				$(row).appendTo("select#pub_select");
+			}
+			// update Section list
+			$("select#section_select option").remove();
+			var row = "<option value=\"" + "" + "\">" + "- Select Section -" + "</option>";
+			$(row).appendTo("select#section_select");
+			for (var i = 0; i < data["sections"].length; i++) {
+				row = "<option value=\"" + data["sections"][i].plan.section_name + "\">" + data["sections"][i].plan.section_name + "</option>";
+				$(row).appendTo("select#section_select");
 			}
 		});
 	});
 
-	// Filter pub_select by pub_type
-	$('select#pub_type').change(function() {
+	// Filter section_select by publication
+	$('select#pub_select').change(function() {
 		var location = $('select#location').val();
 		var pub_type = $('select#pub_type').val();
-		// Send the request and update pub_select dropdown 
-		jQuery.getJSON('/plans/pubs_for_pub_type_and_location/',{pub_type: pub_type, location: location, ajax: 'true'}, function(data){
-			// Clear all options from pub_select 
-			$("select#pub_select option").remove();
-			//put in a empty default line
-			var row = "<option value=\"" + "" + "\">" + "- Select Publication -" + "</option>";
-			$(row).appendTo("select#pub_select");
-			// Fill pub_select 
-			for (var i = 0; i < data.length; i++) {
-				row = "<option value=\"" + data[i].plan.pub_name + "\">" + data[i].plan.pub_name + "</option>";
-				$(row).appendTo("select#pub_select");
+		var pub_select = $('select#pub_select').val();
+		var section_select = $('select#section_select').val();
+
+		// Send the request and update select dropdowns
+		jQuery.getJSON('/plans/publications_and_section_options/',{pub_type: pub_type, location: location, pub_select: pub_select, ajax: 'true'}, function(data){
+			// update Section list
+			$("select#section_select option").remove();
+			var row = "<option value=\"" + "" + "\">" + "- Select Section -" + "</option>";
+			$(row).appendTo("select#section_select");
+			for (var i = 0; i < data["sections"].length; i++) {
+				row = "<option value=\"" + data["sections"][i].plan.section_name + "\">" + data["sections"][i].plan.section_name + "</option>";
+				$(row).appendTo("select#section_select");
 			}
 		});
 	});

@@ -3,7 +3,7 @@ Wescomarchive::Application.routes.draw do
   resources :publications
   resources :publication_types
   resources :plans do
-    get 'pubs_for_pub_type_and_location', :on => :collection
+    get 'publications_and_section_options', :on => :collection
   end
   resources :papers
   resources :sections
