@@ -3,15 +3,26 @@ namespace :wescom do
   task :pdf_import  => :environment do
 
     def import_files
-      files = get_files
-      files.each {|file| process_file(file)}
+      files = get_daily_files
+      files.each {|file| process_file(file)} unless files.nil?
+
+      files = get_manual_files
+      files.each {|file| process_file(file)} unless files.nil?
     end
 
-    def get_files
+    def get_daily_files
       find_date = Date.today.strftime('%d-%m-%Y')
-      puts "Searching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
+      puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
       #find_date = "C01_BULL PAPR_11-03-2013"
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
+      puts "Path: "+pdf_files
+      pdf_files = Dir.glob(pdf_files)
+      pdf_files
+    end
+
+    def get_manual_files
+      puts "\nSearching for PDF files in manual import folder"
+      pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'manual-import','**','{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
       pdf_files
@@ -38,7 +49,13 @@ namespace :wescom do
         #puts "Section Name: "+get_section_name(filename)
         #puts "Page: "+get_page(filename).to_s
         pdf_image.save!
-  #        pdf_image.index!
+#        pdf_image.index!
+
+        if file.include?('manual-import')
+          newfile = '/WescomArchive/pdf-storage/archive-pdf/'+filename
+          FileUtils.mv file, newfile
+          puts "Moved to #{newfile}"
+        end
 
         rescue Exception => e
           puts "Failed to Process File: #{file}\n Error: #{e}\n\n"
