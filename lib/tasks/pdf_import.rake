@@ -94,6 +94,10 @@ namespace :wescom do
                 else
                   if pub_folder == "pulse"
                     publication = "Pulse"
+                  else
+                    if pub_folder == "manual-import"
+                      publication = "The Bulletin"
+                    end
                   end
                 end
               end
