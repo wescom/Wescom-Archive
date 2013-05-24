@@ -6,10 +6,14 @@
   Byline: <%= @story.byline %> <br />
   Publicaton: 
 	<% if @story.plan %>
-		<% if @story.plan.pub_name.length < 8 %>
-			<%= @story.plan.pub_name %>
+		<% if @story.plan.pub_name %>
+			<% if @story.plan.pub_name.length < 8 %>
+				<%= @story.plan.pub_name %>
+			<% else %>
+				 <br/><div class="indent"><%= @story.plan.pub_name %></div>
+			<% end %>
 		<% else %>
-			 <br/><div class="indent"><%= @story.plan.pub_name %></div>
+			<%= @story.plan.import_pub_name %>
 		<% end %>
 		<br/>
 	<% end %>
