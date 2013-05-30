@@ -20,6 +20,7 @@ class StoryImagesController < ApplicationController
     @images = scope.paginate(:page => params[:page], :per_page => 15).order("image_updated_at DESC")
 
     @total_images_count = @images.count
+    increase_search_count
   end
   
   def search
@@ -58,6 +59,7 @@ class StoryImagesController < ApplicationController
       end
     end
     @total_images_count = StoryImage.count(:all)
+    increase_search_count
   end
 
   def show

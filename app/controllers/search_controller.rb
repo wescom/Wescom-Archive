@@ -38,6 +38,7 @@ class SearchController < ApplicationController
       end
     end
     @total_stories_count = Story.count(:all)
+    increase_search_count
   end
 
   def today
@@ -64,6 +65,7 @@ class SearchController < ApplicationController
                               :order => "Pubdate DESC").order_by_pub_section_page
     end
     @total_stories_count = @stories.count
+    increase_search_count
   end
   
   def destroy

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426221328) do
+ActiveRecord::Schema.define(:version => 20130530163945) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20130426221328) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
+    t.integer  "search_count"
   end
 
 end
