@@ -1,8 +1,9 @@
 <tr>
 	<td><%= table_row.email %></td>
 	<td><%= table_row.first_name %> <%= table_row.last_name %></td>	
-	<td><%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %></td>
-	<td><%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %></td>
-	<td><%= table_row.role %></td>
-	<td><%= link_to "Edit", edit_user_path(table_row) %></td>
+	<td class="center"><%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %></td>
+	<td class="center"><%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %></td>
+	<td class="center"><%= table_row.search_count %></td>
+	<td class="center"><%= table_row.role %></td>
+	<td class="center"><%= link_to "Edit", edit_user_path(table_row) %></td>
 </tr>
