@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
   
   def increase_search_count
-    @user = @current_user
+    @user = current_user
     if @user.search_count.nil?
       @user.search_count = 0
     else
