@@ -78,7 +78,7 @@
   <div id="story-info">
 		<br/>
 		<hr/>
-		Attached to PlanID: <%= link_to @story.plan.id, edit_plan_path(@story.plan) %><br/>
+		Attached to PlanID: <%= link_to @story.plan.id, edit_plan_path(@story.plan) if @story.plan %><br/>
 		<% if @story.plan %>
 			Location: <%= @story.plan.location.name if @story.plan.location.present? %><br/>
 			Pub_type: <%= @story.plan.publication_type.name if @story.plan.publication_type.present? %><br/>
