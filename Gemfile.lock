@@ -39,6 +39,8 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    adauth (1.2.1)
+      net-ldap
     arel (3.0.2)
     builder (3.0.4)
     capistrano (2.14.2)
@@ -86,6 +88,7 @@ GEM
     multi_json (1.5.0)
     mysql (2.9.0)
     mysql2 (0.3.11)
+    net-ldap (0.3.1)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.1)
@@ -183,6 +186,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-mysql-adapter
+  adauth
   capistrano
   chronic
   coffee-rails
