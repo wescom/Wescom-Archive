@@ -18,6 +18,7 @@ class StoryImage < ActiveRecord::Base
     text :media_name, :default_boost => 3.0
     text :media_project_group, :default_boost => 3.0
     text :publish_status
+    text :image_content_type
 
     # Sort fields - must use 'string' instead of 'text'
     integer :story_location_id do
@@ -38,6 +39,9 @@ class StoryImage < ActiveRecord::Base
     time :story_pubdate do
       story.pubdate if story.present?
     end
+    string :image_type do
+      self.image_type?
+    end
 
   end
 
@@ -50,7 +54,15 @@ class StoryImage < ActiveRecord::Base
   def is_image?
     !(image_content_type =~ /^image.*/).nil?
   end
-
+  
+  def image_type?
+    if !(image_content_type =~ /^image.*/).nil?
+      "Image"
+    else
+      "Graphic"
+    end
+  end
+  
   class << self
     def published
       where(:publish_status => 'Published')
