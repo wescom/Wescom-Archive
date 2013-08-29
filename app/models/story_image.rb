@@ -56,10 +56,14 @@ class StoryImage < ActiveRecord::Base
   end
   
   def image_type?
-    if !(image_content_type =~ /^image.*/).nil?
-      "Image"
+    if !image_content_type.present?
+      return ""
     else
-      "Graphic"
+      if !(image_content_type =~ /^image.*/).nil?
+        "Image"
+      else
+        "Graphic"
+      end
     end
   end
   
