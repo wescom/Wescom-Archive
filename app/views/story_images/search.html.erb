@@ -31,7 +31,7 @@
 								</td>
 							</div>
 							<td class="small">
-								<%= select_tag(:image_type, options_for_select([['Image'], ['Graphic']], :selected => params[:image_type]),
+								<%= select_tag(:image_type, options_for_select([['Images Only','Image'], ['Other','Graphic']], :selected => params[:image_type]),
 														{:selected => params[:location], :prompt => "- Select Type -"}) %>
 							</td>
 							<td class="medium">
