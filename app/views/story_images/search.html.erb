@@ -13,20 +13,27 @@
 				<%= form_tag search_images_path, :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td class="largest"><%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %></td>
-							<td class="float_right extra_small">Date From:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_from_select, params[:date_from_select], 
-												:class => 'short_date_picker center', 
-												:placeholder => "mm/dd/yyyy" %>
+							<td class="largest">
+								<%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
 							</td>
-							<td class="float_right extra_small">Date To:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_to_select, params[:date_to_select], 
+							<div class="medium">
+								<td class="float_right extra_small">Date From:</td>
+								<td class="smaller">
+									<%= text_field_tag :date_from_select, params[:date_from_select], 
 													:class => 'short_date_picker center', 
 													:placeholder => "mm/dd/yyyy" %>
+								</td>
+								<td class="float_right extra_small">Date To:</td>
+								<td class="smaller">
+									<%= text_field_tag :date_to_select, params[:date_to_select], 
+														:class => 'short_date_picker center', 
+														:placeholder => "mm/dd/yyyy" %>
+								</td>
+							</div>
+							<td class="small">
+								<%= select_tag(:image_type, options_for_select([['Image'], ['Graphic']], :selected => params[:image_type]),
+														{:selected => params[:location], :prompt => "- Image Type -"}) %>
 							</td>
-							<td class="tiny"></td>
 							<td class="medium">
 								<%= select_tag 'location', 
 													options_from_collection_for_select(@locations, 'id', 'name', 
