@@ -69,6 +69,9 @@
 				<% if !@image.media_status.nil? %>
 					<a class="image-field">Status: </a><%= @image.media_status %><br/>
 				<% end %>
+				<% if !@image.media_mime_type.nil? %>
+					<a class="image-field">Type: </a><%= @image.media_mime_type %><br/>
+				<% end %>
 			</div>
 		</div>
 	<% end %>
