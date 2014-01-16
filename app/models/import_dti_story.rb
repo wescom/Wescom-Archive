@@ -4,7 +4,7 @@ class ImportDtiStory < ActiveRecord::Base
   attr_accessor :project_group, :memo, :notes, :origin, :priority, :pub_corrections, :unpublished_corrections
   attr_accessor :status, :web_published_at, :printrunlist, :story_elements, :story_elements_by_name, :tagline
   attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
-  attr_accessor :hl1, :hl2, :byline, :print_text, :web_hl1, :web_hl2, :web_text
+  attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text
   attr_accessor :sidebar_head, :sidebar_body, :tagline
   attr_accessor :web_info, :latestSEO_url, :publish_to_web_datetime
   attr_accessor :media_list
@@ -59,20 +59,50 @@ class ImportDtiStory < ActiveRecord::Base
     end
     
     self.story_elements = cracked["DTIStory"]["StoryElementList"]
-    # still need to grab toolbox element, called mug.line
-    # print.caption would be nice as well
+# still need to grab toolbox element, called mug.line
+# print.caption would be nice as well
 
     self.story_elements_by_name = cracked["DTIStory"]["StoryElementsByName"]
+
     self.hl1 = self.story_elements_by_name["HeadlineDelimitedList"]
+    self.hl1 = fix_escaped_elements(self.hl1) unless self.hl1.nil?
+    self.hl1 = strip_formatting(self.hl1) unless self.hl1.nil?
+
     self.hl2 = self.story_elements_by_name["SubHeadlineDelimitedList"]
-    self.byline = self.story_elements_by_name["BylineDelimitedList"]
+    self.hl2 = fix_escaped_elements(self.hl2) unless self.hl2.nil?
+    self.hl2 = strip_formatting(self.hl2) unless self.hl2.nil?
+
+    self.byline = self.story_elements_by_name["BylineDelimitedList"].split("</p>")
+    if !self.byline.nil?
+      self.paper = strip_formatting(self.byline[1]) unless self.byline[1].nil?
+      self.byline = strip_formatting(self.byline[0]) unless self.byline[0].nil?
+
+      # Truncate byline to get paper
+      self.byline = fix_escaped_elements(self.byline) unless self.byline.nil?
+      self.byline = strip_formatting(self.byline) unless self.byline.nil?
+    end
+
     self.print_text = self.story_elements_by_name["TextDelimitedList"]
+    self.print_text = fix_escaped_elements(self.print_text) unless self.print_text.nil?
+    self.print_text = handle_chapterheads_in_body(self.print_text) unless self.print_text.nil?
+
     self.web_hl1 = self.story_elements_by_name["WebHeadlineDelimitedList"]
+    self.web_hl1 = fix_escaped_elements(self.web_hl1) unless self.web_hl1.nil?
+    self.web_hl1 = strip_formatting(self.web_hl1) unless self.web_hl1.nil?
+
     self.web_hl2 = self.story_elements_by_name["WebSubHeadlineDelimitedList"]
+    self.web_hl2 = fix_escaped_elements(self.web_hl2) unless self.web_hl2.nil?
+    self.web_hl2 = strip_formatting(self.web_hl2) unless self.web_hl2.nil?
+
     self.web_text = self.story_elements_by_name["WebTextDelimitedList"]
+    self.web_text = fix_escaped_elements(self.web_text) unless self.web_text.nil?
+    self.web_text = handle_chapterheads_in_body(self.web_text) unless self.web_text.nil?
+
     self.sidebar_body = ""
     self.sidebar_head = ""
+
     self.tagline = ""
+    self.tagline = fix_escaped_elements(self.tagline)
 
     self.web_info = cracked["DTIStory"]["WebInfo"]["LightningWebInfo"]
     self.latestSEO_url = self.web_info["LatestSEOURL"]
@@ -125,6 +155,8 @@ class ImportDtiStory < ActiveRecord::Base
       return_string.gsub! '{"p"=>nil}', ''
       return_string.gsub! '<p>["p", " ', ''
       return_string.gsub! ' "]</p>', ''
+      return_string.gsub! '<p>', ''
+      return_string.gsub! '</p>', ''
       return_string    
     end
   end

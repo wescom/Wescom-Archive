@@ -59,7 +59,7 @@ namespace :wescom do
         story.page = dti_story.page_number unless dti_story.page_number.nil?
         if !dti_story.edition_name.nil? and !dti_story.pageset_name.nil?
 # ????????? check to see if this is can be more accurate now with section letter
-          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,"")
+          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,dti_story.pageset_letter)
         end
 # ????????? Origin?
         #story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
@@ -86,21 +86,21 @@ namespace :wescom do
 
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
-            puts "*** Media Item: #{x}"
+            #puts "*** Media Item: #{x}"
             image_filename = '/data/archiveup/images_worked/' + x["FileHeaderName"] + x["FileTypeExtension"]
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
-              media.publish_status = "Published"
+              #media.publish_status = "Published"
             else
               image_filename = '/data/archiveup/images_storage/' + x["FileHeaderName"] + x["FileTypeExtension"]
               if File.exists?(image_filename)
                 media = story.story_images.build(:image => File.open(image_filename))
-                media.publish_status = "Attached"
+                #media.publish_status = "Attached"
               else
                 image_filename = '/WescomArchive/archiveup/images_storage/' + x["FileHeaderName"] + x["FileTypeExtension"]
                 if File.exists?(image_filename)
                   media = story.story_images.build(:image => File.open(image_filename))
-                  media.publish_status = "Attached"
+                  #media.publish_status = "Attached"
                 else
                   puts image_filename+' does not exist'
                   media = story.story_images.build
@@ -112,10 +112,11 @@ namespace :wescom do
             media.media_name = x["FileHeaderName"]
             media.media_height = x["Depth"]
             media.media_width = x["Width"]
-#???            media.media_mime_type = x["mime_type"]
-#???            media.media_source = x["Source"]
+            #media.media_mime_type = x["mime_type"]
+            media.media_source = x["Source"]
             media.media_printcaption = x["PrintCaption"]
-#???            media.media_printproducer = x["media_printproducer"]
+            media.media_webcaption = x["OriginalIPTCCaption"]
+            #media.media_printproducer = x["media_printproducer"]
             media.media_originalcaption = x["UserDefinedText1"]
             media.media_byline = x["Byline"]
             media.media_project_group = x["Job"]
@@ -123,19 +124,23 @@ namespace :wescom do
             media.media_status = x["StatusName"]
             media.media_type = x["FileTypeExtension"].gsub! '.', ''
 
-            #media.byline_title = x["BylineTitle"]
-            #media.deskname = x["DeskName"]
-            #media.priority = x["PriorityName"]
-            #media.created_date = x["CreatedDate"]
-            #media.last_refreshed_time = x["LastRefreshedTime"]
-            #media.expire_date = x["ExpireDate"]
+            media.byline_title = x["BylineTitle"]
+            media.deskname = x["DeskName"]
+            media.priority = x["PriorityName"]
+            if x["PriorityName"] == 'Web Ready'
+              media.publish_status = "Published"
+            else
+              media.publish_status = "Attached"
+            end
+            media.created_date = x["CreatedDate"]
+            media.last_refreshed_time = x["LastRefreshedTime"]
+            media.expire_date = x["ExpireDate"]
             #media.related_stories = x["RelatedStoriesList"]
           }
         end
-        
         story.save!
         story.index!
-puts 'StoryId: '+story.id.to_s
+        #puts 'StoryId: '+story.id.to_s
 
         if dti_story.correction?
           puts "Correction for Original Story #" + dti_story.original_story_id.to_s
