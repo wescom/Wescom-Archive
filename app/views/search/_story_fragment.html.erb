@@ -37,6 +37,10 @@
 		<% else %>
 			<% if story_fragment.frontend_db == "SII" %>
 				<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+			<% else %>
+				<% if story_fragment.frontend_db == "DTI Cloud" %>
+					<%= image_tag('/images/newscycle_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				<% end %>
 			<% end %>
 		<% end %>
 	</td>

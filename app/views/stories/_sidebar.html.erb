@@ -26,10 +26,18 @@
 		StoryID: <%= @story.doc_id %> <br />
 		Imported Filename: <%= @story.doc_name %> <br />
 	<% else %>
-		<% if @story.frontend_db == "SII" %>
+		<% if @story.frontend_db == "DTI Cloud" %>
 			<div class="story_frontend_logo">
-				<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				<%= image_tag('/images/newscycle_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
 			</div>
+			StoryID: <%= @story.doc_id %> <br />
+			Imported Filename: <%= @story.doc_name %> <br />
+		<% else %>
+			<% if @story.frontend_db == "SII" %>
+				<div class="story_frontend_logo">
+					<%= image_tag('/images/sii_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
+				</div>
+			<% end %>
 		<% end %>
 	<% end %>
 </div>
