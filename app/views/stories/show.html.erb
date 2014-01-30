@@ -27,8 +27,10 @@
 			      <h3><%= @story.tagline.html_safe %></h3>
 			    <% end %>
 					</br><br/>
-			    <% if @story.sidebar_body %>
-			      <%= @story.sidebar_body.html_safe %>
+			    <% if @story.sidebar_body and @story.sidebar_body.length > 0 %>
+						<div class="toolbox">
+							<%= @story.sidebar_body.html_safe %>
+						</div>
 			    <% end %>
 				</div>
 

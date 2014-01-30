@@ -756,6 +756,10 @@ input#search_query {
 #story_block {
 	min-height: 100px;
 }
+.toolbox {
+	background: #D3D3D3;
+	padding: 10px;
+}
 
 /* Story sidebars & lower blocks */
 #info-block {
