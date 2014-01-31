@@ -61,14 +61,20 @@
 <% end %>
 
 <% if @story.keywords.count > 0 %>
- <p class='story-infohead2 taxonomy_head'>Taxonomy:</p>
- <div id="story-info">
-	<div id='taxonomy'>
-		<% @story.keywords.each do |keyword| %>
-			<div class="indent"><%= keyword.text.downcase %></div>
+	<p class='story-infohead2 taxonomy_head'>
+		<% if @story.frontend_db == "DTI Cloud" %>
+			Keywords: <a class="taxonomy_show">(show)</a>
+		<% else %>
+			Taxonomy:
 		<% end %>
+	</p>
+	<div id="story-info">
+		<div id='taxonomy'>
+			<% @story.keywords.each do |keyword| %>
+				<div class="indent"><%= keyword.text.downcase %></div>
+			<% end %>
+		</div>
 	</div>
-</div>
 <% end %>
 
 <% if !@related_stories.nil? && @related_stories.count > 1 %>

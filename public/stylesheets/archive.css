@@ -813,6 +813,11 @@ input#search_query {
 
 #story-sidebar p.taxonomy_head { cursor: pointer; }
 #story-sidebar #taxonomy { display: none; }
+#story-sidebar a.taxonomy_show { 
+	color: blue;
+	font: bold .7em Arial, Tahoma, sans-serif;
+	text-transform: capitalize;
+}
 
 #lower-block {
 	clear: both;
