@@ -1,6 +1,6 @@
 <p class='story-infohead1'>Information</p>
 <div id="story-info">
-  Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%Y') %><% end %><br />
+  Pubdate: <% if @story.pubdate %><%= @story.pubdate.strftime('%m/%d/%Y') unless @story.pubdate.nil? %><% end %><br />
   Section: <%= @story.plan.section_name if @story.plan %> <br />
   Page: <%= @story.page if @story.page %><br />
   Byline: <%= @story.byline %> <br />
@@ -25,6 +25,12 @@
 		</div>
 		StoryID: <%= @story.doc_id %> <br />
 		Imported Filename: <%= @story.doc_name %> <br />
+		Origin: <%= @story.origin %><br/>
+		Category: <%= @story.categoryname %><br/>
+		Subcategory: <%= @story.subcategoryname %><br/>
+		<% if !@story.memo.nil? %>Memo: <%= @story.memo %><br/><% end %>
+		<% if !@story.memo.nil? %>Notes: <%= @story.notes %><br/><% end %>
+		Published to Web: <br/>&nbsp;&nbsp;&nbsp;&nbsp;<%= @story.web_published_at.strftime('%m/%d/%y %I:%M%p') unless @story.web_published_at.nil?  %><br/>
 	<% else %>
 		<% if @story.frontend_db == "DTI Cloud" %>
 			<div class="story_frontend_logo">
@@ -32,6 +38,12 @@
 			</div>
 			StoryID: <%= @story.doc_id %> <br />
 			Imported Filename: <%= @story.doc_name %> <br />
+			Origin: <%= @story.origin %><br/>
+			Category: <%= @story.categoryname %><br/>
+			Subcategory: <%= @story.subcategoryname %><br/>
+			<% if !@story.memo.nil? %>Memo: <%= @story.memo %><br/><% end %>
+			<% if !@story.memo.nil? %>Notes: <%= @story.notes %><br/><% end %>
+			Published to Web: <br/>&nbsp;&nbsp;&nbsp;&nbsp;<%= @story.web_published_at.strftime('%m/%d/%y %I:%M%p') unless @story.web_published_at.nil? %><br/>
 		<% else %>
 			<% if @story.frontend_db == "SII" %>
 				<div class="story_frontend_logo">
@@ -101,4 +113,3 @@
 		<% end %>
 	</div>
 <% end %>
-
