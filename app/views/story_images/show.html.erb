@@ -5,7 +5,7 @@
 <div id="image-content" class="grid_16">
 	<div class="image-header-bar ">
 		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
-		<%= @image.publish_status %>
+		<div class="float_right"><%= @image.publish_status %></div>
 	</div>
 
 	<% if @image.media_type == "PagePDF" %>
