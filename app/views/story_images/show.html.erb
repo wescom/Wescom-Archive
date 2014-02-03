@@ -45,32 +45,51 @@
 				<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
 			</div>
 
-			<div class="image-head">Photographer's Caption:</div>
+			<% if !@image.media_webcaption.nil? %>
+				<div class="image-head">Web Caption:</div>
+				<div class="image-info-box indent">
+					<%= @image.media_webcaption %><br/><br/>
+				</div>
+			<% end %>
+
+			<div class="image-head">Original Photographer's Caption:</div>
 			<div class="image-info-box indent">
 				<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
 				<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
+				<% if !@image.media_source.nil? %><%= @image.media_source %><br/><% end %>
 			</div>
 		
 			<div class="image-head">DTI Related Info:</div>
 			<div class="image-info-box indent">
-				<% if !@image.media_source.nil? %>
-					<a class="image-field">Media Name: </a><%= @image.media_name %><br/><% end %>
-				<% if !@image.media_source.nil? %>
-					<a class="image-field">ID: </a><%= @image.media_id %><br/><% end %>
-				<% if !@image.media_source.nil? %>
-					<a class="image-field">Original Filename: </a><%= @image.media_source %><br/><% end %>
+				<% if !@image.media_id.nil? %>
+					<a class="image-field">ID: </a><%= @image.media_id %><br/>
+				<% end %>
+				<% if !@image.media_name.nil? %>
+					<a class="image-field">Media Name: </a><%= @image.media_name %><br/>
+				<% end %>
+				<% if !@image.image_file_name.nil? %>
+					<a class="image-field">Original Filename: </a><%= @image.image_file_name %><br/>
+				<% end %>
 				<% if !@image.media_width.nil? and !@image.media_height.nil?%>
 					<a class="image-field">Image Size: </a><%= @image.media_width %>x<%= @image.media_height %><br/>
 				<% end %>
-
 				<% if !@image.media_project_group.nil? %>
 					<a class="image-field">Project Group: </a><%= @image.media_project_group %><br/>
 				<% end %>
 				<% if !@image.media_status.nil? %>
 					<a class="image-field">Status: </a><%= @image.media_status %><br/>
 				<% end %>
+				<% if !@image.priority.nil? %>
+					<a class="image-field">Web Status: </a><%= @image.priority %><br/>
+				<% end %>
 				<% if !@image.media_mime_type.nil? %>
 					<a class="image-field">Type: </a><%= @image.image_content_type %><br/>
+				<% end %>
+				<% if !@image.created_date.nil? %>
+					<a class="image-field">Created: </a><%= @image.created_date.strftime('%m/%d/%y %I:%M%p') unless @image.created_date.nil? %><br/>
+				<% end %>
+				<% if !@image.last_refreshed_time.nil? %>
+					<a class="image-field">Last Refreshed: </a><%= @image.last_refreshed_time.strftime('%m/%d/%y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
 				<% end %>
 			</div>
 		</div>
