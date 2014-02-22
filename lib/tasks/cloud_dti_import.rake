@@ -11,7 +11,7 @@ namespace :wescom do
     end
 
     def get_files
-      news_files = File.join("/","data","archiveup",'*.xml')
+      news_files = File.join("/","data","archiveup","cloud_dti_import",'travromance*.xml')
       #news_files = File.join("/","data","archiveup","completed","2012",'11','*113012*.xml')
       #news_files = File.join("/","data","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
@@ -19,32 +19,34 @@ namespace :wescom do
     end
 
     def process_file(file)
-      puts "Processing: #{file}"
-      File.open(file, "rb") do |infile|
-        file_contents = infile.read
-        next if file_contents.size == 0
-        add_story(file_contents, file)
+      if !file.upcase.include? "FURN" or file.upcase.include? "FURNI"
+        puts "Processing: #{file}"
+        File.open(file, "rb") do |infile|
+          file_contents = infile.read
+          next if file_contents.size == 0
+          add_story(file_contents, file)
+        end
       end
     end
 
     def add_story(file_contents, filename)
       begin
         dti_story = ImportDtiStory.new(file_contents)
-        # Output dti_story
-        #puts "**** \n"+dti_story.storyname
-        #dti_story.instance_variables.each do |v|
-        #  puts "#{v}: #{dti_story.instance_variable_get(v)}\n"
-        #end
         story = Story.new
-        
         #puts "\nStoryId: #{dti_story.storyid}"
         #puts "Story Name: #{dti_story.storyname}"
         #puts "Project Group: #{dti_story.project_group}"
         story.doc_id = dti_story.storyid unless dti_story.storyid.nil?
         story.doc_name = dti_story.storyname unless dti_story.storyname.nil?
         story.project_group = dti_story.project_group unless dti_story.project_group.nil?
-#story.copyright_holder = dti_story.copyright_holder unless dti_story.copyright_holder.nil?
+        story.origin = dti_story.origin unless dti_story.origin.nil?
+        story.categoryname = dti_story.categoryname unless dti_story.categoryname.nil?
+        story.subcategoryname = dti_story.subcategoryname unless dti_story.subcategoryname.nil?
         story.frontend_db = "DTI Cloud"
+        story.memo = dti_story.memo unless dti_story.memo.nil?
+        story.notes = dti_story.notes unless dti_story.notes.nil?
+        story.expiredate = dti_story.expiredate unless dti_story.expiredate.nil?
+        story.web_published_at = dti_story.web_published_at unless dti_story.web_published_at.nil?
 
         #puts "RunDate: #{dti_story.rundate}"
         #puts "Edition Name: #{dti_story.edition_name}"
@@ -57,12 +59,11 @@ namespace :wescom do
         story.section = Section.find_or_create_by_name(dti_story.pageset_name) unless dti_story.pageset_name.nil?
         story.pageset_letter = dti_story.pageset_letter unless dti_story.pageset_letter.nil?
         story.page = dti_story.page_number unless dti_story.page_number.nil?
+        story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
         if !dti_story.edition_name.nil? and !dti_story.pageset_name.nil?
 # ????????? check to see if this is can be more accurate now with section letter
           story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,dti_story.pageset_letter)
         end
-# ????????? Origin?
-        #story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
 
         #puts "hl1: #{dti_story.hl1}"
         #puts "hl2: #{dti_story.hl2}"
@@ -73,39 +74,42 @@ namespace :wescom do
         story.hl2 = dti_story.hl2 unless dti_story.hl2.nil?
         story.byline = dti_story.byline unless dti_story.byline.nil?
         story.copy = dti_story.print_text unless dti_story.print_text.nil?
-        story.sidebar_body = dti_story.sidebar_body unless dti_story.sidebar_body.nil?
-# ?????????
+        story.sidebar_body = dti_story.toolbox1 unless dti_story.toolbox1.nil?
         story.tagline = dti_story.tagline unless dti_story.tagline.nil?
+        story.web_hl1 = dti_story.web_hl1 unless dti_story.web_hl1.nil?
+        story.web_hl2 = dti_story.web_hl2 unless dti_story.web_hl2.nil?
+        story.web_text = dti_story.web_text unless dti_story.web_text.nil?
+        story.toolbox2 = dti_story.toolbox2 unless dti_story.toolbox2.nil?
+        story.toolbox3 = dti_story.toolbox3 unless dti_story.toolbox3.nil?
+        story.toolbox4 = dti_story.toolbox4 unless dti_story.toolbox4.nil?
+        story.toolbox5 = dti_story.toolbox5 unless dti_story.toolbox5.nil?
+        story.web_summary = dti_story.web_summary unless dti_story.web_summary.nil?
+        story.kicker = dti_story.kicker unless dti_story.kicker.nil?
+        story.videourl = dti_story.videourl unless dti_story.videourl.nil?
+        story.alternateurl = dti_story.alternateurl unless dti_story.alternateurl.nil?
+        story.map = dti_story.kicker unless dti_story.map.nil?
+        story.caption = dti_story.caption unless dti_story.caption.nil?
 
         #puts "Keywords: #{dti_story.keywords}"
         if !dti_story.keywords.nil?
-          dti_story.keywords.each { |x|
-            keyword = story.keywords.find_or_create_by_text(x)
-          }
+          if dti_story.keywords.kind_of?(Array)
+            dti_story.keywords.each { |x|
+              keyword = story.keywords.find_or_create_by_text(x)
+            }
+          else
+            keyword = story.keywords.find_or_create_by_text(dti_story.keywords)
+          end
         end
 
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
             #puts "*** Media Item: #{x}"
-            image_filename = '/data/archiveup/images_worked/' + x["FileHeaderName"] + x["FileTypeExtension"]
+            image_filename = '/data/archiveup/images_cloud/' + x["FileHeaderName"] + x["FileTypeExtension"]
             if File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
-              #media.publish_status = "Published"
             else
-              image_filename = '/data/archiveup/images_storage/' + x["FileHeaderName"] + x["FileTypeExtension"]
-              if File.exists?(image_filename)
-                media = story.story_images.build(:image => File.open(image_filename))
-                #media.publish_status = "Attached"
-              else
-                image_filename = '/WescomArchive/archiveup/images_storage/' + x["FileHeaderName"] + x["FileTypeExtension"]
-                if File.exists?(image_filename)
-                  media = story.story_images.build(:image => File.open(image_filename))
-                  #media.publish_status = "Attached"
-                else
-                  puts image_filename+' does not exist'
-                  media = story.story_images.build
-                end
-              end
+              puts image_filename+' does not exist'
+              media = story.story_images.build
             end
 
             media.media_id = x["FileHeaderId"]
@@ -114,16 +118,26 @@ namespace :wescom do
             media.media_width = x["Width"]
             #media.media_mime_type = x["mime_type"]
             media.media_source = x["Source"]
-            media.media_printcaption = x["PrintCaption"]
             media.media_webcaption = x["OriginalIPTCCaption"]
-            #media.media_printproducer = x["media_printproducer"]
+            #puts media.media_webcaption
+
+            if !x["RunList"].nil? and !x["RunList"]["RunInfoItem"].nil?
+              if x["RunList"]["RunInfoItem"].kind_of?(Array)
+                x["RunList"]["RunInfoItem"].each { |y|
+                  media.media_printcaption = y["PrintCaption"]
+                }
+              else
+                media.media_printcaption = x["RunList"]["RunInfoItem"]["PrintCaption"]
+              end
+            end
+            #puts media.media_printcaption
+            
             media.media_originalcaption = x["UserDefinedText1"]
             media.media_byline = x["Byline"]
             media.media_project_group = x["Job"]
             media.media_notes = x["Notes"]
             media.media_status = x["StatusName"]
-            media.media_type = x["FileTypeExtension"].gsub! '.', ''
-
+            media.media_type = x["FileTypeExtension"].gsub(/\./, '')
             media.byline_title = x["BylineTitle"]
             media.deskname = x["DeskName"]
             media.priority = x["PriorityName"]
@@ -140,7 +154,7 @@ namespace :wescom do
         end
         story.save!
         story.index!
-        #puts 'StoryId: '+story.id.to_s
+        puts 'StoryId: '+story.id.to_s
 
         if dti_story.correction?
           puts "Correction for Original Story #" + dti_story.original_story_id.to_s
