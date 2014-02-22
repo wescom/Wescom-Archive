@@ -1,11 +1,12 @@
 class ImportDtiStory < ActiveRecord::Base
   attr_accessor :raw_xml, :storyid, :storyname, :author, :categoryname, :subcategoryname
-  attr_accessor :created_at, :modified_at, :deskname, :expiredate, :keywords
+  attr_accessor :created_at, :modified_at, :deskname, :expiredate, :keywords, :related_stories
   attr_accessor :project_group, :memo, :notes, :origin, :priority, :pub_corrections, :unpublished_corrections
-  attr_accessor :status, :web_published_at, :printrunlist, :story_elements, :story_elements_by_name, :tagline
+  attr_accessor :status, :web_published_at, :printrunlist, :story_elements, :story_elements_by_name
   attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
-  attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text
-  attr_accessor :sidebar_head, :sidebar_body, :tagline
+  attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text, :web_summary
+  attr_accessor :toolbox1, :toolbox2, :toolbox3, :toolbox4, :toolbox5
+  attr_accessor :kicker, :tagline, :caption, :alternateurl, :map, :videourl
   attr_accessor :web_info, :latestSEO_url, :publish_to_web_datetime
   attr_accessor :media_list
   attr_accessor :correction, :original_story_id
@@ -18,111 +19,175 @@ class ImportDtiStory < ActiveRecord::Base
 #    self.raw_xml = cleanup_hedline_tags(self.raw_xml)
 #    self.raw_xml = cleanup_body_tags(self.raw_xml)
 
+    self.raw_xml = Nitf.parse(xml)
+
     cracked = Crack::XML.parse(self.raw_xml)
-    self.storyid = cracked["DTIStory"]["StoryId"]
-    self.storyname = cracked["DTIStory"]["StoryName"]
-    self.project_group = cracked["DTIStory"]["Job"]
-    self.author = cracked["DTIStory"]["Author"]
-    self.origin = cracked["DTIStory"]["Origin"]
+    self.storyid = cracked["DTIStory"]["StoryId"] unless cracked["DTIStory"]["StoryId"].nil?
+    self.storyname = cracked["DTIStory"]["StoryName"] unless cracked["DTIStory"]["StoryName"].nil?
+    self.project_group = cracked["DTIStory"]["Job"] unless cracked["DTIStory"]["Job"].nil?
+    self.author = cracked["DTIStory"]["Author"] unless cracked["DTIStory"]["Author"].nil?
+    self.origin = cracked["DTIStory"]["Origin"] unless cracked["DTIStory"]["Origin"].nil?
 
-    self.deskname = cracked["DTIStory"]["DeskName"]
-    self.categoryname = cracked["DTIStory"]["CategoryName"]
-    self.subcategoryname = cracked["DTIStory"]["SubCategoryName"]
-    self.status = cracked["DTIStory"]["StatusName"]
-    self.priority = cracked["DTIStory"]["PriorityName"]
-    self.memo = cracked["DTIStory"]["Memo"]
-    self.notes = cracked["DTIStory"]["Notes"]
+    self.deskname = cracked["DTIStory"]["DeskName"] unless cracked["DTIStory"]["DeskName"].nil?
+    self.categoryname = cracked["DTIStory"]["CategoryName"] unless cracked["DTIStory"]["CategoryName"].nil?
+    self.subcategoryname = cracked["DTIStory"]["SubCategoryName"] unless cracked["DTIStory"]["SubCategoryName"].nil?
+    self.status = cracked["DTIStory"]["StatusName"] unless cracked["DTIStory"]["StatusName"].nil?
+    self.priority = cracked["DTIStory"]["PriorityName"] unless cracked["DTIStory"]["PriorityName"].nil?
+    self.memo = cracked["DTIStory"]["Memo"] unless cracked["DTIStory"]["Memo"].nil?
+    self.notes = cracked["DTIStory"]["Notes"] unless cracked["DTIStory"]["Notes"].nil?
 
-    self.created_at = cracked["DTIStory"]["StoryCreatedTime"]
-    self.modified_at = cracked["DTIStory"]["LastModifiedTime"]
-    self.expiredate = cracked["DTIStory"]["ExpireDate"]
-    self.web_published_at = cracked["DTIStory"]["UserDefDate1"]
+    self.related_stories = cracked["DTIStory"]["UserDefStr5"] unless cracked["DTIStory"]["UserDefStr5"].nil?
 
-    self.pub_corrections = cracked["DTIStory"]["PubCorrections"]
-    self.unpublished_corrections = cracked["DTIStory"]["UnpublishedCorrections"]
+    self.created_at = cracked["DTIStory"]["StoryCreatedTime"] unless cracked["DTIStory"]["StoryCreatedTime"].nil?
+    self.modified_at = cracked["DTIStory"]["LastModifiedTime"] unless cracked["DTIStory"]["LastModifiedTime"].nil?
+    self.expiredate = cracked["DTIStory"]["ExpireDate"] unless cracked["DTIStory"]["ExpireDate"].nil?
+    self.web_published_at = cracked["DTIStory"]["UserDefDate1"] unless cracked["DTIStory"]["UserDefDate1"].nil?
 
-    keyword_data = cracked["DTIStory"]["KeywordList"]["Keyword"]
+    self.pub_corrections = cracked["DTIStory"]["PubCorrections"] unless cracked["DTIStory"]["PubCorrections"].nil?
+    self.unpublished_corrections = cracked["DTIStory"]["UnpublishedCorrections"] unless cracked["DTIStory"]["UnpublishedCorrections"].nil?
+
+    keyword_data = cracked["DTIStory"]["KeywordList"]["Keyword"] unless cracked["DTIStory"]["KeywordList"].nil?
     self.keywords = keyword_data
     
-    printrunlist_data = cracked["DTIStory"]["PrintRunList"]["PrintRunInfo"]
+    printrunlist_data = cracked["DTIStory"]["PrintRunList"]["PrintRunInfo"] unless cracked["DTIStory"]["PrintRunList"].nil?
     if !printrunlist_data.nil?
-      if printrunlist_data.count == 1
-        data = printrunlist_data
+      if printrunlist_data.kind_of?(Array)
+        data = printrunlist_data.shift  # Grab first item in array
       else
-        data = printrunlist_data.shift  # Grab first item in hash
+        data = printrunlist_data
       end
-      self.rundate = data["RunDate"]
-      self.edition_name = data["EditionName"]
-      self.pageset_name = data["PageSetName"]
-      self.pageset_letter = data["PageSetLetter"]
-      self.page_number = data["PageNumber"]
-    end
-    
-    self.story_elements = cracked["DTIStory"]["StoryElementList"]
-# still need to grab toolbox element, called mug.line
-# print.caption would be nice as well
-
-    self.story_elements_by_name = cracked["DTIStory"]["StoryElementsByName"]
-
-    self.hl1 = self.story_elements_by_name["HeadlineDelimitedList"]
-    self.hl1 = fix_escaped_elements(self.hl1) unless self.hl1.nil?
-    self.hl1 = strip_formatting(self.hl1) unless self.hl1.nil?
-
-    self.hl2 = self.story_elements_by_name["SubHeadlineDelimitedList"]
-    self.hl2 = fix_escaped_elements(self.hl2) unless self.hl2.nil?
-    self.hl2 = strip_formatting(self.hl2) unless self.hl2.nil?
-
-    self.byline = self.story_elements_by_name["BylineDelimitedList"].split("</p>")
-    if !self.byline.nil?
-      self.paper = strip_formatting(self.byline[1]) unless self.byline[1].nil?
-      self.byline = strip_formatting(self.byline[0]) unless self.byline[0].nil?
-
-      # Truncate byline to get paper
-      self.byline = fix_escaped_elements(self.byline) unless self.byline.nil?
-      self.byline = strip_formatting(self.byline) unless self.byline.nil?
+      self.rundate = data["RunDate"] unless data["RunDate"].nil?
+      self.edition_name = data["EditionName"] unless data["EditionName"].nil?
+      self.pageset_name = data["PageSetName"] unless data["PageSetName"].nil?
+      self.pageset_letter = data["PageSetLetter"] unless data["PageSetLetter"].nil?
+      self.page_number = data["PageNumber"] unless data["PageNumber"].nil?
     end
 
-    self.print_text = self.story_elements_by_name["TextDelimitedList"]
-    self.print_text = fix_escaped_elements(self.print_text) unless self.print_text.nil?
-    self.print_text = handle_chapterheads_in_body(self.print_text) unless self.print_text.nil?
+    self.story_elements = cracked["DTIStory"]["StoryElementList"]["StoryElement"] unless cracked["DTIStory"]["StoryElementList"].nil?
+    if !self.story_elements.nil?
+        story_elements = []
+      if self.story_elements.kind_of?(Array)   # Multiple Story elements
+        count = 0
+        self.story_elements.each { |x|
+          story_elements[count] = x.slice("storyElementName","elementStyleMarkUp")
+          count += 1
+        }
+      else    # Only one Story element
+        story_elements[0] = self.story_elements.slice("storyElementName","elementStyleMarkUp")
+      end
+      self.story_elements = story_elements
 
-    self.web_hl1 = self.story_elements_by_name["WebHeadlineDelimitedList"]
-    self.web_hl1 = fix_escaped_elements(self.web_hl1) unless self.web_hl1.nil?
-    self.web_hl1 = strip_formatting(self.web_hl1) unless self.web_hl1.nil?
+      self.hl1 = self.story_elements.select.reject{|x| x["storyElementName"] != "hl1"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.hl1 = fix_escaped_elements(self.hl1) unless self.hl1.nil?
+      self.hl1 = strip_formatting(self.hl1) unless self.hl1.nil?
+      self.hl1 = self.hl1.gsub(/<[^<>]*>/, "") unless self.hl1.nil? #Remove all tags from string
 
-    self.web_hl2 = self.story_elements_by_name["WebSubHeadlineDelimitedList"]
-    self.web_hl2 = fix_escaped_elements(self.web_hl2) unless self.web_hl2.nil?
-    self.web_hl2 = strip_formatting(self.web_hl2) unless self.web_hl2.nil?
+      self.web_hl1 = self.story_elements.select.reject{|x| x["storyElementName"] != "web.headline"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.web_hl1 = fix_escaped_elements(self.web_hl1) unless self.web_hl1.nil?
+      self.web_hl1 = strip_formatting(self.web_hl1) unless self.web_hl1.nil?
+      self.web_hl1 = self.web_hl1.gsub(/<[^<>]*>/, "") unless self.web_hl1.nil? #Remove all tags from string
 
-    self.web_text = self.story_elements_by_name["WebTextDelimitedList"]
-    self.web_text = fix_escaped_elements(self.web_text) unless self.web_text.nil?
-    self.web_text = handle_chapterheads_in_body(self.web_text) unless self.web_text.nil?
+      self.hl2 = self.story_elements.select.reject{|x| x["storyElementName"] != "hl2"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.hl2 = fix_escaped_elements(self.hl2) unless self.hl2.nil?
+      self.hl2 = strip_formatting(self.hl2) unless self.hl2.nil?
 
-    self.sidebar_body = ""
-    self.sidebar_head = ""
+      self.web_hl2 = self.story_elements.select.reject{|x| x["storyElementName"] != "web.subhead"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.web_hl2 = fix_escaped_elements(self.web_hl2) unless self.web_hl2.nil?
+      self.web_hl2 = strip_formatting(self.web_hl2) unless self.web_hl2.nil?
 
-    self.tagline = ""
-    self.tagline = fix_escaped_elements(self.tagline)
+      self.byline = self.story_elements.select.reject{|x| x["storyElementName"] != "bytag"}.collect{|x| x["elementStyleMarkUp"] }.join.split("</p>")
+      if !self.byline.empty?
+        self.paper = self.byline[1] unless self.byline[1].nil?
+        self.paper = self.paper.gsub(/<[^<>]*>/, "") unless self.paper.nil? #Remove all tags from string
+        
+        self.byline = self.byline[0] unless self.byline[0].nil?
+        self.byline = fix_escaped_elements(self.byline) unless self.byline.nil?
+        self.byline = self.byline.gsub(/<[^<>]*>/, "") unless self.byline.nil? #Remove all tags from string
+        self.byline = self.byline.gsub(/^By /, "") unless self.byline.nil?
+      else
+        self.byline = ""
+      end
 
-    self.web_info = cracked["DTIStory"]["WebInfo"]["LightningWebInfo"]
-    self.latestSEO_url = self.web_info["LatestSEOURL"]
-    self.publish_to_web_datetime = self.web_info["PublishToWebDateTime"]
+      self.print_text = self.story_elements.select.reject{|x| x["storyElementName"] != "text"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.print_text = fix_escaped_elements(self.print_text) unless self.print_text.nil?
+      self.print_text = handle_chapterheads_in_body(self.print_text) unless self.print_text.nil?
+      self.print_text = self.print_text.encode('utf-8') unless self.print_text.nil?
+
+      self.web_text = self.story_elements.select.reject{|x| x["storyElementName"] != "web.text"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.web_text = fix_escaped_elements(self.web_text) unless self.web_text.nil?
+      self.web_text = handle_chapterheads_in_body(self.web_text) unless self.web_text.nil?
+      self.web_text = self.web_text.encode('utf-8') unless self.web_text.nil?
+
+      self.toolbox1 = self.story_elements.select.reject{|x| x["storyElementName"] != "mug.line"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.toolbox1 = fix_escaped_elements(self.toolbox1) unless self.toolbox1.nil?
+      self.toolbox1 = handle_chapterheads_in_body(self.toolbox1) unless self.toolbox1.nil?
+      self.toolbox1 = self.toolbox1.encode('utf-8') unless self.toolbox1.nil?
+
+      self.toolbox2 = self.story_elements.select.reject{|x| x["storyElementName"] != "toolbox2"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.toolbox2 = fix_escaped_elements(self.toolbox2) unless self.toolbox2.nil?
+      self.toolbox2 = handle_chapterheads_in_body(self.toolbox2) unless self.toolbox2.nil?
+      self.toolbox2 = self.toolbox2.encode('utf-8') unless self.toolbox2.nil?
+
+      self.toolbox3 = self.story_elements.select.reject{|x| x["storyElementName"] != "toolbox3"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.toolbox3 = fix_escaped_elements(self.toolbox3) unless self.toolbox3.nil?
+      self.toolbox3 = handle_chapterheads_in_body(self.toolbox3) unless self.toolbox3.nil?
+      self.toolbox3 = self.toolbox3.encode('utf-8') unless self.toolbox3.nil?
+
+      self.toolbox4 = self.story_elements.select.reject{|x| x["storyElementName"] != "toolbox4"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.toolbox4 = fix_escaped_elements(self.toolbox4) unless self.toolbox4.nil?
+      self.toolbox4 = handle_chapterheads_in_body(self.toolbox4) unless self.toolbox4.nil?
+      self.toolbox4 = self.toolbox4.encode('utf-8') unless self.toolbox4.nil?
+
+      self.toolbox5 = self.story_elements.select.reject{|x| x["storyElementName"] != "toolbox5"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.toolbox5 = fix_escaped_elements(self.toolbox5) unless self.toolbox5.nil?
+      self.toolbox5 = handle_chapterheads_in_body(self.toolbox5) unless self.toolbox5.nil?
+      self.toolbox5 = self.toolbox5.encode('utf-8') unless self.toolbox5.nil?
+
+      self.kicker = self.story_elements.select.reject{|x| x["storyElementName"] != "kicker"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.kicker = fix_escaped_elements(self.kicker) unless self.kicker.nil?
+      self.kicker = handle_chapterheads_in_body(self.kicker) unless self.kicker.nil?
+
+      self.web_summary = self.story_elements.select.reject{|x| x["storyElementName"] != "quick.read"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.web_summary = fix_escaped_elements(self.web_summary) unless self.web_summary.nil?
+      self.web_summary = handle_chapterheads_in_body(self.web_summary) unless self.web_summary.nil?
+
+      self.videourl = self.story_elements.select.reject{|x| x["storyElementName"] != "video"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.videourl = fix_escaped_elements(self.videourl) unless self.videourl.nil?
+      self.videourl = handle_chapterheads_in_body(self.videourl) unless self.videourl.nil?
+
+      self.alternateurl = self.story_elements.select.reject{|x| x["storyElementName"] != "alternateurl"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.alternateurl = fix_escaped_elements(self.alternateurl) unless self.alternateurl.nil?
+      self.alternateurl = handle_chapterheads_in_body(self.alternateurl) unless self.alternateurl.nil?
+
+      self.map = self.story_elements.select.reject{|x| x["storyElementName"] != "map.location"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.map = fix_escaped_elements(self.map) unless self.map.nil?
+      self.map = handle_chapterheads_in_body(self.map) unless self.map.nil?
+
+      self.caption = self.story_elements.select.reject{|x| x["storyElementName"] != "caption"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.caption = fix_escaped_elements(self.caption) unless self.caption.nil?
+    end
+
+    self.story_elements_by_name = cracked["DTIStory"]["StoryElementsByName"] unless cracked["DTIStory"]["StoryElementsByName"].nil?
+
+    self.web_info = cracked["DTIStory"]["WebInfo"]["LightningWebInfo"] unless cracked["DTIStory"]["WebInfo"]["LightningWebInfo"].nil?
+    self.latestSEO_url = self.web_info["LatestSEOURL"] unless web_info["LatestSEOURL"].nil?
+    self.publish_to_web_datetime = self.web_info["PublishToWebDateTime"] unless web_info["PublishToWebDateTime"].nil?
     
-    media_data = cracked["DTIStory"]["MediaList"]["MediaItem"]
+    media_data = cracked["DTIStory"]["MediaList"]["MediaItem"] unless cracked["DTIStory"]["MediaList"].nil?
     if !media_data.nil?
       self.media_list = []
       if media_data.length == 51  # 51 fields means it is a single media record
         self.media_list[0] = media_data.slice("FileHeaderId","FileHeaderName",
           "FileTypeExtension","NativeFileExtension","Byline","BylineTitle","Source","OriginalIPTCCaption","PrintCaption",
           "CreatorsName","Depth","Width","DeskName","StatusName","PriorityName","Job","Notes","UserDefinedText1",
-          "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList")
+          "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList")
       else    # more than one media record
         count = 0
         media_data.each { |x|
           self.media_list[count] = x.slice("FileHeaderId","FileHeaderName",
             "FileTypeExtension","NativeFileExtension","Byline","BylineTitle","Source","OriginalIPTCCaption","PrintCaption",
             "CreatorsName","Depth","Width","DeskName","StatusName","PriorityName","Job","Notes","UserDefinedText1",
-            "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList")
+            "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList")
           count += 1
         }
       end
@@ -155,8 +220,8 @@ class ImportDtiStory < ActiveRecord::Base
       return_string.gsub! '{"p"=>nil}', ''
       return_string.gsub! '<p>["p", " ', ''
       return_string.gsub! ' "]</p>', ''
-      return_string.gsub! '<p>', ''
-      return_string.gsub! '</p>', ''
+      #return_string.gsub! '<p>', ''
+      #return_string.gsub! '</p>', ''
       return_string    
     end
   end
@@ -164,8 +229,6 @@ class ImportDtiStory < ActiveRecord::Base
   def fix_escaped_elements(string)
     if !string.nil?
       return_string = string
-  #      return_string.gsub! /\342\200[\230\231]/, "'"
-  #      return_string.gsub! /\342\200[\234\235]/, '"'
       return_string.gsub! '&#x2002', " "
       return_string.gsub! '&#x2008', "-"
       return_string.gsub! '&#x2009', "-"
@@ -208,7 +271,7 @@ class ImportDtiStory < ActiveRecord::Base
     return_string    
   end
 
-  def handle_styling_in_sidebar(string)
+  def handle_styling_in_toolbox(string)
     #puts string
     return_string = string
     return_string.gsub! '<hl2>', '<p class="hl2_head">'
