@@ -8,6 +8,9 @@
 		<div class="inner-box clearfix">
 		  <div id="story-content" class="full_width clearfix">
 				<div class="clearfix">
+			    <% if @story.kicker and @story.kicker.length > 0 and @story.kicker != '<p></p>' %>
+						<%= @story.kicker.html_safe %>
+			    <% end %>
 			    <% if @story.hl1 %>
 			    	<h1><%= @story.hl1.html_safe %></h1>
 					<% end %>
@@ -18,7 +21,7 @@
 			      <h4>By: <%= @story.byline.html_safe %>
 							<% if @story.paper %>, <%= @story.paper.name.html_safe if @story.paper.present? %> <% end %>
 						</h4>
-			    <% end %>
+			    <% end %></br>
 				</div>
 
 				<div id="story_block" class="grid_12 clearfix">
@@ -30,6 +33,30 @@
 			    <% if @story.sidebar_body and @story.sidebar_body.length > 0 %>
 						<div class="toolbox">
 							<%= @story.sidebar_body.html_safe %>
+						</div>
+			    <% end %>
+			    <% if @story.toolbox2 and @story.toolbox2.length > 0 and @story.toolbox2 != '<p></p>' %>
+						<br/>
+						<div class="toolbox">
+							<%= @story.toolbox2.html_safe %>
+						</div>
+			    <% end %>
+			    <% if @story.toolbox3 and @story.toolbox3.length > 0 and @story.toolbox3 != '<p></p>' %>
+						<br/>
+						<div class="toolbox">
+							<%= @story.toolbox3.html_safe %>
+						</div>
+			    <% end %>
+			    <% if @story.toolbox4 and @story.toolbox4.length > 0 and @story.toolbox4 != '<p></p>' %>
+						<br/>
+						<div class="toolbox">
+							<%= @story.toolbox4.html_safe %>
+						</div>
+			    <% end %>
+			    <% if @story.toolbox5 and @story.toolbox5.length > 0 and @story.toolbox5 != '<p></p>' %>
+						<br/>
+						<div class="toolbox">
+							<%= @story.toolbox5.html_safe %>
 						</div>
 			    <% end %>
 				</div>
@@ -48,6 +75,54 @@
 						<br/>
 				  	<%= render(:partial => 'image_sidebar') %>
 					</div>
+				</div>
+
+				<div id="web_story_block" class="grid_12 clearfix">
+					<br/><br/>
+					<h3>Web Fields:</h3>
+			    <% if @story.web_hl1 and @story.web_hl1.length > 0 and @story.web_hl1 != '<p></p>'%>
+						<div class="web_field_label">Web_Head:</div>
+						<div class="web_field">
+							<%= @story.web_hl1.html_safe %></br>
+						</div>
+					<% end %>
+			    <% if @story.web_hl2 and @story.web_hl2.length > 0 and @story.web_hl2 != '<p></p>'%>
+						<div class="web_field_label">Web_Subhead:</div>
+						<div class="web_field">
+							<%= @story.web_hl2.html_safe %></br>
+						</div>
+			    <% end %>
+			    <% if @story.web_text and @story.web_text.length > 0 and @story.web_text != '<p></p>'%>
+						<div class="web_field_label">Web_Text:</div>
+						<div class="web_field">
+							<%=  @story.web_text.html_safe %></br>
+						</div>
+					<% end %>
+			    <% if @story.web_summary and @story.web_summary.length > 0 and @story.web_summary != '<p></p>'%>
+						<div class="web_field_label">Web_Summary:</div>
+						<div class="web_field">
+							<%= @story.web_summary.html_safe %></br>
+						</div>
+					<% end %>
+			    <% if @story.videourl and @story.videourl.length > 0 %>
+							<div class="web_field_label">VideoURL:</div>
+							<div class="web_field">
+								<%= @story.videourl.html_safe %></br>
+							</div>
+			    <% end %>
+			    <% if @story.alternateurl and @story.alternateurl.length > 0 and @story.alternateurl != '<p></p>' %>
+							<div class="web_field_label">AlternateURL:</div>
+							<div class="web_field">
+								<%= @story.alternateurl.html_safe %></br>
+							</div>
+			    <% end %>
+			    <% if @story.map and @story.map.length > 0 %>
+							<div class="web_field_label">Map:</div>
+							<div class="web_field">
+								<%= @story.map.html_safe %></br>
+							</div>
+			    <% end %>
+					</br><br/>
 				</div>
 
 			  <div id="lower-block" class="full_width hide">
