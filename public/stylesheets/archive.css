@@ -760,6 +760,16 @@ input#search_query {
 	background: #D3D3D3;
 	padding: 10px;
 }
+.web_field {
+	background: #D3D3D3;
+	padding: 10px;
+	margin-left: 25px;
+}
+.web_field_label {
+	font: normal .5em Arial, Tahoma, sans-serif;
+	padding: 5px;
+	margin-left: 25px;
+}
 
 /* Story sidebars & lower blocks */
 #info-block {
