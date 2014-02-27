@@ -34,12 +34,30 @@ class Nitf < ActiveRecord::Base
     file_string.gsub!("\xC2\xa6".force_encoding("ASCII-8BIT"), '|')   # Split vertical bar
     file_string.gsub!("\xC2\xab".force_encoding("ASCII-8BIT"), '<<')  # Double less than
     file_string.gsub!("\xC2\xbb".force_encoding("ASCII-8BIT"), '>>')  # Double greater than
+    file_string.gsub!("\xE2\x80\xA9".force_encoding("ASCII-8BIT"), '')    #
+    file_string.gsub!("\xE2\x85\x90".force_encoding("ASCII-8BIT"), '1/7')    #one seventh
+    file_string.gsub!("\xE2\x85\x91".force_encoding("ASCII-8BIT"), '1/9')    #one ninth
+    file_string.gsub!("\xE2\x85\x92".force_encoding("ASCII-8BIT"), '1/10')    #one tenth
+    file_string.gsub!("\xE2\x85\x93".force_encoding("ASCII-8BIT"), '1/3')    #one third
+    file_string.gsub!("\xE2\x85\x94".force_encoding("ASCII-8BIT"), '2/3')    #two third
+    file_string.gsub!("\xE2\x85\x95".force_encoding("ASCII-8BIT"), '1/5')    #one fifth
+    file_string.gsub!("\xE2\x85\x96".force_encoding("ASCII-8BIT"), '2/5')    #two fifth
+    file_string.gsub!("\xE2\x85\x97".force_encoding("ASCII-8BIT"), '3/5')    #three fifth
+    file_string.gsub!("\xE2\x85\x98".force_encoding("ASCII-8BIT"), '4/5')    #four fifth
+    file_string.gsub!("\xE2\x85\x99".force_encoding("ASCII-8BIT"), '1/6')    #one sixth
+    file_string.gsub!("\xE2\x85\x9A".force_encoding("ASCII-8BIT"), '5/6')    #five sixth
+    file_string.gsub!("\xE2\x85\x9B".force_encoding("ASCII-8BIT"), '1/8')    #one eighth
+    file_string.gsub!("\xE2\x85\x9C".force_encoding("ASCII-8BIT"), '3/8')    #three eighth
+    file_string.gsub!("\xE2\x85\x9D".force_encoding("ASCII-8BIT"), '5/8')    #five eighth
+    file_string.gsub!("\xE2\x85\x9E".force_encoding("ASCII-8BIT"), '7/8')    #seven eighth
     file_string.gsub!("\xC2\xbc".force_encoding("ASCII-8BIT"), '1/4') # one quarter
     file_string.gsub!("\xC2\xbd".force_encoding("ASCII-8BIT"), '1/2') # one half
     file_string.gsub!("\xC2\xbe".force_encoding("ASCII-8BIT"), '3/4') # three quarters
     file_string.gsub!("\xCA\xbf".force_encoding("ASCII-8BIT"), "'")   # c-single quote
     file_string.gsub!("\xCC\xa8".force_encoding("ASCII-8BIT"), '')    # modifier - under curve
     file_string.gsub!("\xCC\xb1".force_encoding("ASCII-8BIT"), '')    # modifier - under line
+    file_string.gsub!("\xEF\xBF\xBC".force_encoding("ASCII-8BIT"), '')    # unknown
+    file_string.gsub!("\xEF\xBF\xBD".force_encoding("ASCII-8BIT"), '')    # unknown
 
     file_string.gsub! /\r\n/, "\n"
     file_string.gsub! /\n\r/, "\n"
@@ -73,7 +91,7 @@ class Nitf < ActiveRecord::Base
     file_string.gsub! /\007/, "\n"
     
     #file_string.force_encoding("UTF-8").gsub!(/\u9999/) {replace_unknown($1)}
-    file_string.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+#    file_string.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
 
     file_string
   end

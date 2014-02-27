@@ -12,20 +12,27 @@ namespace :wescom do
 
     def get_files
       news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup","completed","2012",'11','*113012*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'*.xml')
       #news_files = File.join("/","WescomArchive","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
 
     def process_file(file)
-      if !file.upcase.include? "FURN" or file.upcase.include? "FURNI"
+      if !furniture_story?(file)
         puts "Processing: #{file}"
         File.open(file, "rb") do |infile|
           file_contents = infile.read
           next if file_contents.size == 0
           add_story(file_contents, file)
         end
+      else
+        puts "Ignoring Furniture file: #{file}"
+        filename = File.basename(file)
+        file_year  = Time.now.year.to_s
+        dirname = '/WescomArchive/archiveup/completed/'+file_year+'/furniture/'
+        FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
+        FileUtils.mv file, dirname+filename
       end
     end
 
@@ -87,7 +94,7 @@ namespace :wescom do
         story.kicker = dti_story.kicker unless dti_story.kicker.nil?
         story.videourl = dti_story.videourl unless dti_story.videourl.nil?
         story.alternateurl = dti_story.alternateurl unless dti_story.alternateurl.nil?
-        story.map = dti_story.kicker unless dti_story.map.nil?
+        story.map = dti_story.map unless dti_story.map.nil?
         story.caption = dti_story.caption unless dti_story.caption.nil?
 
         #puts "Keywords: #{dti_story.keywords}"
@@ -104,52 +111,59 @@ namespace :wescom do
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
             #puts "*** Media Item: #{x}"
-            image_filename = '/data/archiveup/images_cloud/' + x["FileHeaderName"] + x["FileTypeExtension"]
-            if File.exists?(image_filename)
+            image_filename = '/WescomArchive/archiveup/images_cloud/'
+            image_filename = image_filename + x["FileHeaderName"] unless x["FileHeaderName"].nil?
+            image_filename = image_filename + x["FileTypeExtension"] unless x["FileTypeExtension"].nil?
+
+            if !x["FileHeaderName"].nil? and File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
             else
               puts image_filename+' does not exist'
               media = story.story_images.build
             end
 
-            media.media_id = x["FileHeaderId"]
-            media.media_name = x["FileHeaderName"]
-            media.media_height = x["Depth"]
-            media.media_width = x["Width"]
-            #media.media_mime_type = x["mime_type"]
-            media.media_source = x["Source"]
-            media.media_webcaption = x["OriginalIPTCCaption"]
+            media.media_id = x["FileHeaderId"] unless x["FileHeaderId"].nil?
+            media.media_name = x["FileHeaderName"] unless x["FileHeaderName"].nil?
+            media.media_height = x["Depth"] unless x["Depth"].nil?
+            media.media_width = x["Width"] unless x["Width"].nil?
+            #media.media_mime_type = x["mime_type"] unless x["mime_type"].nil?
+            media.media_source = x["Source"] unless x["Source"].nil?
+            media.media_webcaption = x["OriginalIPTCCaption"] unless x["OriginalIPTCCaption"].nil?
             #puts media.media_webcaption
 
             if !x["RunList"].nil? and !x["RunList"]["RunInfoItem"].nil?
               if x["RunList"]["RunInfoItem"].kind_of?(Array)
                 x["RunList"]["RunInfoItem"].each { |y|
-                  media.media_printcaption = y["PrintCaption"]
+                  media.media_printcaption = y["PrintCaption"] unless x["PrintCaption"].nil?
                 }
               else
-                media.media_printcaption = x["RunList"]["RunInfoItem"]["PrintCaption"]
+                media.media_printcaption = x["RunList"]["RunInfoItem"]["PrintCaption"] unless x["RunList"]["RunInfoItem"]["PrintCaption"].nil?
               end
             end
             #puts media.media_printcaption
-            
-            media.media_originalcaption = x["UserDefinedText1"]
-            media.media_byline = x["Byline"]
-            media.media_project_group = x["Job"]
-            media.media_notes = x["Notes"]
-            media.media_status = x["StatusName"]
-            media.media_type = x["FileTypeExtension"].gsub(/\./, '')
-            media.byline_title = x["BylineTitle"]
-            media.deskname = x["DeskName"]
-            media.priority = x["PriorityName"]
+
+            media.media_originalcaption = x["UserDefinedText1"] unless x["UserDefinedText1"].nil?
+            media.media_byline = x["Byline"] unless x["Byline"].nil?
+            media.media_project_group = x["Job"] unless x["Job"].nil?
+            media.media_notes = x["Notes"] unless x["Notes"].nil?
+            media.media_status = x["StatusName"] unless x["StatusName"].nil?
+            media.media_type = x["FileTypeExtension"].gsub(/\./, '') unless x["FileTypeExtension"].nil?
+            media.byline_title = x["BylineTitle"] unless x["BylineTitle"].nil?
+            media.deskname = x["DeskName"] unless x["DeskName"].nil?
+            media.priority = x["PriorityName"] unless x["PriorityName"].nil?
+
+#################
+# set publish_status based on page placement
+##################
             if x["PriorityName"] == 'Web Ready'
               media.publish_status = "Published"
             else
               media.publish_status = "Attached"
             end
-            media.created_date = x["CreatedDate"]
-            media.last_refreshed_time = x["LastRefreshedTime"]
-            media.expire_date = x["ExpireDate"]
-            #media.related_stories = x["RelatedStoriesList"]
+            media.created_date = x["CreatedDate"] unless x["CreatedDate"].nil?
+            media.last_refreshed_time = x["LastRefreshedTime"] unless x["LastRefreshedTime"].nil?
+            media.expire_date = x["ExpireDate"] unless x["ExpireDate"].nil?
+            #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
           }
         end
         story.save!
@@ -168,14 +182,45 @@ namespace :wescom do
             puts "No original story found in database"
           end
         end
+        
+        # Move completed import file out of import folder
+        file = File.basename(filename)
+        file_month = ""
+        file_year  = ""
+        if !story.pubdate.nil?
+          file_month = story.pubdate.month.to_s
+          file_year  = story.pubdate.year.to_s
+        else
+          if !story.web_published_at.nil?
+            file_month = story.web_published_at.month.to_s
+            file_year  = story.web_published_at.year.to_s
+          else
+            file_month = "web_only"
+            file_year  = Time.now.year.to_s
+          end
+        end
+        dirname = '/WescomArchive/archiveup/completed/'+file_year+'/'+file_month+'/'
+        FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
+        FileUtils.mv filename, dirname+file
 
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
-        FileUtils.cp filename, '/data/archiveup/import_failed/'+file
+        FileUtils.mv filename, '/WescomArchive/archiveup/import_failed/'+file
       end
     end
     
+    def furniture_story?(file)
+      fileupper = file.upcase
+       if !(fileupper =~ /\D\da? FURN/).nil? or !(fileupper =~ /\D\da?FURN/).nil? or 
+         !(fileupper =~ /FURN\D\da?/).nil? or !(fileupper =~ /FURN \D\da?/).nil? or 
+         !(fileupper =~ /FURNITURE\D\da?/).nil? or !(fileupper =~ /FURNITURE \D\da?/).nil?
+        return true
+      else
+        return false
+      end
+    end
+
     def create_pdf_filename(pubdate,section,page)
       pdf_filename = section+("%02d" % page)+"_NEWS MAIN_"+pubdate.strftime('%d-%m-%y')+"_.PDF"
       return pdf_filename
