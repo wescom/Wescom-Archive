@@ -98,6 +98,12 @@
 							<%=  @story.web_text.html_safe %></br>
 						</div>
 					<% end %>
+			    <% if @story.htmltext and @story.htmltext.length > 0 and @story.htmltext != '<p></p>'%>
+						<div class="web_field_label">HTML Text:</div>
+						<div class="web_field">
+							<%=  @story.htmltext %></br>
+						</div>
+					<% end %>
 			    <% if @story.web_summary and @story.web_summary.length > 0 and @story.web_summary != '<p></p>'%>
 						<div class="web_field_label">Web_Summary:</div>
 						<div class="web_field">
