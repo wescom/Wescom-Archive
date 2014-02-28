@@ -11,7 +11,7 @@ namespace :wescom do
     end
 
     def get_files
-      news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
+      news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'Wolverine*.xml')
       #news_files = File.join("/","WescomArchive","archiveup","import_failed",'*.xml')
       #news_files = File.join("/","WescomArchive","archiveup",'completed','testxml','**','*.xml')
       news_files = Dir.glob(news_files)
@@ -19,20 +19,29 @@ namespace :wescom do
     end
 
     def process_file(file)
-      if !furniture_story?(file)
-        puts "Processing: #{file}"
-        File.open(file, "rb") do |infile|
-          file_contents = infile.read
-          next if file_contents.size == 0
-          add_story(file_contents, file)
-        end
-      else
+      if furniture_story?(file)
         puts "Ignoring Furniture file: #{file}"
         filename = File.basename(file)
         file_year  = Time.now.year.to_s
         dirname = '/WescomArchive/archiveup/completed/'+file_year+'/furniture/'
         FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
         FileUtils.mv file, dirname+filename
+      else
+        if saxotech_story?(file)
+          puts "Ignoring Saxotech file: #{file}"
+          filename = File.basename(file)
+          file_year  = Time.now.year.to_s
+          dirname = '/WescomArchive/archiveup/completed/'+file_year+'/saxotech/'
+          FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
+          FileUtils.mv file, dirname+filename
+        else
+          puts "Processing: #{file}"
+          File.open(file, "rb") do |infile|
+            file_contents = infile.read
+            next if file_contents.size == 0
+            add_story(file_contents, file)
+          end
+        end
       end
     end
 
@@ -92,6 +101,7 @@ namespace :wescom do
         story.toolbox5 = dti_story.toolbox5 unless dti_story.toolbox5.nil?
         story.web_summary = dti_story.web_summary unless dti_story.web_summary.nil?
         story.kicker = dti_story.kicker unless dti_story.kicker.nil?
+        story.htmltext = dti_story.htmltext unless dti_story.htmltext.nil?
         story.videourl = dti_story.videourl unless dti_story.videourl.nil?
         story.alternateurl = dti_story.alternateurl unless dti_story.alternateurl.nil?
         story.map = dti_story.map unless dti_story.map.nil?
@@ -118,7 +128,7 @@ namespace :wescom do
             if !x["FileHeaderName"].nil? and File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
             else
-              puts image_filename+' does not exist'
+#              puts image_filename+' does not exist'
               media = story.story_images.build
             end
 
@@ -215,6 +225,16 @@ namespace :wescom do
        if !(fileupper =~ /\D\da? FURN/).nil? or !(fileupper =~ /\D\da?FURN/).nil? or 
          !(fileupper =~ /FURN\D\da?/).nil? or !(fileupper =~ /FURN \D\da?/).nil? or 
          !(fileupper =~ /FURNITURE\D\da?/).nil? or !(fileupper =~ /FURNITURE \D\da?/).nil?
+        return true
+      else
+        return false
+      end
+    end
+
+    def saxotech_story?(file)
+      # Check whether story was imported from Saxotech
+      fileupper = file.upcase
+       if !(fileupper =~ /(SX-)/).nil?
         return true
       else
         return false

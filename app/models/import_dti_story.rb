@@ -6,7 +6,7 @@ class ImportDtiStory < ActiveRecord::Base
   attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
   attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text, :web_summary
   attr_accessor :toolbox1, :toolbox2, :toolbox3, :toolbox4, :toolbox5
-  attr_accessor :kicker, :tagline, :caption, :alternateurl, :map, :videourl
+  attr_accessor :kicker, :tagline, :caption, :alternateurl, :map, :videourl, :htmltext
   attr_accessor :web_info, :latestSEO_url, :publish_to_web_datetime
   attr_accessor :media_list
   attr_accessor :correction, :original_story_id
@@ -146,6 +146,10 @@ class ImportDtiStory < ActiveRecord::Base
       self.kicker = self.story_elements.select.reject{|x| x["storyElementName"] != "kicker"}.collect{|x| x["elementStyleMarkUp"] }.join
       self.kicker = fix_escaped_elements(self.kicker) unless self.kicker.nil?
       self.kicker = handle_chapterheads_in_body(self.kicker) unless self.kicker.nil?
+
+      self.htmltext = self.story_elements.select.reject{|x| x["storyElementName"] != "htmltext"}.collect{|x| x["elementStyleMarkUp"] }.join
+      self.htmltext = fix_escaped_elements(self.htmltext) unless self.htmltext.nil?
+      self.htmltext = handle_chapterheads_in_body(self.htmltext) unless self.htmltext.nil?
 
       self.web_summary = self.story_elements.select.reject{|x| x["storyElementName"] != "quick.read"}.collect{|x| x["elementStyleMarkUp"] }.join
       self.web_summary = fix_escaped_elements(self.web_summary) unless self.web_summary.nil?
