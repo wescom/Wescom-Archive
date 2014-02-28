@@ -9,6 +9,9 @@
 								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
 						<p class="image-info">
 							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
+							<% if image.priority == 'Web Ready' %>
+								<br/>Published to Web
+							<% end %>
 						</p>
 					</li>
 				</ul>
