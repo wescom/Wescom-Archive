@@ -11,9 +11,9 @@ namespace :wescom do
     end
 
     def get_files
-      news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'Wolverine*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup",'completed','testxml','**','*.xml')
+      news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'Wolverine*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup",'completed','**','Wolverine*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -162,10 +162,7 @@ namespace :wescom do
             media.deskname = x["DeskName"] unless x["DeskName"].nil?
             media.priority = x["PriorityName"] unless x["PriorityName"].nil?
 
-#################
-# set publish_status based on page placement
-##################
-            if x["PriorityName"] == 'Web Ready'
+            if !x["RunList"].nil? or x["PriorityName"] == 'Web Ready'
               media.publish_status = "Published"
             else
               media.publish_status = "Attached"
