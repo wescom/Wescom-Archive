@@ -9,6 +9,7 @@ bundle install>>/tmp/null
 
 echo "Import Daily Stories"
 bundle exec rake wescom:dti_import RAILS_ENV=production
+bundle exec rake wescom:cloud_dti_import RAILS_ENV=production
 
 # force all imported images to new owner, otherwise web process cannot modify/delete
 find /WescomArchive/db_images/1* -mtime -1 -exec chown -hR shoffmann:shoffmann {} \;
