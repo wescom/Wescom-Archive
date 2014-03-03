@@ -12,8 +12,8 @@ namespace :wescom do
 
     def get_files
       news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'Wolverine*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup",'completed','**','Wolverine*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup",'completed','**','Lucas*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
@@ -128,7 +128,7 @@ namespace :wescom do
             if !x["FileHeaderName"].nil? and File.exists?(image_filename)
               media = story.story_images.build(:image => File.open(image_filename))
             else
-#              puts image_filename+' does not exist'
+              puts image_filename+' does not exist'
               media = story.story_images.build
             end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530163945) do
+ActiveRecord::Schema.define(:version => 20140228183853) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -137,6 +137,31 @@ ActiveRecord::Schema.define(:version => 20130530163945) do
     t.string   "project_group"
     t.string   "frontend_db"
     t.integer  "plan_id"
+    t.string   "pageset_letter"
+    t.string   "author"
+    t.string   "origin"
+    t.string   "deskname"
+    t.string   "categoryname"
+    t.string   "subcategoryname"
+    t.text     "memo"
+    t.text     "notes"
+    t.datetime "expiredate"
+    t.datetime "web_published_at"
+    t.string   "related_stories"
+    t.string   "web_hl1"
+    t.string   "web_hl2"
+    t.text     "web_text"
+    t.text     "toolbox2"
+    t.text     "toolbox3"
+    t.text     "toolbox4"
+    t.text     "toolbox5"
+    t.text     "web_summary"
+    t.string   "kicker"
+    t.string   "videourl"
+    t.string   "alternateurl"
+    t.string   "map"
+    t.text     "caption"
+    t.text     "htmltext"
   end
 
   add_index "stories", ["plan_id"], :name => "index_stories_on_plan_id"
@@ -164,6 +189,13 @@ ActiveRecord::Schema.define(:version => 20130530163945) do
     t.string   "media_status"
     t.string   "media_type"
     t.string   "publish_status"
+    t.text     "media_webcaption"
+    t.string   "byline_title"
+    t.string   "deskname"
+    t.string   "priority"
+    t.datetime "created_date"
+    t.datetime "last_refreshed_time"
+    t.datetime "expire_date"
   end
 
   add_index "story_images", ["image_updated_at"], :name => "index_story_images_on_image_updated_at"
@@ -189,8 +221,12 @@ ActiveRecord::Schema.define(:version => 20130530163945) do
     t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "role"
-    t.integer  "search_count"
+    t.string   "role",          :default => "View"
+    t.integer  "search_count",  :default => 0
+    t.string   "login"
+    t.string   "name"
+    t.text     "group_strings"
+    t.string   "ou_strings"
   end
 
 end
