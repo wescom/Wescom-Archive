@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
       if (@story.pageset_letter.present?)
         scope = scope.where('section_letter = ?', @story.pageset_letter)
       end
-      if (@story.page.present?)
+      if (@story.page.present?) and (@story.pageset_letter.present?)
         scope = scope.where('page = ?', @story.page)
       end
       @pdf_image = scope.order_by_pubdate_section_page.first
