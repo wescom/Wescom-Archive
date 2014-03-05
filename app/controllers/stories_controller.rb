@@ -4,7 +4,14 @@ class StoriesController < ApplicationController
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
     if @story.plan.present?
-      @pdf_image = PdfImage.includes('plan').where(:pubdate=>@story.pubdate).where('plans.pub_name = ?',@story.plan.pub_name).order_by_pubdate_section_page.first
+      scope = PdfImage.includes('plan').where(:pubdate=>@story.pubdate).where('plans.pub_name = ?',@story.plan.pub_name)
+      if (@story.pageset_letter.present?)
+        scope = scope.where('section_letter = ?', @story.pageset_letter)
+      end
+      if (@story.page.present?)
+        scope = scope.where('page = ?', @story.page)
+      end
+      @pdf_image = scope.order_by_pubdate_section_page.first
     end
 
     respond_to do |format|
