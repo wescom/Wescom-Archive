@@ -11,9 +11,9 @@ namespace :wescom do
     end
 
     def get_files
-      #news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
-      news_files = File.join("/","WescomArchive","archiveup","import_failed",'*.xml')
-      #news_files = File.join("/","WescomArchive","archiveup",'completed','**','Lucas*.xml')
+      news_files = File.join("/","WescomArchive","archiveup","cloud_dti_import",'*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup","import_failed",'Beer*.xml')
+      #news_files = File.join("/","WescomArchive","archiveup",'completed','**','*.xml')
       news_files = Dir.glob(news_files)
       news_files
     end
