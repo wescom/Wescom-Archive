@@ -1,6 +1,6 @@
 == Wescom Archive ==
 
-This website allows full text searching of all stories, images and PDF pages published at The Bulletin from 1994-Present. Stories, images and PDF pages are ingested on a daily basis every morning and get added to the index on import. Indexing is handled by the Sunspot SOLR gem.
+This website allows full text searching of all stories, images and PDF pages published at The Bulletin from 1992-Present. Stories, images and PDF pages are ingested on a daily basis every morning and get added to the index on import. Indexing is handled by the Sunspot SOLR gem.
 
 Installation
 1) Configure Database.yml
