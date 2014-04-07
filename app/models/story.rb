@@ -20,12 +20,20 @@ class Story < ActiveRecord::Base
     # Search fields
     text :hl1, :default_boost => 2.0, :stored => true
     text :hl2, :stored => true
+    text :web_hl1, :default_boost => 2.0, :stored => true
+    text :web_hl2, :stored => true
     text :page
     text :byline, :default_boost => 3.0, :stored => true
     text :tagline
     text :copy, :publish_year
+    text :web_text
+    text :web_summary
     text :sidebar_body
     text :project_group
+    text :toolbox2
+    text :toolbox3
+    text :toolbox4
+    text :toolbox5
 
     # Sort fields - must use 'string' instead of 'text'
     integer :story_location_id do
