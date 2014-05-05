@@ -27,19 +27,28 @@ namespace :wescom do
         FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
         FileUtils.mv file, dirname+filename
       else
-        if saxotech_story?(file)
-          puts "Ignoring Saxotech file: #{file}"
+        if comic_story?(file)
+          puts "Ignoring Comic file: #{file}"
           filename = File.basename(file)
           file_year  = Time.now.year.to_s
-          dirname = '/WescomArchive/archiveup/completed/'+file_year+'/saxotech/'
+          dirname = '/WescomArchive/archiveup/completed/'+file_year+'/comics/'
           FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
           FileUtils.mv file, dirname+filename
         else
-          puts "Processing: #{file}"
-          File.open(file, "rb") do |infile|
-            file_contents = infile.read
-            next if file_contents.size == 0
-            add_story(file_contents, file)
+          if saxotech_story?(file)
+            puts "Ignoring Saxotech file: #{file}"
+            filename = File.basename(file)
+            file_year  = Time.now.year.to_s
+            dirname = '/WescomArchive/archiveup/completed/'+file_year+'/saxotech/'
+            FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
+            FileUtils.mv file, dirname+filename
+          else
+            puts "Processing: #{file}"
+            File.open(file, "rb") do |infile|
+              file_contents = infile.read
+              next if file_contents.size == 0
+              add_story(file_contents, file)
+            end
           end
         end
       end
@@ -222,6 +231,16 @@ namespace :wescom do
        if !(fileupper =~ /\D\da? FURN/).nil? or !(fileupper =~ /\D\da?FURN/).nil? or 
          !(fileupper =~ /FURN\D\da?/).nil? or !(fileupper =~ /FURN \D\da?/).nil? or 
          !(fileupper =~ /FURNITURE\D\da?/).nil? or !(fileupper =~ /FURNITURE \D\da?/).nil?
+        return true
+      else
+        return false
+      end
+    end
+
+    def comic_story?(file)
+      fileupper = file.upcase
+puts fileupper
+       if !(fileupper =~ /COMICS \da?/).nil?
         return true
       else
         return false
