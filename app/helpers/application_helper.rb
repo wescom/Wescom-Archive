@@ -19,10 +19,16 @@ module ApplicationHelper
   def text_for_story_link(story)
     text = if !story.hl1.nil? and story.hl1.length > 0
       story.hl1
+    elsif !story.web_hl1.nil? and story.web_hl1.length > 0
+      story.web_hl1
     elsif !story.hl2.nil? and story.hl2.length > 0
       story.hl2
+    elsif !story.web_hl2.nil? and story.web_hl2.length > 0
+      story.web_hl2
     elsif !story.copy.nil? and story.copy.length > 0
       "No Headline. Story Copy: "+truncate(story.copy.gsub(/<.*?>/, ''), :length => 75)
+    elsif !story.web_text.nil? and story.web_text.length > 0
+      "No Headline. Story Copy: "+truncate(story.web_text.gsub(/<.*?>/, ''), :length => 75)
     else
       story.doc_name
     end
