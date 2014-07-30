@@ -68,6 +68,29 @@ class StoryImagesController < ApplicationController
     render :layout => "plain"
   end
   
+  def edit
+    @image = StoryImage.find(params[:id])
+    render :layout => "plain"
+  end
+
+  def update
+    @image = StoryImage.find(params[:id])
+Rails.logger.info params[:image]
+
+    if params[:cancel_button]
+      redirect_to story_image_path
+    else
+      @image.attributes=(params[:story_image])
+      if @image.save
+        flash[:notice] = "Image Updated"
+        redirect_to story_image_path
+      else
+        flash[:error] = "Image Update Failed"
+        render :action => :edit
+      end
+    end
+  end
+  
   def destroy
     @image = StoryImage.find(params[:id])
     @story = @image.story

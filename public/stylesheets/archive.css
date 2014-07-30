@@ -906,7 +906,11 @@ img.image_large {height:auto;width:450px;}
 	text-align:center;
 }
 
-#page-content input.image-delete {
+.image-storyname {
+  font: normal 1.3em Arial, Tahoma, sans-serif;
+}
+
+#page-content input.image-edit-button {
 	cursor: pointer;
   font: normal 0.7em Arial, Tahoma, sans-serif;
 	width: 90px;
@@ -915,6 +919,14 @@ img.image_large {height:auto;width:450px;}
   padding: 5px 5px 5px 5px;
   text-transform: uppercase;
   border: 1px solid;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+#image-content input {
+  font: normal 0.9em Arial, Tahoma, sans-serif;
+  margin: 0px 0px 0px 0px;
+	margin-left: 10px;
 }
 
 /* Story Editing */

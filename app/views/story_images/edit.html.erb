@@ -1,0 +1,35 @@
+<% content_for :title do %>
+  <%= "#{h @image.media_name} - " if @image.media_name -%>
+<% end %>
+
+<div id="image-content" class="grid_16">
+	<div class="image-header-bar ">
+		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
+		<div class="float_right"><%= @image.publish_status %></div>
+	</div>
+
+	<% if @image.media_type == "PagePDF" %>
+		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
+	<% else %>
+		<div id="image_image" class="grid_8 clearfix">
+			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %>
+		</div>
+
+		<div id="image_info" class="grid_8 clearfix">
+			<div class="image-attached-story">
+				<h3>Edit image captions</h3>
+				<%= form_for @image, :url => story_image_path do |form| %>
+					<div id="image-edit" class="clearfix">
+						<%= render :partial => 'form', :object => form %>
+					</div>
+					<div class="full_width">
+						<div>
+							<%= form.submit "Update", :class => 'submit medium'%>
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit medium'%>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>

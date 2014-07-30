@@ -1,0 +1,17 @@
+<div class="image-head">Print Caption:</div>
+<div class="image-info-edit">
+		<%= form.text_area :media_printcaption, :class => 'image_field small' %></br>
+		Print Producer: <%= form.text_field :media_printproducer, :class => 'image_field big' %></br>
+</div>
+
+<div class="image-head">Web Caption:</div>
+<div class="image-info-edit">
+	<%= form.text_area :media_webcaption, :class => 'image_field small' %></br>
+</div>
+
+<div class="image-head">Original Photographer's Caption:</div>
+<div class="image-info-edit">
+	<%= form.text_area :media_originalcaption, :class => 'image_field small' %></br>
+	Original Photographer's Byline: <%= form.text_field :media_byline, :class => 'image_field big' %></br>
+	Original Photographer's Source: <%= form.text_field :media_source, :class => 'image_field big' %></br>
+</div>
