@@ -24,8 +24,8 @@
 	</td>
   <td class="center status_col"><%= image_fragment.publish_status %></td>
   <td class="center section_col">
-		<% if (image_fragment.story.plan.present? %>
-			<% if image_fragment.story.plan.pub_name.present?) %>
+		<% if image_fragment.story.plan.present? %>
+			<% if image_fragment.story.plan.pub_name.present? %>
 				<% if image_fragment.story.plan.pub_name.strip == "The Bulletin" %>
 					<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
 				<% else %>
