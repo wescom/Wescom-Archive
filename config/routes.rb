@@ -1,4 +1,8 @@
 Wescomarchive::Application.routes.draw do
+  match "/signout" => "sessions#destroy"
+
+  resources :sessions
+
   resources :locations
   resources :publications
   resources :publication_types
@@ -23,9 +27,9 @@ Wescomarchive::Application.routes.draw do
   match "/search/today" => "search#today"
   match "/search_images" => "story_images#search"
 
-  match "/login" => "Auth#create"
-  match "/logout" => "Auth#destroy"
-  match "/setup" => "Auth#setup"
+  match "/login" => "sessions#new"
+  match "/logout" => "sessions#destroy"
+  match "/adauth" => "sessions#create"
 
   root :to => "home#index"
 end

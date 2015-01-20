@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include ApplicationHelper
+  helper_method :current_user
 
   def require_user
     unless current_user
-      redirect_to '/login?domain=wescompapers.com'
+#      redirect_to '/login?domain=wescompapers.com'
+      redirect_to '/login', :error => "Invalid Login"
       return false
     end
   end
@@ -23,7 +25,13 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+  
+  def authenticate_user!
+     if current_user.nil?
+         redirect_to '/login', :error => "Invalid Login" 
+     end
   end
 
   def signed_in?

@@ -36,5 +36,11 @@ module Wescomarchive
 
     # Version of your assets, change this if you want to expire all your assets  
     config.assets.version = '2.1'
+
+    # config.authentication_method = :authenticate_admin_user!
+    config.authentication_method = :authenticate_user!
+
+    #config.current_user_method = :current_admin_user
+    config.current_user_method = :current_user
   end
 end

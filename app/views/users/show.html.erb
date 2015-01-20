@@ -5,9 +5,8 @@
 
 		<div class="inner-box clearfix">
 		  <div id="form-block" class="grid_15">
-				Username: <%= @user.email %><br/>
-				First Name: <%= @user.first_name %><br/>
-				Last Name: <%= @user.last_name %><br/>
+				Username: <%= @user.login %><br/>
+				Name: <%= @user.name %><br/>
 				Created At: <%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
 				Updated At: <%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
 				Role: <%= @user.role %><br/>
