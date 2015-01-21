@@ -2,7 +2,7 @@ production:
   solr:
     hostname: archive2
     port: 8983
-    path: '/solr'
+    path: '/solr/default'
     log_level: WARNING
 
 development:
