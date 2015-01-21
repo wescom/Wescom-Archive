@@ -2,7 +2,7 @@ production:
   solr:
     hostname: archive2
     port: 8080 #Tomcat default
-    path: '/solr/default'
+    path: '/solr'
     log_level: WARNING
 
 development:
