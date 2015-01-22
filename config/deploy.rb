@@ -64,6 +64,8 @@ namespace :deploy do
       ln -s #{shared_path}/system #{latest_release}/public/system &&
       ln -s #{shared_path}/log #{latest_release}/log &&
       ln -s #{shared_path}/pids #{latest_release}/tmp/pids
+      mkdir -p #{latest_release}/solr &&
+      ln -s #WescomArchive/solr #{latest_release}/solr
     CMD
     #ln -sf /u/apps/wescomarchive/shared/system /u/apps/wescomarchive/current/public/system &&
   end
