@@ -67,8 +67,7 @@ namespace :deploy do
     CMD
     run <<-CMD
       rm -rf #{latest_release}/solr &&
-      mkdir #{latest_release}/solr &&
-      ln -s #/WescomArchive/solr #{latest_release}/solr
+      ln -s /WescomArchive/solr #{latest_release}/solr
     CMD
   end
 
