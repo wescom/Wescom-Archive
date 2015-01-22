@@ -58,14 +58,12 @@ namespace :deploy do
   desc "Finialize update"
   task :finalize_update do
     run <<-CMD
-      rm -rf #{latest_release}/log #{latest_release}/public/system #{latest_release}/tmp/pids #{latest_release}/solr &&
+      rm -rf #{latest_release}/log #{latest_release}/public/system #{latest_release}/tmp/pids &&
       mkdir -p #{latest_release}/public &&
       mkdir -p #{latest_release}/tmp &&
       ln -s #{shared_path}/system #{latest_release}/public/system &&
       ln -s #{shared_path}/log #{latest_release}/log &&
       ln -s #{shared_path}/pids #{latest_release}/tmp/pids
-      mkdir #{latest_release}/solr &&
-      ln -s #WescomArchive/solr #{latest_release}/solr
     CMD
     run <<-CMD
       rm -rf #{latest_release}/solr &&
