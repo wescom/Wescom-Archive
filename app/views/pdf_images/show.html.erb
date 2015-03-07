@@ -7,15 +7,38 @@
 		<% if !@pdf_image.image_file_name.nil? %><%= @pdf_image.image_file_name %><% end %>
 	</div>
 
-	<%= link_to image_tag(@pdf_image.image(:large), :alt=>"PagePDF", :class=>"image_large"), @pdf_image.image.url %>
+	<div id="image_pdf" class="grid_6">
+		<%= link_to image_tag(@pdf_image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @pdf_image.image.url %>
+	</div>
 	
-	<div id="image_edit" class="grid_16">
-		<% if admin? || edit? %>
-			<%= button_to "Delete Image", pdf_image_path(@pdf_image), 
-					:method => :delete, 
-					:confirm => "Are you sure you want to delete image from story?",
-					:action => 'destroy',
-					:class => 'image-delete float_right' %>
+	<div id="image-info" class="grid_9">
+		<% if @pdf_image.plan.present? %>
+			<div class="image-head">Plan Info:</div>
+			<div class="image-info-box indent">
+				Location: <%= @pdf_image.plan.location.name if @pdf_image.plan.location.name.present? %><br/>
+				Publication Type: <%= @pdf_image.plan.publication_type.name if @pdf_image.plan.publication_type.name.present? %><br/>
+			</div>
+			<br/>
+			<div class="image-info-box indent">
+				Publication Name: <%= @pdf_image.plan.pub_name if @pdf_image.plan.pub_name.present? %><br/>
+				Section Name: <%= @pdf_image.plan.section_name if @pdf_image.plan.section_name.present? %><br/>
+				Section Letter: <%= @pdf_image.section_letter if @pdf_image.section_letter.present? %><br/>
+				Page: <%= @pdf_image.page if @pdf_image.page.to_i >= 0 %><br/>
+				PubDate: <%= @pdf_image.pubdate.strftime('%m/%d/%Y') if @pdf_image.pubdate.present? %><br/>
+			</div>
 		<% end %>
+		
+		<br/>
+		<br/>
+		<div class="center">
+			<%= button_to "Edit", edit_pdf_image_path(@pdf_image), :method => :get, :class => 'image-edit-button float_left' %>
+			<% if admin? || edit? %>
+				<%= button_to "Delete Image", pdf_image_path(@pdf_image), 
+						:method => :delete, 
+						:confirm => "Are you sure you want to delete PDF from archive?",
+						:action => 'destroy',
+						:class => 'image-delete image-edit-button float_left' %>
+			<% end %>
+		</div>
 	</div>
 </div>

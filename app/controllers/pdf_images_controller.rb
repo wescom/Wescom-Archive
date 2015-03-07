@@ -85,6 +85,31 @@ class PdfImagesController < ApplicationController
     render :layout => "plain"
   end
 
+  def edit
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
+    @pdf_image = PdfImage.find(params[:id])
+    render :layout => "plain"
+  end
+
+  def update
+    @pdf_image = PdfImage.find(params[:id])
+
+    if params[:cancel_button]
+      redirect_to pdf_image_path
+    else
+      @pdf_image.attributes=(params[:pdf_image])
+      if @pdf_image.save
+        flash[:notice] = "PDF Updated"
+        redirect_to pdf_image_path
+      else
+        flash[:error] = "PDF Update Failed"
+        render :action => :edit
+      end
+    end
+  end
+  
   def destroy
     @pdf_images = PdfImage.find(params[:id])
     if @pdf_images.destroy

@@ -152,6 +152,13 @@ $(document).ready(function(){
 		changeYear: true,
 		yearRange: "1992:"+max_year
 	});
+	$(".input_date_picker").datepicker({ 
+		altField: "#pubdate-alt",
+		altFormat: "yy-mm-d", 
+		changeMonth: true, 
+		changeYear: true,
+		yearRange: "1992:"+max_year
+	});
 	
 	$("#sidebar_today").hide();
 

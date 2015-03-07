@@ -1,0 +1,38 @@
+<% content_for :title do %>
+  <%= "#{h @pdf_image.image_file_name} - " if @pdf_image.image_file_name -%>
+<% end %>
+
+<div id="image-content" class="grid_16">
+	<div class="image-header-bar ">
+		<%= @pdf_image.image_file_name if !@pdf_image.image_file_name.nil? %>
+	</div>
+
+	<div id="image_pdf" class="grid_6">
+		<%= link_to image_tag(@pdf_image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @pdf_image.image.url %><br/>
+		<%= @pdf_image.image_file_name if !@pdf_image.image_file_name.nil? %>
+	</div>
+	
+	<div id="image_edit" class="grid_9">
+		<%= form_for @pdf_image, :url => pdf_image_path do |form| %>
+			Publication Name: <%= form.text_field :publication, :class => "large" %><br/>
+			Section Name: <%= form.text_field :section_name, :class => "large" %><br/>
+			Section Letter: <%= form.text_field :section_letter, :class => "small" %><br/>
+			Page: <%= form.text_field :page, :class => "small" %><br/>
+			PubDate: <%= form.text_field :pubdate, 
+								:class => 'input_date_picker small', 
+								:placeholder => :pubdate,
+								:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
+			<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
+
+			Plan: <%= @pdf_image.plan_id %><br/>
+			Publication Name: <%= @pdf_image.plan.pub_name %><br/>
+			Section Name: <%= @pdf_image.plan.section_name %><br/>
+
+			<div>
+				<%= form.submit "Update", :class => 'image-edit-button small float_left'%>
+				<%= form.submit "Cancel", :name => 'cancel_button', :class => 'image-edit-button small float_left'%>
+			</div>
+		<% end %>
+		
+	</div>
+</div>
