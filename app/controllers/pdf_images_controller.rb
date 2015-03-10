@@ -89,6 +89,7 @@ class PdfImagesController < ApplicationController
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
     @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
+
     @pdf_image = PdfImage.find(params[:id])
     render :layout => "plain"
   end
@@ -97,12 +98,16 @@ class PdfImagesController < ApplicationController
     @pdf_image = PdfImage.find(params[:id])
 
     if params[:cancel_button]
-      redirect_to pdf_image_path
+      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
       @pdf_image.attributes=(params[:pdf_image])
       if @pdf_image.save
         flash[:notice] = "PDF Updated"
-        redirect_to pdf_image_path
+        redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+            :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+            :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
       else
         flash[:error] = "PDF Update Failed"
         render :action => :edit

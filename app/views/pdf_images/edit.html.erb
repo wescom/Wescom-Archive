@@ -28,6 +28,14 @@
 			Publication Name: <%= @pdf_image.plan.pub_name %><br/>
 			Section Name: <%= @pdf_image.plan.section_name %><br/>
 
+			<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
+			<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
+			<%= hidden_field_tag :location, params[:location] %>
+			<%= hidden_field_tag :pub_type, params[:pub_type] %>
+			<%= hidden_field_tag :pub_select, params[:pub_select] %>
+			<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
+			<%= hidden_field_tag :pagenum, params[:pagenum] %>
+
 			<div>
 				<%= form.submit "Update", :class => 'image-edit-button small float_left'%>
 				<%= form.submit "Cancel", :name => 'cancel_button', :class => 'image-edit-button small float_left'%>
