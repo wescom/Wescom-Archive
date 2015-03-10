@@ -86,7 +86,14 @@
 																:sectionletter=>params[:sectionletter], 
 																:pagenum=>params[:pagenum]) %></div>
 									<% if admin? and @settings.show_delete_button %>
-									<div class="center"><%= button_to "Delete", pdf_image_path(pdf), 
+									<div class="center"><%= button_to "Delete", pdf_image_path(pdf	,
+																	:date_from_select=>params[:date_from_select], 
+																	:date_to_select=>params[:date_to_select], 
+																	:location=>params[:location], 
+																	:pub_type=>params[:pub_type], 
+																	:pub_select=>params[:pub_select], 
+																	:sectionletter=>params[:sectionletter], 
+																	:pagenum=>params[:pagenum]), 
 																:method => :delete, 
 																:confirm => "Are you sure you want to delete PDF?",
 																:action => 'destroy' %>

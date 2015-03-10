@@ -119,10 +119,14 @@ class PdfImagesController < ApplicationController
     @pdf_images = PdfImage.find(params[:id])
     if @pdf_images.destroy
       flash[:notice] = "PDF Killed!"
-      redirect_to pdf_images_path
+      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
       flash[:error] = "PDF Deletion Failed"
-      redirect_to pdf_images_path
+      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     end
   end
   
