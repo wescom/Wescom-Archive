@@ -11,6 +11,18 @@
 																										:pub_select=>params[:pub_select], 
 																										:sectionletter=>params[:sectionletter], 
 																										:pagenum=>params[:pagenum]) %>)</span>
+			<% if admin? or edit? %>
+				<span class="float_right">
+					<%= link_to "Upload PDFs", new_pdf_image_path(
+												:date_from_select=>params[:date_from_select], 
+												:date_to_select=>params[:date_to_select], 
+												:location=>params[:location], 
+												:pub_type=>params[:pub_type], 
+												:pub_select=>params[:pub_select], 
+												:sectionletter=>params[:sectionletter], 
+												:pagenum=>params[:pagenum]) %>
+				</span>
+			<% end %>
 		</h1>
 		<h2 class="clearfix">
 			<div id="filter_images_block" class="full_width clear_fix">

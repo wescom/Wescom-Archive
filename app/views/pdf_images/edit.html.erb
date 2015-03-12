@@ -25,8 +25,8 @@
 			<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
 
 			Plan: <%= @pdf_image.plan_id %><br/>
-			Publication Name: <%= @pdf_image.plan.pub_name %><br/>
-			Section Name: <%= @pdf_image.plan.section_name %><br/>
+			Publication Name: <%= @pdf_image.plan.pub_name if @pdf_image.plan.present? %><br/>
+			Section Name: <%= @pdf_image.plan.section_name if @pdf_image.plan.present? %><br/>
 
 			<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
 			<%= hidden_field_tag :date_to_select, params[:date_to_select] %>

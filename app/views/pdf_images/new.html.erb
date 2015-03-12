@@ -1,0 +1,58 @@
+<div id="new-pdf-page">
+	<%= render(:partial => "home/pagenav") %>
+	<div id="page-content" class="clearfix">
+		<h1>New PDF Files</h1>
+
+		<div class="inner-box clearfix">
+			<%= form_for @pdf_image, :url => pdf_images_path do |form| %>
+			  <div id="form-block" class="grid_18">
+					<div class="grid_8">
+						<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
+						<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
+						<%= hidden_field_tag :location, params[:location] %>
+						<%= hidden_field_tag :pub_type, params[:pub_type] %>
+						<%= hidden_field_tag :pub_select, params[:pub_select] %>
+						<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
+						<%= hidden_field_tag :pagenum, params[:pagenum] %>
+
+						Location:
+						<%= select_tag 'location', 
+											options_from_collection_for_select(@locations, 'id', 'name', 
+											:selected => params[:location]), {:prompt => "- Select Location -"} %>
+						Pub Type:
+						<%= select_tag 'pub_type', 
+											options_from_collection_for_select(@pub_types, 'id', 'name', 
+											:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
+						<br/>
+						Publication Name: <%= form.text_field :publication, 
+								:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
+								:class => "full", :autofocus => true %>
+						Section Name: <%= form.text_field :section_name, 
+								:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)",
+								:class => "full" %>
+						Section Letter: <%= form.text_field :section_letter, 
+								:placeholder => "A,B,C,...",
+								:class => "small" %>
+						PubDate: <%= form.text_field :pubdate, 
+											:class => 'input_date_picker large', 
+											:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
+											:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
+						<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
+					</div>
+					<div class="grid_7">
+						<div id="pdf-upload-box">
+							<div class="grid_10">
+								PDF Files to Upload: *
+									<%= form.file_field :image %>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid_15">
+					<%= form.submit "Create", :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

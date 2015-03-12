@@ -85,6 +85,32 @@ class PdfImagesController < ApplicationController
     render :layout => "plain"
   end
 
+  def new
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @pdf_image = PdfImage.new
+  end
+
+  def create
+    if params[:cancel_button]
+      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
+    else
+      @pdf_image = PdfImage.new(params[:pdf_image])
+      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name(
+                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name)
+      @pdf_image.plan_id = @plan.id
+      if @pdf_image.save
+        flash[:notice] = "PDF Created"
+        redirect_to pdf_images_path
+      else
+        flash[:error] = "PDF Creation Failed"
+        render :action => :new
+      end
+    end    
+  end
+  
   def edit
     @locations = Location.find(:all, :order => 'name')
     @pub_types = PublicationType.find(:all, :order => 'sort_order')
