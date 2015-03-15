@@ -97,19 +97,30 @@ class PdfImagesController < ApplicationController
           :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
           :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
-      @pdf_image = PdfImage.new(params[:pdf_image])
-      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
-                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
-      @pdf_image.plan_id = @plan.id
-      if @pdf_image.save
-        flash[:notice] = "PDF Created"
-        redirect_to pdf_images_path
-      else
-        flash[:error] = "PDF Creation Failed"
-        @locations = Location.find(:all, :order => 'name')
-        @pub_types = PublicationType.find(:all, :order => 'sort_order')
-        render :action => :new
+      @pdf_images = params[:pdf_image][:image]
+      Rails.logger.info '***1****'+@pdf_images.to_s
+      for i in (0..@pdf_images.length-1)
+        Rails.logger.info '**2*****'+@pdf_images[i].to_s
+        params[:pdf_image][:image] = @pdf_images[i]
+        Rails.logger.info '**2*****'+params[:pdf_image][:image].to_s
+  
+        @pdf_image = PdfImage.new(params[:pdf_image])
+        @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
+                      params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
+        @pdf_image.plan_id = @plan.id
+
+        if @pdf_image.save
+          flash[:notice] = "PDF Created"
+        else
+          break
+          flash[:error] = "PDF Creation Failed"
+          @locations = Location.find(:all, :order => 'name')
+          @pub_types = PublicationType.find(:all, :order => 'sort_order')
+          render :action => :new
+        end
       end
+      flash[:notice] = "PDF Created"
+      redirect_to pdf_images_path
     end
   end
   
@@ -131,6 +142,9 @@ class PdfImagesController < ApplicationController
           :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
       @pdf_image.attributes=(params[:pdf_image])
+      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
+                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
+      @pdf_image.plan_id = @plan.id
       if @pdf_image.save
         flash[:notice] = "PDF Updated"
         redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 

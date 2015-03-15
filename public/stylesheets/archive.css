@@ -573,7 +573,8 @@ input#search_query {
 	text-align: center;
 }
 
-#page-content #filter_images_block form select, #page-content #filter_stories_block form select {
+#page-content #filter_images_block form select, #page-content #filter_stories_block form select,
+#page-content #image_edit select {
 	font: normal 1.1em Arial, Tahoma, sans-serif;
 	margin: 0px 0px 0px 10px;
 }

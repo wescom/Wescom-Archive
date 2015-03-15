@@ -52,7 +52,7 @@
 						<div id="pdf-upload-box">
 							<div class="grid_10">
 								* PDF Files to Upload: <%= error_messages(@pdf_image, "image") %>
-									<%= form.file_field :image %>
+									<%= form.file_field :image, accept: 'application/pdf', :multiple => true %>
 							</div>
 						</div>
 					</div>
