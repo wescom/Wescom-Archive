@@ -956,6 +956,8 @@ img.image_large {height:auto;width:450px;}
 	padding: 4px;
 }
 
+#text-error {list-style: none; }
+
 #page-content form input.tiny { width: 3%; }
 #page-content form input.extra_small { width: 6%; }
 #page-content form input.smaller { width: 8%; }

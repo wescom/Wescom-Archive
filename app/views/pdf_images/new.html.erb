@@ -15,34 +15,43 @@
 						<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
 						<%= hidden_field_tag :pagenum, params[:pagenum] %>
 
-						Location:
+						<b>* Location:</b>
 						<%= select_tag 'location', 
 											options_from_collection_for_select(@locations, 'id', 'name', 
 											:selected => params[:location]), {:prompt => "- Select Location -"} %>
-						Pub Type:
+
+						<b>* Pub Type:</b>
 						<%= select_tag 'pub_type', 
 											options_from_collection_for_select(@pub_types, 'id', 'name', 
 											:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
 						<br/>
-						Publication Name: <%= form.text_field :publication, 
+
+						<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
+						<%= form.text_field :publication, 
 								:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
 								:class => "full", :autofocus => true %>
-						Section Name: <%= form.text_field :section_name, 
+
+						<b>* Section Name:</b> <%= error_messages(@pdf_image, "section_name") %>
+						<%= form.text_field :section_name, 
 								:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)",
 								:class => "full" %>
-						Section Letter: <%= form.text_field :section_letter, 
+
+						<b>Section Letter:</b> 
+						<%= form.text_field :section_letter, 
 								:placeholder => "A,B,C,...",
 								:class => "small" %>
-						PubDate: <%= form.text_field :pubdate, 
+
+						<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
+						<%= form.text_field :pubdate, 
 											:class => 'input_date_picker large', 
 											:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
-											:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
-						<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
+											:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %>
+						<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %>
 					</div>
 					<div class="grid_7">
 						<div id="pdf-upload-box">
 							<div class="grid_10">
-								PDF Files to Upload: *
+								* PDF Files to Upload: <%= error_messages(@pdf_image, "image") %>
 									<%= form.file_field :image %>
 							</div>
 						</div>

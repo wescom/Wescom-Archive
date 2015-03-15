@@ -87,7 +87,7 @@
 									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
 								</div>
 								<div>
-									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') %></div>
+									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') if pdf.pubdate? %></div>
 									<div class="center"><%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %></div>
 									<div class="center"><%= link_to "Edit", edit_pdf_image_path(pdf,
 																:date_from_select=>params[:date_from_select], 

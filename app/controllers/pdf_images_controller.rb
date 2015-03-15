@@ -98,17 +98,19 @@ class PdfImagesController < ApplicationController
           :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
       @pdf_image = PdfImage.new(params[:pdf_image])
-      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name(
-                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name)
+      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
+                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
       @pdf_image.plan_id = @plan.id
       if @pdf_image.save
         flash[:notice] = "PDF Created"
         redirect_to pdf_images_path
       else
         flash[:error] = "PDF Creation Failed"
+        @locations = Location.find(:all, :order => 'name')
+        @pub_types = PublicationType.find(:all, :order => 'sort_order')
         render :action => :new
       end
-    end    
+    end
   end
   
   def edit
@@ -136,7 +138,9 @@ class PdfImagesController < ApplicationController
             :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
       else
         flash[:error] = "PDF Update Failed"
-        render :action => :edit
+        @locations = Location.find(:all, :order => 'name')
+        @pub_types = PublicationType.find(:all, :order => 'sort_order')
+        render :action => :edit, :layout => "plain"
       end
     end
   end

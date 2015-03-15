@@ -14,14 +14,23 @@
 	
 	<div id="image_edit" class="grid_9">
 		<%= form_for @pdf_image, :url => pdf_image_path do |form| %>
-			Publication Name: <%= form.text_field :publication, :class => "large" %><br/>
-			Section Name: <%= form.text_field :section_name, :class => "large" %><br/>
-			Section Letter: <%= form.text_field :section_letter, :class => "small" %><br/>
-			Page: <%= form.text_field :page, :class => "small" %><br/>
-			PubDate: <%= form.text_field :pubdate, 
-								:class => 'input_date_picker small', 
-								:placeholder => :pubdate,
-								:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
+			<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
+			<%= form.text_field :publication, :class => "large" %><br/>
+
+			<b>* Section Name:</b> <%= error_messages(@pdf_image, "section_name") %>
+			<%= form.text_field :section_name, :class => "large" %><br/>
+
+			<b>Section Letter:</b>
+			<%= form.text_field :section_letter, :class => "small" %><br/>
+			
+			<b>Page:</b>
+			<%= form.text_field :page, :class => "small" %><br/>
+
+			<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
+			<%= form.text_field :pubdate, 
+				:class => 'input_date_picker small', 
+				:placeholder => :pubdate,
+				:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
 			<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
 
 			Plan: <%= @pdf_image.plan_id %><br/>
