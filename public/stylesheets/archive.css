@@ -865,6 +865,28 @@ img.image_large {height:auto;width:450px;}
 #mybook img.centered {display: block; margin-left: auto;	margin-right: auto}
 #pdf-upload-box {width: 100%; min-height: 300px; border: solid lightgrey; padding: 30px;}
 
+#ProgressOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+	background-color: rgba(0,0,0,0.5);
+}
+
+#ProgressOverlay .modal-box {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-100px;
+	margin-left:-150px;
+	height: 30%;
+	width: 30%;
+	background-color: white;
+	text-align: center;
+}
+
 /* Image Content */
 #image-content {
   font: normal 1.2em Arial, Tahoma, sans-serif;

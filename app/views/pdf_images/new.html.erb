@@ -59,9 +59,26 @@
 				</div>
 				<div class="grid_15">
 					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
-					<%= form.submit "Create", :class => 'submit small float_right'%>
+					<%= form.submit "Create", :class => 'submit small float_right progress_bar'%>
 				</div>
 			<% end %>
+		
+			<div id="ProgressOverlay" class="modal hide fade">
+				<div class="modal-box text-center">
+					<div class="modal-header text-center">
+						<h3>Uploading Files</h3>
+					</div>
+					<div class="modal-body text-center">
+						<br/>
+						<br/>
+						<img class="spinner" src="/images/Spinner.gif">
+						<br/>
+						<br/>
+						Please be patient while we upload your files. Thank you.
+					</div>
+				</div>
+			</div>
+		
 		</div>
 	</div>
 </div>
