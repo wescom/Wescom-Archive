@@ -127,7 +127,9 @@ class PdfImagesController < ApplicationController
         end
       end
       flash[:notice] = "PDF Created"
-      redirect_to pdf_images_path
+      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     end
   end
   
