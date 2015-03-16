@@ -3,6 +3,8 @@ production:
     hostname: archive2
     port: 8983
     path: '/solr/default'
+    min_memory: 1G
+    max_memory: 1.2G
     log_level: WARNING
 
 development:
