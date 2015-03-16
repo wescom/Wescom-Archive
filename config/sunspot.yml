@@ -4,7 +4,7 @@ production:
     port: 8983
     path: '/solr/default'
     min_memory: 1G
-    max_memory: 1.2G
+    max_memory: 1G
     log_level: WARNING
 
 development:
