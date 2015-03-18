@@ -292,7 +292,7 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.progress_bar').click(function() {
+	$('.progress_bars').click(function() {
 		$('#ProgressOverlay').show()
 	});
 	

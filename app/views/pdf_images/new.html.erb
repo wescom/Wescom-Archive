@@ -18,21 +18,21 @@
 						<b>* Location:</b>
 						<%= select_tag 'location', 
 											options_from_collection_for_select(@locations, 'id', 'name', 
-											:selected => params[:location]), {:prompt => "- Select Location -"} %>
+											:selected => params[:location]), {:prompt => "- Select Location -", :required => true} %>
 
 						<b>* Pub Type:</b>
 						<%= select_tag 'pub_type', 
 											options_from_collection_for_select(@pub_types, 'id', 'name', 
-											:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
+											:selected => params[:pub_type]), {:prompt => "- Select Pub Type -", :required => true} %>
 						<br/>
 
 						<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
-						<%= form.text_field :publication, 
+						<%= form.text_field :publication, :required => true, 
 								:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
 								:class => "full", :autofocus => true %>
 
 						<b>* Section Name:</b> <%= error_messages(@pdf_image, "section_name") %>
-						<%= form.text_field :section_name, 
+						<%= form.text_field :section_name, :required => true, 
 								:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)",
 								:class => "full" %>
 
@@ -42,7 +42,7 @@
 								:class => "small" %>
 
 						<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
-						<%= form.text_field :pubdate, 
+						<%= form.text_field :pubdate, :required => true, 
 											:class => 'input_date_picker large', 
 											:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
 											:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %>
@@ -52,13 +52,13 @@
 						<div id="pdf-upload-box">
 							<div class="grid_10">
 								* PDF Files to Upload: <%= error_messages(@pdf_image, "image") %>
-									<%= form.file_field :image, accept: 'application/pdf', :multiple => true %>
+									<%= form.file_field :image, accept: 'application/pdf', :multiple => true, :required => true %>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="grid_15">
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right', :formnovalidate => true %>
 					<%= form.submit "Create", :class => 'submit small float_right progress_bar'%>
 				</div>
 			<% end %>
