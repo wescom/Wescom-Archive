@@ -137,8 +137,6 @@ class PdfImagesController < ApplicationController
         flash[:error] = "PDF Creation Failed"
         @locations = Location.find(:all, :order => 'name')
         @pub_types = PublicationType.find(:all, :order => 'sort_order')
-Rails.logger.info '******************** before render '
-#        render :action => :new
         redirect_to new_pdf_image_path(:pdf_image => params[:pdf_image])
       end
     end

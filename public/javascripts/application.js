@@ -292,8 +292,13 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.progress_bars').click(function() {
-		$('#ProgressOverlay').show()
+	$('.progress_bar').click(function() {
+		alert 
+		if ($('select#location').val().length > 0 && $('select#pub_type').val().length > 0 &&
+				$('input#pdf_image_publication').val().length > 0 && $('input#pdf_image_section_name').val().length > 0 &&
+				$('input#pdf_image_pubdate').val().length > 0 && $('input#pdf_image_image').val().length > 0) {
+			$('#ProgressOverlay').show()
+		}
 	});
 	
 });
