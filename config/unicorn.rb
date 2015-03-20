@@ -2,7 +2,7 @@ env = ENV["RAILS_ENV"] || "development"
 
 worker_processes 2
 preload_app true
-timeout 60
+timeout 1200
 
 listen 6000
 
