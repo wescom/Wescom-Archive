@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @logs = @user.logs.find(:all, :order => 'created_at DESC')
   end
 
   def edit

@@ -1,15 +1,39 @@
 <div id="users-page">
 	<%= render(:partial => "home/pagenav") %>
 	<div id="page-content" class="clearfix">
-		<h1><%= @user.first_name %> <%= @user.last_name %></h1>
-
+		<% if @user.name.nil? %>
+			<h1><%= @user.first_name %> <%= @user.last_name %></h1>
+		<% else %>
+			<h1><%= @user.name %></h1>
+		<% end %>
+		
 		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-				Username: <%= @user.login %><br/>
-				Name: <%= @user.name %><br/>
-				Created At: <%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-				Updated At: <%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-				Role: <%= @user.role %><br/>
+		  <div id="form-block" class="grid_16">
+				<div class="grid_8">
+					<b>Username:</b> <%= @user.login %><br/>
+					<b>Name:</b> <%= @user.name %><br/>
+					<b>Created At:</b> <%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+					<b>Updated At:</b> <%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+					<b>Role:</b> <%= @user.role %><br/>
+				</div>
+
+				<div class="grid_8">
+					<%= @logs.count %> Changes to Archive:
+						<div id="info-logs-full">
+							<% if @logs.count > 1 %>
+								<% @logs.each do |log| %>
+									<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+									<%= 'Story #'+log.story_id.to_s unless log.story_id.nil? %>
+									<%= 'Story Image#'+log.story_image_id.to_s unless log.story_image_id.nil? %>
+									<%= 'PDF #'+log.pdf_image_id.to_s unless log.pdf_image_id.nil? %>
+									<%= 'Plan #'+log.plan_id.to_s unless log.plan_id.nil? %>
+									<%= log.log_action.downcase %>
+									<br/>
+								<% end %>
+							<% end %>
+						</div>
+				</div>
+				<%= button_to "Back", users_path, :method => :get, :class => 'submit medium float_left' %>
 			</div>
 		</div>
 	</div>
