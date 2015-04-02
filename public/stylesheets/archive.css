@@ -725,6 +725,7 @@ input#search_query {
 	margin-bottom: 10px;
 	max-height: 70px;
 	overflow: scroll;
+	background: white;
 }
 
 #page-content #advanced-search input {
