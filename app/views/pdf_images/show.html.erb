@@ -12,6 +12,25 @@
 	</div>
 	
 	<div id="image-info" class="grid_9">
+		<div id="last_updated" class="float_right">
+			<% if @last_updated.present? %>
+				Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+				on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+				<% if @logs.count > 1 %>
+					<br/><div id="log_show_more" class="float_right">show more</div><br/>
+					<br/>
+					<div id="info-logs" class="hidden">
+						<% @logs.each do |log| %>
+							<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+							<%= log.log_action %>
+							by <%= log.user.name unless log.user.nil? %>
+							<br/>
+						<% end %>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+
 		<% if @pdf_image.plan.present? %>
 			<div class="image-head">Plan Info:</div>
 			<div class="image-info-box indent">
@@ -31,14 +50,14 @@
 		<br/>
 		<br/>
 		<div class="center">
-			<%= button_to "Edit", edit_pdf_image_path(@pdf_image), :method => :get, :class => 'image-edit-button float_left' %>
 			<% if admin? || edit? %>
-				<%= button_to "Delete Image", pdf_image_path(@pdf_image), 
+				<%= button_to "Delete", pdf_image_path(@pdf_image), 
 						:method => :delete, 
 						:confirm => "Are you sure you want to delete PDF from archive?",
 						:action => 'destroy',
-						:class => 'image-delete image-edit-button float_left' %>
+						:class => 'submit medium float_right' %>
 			<% end %>
+			<%= button_to "Edit", edit_pdf_image_path(@pdf_image), :method => :get, :class => 'submit medium float_right' %>
 		</div>
 	</div>
 </div>

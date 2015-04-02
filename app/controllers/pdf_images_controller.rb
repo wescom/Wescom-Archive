@@ -82,6 +82,8 @@ class PdfImagesController < ApplicationController
 
   def show
     @pdf_image = PdfImage.find(params[:id])
+    @logs = @pdf_image.logs.find(:all, :order => 'created_at DESC')
+    @last_updated = @logs.first
     render :layout => "plain"
   end
 
@@ -118,6 +120,7 @@ class PdfImagesController < ApplicationController
           @pdf_image.page = @page
 
           if @pdf_image.save
+            Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","PDF uploaded",current_user)
             @success = 'true'
           else
             break
@@ -164,6 +167,7 @@ class PdfImagesController < ApplicationController
                     params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
       @pdf_image.plan_id = @plan.id
       if @pdf_image.save
+        Log.create_log("Pdf_image",@pdf_image.id,"Updated","PDF edited",current_user)
         flash[:notice] = "PDF Updated"
         redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
             :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
