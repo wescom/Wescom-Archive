@@ -10,13 +10,36 @@
 				<%= form_for @plan, :url => plan_path do |form| %>
 					<div class="full_width clearfix">
 						<div class="grid_8">
-							Location: 
-							<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
-									{:prompt => "- Select Location -"}, :class => 'small' %>
-							Publication Type: 
-							<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
-									{:prompt => "- Select Publication Type -"}, :class => 'small' %>
+							<div class="grid_8">
+								Location: 
+								<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
+										{:prompt => "- Select Location -"}, :class => 'medium' %>
+								Publication Type: 
+								<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
+										{:prompt => "- Select Publication Type -"}, :class => 'medium' %>
+							</div>
+							<div class="grid_8">
+								<div id="last_updated" class="float_right">
+									<% if @last_updated.present? %>
+										Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+										on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+										<% if @logs.count > 1 %>
+											<br/><div id="log_show_more" class="float_right">show more</div><br/>
+											<br/>
+											<div id="info-logs" class="hidden">
+												<% @logs.each do |log| %>
+													<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+													<%= log.log_action %>
+													by <%= log.user.name unless log.user.nil? %>
+													<br/>
+												<% end %>
+											</div>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
 						</div>
+
 						<div class="grid_8">
 							<h3>Sample Records attached to this plan:</h3>
 							<div id="plan_sample_block">
@@ -94,8 +117,8 @@
 						</div>
 					</div>
 					<br/>
-					<%= form.submit "Update", :class => 'submit small'%>
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
+					<%= form.submit "Update", :class => 'submit small float_right'%>
 				<% end %>
 			</div>
 		</div>

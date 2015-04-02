@@ -5,6 +5,8 @@ class PlansController < ApplicationController
 
   def show
     @plan = Plan.find(params[:id])
+    @logs = @plan.logs.find(:all, :order => 'created_at DESC')
+    @last_updated = @logs.first
   end
 
   def new
@@ -32,6 +34,8 @@ class PlansController < ApplicationController
   
   def edit
     @plan = Plan.find(params[:id])
+    @logs = @plan.logs.find(:all, :order => 'created_at DESC')
+    @last_updated = @logs.first
     @locations = Location.find(:all, :order => "name")
     @publication_types = PublicationType.find(:all, :order => "sort_order")
     @pdfs = @plan.pdf_images.limit(50).order('page')
@@ -48,6 +52,7 @@ class PlansController < ApplicationController
       redirect_to plans_path
     else
       if @plan.update_attributes(params[:plan])
+        Log.create_log("Plan",@plan.id,"Updated","Plan edited",current_user)
         flash[:notice] = "Plan updated"
         redirect_to plans_url
       else
