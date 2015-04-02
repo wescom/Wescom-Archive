@@ -7,6 +7,25 @@
 
 		<div class="inner-box clearfix">
 		  <div id="story-content" class="full_width clearfix">
+				<div id="last_updated" class="float_right">
+					<% if @last_updated.present? %>
+						Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+						on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+						<% if @logs.count > 1 %>
+							<br/><div id="log_show_more" class="float_right">show more</div><br/>
+							<br/>
+							<div id="info-logs" class="hidden">
+								<% @logs.each do |log| %>
+									<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+									<%= log.log_action %>
+									by <%= log.user.name unless log.user.nil? %>
+									<br/>
+								<% end %>
+							</div>
+						<% end %>
+					<% end %>
+				</div>
+
 				<div class="clearfix">
 			    <% if @story.kicker and @story.kicker.length > 0 and @story.kicker != '<p></p>' %>
 						<%= @story.kicker.html_safe %>

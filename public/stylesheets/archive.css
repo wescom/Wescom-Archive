@@ -707,6 +707,26 @@ input#search_query {
 	margin: 0px 0px 20px 0px;
 }
 
+#last_updated {
+	font-size: .7em;
+	font-style: italic;
+}
+#log_show_more {
+	color: blue;
+	cursor: pointer;
+}
+
+#info-logs {
+	display: none;
+	border: black;
+	border-style: solid;
+	border-width: thin;
+	padding: 2%;
+	margin-bottom: 10px;
+	max-height: 70px;
+	overflow: scroll;
+}
+
 #page-content #advanced-search input {
 	font: normal 1.0em Arial, Tahoma, sans-serif;
 }

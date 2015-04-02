@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   AdauthSearchField = [:login, :login]
   
+  has_many :logs
+
 #  def self.create_with_openid(identity, openid_params)
 #    create! do |user|
 #      user.identity = identity

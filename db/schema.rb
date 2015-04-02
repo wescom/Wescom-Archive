@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140228183853) do
+ActiveRecord::Schema.define(:version => 20150322164007) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -38,6 +38,18 @@ ActiveRecord::Schema.define(:version => 20140228183853) do
   end
 
   add_index "locations", ["name"], :name => "index_locations_on_name"
+
+  create_table "logs", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "story_id"
+    t.integer  "story_image_id"
+    t.integer  "plan_id"
+    t.integer  "pdf_image_id"
+    t.string   "log_action"
+    t.string   "log_detail"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "papers", :force => true do |t|
     t.string   "name"

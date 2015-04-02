@@ -172,6 +172,11 @@ $(document).ready(function(){
     return false;
   });
 
+  $("#log_show_more").click(function () {
+    $("#info-logs").slideToggle("medium");
+    return false;
+  });
+
   $(".taxonomy_head").click(function () {
     $("#taxonomy").slideToggle("medium");
     return false;

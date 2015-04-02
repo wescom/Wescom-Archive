@@ -3,6 +3,9 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
+    @logs = @story.logs.find(:all, :order => 'created_at DESC')
+    @last_updated = @logs.first
+    
     if @story.plan.present?
       scope = PdfImage.includes('plan').where(:pubdate=>@story.pubdate).where('plans.pub_name = ?',@story.plan.pub_name)
       if (@story.pageset_letter.present?)
@@ -42,6 +45,7 @@ class StoriesController < ApplicationController
     else
       @story.attributes=(params[:story])
       if @story.save
+        Log.create_log("Story",@story.id,"Updated","Story edited",current_user)
         flash[:notice] = "Story Updated"
         redirect_to story_path
       else

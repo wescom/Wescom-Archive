@@ -12,6 +12,7 @@ class Story < ActiveRecord::Base
   has_many :inverse_correction_links, :class_name => 'CorrectionLink', :foreign_key => "correction_id"
   has_many :corrected_stories, :through => :inverse_correction_links, :source => :story
   has_many :story_images, :dependent => :destroy
+  has_many :logs, :dependent => :destroy
 
   validates :pubdate, :presence => true, :on => :update
   validates :page, :presence => true, :numericality => true, :on => :update
