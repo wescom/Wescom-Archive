@@ -19,6 +19,25 @@
 		</div>
 
 		<div id="image_info" class="grid_8 clearfix">
+			<div id="last_updated" class="float_right">
+				<% if @last_updated.present? %>
+					Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+					on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+					<% if @logs.count > 1 %>
+						<br/><div id="log_show_more" class="float_right">show more</div><br/>
+						<br/>
+						<div id="info-logs" class="hidden">
+							<% @logs.each do |log| %>
+								<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+								<%= log.log_action %>
+								by <%= log.user.name unless log.user.nil? %>
+								<br/>
+							<% end %>
+						</div>
+					<% end %>
+				<% end %>
+			</div>
+			
 			<div class="image-attached-story">
 				<% if @image.publish_status == "Published" %>
 					Published On <%= @image.story.pubdate.strftime('%m/%d/%y') if @image.story.pubdate.present? %><br/>
@@ -102,13 +121,13 @@
 	
 	<div id="image_edit" class="grid_16">
 		<% if admin? || edit? %>
-			<%= button_to "Edit Captions", edit_story_image_path(@image), :method => :get, :class => 'image-edit-button float_left' %>
+			<%= button_to "Edit Captions", edit_story_image_path(@image), :method => :get, :class => 'submit small float_left' %>
 			<% if admin? %>
 				<%= button_to "Delete Image", story_image_path(@image), 
 						:method => :delete, 
 						:confirm => "Are you sure you want to delete image from story?",
 						:action => 'destroy',
-						:class => 'image-edit-button float_left' %>
+						:class => 'submit small float_left' %>
 			<% end %>
 		<% end %>
 	</div>

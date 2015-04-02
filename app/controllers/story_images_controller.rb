@@ -65,6 +65,8 @@ class StoryImagesController < ApplicationController
 
   def show
     @image = StoryImage.find(params[:id])
+    @logs = @image.logs.find(:all, :order => 'created_at DESC')
+    @last_updated = @logs.first
     render :layout => "plain"
   end
   
@@ -75,13 +77,13 @@ class StoryImagesController < ApplicationController
 
   def update
     @image = StoryImage.find(params[:id])
-Rails.logger.info params[:image]
 
     if params[:cancel_button]
       redirect_to story_image_path
     else
       @image.attributes=(params[:story_image])
       if @image.save
+        Log.create_log("Story_image",@image.id,"Updated","Story Image edited",current_user)
         flash[:notice] = "Image Updated"
         redirect_to story_image_path
       else
