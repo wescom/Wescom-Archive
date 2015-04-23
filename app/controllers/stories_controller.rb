@@ -55,6 +55,19 @@ class StoriesController < ApplicationController
     end
   end
   
+  def approve
+    @story = Story.find(params[:story_id])
+    @story.approved = true
+    if @story.save
+      Log.create_log("Story",@story.id,"Approved","Story approved",current_user)
+      flash[:notice] = "Story Approved"
+      redirect_to story_path(@story)
+    else
+      flash[:error] = "Story Approval Failed"
+      redirect_to story_path(@story)
+    end
+  end
+  
   def destroy
     @story = Story.find(params[:id])
     if @story.destroy

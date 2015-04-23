@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150322164007) do
+ActiveRecord::Schema.define(:version => 20150423145456) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20150322164007) do
     t.string   "map"
     t.text     "caption"
     t.text     "htmltext"
+    t.boolean  "approved"
   end
 
   add_index "stories", ["plan_id"], :name => "index_stories_on_plan_id"

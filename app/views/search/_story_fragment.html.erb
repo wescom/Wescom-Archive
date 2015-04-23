@@ -50,7 +50,11 @@
 			Images Attached
 		<% end %>
 	</td>
-	<td class="false center status_col">Needs Review</td>
+	<% if story_fragment.approved %>
+		<td class="true center status_col">Approved</td>
+	<% else %>
+		<td class="false center status_col">Needs Review</td>
+	<% end %>
 	<% if admin? and @settings.show_delete_button %>
 		<td class="false center action_col">
 			<%= button_to "Delete", story_path(story_fragment), 

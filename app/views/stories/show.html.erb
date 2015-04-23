@@ -11,7 +11,7 @@
 					<% if @last_updated.present? %>
 						Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
 						on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
-						<% if @logs.count > 1 %>
+						<% if @logs.count > 0 %>
 							<br/><div id="log_show_more" class="float_right">show more</div><br/>
 							<br/>
 							<div id="info-logs" class="hidden">
@@ -84,6 +84,22 @@
 					<div id="edit-block" class="full_width">
 						<% if admin? || edit? %>
 							<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'submit' %>
+							<% if @story.approved %>
+								<p class='center'>Story Approved</p>
+							<!--	<%= button_to("Unapprove Story?", 
+										{:action=>'update', :id=>@story.id, :story=>{:approved=>false}}, 
+										{:onclick => "return confirm('Reverse approval?')",
+											:method => :put, 
+											:remote => true,
+											:class => 'submit full'}) %> -->
+							<% else %>
+								<%= button_to("Approve Story?", story_approve_path(@story.id), 
+										{:onclick => "return confirm('Can you verify that this story and all attached assets are accurate?')",
+											:method => :put, 
+											:action => :approve,
+											:remote => true,
+											:class => 'submit full'}) %>
+							<% end %>
 						<% end %>
 					</div>
 
