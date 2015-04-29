@@ -9,6 +9,15 @@
 
 		<div class="inner-box clearfix">
 		  <div id="story-content" class="grid_15">
+				<script type="text/javascript">
+				       bkLib.onDomLoaded(function() { 
+									nicEditors.allTextAreas({
+										iconsPath : '/images/nicEditorIcons.gif',
+										buttonList : ['bold','italic','underline','left','center','right','justify','indent','outdent','xhtml'],
+										xhtml : true
+									})
+							 });
+				</script>
 				<%= form_for @story, :url => story_path do |form| %>
 					<div id="story-edit" class="clearfix">
 						<%= render :partial => 'form', :object => form %>
