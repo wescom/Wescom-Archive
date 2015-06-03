@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
     t.integer  "correction_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "keywords", :force => true do |t|
     t.string   "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "keywords_stories", :id => false, :force => true do |t|
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
 
   create_table "papers", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "pdf_images", :force => true do |t|
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
 
   create_table "publications", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "location_id"
     t.integer  "publication_type_id"
   end
@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
 
   create_table "sections", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "section_category_id"
   end
 
@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
   create_table "stories", :force => true do |t|
     t.string   "hl1"
     t.date     "pubdate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "page",             :limit => 50
     t.string   "byline"
     t.text     "copy"
@@ -217,14 +217,14 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
   create_table "story_topics", :force => true do |t|
     t.integer  "story_id"
     t.integer  "topic_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "topics", :force => true do |t|
     t.string   "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -232,8 +232,8 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "role",          :default => "View"
     t.integer  "search_count",  :default => 0
     t.string   "login"
