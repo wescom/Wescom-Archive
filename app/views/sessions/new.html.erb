@@ -6,19 +6,19 @@
 	<div id="page-content" class="clearfix">
 		<div class="inner-box clearfix">
 			<h1>Login <span>(Using your Spark or Computer username/password)</span></h1>
-		  <div id="login-content" class="grid_6 clearfix">
+		  <div id="login-content" class="grid_5 clearfix">
 				<%= adauth_form do %>
 					<div class="indent">
 						<br/><br/>
 						<p>Username:
-						<%= text_field_tag :username, nil, :class => 'biggest' %></p>
+						<%= text_field_tag :username, nil, :class => 'full' %></p>
 						<p>Password:
-						<%= password_field_tag :password, nil, :class => 'biggest' %></p>
+						<%= password_field_tag :password, nil, :class => 'full' %></p>
 						<%= submit_tag "Login", :class => 'submit small' %>
 					</div>
 				<% end %>
 			</div>
-			<div class="8">
+			<div class="9">
 				<!--<img src = "/images/Newspapers_1.jpg" alt = "Newspapers" />-->
 				<% if @pdfs.present? %>
 					<% @pdfs.each do |pdf| %>
