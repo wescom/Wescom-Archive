@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 	def new
 		redirect_to root_path if current_user
-#		@pdfs = PdfImage.includes('plan').where('plans.pub_name = ? and page = ? and section_letter = ?', "The Bulletin", 1, "A").limit(5).order('pubdate DESC')
+		@pdfs = PdfImage.includes('plan').where('page = ?', 1).limit(5).order('pubdate DESC')
 	end
 
 	def create
