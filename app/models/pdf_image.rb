@@ -18,4 +18,8 @@ class PdfImage < ActiveRecord::Base
   def self.order_by_pubdate_section_page
     includes('plan').order('pubdate DESC').order('plans.pub_name').order('section_letter').order('plans.section_name').order('page')
   end
+
+  def self.order_by_pubdate_sectionletter_page
+    includes('plan').order('pubdate DESC').order('plans.pub_name').order('section_letter').order('page')
+  end
 end
