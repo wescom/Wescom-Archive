@@ -7,9 +7,12 @@ gem 'mysql', '2.9.0'
 gem 'activerecord-mysql-adapter'
 gem 'net-ssh', '< 2.8.0'
 gem 'dti_nitf'
+
 gem 'sunspot'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+gem 'yomu'
+
 gem 'progress_bar'
 gem 'will_paginate'
 gem 'chronic'

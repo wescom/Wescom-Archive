@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150423145456) do
+ActiveRecord::Schema.define(:version => 20150609161056) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20150423145456) do
     t.string   "section_name"
     t.integer  "page"
     t.integer  "plan_id"
+    t.text     "pdf_text"
   end
 
   add_index "pdf_images", ["page"], :name => "index_pdf_images_on_page"

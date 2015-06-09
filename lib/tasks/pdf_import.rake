@@ -42,12 +42,20 @@ namespace :wescom do
         pdf_image.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(pdf_image.publication,pdf_image.section_name,pdf_image.section_letter)
         pdf_image.page = get_page(filename)
 
+        # Read text within PDF file to use for fulltext indexing/searching
+        yomu = Yomu.new file
+        pdftext = yomu.text
+        pdftext.gsub! /\n/, " "               # Clear newlines
+        pdftext.gsub! "- ", ""                # Clear hyphens from justication
+        pdf_image.pdf_text = pdftext
+        
         #puts "Filename: "+filename
         #puts "PubDate: "+get_pubdate(filename).to_s
         #puts "Publication: "+get_publication(path).to_s
         #puts "Section Letter: "+get_section_letter(filename)
         #puts "Section Name: "+get_section_name(filename)
         #puts "Page: "+get_page(filename).to_s
+        #puts "Pdf_text: "+pdftext
         pdf_image.save!
 #        pdf_image.index!
 
