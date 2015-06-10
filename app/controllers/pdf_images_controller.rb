@@ -118,10 +118,22 @@ class PdfImagesController < ApplicationController
           @section_page = @pdf_image.image_file_name.match(/[a-zA-Z]\d{1,3}/).to_s
           @page = @section_page.match(/\d{1,3}/).to_s
           @pdf_image.page = @page
-
+          
           if @pdf_image.save
-            Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","PDF uploaded",current_user)
-            @success = 'true'
+            # Read text within PDF file to use for fulltext indexing/searching
+            yomu = Yomu.new @pdf_image.image.path
+            pdftext = yomu.text
+            pdftext.gsub! /\n/, " "               # Clear newlines
+            pdftext.gsub! "- ", ""                # Clear hyphens from justication
+            @pdf_image.pdf_text = pdftext
+            
+            if @pdf_image.save
+              Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","PDF uploaded",current_user)
+              @success = 'true'
+            else
+              break
+              @success = 'false'
+            end
           else
             break
             @success = 'false'
