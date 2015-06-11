@@ -129,7 +129,7 @@ namespace :wescom do
 
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
-            puts "*** Media Item: #{x}"
+            #puts "*** Media Item: #{x}"
             image_filename = '/WescomArchive/archiveup/images_cloud/'
             image_filename = image_filename + x["FileHeaderName"] unless x["FileHeaderName"].nil?
             image_filename = image_filename + x["FileTypeExtension"] unless x["FileTypeExtension"].nil?
