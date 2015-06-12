@@ -5,7 +5,7 @@ namespace :wescom do
     def import_pdftext()
       puts ""
       puts "Importing PDF text into database field pdf_text"
-      pdf_images = PdfImage.find(:all)
+      pdf_images = PdfImage.where('pdf_text is Null')
       images_remaining = pdf_images.count
       #puts "*** PDF Images total: "+images_remaining.to_s
 
