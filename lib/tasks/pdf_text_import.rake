@@ -3,12 +3,14 @@ namespace :wescom do
   task :pdftext_import  => :environment do
 
     def import_pdftext()
+      puts ""
       puts "Importing PDF text into database field pdf_text"
       pdf_images = PdfImage.find(:all)
-      puts "*** PDF Images count: "+pdf_images.count.to_s
+      images_remaining = pdf_images.count
+      #puts "*** PDF Images total: "+images_remaining.to_s
 
       pdf_images.each do |pdf|
-        puts "Processing:  ID ##{pdf.id} - #{pdf.image_file_name}"
+        puts "*** PDF Images remaining: "+images_remaining.to_s+"......  Processing:  ID ##{pdf.id} - #{pdf.image_file_name}"
 
         # Read text within PDF file to use for fulltext indexing/searching
         yomu = Yomu.new pdf.image.path
@@ -17,7 +19,11 @@ namespace :wescom do
         pdftext.gsub! "- ", ""                # Clear hyphens from justication
         pdf.pdf_text = pdftext
         pdf.save!
+        
+        images_remaining = images_remaining - 1
       end
+      puts "Import complete"
+      puts ""
     end
   
     import_pdftext
