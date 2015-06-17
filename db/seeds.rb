@@ -8,6 +8,7 @@
 
 puts 'Creating DEFAULT USER:'
 user = User.find_or_create_by_email :login => ENV['LOGIN']
+user.name = 'Admin'
 user.role = 'Admin'
 user.save
 puts 'user: ' << user.name
