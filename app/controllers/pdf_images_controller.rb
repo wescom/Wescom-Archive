@@ -21,6 +21,7 @@ class PdfImagesController < ApplicationController
           fulltext params[:search_query]
           order_by :pubdate, :desc
           order_by :publication, :asc
+          order_by :section_letter, :asc
           order_by :page, :asc
           with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
