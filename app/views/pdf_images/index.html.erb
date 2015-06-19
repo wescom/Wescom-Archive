@@ -84,7 +84,9 @@
 		  <div id="pdf-block" class="full_width">
 			  <% if @pdf_images %>
 					<div id="table-paginate" class="full_width clearfix">
-		      	<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
+						Search Results: <%= number_with_delimiter(@pdf_images.results.total_pages * @pdf_images.results.count,
+				 											:delimiter => ',') %>
+		      			<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
 					</div>
 					<div id="pdf-gallery" class="full_width clearfix">
 						<% @pdf_images.results.each do |pdf| %>
