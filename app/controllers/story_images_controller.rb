@@ -2,6 +2,9 @@ class StoryImagesController < ApplicationController
   before_filter :require_user
   
   def index
+    @locations = Location.find(:all, :order => 'name')
+    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+
     @publications = Plan.where("pub_name is not null and pub_name<>''")
     @publications = @publications.where(:location_id => params[:location]) if params[:location].present?
     @publications = @publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
@@ -17,6 +20,9 @@ class StoryImagesController < ApplicationController
     scope = scope.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
     scope = scope.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
     scope = scope.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
+
+    scope = scope.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
+    scope = scope.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
     @images = scope.paginate(:page => params[:page], :per_page => 15).order("image_updated_at DESC")
 
     @total_images_count = @images.count
