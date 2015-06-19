@@ -17,7 +17,7 @@ class StoryImagesController < ApplicationController
     scope = scope.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
     scope = scope.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
     scope = scope.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
-    @images = scope.paginate(:page => params[:page], :per_page => 16).order("id DESC")
+    @images = scope.paginate(:page => params[:page], :per_page => 15).order("id DESC")
 
     @total_images_count = @images.count
     increase_search_count
