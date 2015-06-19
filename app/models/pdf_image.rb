@@ -15,6 +15,23 @@ class PdfImage < ActiveRecord::Base
   validates_presence_of :pubdate, :message=>'PubDate is required'
   validates_presence_of :image, :message=>'Image is required'
 
+  searchable :auto_index => true, :auto_remove => true do
+    # Search fields
+    text :pdf_text
+
+    # Sort fields - must use 'string' instead of 'text'
+    integer :pdf_image_location_id do
+      plan.location_id if plan.present?
+    end
+    integer :pdf_image_pub_type_id do
+      plan.publication_type_id if plan.present?
+    end
+    time :pubdate
+    string :publication
+    string :section_letter
+    integer :page
+  end
+
   def self.order_by_pubdate_section_page
     includes('plan').order('pubdate DESC').order('plans.pub_name').order('section_letter').order('plans.section_name').order('page')
   end
@@ -22,4 +39,5 @@ class PdfImage < ActiveRecord::Base
   def self.order_by_pubdate_sectionletter_page
     includes('plan').order('pubdate DESC').order('plans.pub_name').order('section_letter').order('page')
   end
+
 end

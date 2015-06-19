@@ -14,29 +14,26 @@ class PdfImagesController < ApplicationController
     end
     @publications = scope.uniq.order('pub_name')
 
-    scope = PdfImage
-    if (params[:date_from_select].present?)
-      scope = scope.where('DATE(pubdate) >= ?', Date.strptime(params[:date_from_select], "%m/%d/%Y"))
+    if params[:search_query]
+      begin
+        @pdf_images = PdfImage.search do
+          paginate(:page => params[:page], :per_page => 15)
+          fulltext params[:search_query]
+          order_by :pubdate, :desc
+          order_by :publication, :asc
+          order_by :page, :asc
+          with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+          with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+          with :pdf_image_location_id, params[:location] if params[:location].present?
+          with :pdf_image_pub_type_id, params[:pub_type] if params[:pub_type].present?
+          with :publication, params[:pub_select] if params[:pub_select].present?
+          with :section_letter, params[:sectionletter] if params[:sectionletter].present?
+          with :page, params[:pagenum] if params[:pagenum].present?
+      end
+      rescue Errno::ECONNREFUSED
+        render :text => "Search Server Down\n\n\n It will be back online shortly"
+      end
     end
-    if (params[:date_to_select].present?)
-      scope = scope.where('DATE(pubdate) <= ?', Date.strptime(params[:date_to_select], "%m/%d/%Y"))
-    end
-    if (params[:location].present?)
-      scope = scope.includes('plan').where('plans.location_id = ?', params[:location])
-    end
-    if (params[:pub_type].present?)
-      scope = scope.includes('plan').where('plans.publication_type_id = ?', params[:pub_type])
-    end
-    if (params[:pub_select].present?)
-      scope = scope.includes('plan').where('plans.pub_name = ?', params[:pub_select])
-    end
-    if (params[:sectionletter].present?)
-      scope = scope.where('section_letter = ?', params[:sectionletter])
-    end
-    if (params[:pagenum].present?)
-      scope = scope.where('page = ?', params[:pagenum])
-    end
-    @pdf_images = scope.paginate(:page => params[:page], :per_page => 16).order_by_pubdate_sectionletter_page
     increase_search_count
   end
 

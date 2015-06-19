@@ -29,7 +29,9 @@
 				<%= form_tag pdf_images_path , :method => :get do %>
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
-							<td class="small"></td>
+							<td class="largest">
+								<%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
+							</td>
 							<td class="float_right extra_small">Date From:</td>
 							<td class="smaller">
 								<%= text_field_tag :date_from_select, params[:date_from_select], 
@@ -46,8 +48,7 @@
 								<%= select_tag 'location', 
 													options_from_collection_for_select(@locations, 'id', 'name', 
 													:selected => params[:location]), {:prompt => "- Select Location -"} %>
-							</td>
-							<td class="medium">
+								<br/>
 								<%= select_tag 'pub_type', 
 													options_from_collection_for_select(@pub_types, 'id', 'name', 
 													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
@@ -56,16 +57,21 @@
 								<%= select_tag 'pub_select', 
 													options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
 													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-							</td>
-							<td class="float_right extra_small"> Section Letter:</td>
-							<td class="extra_small">
-								<%= select_tag 'sectionletter', 
-													options_from_collection_for_select(@section_letters, 'section_letter', 'section_letter', 
-													:selected => params[:sectionletter]), {:prompt => "-"} %>
-							</td>
-							<td class="float_right extra_small">Page #:</td>
-							<td class="tiny">
-								<%= text_field_tag :pagenum, params[:pagenum] %>
+													<br/>
+								<table cellspacing="0" cellpadding="0">
+									<tbody>
+										<td class="float_right extra_small"> Section Letter:</td>
+										<td class="medium">
+											<%= select_tag 'sectionletter', 
+																options_from_collection_for_select(@section_letters, 'section_letter', 'section_letter', 
+																:selected => params[:sectionletter]), {:prompt => "-", :class => 'extra_small'} %>
+										</td>
+										<td class="float_right extra_small">Page #:</td>
+										<td class="medium">
+											<%= text_field_tag :pagenum, params[:pagenum], :class => 'full' %>
+										</td>
+									</tbody>
+								</table>
 							</td>
 							<td class="smaller"><%= submit_tag "Filter", :class => 'submit float_right'%></td>
 						</tbody>
@@ -78,10 +84,10 @@
 		  <div id="pdf-block" class="full_width">
 			  <% if @pdf_images %>
 					<div id="table-paginate" class="full_width clearfix">
-		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+		      	<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
 					</div>
 					<div id="pdf-gallery" class="full_width clearfix">
-						<% @pdf_images.each do |pdf| %>
+						<% @pdf_images.results.each do |pdf| %>
 							<div id="pdf-gallery-item" class="grid_2">
 								<div class="center">
 									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
@@ -116,7 +122,7 @@
 						<% end %>
 					</div>
 					<div id="table-paginate" class="full_width">
-		      	<div class="float_right"><%= will_paginate @pdf_images %></div>
+		      	<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
 					</div>
 			  <% end %>
 			</div>
