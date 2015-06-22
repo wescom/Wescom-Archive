@@ -23,8 +23,8 @@ class PdfImagesController < ApplicationController
           order_by :publication, :asc
           order_by :section_letter, :asc
           order_by :page, :asc
-          with(:pubdate).greater_than(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
-          with(:pubdate).less_than(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+          with(:pubdate).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+          with(:pubdate).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
           with :pdf_image_location_id, params[:location] if params[:location].present?
           with :pdf_image_pub_type_id, params[:pub_type] if params[:pub_type].present?
           with :publication, params[:pub_select] if params[:pub_select].present?
