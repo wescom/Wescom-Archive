@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150618141726) do
+ActiveRecord::Schema.define(:version => 20150706224149) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(:version => 20150618141726) do
     t.integer "story_id"
     t.integer "keyword_id"
   end
+
+  add_index "keywords_stories", ["keyword_id"], :name => "index_keywords_stories_on_keyword_id"
+  add_index "keywords_stories", ["story_id"], :name => "index_keywords_stories_on_story_id"
 
   create_table "locations", :force => true do |t|
     t.string   "name"
