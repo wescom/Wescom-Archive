@@ -53,7 +53,7 @@ namespace :wescom do
       end
 
       # Take each group and destroy the duplicate, keeping only the first one.
-      object_groups.each do |group|
+      object_groups.drop(1).each do |group|
         puts "Duplicate Record = " + group[0].doc_name
         group.each_with_index do |object, index|
           #puts "Duplicate Record=  "+"id:"+object.id.to_s + ", " + object.doc_name unless index == 0
