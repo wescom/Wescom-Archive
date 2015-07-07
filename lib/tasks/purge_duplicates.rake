@@ -57,7 +57,7 @@ namespace :wescom do
         puts "Duplicate Record = " + group[0].doc_name
         group.each_with_index do |object, index|
           #puts "Duplicate Record=  "+"id:"+object.id.to_s + ", " + object.doc_name unless index == 0
-          #object.destroy unless index == 0
+          object.destroy unless index == 0
         end
       end
     end
