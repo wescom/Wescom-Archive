@@ -12,27 +12,38 @@
 					<table cellspacing="0" cellpadding="0">
 						<tbody>
 							<td class="large"><%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images</td>
-							<td class="float_right extra_small">Date From:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_from_select, params[:date_from_select], 
-												:class => 'short_date_picker center', 
-												:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="float_right extra_small">Date To:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_to_select, params[:date_to_select], 
+							<div class="medium">
+								<td class="float_right extra_small">Date From:</td>
+								<td class="smaller">
+									<%= text_field_tag :date_from_select, params[:date_from_select], 
 													:class => 'short_date_picker center', 
 													:placeholder => "mm/dd/yyyy" %>
+								</td>
+								<td class="float_right extra_small">Date To:</td>
+								<td class="smaller">
+									<%= text_field_tag :date_to_select, params[:date_to_select], 
+														:class => 'short_date_picker center', 
+														:placeholder => "mm/dd/yyyy" %>
+								</td>
+							</div>
+							<td class="medium">
+								<%= select_tag 'location', 
+													options_from_collection_for_select(@locations, 'id', 'name', 
+													:selected => params[:location]), {:prompt => "- Select Location -"} %>
+								<br/>
+								<%= select_tag 'pub_type', 
+													options_from_collection_for_select(@pub_types, 'id', 'name', 
+													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
 							</td>
 							<td class="medium">
 								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
 													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-							</td>
-							<td class="medium">
+								<br/>
 								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
 													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
 							</td>
-							<td class="smaller"><%= submit_tag "Filter", :class => 'submit'%></td>
+							<td class="tiny"></td>
+							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
 						</tbody>
 					</table>
 				<% end %>
