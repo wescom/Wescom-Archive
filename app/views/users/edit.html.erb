@@ -8,16 +8,36 @@
 	
 			<div class="inner-box clearfix">
 			  <div id="form-block" class="grid_15">
-					Username: <%= @user.login %><br/>
-					Full Name: <%= @user.name %><br/>
-					Created At: <%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-					Updated At: <%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-					Role: <%= form.select :role, ['View', 'Edit', 'Admin'], {}, :class=>'medium' %>
-		
-					<%= form.submit "Update", :class => 'submit small'%>
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+				<h1><%= @user.name %></h1>
+				<div class="grid_6">
+					<strong>Username: </strong><%= @user.login %><br/>
+					<strong>Created: </strong><%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+					<strong>Updated: </strong><%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+					<br/>
+					<% if admin? %>
+						<strong>Role: </strong><%= form.select :role, ['View', 'Edit', 'Admin'], {}, :class=>'medium' %>
+					<% end %>
+				</div>
+				<div class="grid_6">
+					<strong>Search Defaults</strong> - Select only if you want all your searches to default to specific filtering
+					<div class="indent">
+						<%= form.select 'default_location_id', 
+											options_from_collection_for_select(@locations, 'id', 'name', @user.default_location_id), 
+											{:prompt => "- Select Location -", :include_blank => 'No Default'} %>
+						<%= form.select 'default_publication_type_id', 
+											options_from_collection_for_select(@pub_types, 'id', 'name', @user.default_publication_type_id), 
+											{:prompt => "- Select Pub Type -", :include_blank => 'No Default'} %>
+						<%= form.select 'default_publication', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
+											@user.default_publication), 
+											{:prompt => "- Select Publication -", :include_blank => 'No Default'} %>
+						<%= form.select 'default_section_name', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
+											@user.default_section_name), 
+											{:prompt => "- Select Section -", :include_blank => 'No Default'} %>
+					</div>
 				</div>
 			</div>
+			<%= form.submit "Update", :class => 'submit medium float_left'%>
+			<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit medium float_left'%>
 		<% end %>
 	</div>
 </div>

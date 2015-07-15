@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150706224149) do
+ActiveRecord::Schema.define(:version => 20150714143604) do
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
@@ -240,14 +240,18 @@ ActiveRecord::Schema.define(:version => 20150706224149) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "role",          :default => "View"
-    t.integer  "search_count",  :default => 0
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+    t.string   "role",                        :default => "View"
+    t.integer  "search_count",                :default => 0
     t.string   "login"
     t.string   "name"
     t.text     "group_strings"
     t.string   "ou_strings"
+    t.integer  "default_location_id"
+    t.integer  "default_publication_type_id"
+    t.string   "default_publication"
+    t.string   "default_section_name"
   end
 
 end

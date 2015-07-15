@@ -1,10 +1,22 @@
 <div id="page-navigation" class="clearfix">	
   <ul>
-		<li class="search"><%= link_to "Search Stories", {:controller => 'search', :action => 'index'} %></li>
+		<li class="search"><%= link_to "Search Stories", {:controller => 'search', :action => 'index',
+														:location=>current_user.default_location_id, 
+														:pub_type=>current_user.default_publication_type_id,
+													 	:pub_select=>current_user.default_publication,
+													 	:section_select=>current_user.default_section_name} %></li>
 		<li class="today"><%= link_to "Today's Stories", search_today_url(:papername => "All") %></li>
-		<li class="search-images"><%= link_to "Search Images", search_images_url %></li>
-		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url %></li>
-		<li class="pdf-images"><%= link_to "PDF Pages", pdf_images_url %></li>
+		<li class="search-images"><%= link_to "Search Images", search_images_url(:location=>current_user.default_location_id, 
+																		:pub_type=>current_user.default_publication_type_id,
+																	 	:pub_select=>current_user.default_publication,
+																	 	:section_select=>current_user.default_section_name) %></li>
+		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url(:location=>current_user.default_location_id, 
+																		:pub_type=>current_user.default_publication_type_id,
+																	 	:pub_select=>current_user.default_publication,
+																	 	:section_select=>current_user.default_section_name) %></li>
+		<li class="pdf-images"><%= link_to "PDF Pages", pdf_images_path(:location=>current_user.default_location_id, 
+																		:pub_type=>current_user.default_publication_type_id,
+																	 	:pub_select=>current_user.default_publication) %></li>
 		<% if admin? or edit? %>
 			<li class="admin"><a> Administration </a>
 				<ul>
