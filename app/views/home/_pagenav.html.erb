@@ -10,10 +10,7 @@
 																		:pub_type=>current_user.default_publication_type_id,
 																	 	:pub_select=>current_user.default_publication,
 																	 	:section_select=>current_user.default_section_name) %></li>
-		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url(:location=>current_user.default_location_id, 
-																		:pub_type=>current_user.default_publication_type_id,
-																	 	:pub_select=>current_user.default_publication,
-																	 	:section_select=>current_user.default_section_name) %></li>
+		<li class="image-gallery"><%= link_to "Image Gallery", story_images_url() %></li>
 		<li class="pdf-images"><%= link_to "PDF Pages", pdf_images_path(:location=>current_user.default_location_id, 
 																		:pub_type=>current_user.default_publication_type_id,
 																	 	:pub_select=>current_user.default_publication) %></li>
