@@ -12,32 +12,32 @@
 		  <div id="form-block" class="full_width clearfix">
 				<div id="settings_block">
 					<%= form_for @settings, :url => site_setting_path do |form| %>
-
-						<div id="settings_inner_block">
-							<div class="setting_header">Settings</div>
-							<div class="setting_body">
-								<div class="setting_field clearfix">
-									<div class="setting_label">Show Story Delete Button? </div>
-									<div class="setting_value setting_value_checkbox">
-										<%= form.check_box :show_delete_button, :class => 'medium' %>
+						<div id="settings_inner_block grid_16">
+							<div class="grid_12">
+								<div class="setting_header">Settings</div>
+								<div class="setting_body">
+									<div class="setting_field clearfix">
+										<div class="setting_label">Show Story Delete Button? </div>
+										<div class="setting_value setting_value_checkbox">
+											<%= form.check_box :show_delete_button, :class => 'medium' %>
+										</div>
 									</div>
-								</div>
-								<div class="setting_field clearfix">
-									<div class="setting_label">Show? </div>
-									<div class="setting_value setting_value_checkbox">
-										<%= form.check_box :show_site_announcement, :class => 'medium' %>
+									<div class="setting_field clearfix">
+										<div class="setting_label">Show? </div>
+										<div class="setting_value setting_value_checkbox">
+											<%= form.check_box :show_site_announcement, :class => 'medium' %>
+										</div>
 									</div>
-								</div>
-								<div class="setting_field clearfix">
+									<div class="setting_field clearfix">
 										<div class="setting_label">Announcement Text: </div>
-										<%= form.text_area :site_announcement, 
-											{:class => 'setting_value'} %>
+										<%= form.text_area :site_announcement, {:class => 'setting_value'} %>
+									</div>
 								</div>
-						</div>
-						
-						<div>
-							<%= form.submit "Update", :class => 'submit small'%>
-							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
+							</div>
+							<div class="grid_4">
+								<%= form.submit "Update", :class => 'submit medium float_left'%>
+								<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit medium float_left'%>
+							</div>
 						</div>
 					<% end %>
 				</div>
