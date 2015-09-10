@@ -18,7 +18,7 @@ namespace :wescom do
   def split_file_into_multiple_pieces(file, counter)
     #Subracting 1 from the counter length for csplit to work correctly. 
     counter -= 1
-    news_files = File.join("/","data","archiveup","sii_stories","news_stories")
+    news_files = File.join("/","WescomArchive","archiveup","sii_stories","news_stories")
     Dir.chdir(news_files)
     system "csplit -s -f story_`date '+%H_%M_%S'`_ #{file.split("/")[7]} -n5 #{file} \"/^=== END OF STORY ===/+1\" {#{counter}}"
     sleep 2   # Need to wait 2 seconds. system too fast to increment seconds in filename
@@ -26,7 +26,7 @@ namespace :wescom do
   end
 
   def get_files
-    news_files = File.join("/","data","archiveup","sii_stories","news_stories","story*")
+    news_files = File.join("/","WescomArchive","archiveup","sii_stories","news_stories","story*")
     news_files = Dir.glob(news_files)
     return_files = Dir.glob(news_files)
   end
@@ -96,7 +96,14 @@ namespace :wescom do
       keyword = /keyword \((.*?)\)/i.match(text)
       pagedesc = /pagedesc \((.*?)\)/i.match(text)
       pagedate = /pagedate \((.*?)\)/i.match(text)
+#puts "\n\nHeadline: #{headline[1] unless headline.nil? }"
+#puts "Byline: #{byline[1] unless byline.nil?}"
+#puts "Topic: #{topic[1] unless topic.nil?}"
+#puts "Keyword: #{keyword[1] unless keyword.nil?}"
+#puts "Page Description: #{pagedesc[1] unless pagedesc.nil?}"
+#puts "Page Date: #{pagedate.to_s}"
       pagedate = Chronic.parse(pagedate[1])
+#puts "******** head: "+pagedate.to_s
       copy = /<p>.+<\/p>/.match(text)
 
       #puts "\n\nHeadline: #{headline[1] unless headline.nil? }"
@@ -175,18 +182,22 @@ namespace :wescom do
   end
 
   def find_sii_files_in_directory
-    sii_files = File.join("/","data","archiveup","sii_stories",'test.txt')
+    sii_files = File.join("/","WescomArchive","archiveup","sii_stories",'test.txt')
     sii_files = Dir.glob(sii_files)
     sii_files
   end
 
   def split_and_count_files(input_file)
+    puts "------------------"
+    puts "Splitting file: "+input_file.to_s
     count = count_stories_in_file(input_file)
     split_file_into_multiple_pieces(input_file,count)
-    puts "File: #{input_file} Story Count: #{count}"
+    puts "Story Count: #{count}"
   end
 
   def import_files
+    puts "------------------"
+    puts "Importing stories ..."
     files = get_files
     files.each {|file| process_file(file)}
   end
