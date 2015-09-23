@@ -1,4 +1,6 @@
 class PdfImagesController < ApplicationController
+  before_filter :require_user
+
   def index
     @settings = SiteSettings.find(:first)
     @locations = Location.find(:all, :order => 'name')
