@@ -104,9 +104,9 @@ namespace :wescom do
         
             # Move PDF and OCR files to import folder
             puts(" Moving PDF files to Wescom Archive import folder... " + directory_for_pdf_imports)
-            system("mv " + directory_name + "/CLEAN_IMAGE/*.PDF" + " " + directory_for_pdf_imports)
+            system("cp " + directory_name + "/CLEAN_IMAGE/*.PDF" + " " + directory_for_pdf_imports)
             puts(" Moving OCR files to Wescom Archive import folder... " + directory_for_pdf_imports)
-            system("mv " + directory_name + "/OCR_HTML/*.txt" + " " + directory_for_pdf_imports)
+            system("cp " + directory_name + "/OCR_HTML/*.txt" + " " + directory_for_pdf_imports)
 
             # mark csv line as imported
             line << "imported"
@@ -154,7 +154,7 @@ namespace :wescom do
         pdf_image.pubdate = get_pubdate(filename)
         pdf_image.publication = get_publication(filename)
         pdf_image.section_letter = get_section_letter(filename)
-        pdf_image.section_name = ""
+        pdf_image.section_name = "Main"
         pdf_image.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(pdf_image.publication,pdf_image.section_name,pdf_image.section_letter)
         pdf_image.page = get_page(filename)
 
