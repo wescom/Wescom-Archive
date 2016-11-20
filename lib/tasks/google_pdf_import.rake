@@ -201,7 +201,9 @@ namespace :wescom do
 
         #Move PDF for archive and remove OCR file
         system("mv " + file.gsub(" ","\\ ") + " " + '/WescomArchive/pdf-storage/archive-pdf/' + filename.gsub(" ","\\ "))
-        system("rm " + directory_for_pdf_imports + ocr_file.gsub(" ","\\ "))
+        if File.exist?(directory_for_pdf_imports + ocr_file.gsub(" ","\\ ")
+          system("rm " + directory_for_pdf_imports + ocr_file.gsub(" ","\\ "))
+        end
 
         rescue Exception => e
           puts "Failed to Import File into archive: #{file}\n Error: #{e}\n\n"
