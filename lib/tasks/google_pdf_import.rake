@@ -27,8 +27,8 @@ namespace :wescom do
         #------#
     
         # Directory to store downloaded Google PDF files
-        #directory_of_Google_PDFs = "/Volumes/wescomarchive/Google_PDF_Archives/"
-        directory_of_Google_PDFs = "/WescomArchive/Google_PDF_Archives/"
+        directory_of_Google_PDFs = "/Volumes/wescomarchive/Google_PDF_Archives/"
+        #directory_of_Google_PDFs = "/WescomArchive/Google_PDF_Archives/"
         #directory_for_pdf_imports = "/Volumes/pdf-storage/archive-pdf/manual-GooglePDF-import/"
         directory_for_pdf_imports = "/WescomArchive/pdf-storage/archive-pdf/manual-GooglePDF-import/" 
         
@@ -51,7 +51,7 @@ namespace :wescom do
         end
 
         # loop through each non-imported records in the csv file
-        f[imported_records..imported_records+1].each do |line|
+        f[imported_records..imported_records].each do |line|
           # line[0] = Folder Name
           # line[1] = Start_page - End_page
           # line[2] = Publication
@@ -109,10 +109,10 @@ namespace :wescom do
                   new_OCR_filename = directory_name + "/OCR_HTML/" + page + "_" + line[2] + "_" + pub_day + "-" + pub_month + "-" + pub_year + "_.txt"
                   File.open(new_OCR_filename, "w:#{ocr_text.encoding.name}") { |file| file.write(ocr_text) }
                 else
-                  puts "PCR file does not exist: " + root_ocr_filename + ".html"
+                  puts "   - OCR file does not exist: " + root_ocr_filename + ".html"
                 end
               else
-                puts "Image file does not exist: " + root_image_filename + ".png"
+                puts "   - Image file does not exist: " + root_image_filename + ".png"
               end
 
               start_page +=1
@@ -182,8 +182,12 @@ namespace :wescom do
 
         # Get text from OCR file to use for fulltext indexing/searching
         ocr_file = filename.gsub(".PDF",".txt")
-        pdftext = File.read(directory_for_pdf_imports + ocr_file)
-        pdf_image.pdf_text = pdftext
+        if File.exist?(directory_for_pdf_imports + ocr_file)
+          pdftext = File.read(directory_for_pdf_imports + ocr_file)
+          pdf_image.pdf_text = pdftext
+        else
+          pdf_image.pdf_text = ""
+        end
 
         #puts "Filename: "+filename
         #puts "PubDate: "+get_pubdate(filename).to_s
