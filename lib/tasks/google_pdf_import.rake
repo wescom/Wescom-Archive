@@ -41,8 +41,17 @@ namespace :wescom do
 
         old_folder = ""
 
-        # loop through each record in the csv file
-        f.take(1).each do |line|
+        # Count imported records in array f so we can skip them
+        imported_records = 0
+        f.each do |line|
+          if line[5] == "imported"
+            imported_records = imported_records + 1
+            puts line.inspect
+          end 
+        end
+
+        # loop through each non-imported records in the csv file
+        f[imported_records..imported_records+1].each do |line|
           # line[0] = Folder Name
           # line[1] = Start_page - End_page
           # line[2] = Publication
