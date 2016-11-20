@@ -124,6 +124,7 @@ namespace :wescom do
             system("rm " + directory_name + "/CLEAN_IMAGE/*.PDF")
             puts(" Moving OCR files to Wescom Archive import folder... " + directory_for_pdf_imports)
             system("cp " + directory_name + "/OCR_HTML/*.txt" + " " + directory_for_pdf_imports)
+            system("rm " + directory_name + "/OCR_HTML/*.txt")
 
             # mark csv line as imported
             line << "imported"
