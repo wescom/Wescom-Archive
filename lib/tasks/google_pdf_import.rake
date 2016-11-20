@@ -4,7 +4,6 @@ namespace :wescom do
 
     def import_google_pdf()
 
-#      require 'fileutils'
       require 'csv'
     
       puts ""
@@ -82,22 +81,30 @@ namespace :wescom do
 
               # Convert PNG image into PDF
               puts("   converting page... "+ root_image_filename + ".png" )
-              system("convert " + root_image_filename + ".png " + root_image_filename + ".pdf")
+              if File.exist?(root_image_filename + ".png")
+                system("convert " + root_image_filename + ".png " + root_image_filename + ".pdf")
 
-              # Rename PDF file to PAGENO_PUBNAME_DD-MM-YYYY_.PDF
-              puts("   renaming page... "+ root_image_filename + ".png")
-              new_PDF_filename = page + "_" + line[2] + "_" + pub_day + "-" + pub_month + "-" + pub_year + "_.PDF"
-              new_PDF_filename = new_PDF_filename.gsub(" ","\\ ")   # Account for any spaces in pub name
-              system("mv " + root_image_filename + ".pdf " + directory_name + "/CLEAN_IMAGE/" + new_PDF_filename)
+                # Rename PDF file to PAGENO_PUBNAME_DD-MM-YYYY_.PDF
+                puts("   renaming page... "+ root_image_filename + ".png")
+                new_PDF_filename = page + "_" + line[2] + "_" + pub_day + "-" + pub_month + "-" + pub_year + "_.PDF"
+                new_PDF_filename = new_PDF_filename.gsub(" ","\\ ")   # Account for any spaces in pub name
+                system("mv " + root_image_filename + ".pdf " + directory_name + "/CLEAN_IMAGE/" + new_PDF_filename)
           
-              # Get OCR text from Google file and write to new file PAGENO_GOOGLE_DD-MM-YYYY_.txt
-              puts("   grabbing OCR text... "+ root_ocr_filename + ".html")
-              file = File.open(root_ocr_filename + ".html", "rb")
-              ocr_text = file.read
-              ocr_text = ocr_text.gsub("<style>span {position:absolute}</style>", '')
-              ocr_text = ocr_text.gsub(/<\/?[^>]*>/, '').gsub(/\n\n+/, "\n").gsub(/^\n|\n$/, '').gsub(/\n/, ' ')
-              new_OCR_filename = directory_name + "/OCR_HTML/" + page + "_" + line[2] + "_" + pub_day + "-" + pub_month + "-" + pub_year + "_.txt"
-              File.open(new_OCR_filename, "w:#{ocr_text.encoding.name}") { |file| file.write(ocr_text) }
+                # Get OCR text from Google file and write to new file PAGENO_GOOGLE_DD-MM-YYYY_.txt
+                puts("   grabbing OCR text... "+ root_ocr_filename + ".html")
+                if File.exist?(root_ocr_filename + ".html")
+                  file = File.open(root_ocr_filename + ".html", "rb")
+                  ocr_text = file.read
+                  ocr_text = ocr_text.gsub("<style>span {position:absolute}</style>", '')
+                  ocr_text = ocr_text.gsub(/<\/?[^>]*>/, '').gsub(/\n\n+/, "\n").gsub(/^\n|\n$/, '').gsub(/\n/, ' ')
+                  new_OCR_filename = directory_name + "/OCR_HTML/" + page + "_" + line[2] + "_" + pub_day + "-" + pub_month + "-" + pub_year + "_.txt"
+                  File.open(new_OCR_filename, "w:#{ocr_text.encoding.name}") { |file| file.write(ocr_text) }
+                else
+                  puts "PCR file does not exist: " + root_ocr_filename + ".html"
+                end
+              else
+                puts "Image file does not exist: " + root_image_filename + ".png"
+              end
 
               start_page +=1
             end
@@ -121,11 +128,11 @@ namespace :wescom do
             # Remove downloaded Google folder from local system if no longer needed
             if line[0] != old_folder and old_folder != ""
               puts(" Removing old downloaded Google folder... " + directory_of_Google_PDFs + old_folder)
-              system("rm " + directory_of_Google_PDFs + old_folder)
+              system("rm -r" + directory_of_Google_PDFs + old_folder)
             end
             old_folder = line[0]
 
-            puts "  File Record Converted: " + line.inspect
+            puts(" File Record Converted: " + line.inspect)
 
             # Get array of PDFs to import into database
             #pdf_files = File.join("/","Volumes","pdf-storage","archive-pdf",'manual-GooglePDF-import','**','{*.PDF,*.pdf}')
@@ -133,15 +140,19 @@ namespace :wescom do
             pdf_files = Dir.glob(pdf_files)
 
             # Import list of PDF into database
+            puts " Files to import into Wescom Archive: " + pdf_files.count.to_s
             pdf_files.each {|file| process_file(file,directory_for_pdf_imports)} unless pdf_files.nil?
 
-            puts "  *** PDFs Imported: " + line.inspect
+            puts(" *** PDFs Imported: " + line.inspect)
             puts("")
           end
         end
 
       puts "Import complete"
       puts ""
+      
+      rescue Exception => e
+        puts "Failed to get File: #{file}\n Error: #{e}\n\n"
     end
 
     def process_file(file,directory_for_pdf_imports)
@@ -178,7 +189,7 @@ namespace :wescom do
         system("rm " + directory_for_pdf_imports + ocr_file.gsub(" ","\\ "))
 
         rescue Exception => e
-          puts "Failed to Process File: #{file}\n Error: #{e}\n\n"
+          puts "Failed to Import File into archive: #{file}\n Error: #{e}\n\n"
           #FileUtils.cp file, '/data/archiveup/import_failed/'+filename
       end
     end
