@@ -118,7 +118,7 @@ namespace :wescom do
             # mark csv line as imported
             line << "imported"
             # write out latest version of csv file with current line marked imported
-            new_csv_file = directory_of_Google_PDFs + "Bulletin_info_imported.csv"
+            new_csv_file = directory_of_Google_PDFs + "Bulletin_info.csv"
             CSV.open(new_csv_file, 'w') do |csv_object|
               f.each do |row_array|
                 csv_object << row_array
