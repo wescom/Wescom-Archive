@@ -27,8 +27,8 @@ namespace :wescom do
         #------#
     
         # Directory to store downloaded Google PDF files
-        directory_of_Google_PDFs = "/Volumes/wescomarchive/Google_PDF_Archives/"
-        #directory_of_Google_PDFs = "/WescomArchive/Google_PDF_Archives/"
+        #directory_of_Google_PDFs = "/Volumes/wescomarchive/Google_PDF_Archives/"
+        directory_of_Google_PDFs = "/WescomArchive/Google_PDF_Archives/"
         #directory_for_pdf_imports = "/Volumes/pdf-storage/archive-pdf/manual-GooglePDF-import/"
         directory_for_pdf_imports = "/WescomArchive/pdf-storage/archive-pdf/manual-GooglePDF-import/" 
         
