@@ -139,7 +139,7 @@ namespace :wescom do
             # Remove downloaded Google folder from local system if no longer needed
             if line[0] != old_folder and old_folder != ""
               puts(" Removing old downloaded Google folder... " + directory_of_Google_PDFs + old_folder)
-              system("rm -r" + directory_of_Google_PDFs + old_folder)
+              system("rm -r " + directory_of_Google_PDFs + old_folder)
             end
             old_folder = line[0]
 
