@@ -1,8 +1,8 @@
 namespace :wescom do
   desc "Import PDF text into pdf_text field"
-  task :import_google_pdf  => :environment do
+  task :import_google_pdf, [:number_of_records_to_import] => :environment do |t, args|
 
-    def import_google_pdf()
+    def import_google_pdf(records_to_import)
 
       require 'csv'
     
@@ -46,12 +46,12 @@ namespace :wescom do
         f.each do |line|
           if line[5] == "imported"
             imported_records = imported_records + 1
-            puts line.inspect
+            #puts line.inspect
           end 
         end
 
         # loop through each non-imported records in the csv file
-        f[imported_records..imported_records].each do |line|
+        f[imported_records..imported_records+records_to_import-1].each do |line|
           # line[0] = Folder Name
           # line[1] = Start_page - End_page
           # line[2] = Publication
@@ -241,7 +241,18 @@ namespace :wescom do
         return array_of_numbers[1].to_i
       end
     end
-    import_google_pdf
+    
+    #
+    
+    # set number of records to import from CSV file based on paramter passed to task. If none, import 1 record.
+    if args[:number_of_records_to_import]
+      records_to_import = args[:number_of_records_to_import]
+    else
+      records_to_import = "1"
+    end
+    puts "number: " + records_to_import.to_s
+
+    import_google_pdf(records_to_import)
 
   end
 end
