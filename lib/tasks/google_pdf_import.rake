@@ -244,7 +244,7 @@ namespace :wescom do
     
     # set number of records to import from CSV file based on paramter passed to task. If none, import 1 record.
     if args[:number_of_records_to_import]
-      records_to_import = args[:number_of_records_to_import]
+      records_to_import = args[:number_of_records_to_import].to_i
     else
       records_to_import = 1
     end
