@@ -149,7 +149,7 @@ namespace :wescom do
 
           # Import list of PDF into database
           puts " Files to import into Wescom Archive: " + pdf_files.count.to_s
-          pdf_files.each {|file| process_file(file,directory_for_pdf_imports)} unless pdf_files.nil?
+          pdf_files.each {|file| process_file(file,directory_for_pdf_imports,directory_for_completed_pdfs)} unless pdf_files.nil?
 
           puts(" *** PDFs Imported: " + line.inspect)
           puts("")
@@ -163,7 +163,7 @@ namespace :wescom do
         puts "Failed to get File: #{file}\n Error: #{e}\n\n"
     end
 
-    def process_file(file,directory_for_pdf_imports)
+    def process_file(file,directory_for_pdf_imports,directory_for_completed_pdfs)
       puts "  Importing: #{file}"
       begin
         # filename example: 01_The Bulletin_28-05-2010_.PDF
