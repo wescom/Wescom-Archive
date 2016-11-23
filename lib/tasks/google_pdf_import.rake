@@ -27,6 +27,7 @@ namespace :wescom do
       directory_of_Google_PDFs = "/WescomArchive/Google_PDF_Archives/"
       #directory_for_pdf_imports = "/Volumes/pdf-storage/archive-pdf/manual-GooglePDF-import/"
       directory_for_pdf_imports = "/WescomArchive/pdf-storage/archive-pdf/manual-GooglePDF-import/" 
+      directory_for_completed_pdfs = "/WescomArchive/pdf-storage/archive-pdf/GooglePDF-completed/" 
       
       # define an array to hold the info.csv records
       arr = Array.new
@@ -196,7 +197,7 @@ namespace :wescom do
 #        pdf_image.index!
 
         #Move PDF for archive and remove OCR file
-        system("mv " + file.gsub(" ","\\ ") + " " + '/WescomArchive/pdf-storage/archive-pdf/' + filename.gsub(" ","\\ "))
+        system("mv " + file.gsub(" ","\\ ") + " " + directory_for_completed_pdfs + filename.gsub(" ","\\ "))
         if File.exist?(directory_for_pdf_imports + ocr_file.gsub(" ","\\ "))
           system("rm " + directory_for_pdf_imports + ocr_file.gsub(" ","\\ "))
         end
