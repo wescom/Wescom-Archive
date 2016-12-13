@@ -58,6 +58,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.0.10)
+    double-bag-ftps (0.1.3)
     dti_nitf (0.2.5)
       crack (>= 0.1.6)
     erubis (2.7.0)
@@ -188,6 +189,7 @@ DEPENDENCIES
   capistrano
   chronic
   coffee-rails
+  double-bag-ftps
   dti_nitf
   jquery-rails
   mongrel (= 1.2.0.pre2)

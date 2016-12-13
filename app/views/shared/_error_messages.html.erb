@@ -1,3 +1,13 @@
+<% if flash[:error] %>
+	<p class="error"><%= flash[:error] %></p>
+<% end %>
+<% if flash[:alert] %>
+	<p class="error"><%= flash[:alert] %></p>
+<% end %>
+<% if flash[:notice] %>
+	<p class="error"><%= flash[:notice] %></p>
+<% end %>
+
 <% if target.errors.any? %>
 	<div id="notice">
 	  <h2><%= pluralize(target.errors.count, "error") %> prohibited this record from being saved:</h2>

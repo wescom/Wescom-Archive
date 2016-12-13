@@ -5,6 +5,8 @@
 		  <%= "#{h @story.hl1} - " if @story.hl1 -%>
 		<% end %>
 
+		<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
+		
 		<div class="inner-box clearfix">
 		  <div id="story-content" class="full_width clearfix">
 				<div id="last_updated" class="float_right">
@@ -100,6 +102,12 @@
 											:remote => true,
 											:class => 'submit full'}) %>
 							<% end %>
+							<%= button_to("Import to DTI", story_import_to_DTI_path(@story.id), 
+									{:onclick => "return confirm('Are you sure you want to import this story into DTI?')",
+										:method => :put, 
+										:action => :import_to_DTI,
+										:remote => true,
+										:class => 'submit full'}) %>
 						<% end %>
 					</div>
 

@@ -19,7 +19,10 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @story }
+      format.xml do  
+        stream = render_to_string(:template=>"stories/show" )  
+        send_data(stream, :type=>"text/xml",:filename => @story.doc_name+'.xml')
+      end
     end
   end
   
@@ -66,6 +69,51 @@ class StoriesController < ApplicationController
       flash[:error] = "Story Approval Failed"
       redirect_to story_path(@story)
     end
+  end
+  
+  def import_to_DTI
+    @story = Story.find(params[:story_id])
+
+    if !@story.pubdate.nil?
+      # Create xml file from story data
+      file_contents = render_to_string :file => 'stories/show.xml.builder'
+      if !@story.doc_name.nil?
+        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive '+@story.doc_name+'.xml').gsub(" ","_")
+      else
+        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive-TheBulletin '+@story.pubdate.to_s+'.xml').gsub(" ","_")
+      end
+      File.open(xml_filename,'w'){|f| f.write file_contents}
+      #render :text => file_contents  #dont render the xml file to screen, render the story instead after ftp
+
+      # FTP Credentials
+      host = 'tbb-ftp.tbb.us1.dti'
+      user = 'batchsync'
+      passwd = 'Password1'
+
+      # FTP file to DTI's story import folder
+      require 'double_bag_ftps'
+      ftps = DoubleBagFTPS.new
+      ftps.ssl_context = DoubleBagFTPS.create_ssl_context(:verify_mode => OpenSSL::SSL::VERIFY_NONE, :ssl_version  => "SSLv3")
+      ftps.debug_mode = true
+      ftps.passive = true
+      ftps.connect(host)
+      ftps.login(user, passwd)
+      ftps.welcome
+      ftps.chdir("./Interfaces/Story Import/FileIn")
+      ftps.putbinaryfile(xml_filename)
+      puts "Remote directory list"
+      puts ftps.list  # Output file listing of remote folder
+      ftps.close
+
+      Rails.logger.info "*** FTP transfer to DTI story import folder complete: " + xml_filename
+      flash[:notice] = "Story exported to Cloud DTI"
+    else
+      Rails.logger.info "*** FTP transfer to DTI story failed - NO PUBDATE"
+      flash[:error] = "Story export failed - NO PUBDATE"
+    end
+    
+    redirect_to story_path(@story)
+
   end
   
   def destroy

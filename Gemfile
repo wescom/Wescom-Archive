@@ -19,6 +19,8 @@ gem 'chronic'
 gem 'mongrel', "1.2.0.pre2"
 gem "paperclip", "~> 3.0"
 
+gem 'double-bag-ftps'
+
 gem 'unicorn'
 gem 'capistrano'
 gem 'rvm-capistrano',  require: false

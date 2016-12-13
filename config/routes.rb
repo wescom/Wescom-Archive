@@ -14,6 +14,7 @@ Wescomarchive::Application.routes.draw do
   resources :section_categories
   resources :stories do
     put 'approve'
+    put 'import_to_DTI'
   end
   resources :correction_links
   resources :story_images
