@@ -102,6 +102,8 @@
 											:remote => true,
 											:class => 'submit full'}) %>
 							<% end %>
+						<% end %>
+						<% if admin? %>
 							<%= button_to("Import to DTI", story_import_to_DTI_path(@story.id), 
 									{:onclick => "return confirm('Are you sure you want to import this story into DTI?')",
 										:method => :put, 
