@@ -85,30 +85,40 @@ class StoriesController < ApplicationController
       File.open(xml_filename,'w'){|f| f.write file_contents}
       #render :text => file_contents  #dont render the xml file to screen, render the story instead after ftp
 
+      # write IPTC data to attached images
+      puts "\nExporting images out of database"
+      image_path = '/WescomArchive/archiveup/exported_to_cloud_dti/archive '
+    	@story.story_images.each do |image|
+    	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
+    	  puts "Exporting... "+image_path+image.image_file_name
+			end
+
       # FTP Credentials
       host = 'tbb-ftp.tbb.us1.dti'
       user = 'batchsync'
       passwd = 'Password1'
 
-      # FTP file to DTI's story import folder
+      # FTP xml file to DTI's story import folder and attached images to autoload news media folder
       require 'double_bag_ftps'
       ftps = DoubleBagFTPS.new
       ftps.ssl_context = DoubleBagFTPS.create_ssl_context(:verify_mode => OpenSSL::SSL::VERIFY_NONE, :ssl_version  => "SSLv3")
-      ftps.debug_mode = true
+      #ftps.debug_mode = true
       ftps.passive = true
       ftps.connect(host)
       ftps.login(user, passwd)
+      puts "\nFTP Connection to " + host + " ***"
       ftps.welcome
       ftps.chdir("./Interfaces/Story Import/FileIn")
-      ftps.putbinaryfile(xml_filename)
-      puts "Remote directory list"
+#     ftps.putbinaryfile(xml_filename)
+      puts "Remote directory list after transfer"
       puts ftps.list  # Output file listing of remote folder
+
       ftps.close
 
-      Rails.logger.info "*** FTP transfer to DTI story import folder complete: " + xml_filename
+      Rails.logger.info "\n*** FTP transfer to DTI story import folder complete: " + xml_filename
       flash[:notice] = "Story exported to Cloud DTI"
     else
-      Rails.logger.info "*** FTP transfer to DTI story failed - NO PUBDATE"
+      Rails.logger.info "\n*** FTP transfer to DTI story failed - NO PUBDATE"
       flash[:error] = "Story export failed - NO PUBDATE"
     end
     
