@@ -78,19 +78,27 @@ class StoriesController < ApplicationController
       # Create xml file from story data
       file_contents = render_to_string :file => 'stories/show.xml.builder'
       if !@story.doc_name.nil?
-        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive '+@story.doc_name+'.xml').gsub(" ","_")
+        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive_'+@story.doc_name+'.xml').gsub(" ","_").gsub("-","_")
       else
-        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive-TheBulletin '+@story.pubdate.to_s+'.xml').gsub(" ","_")
+        xml_filename = ('/WescomArchive/archiveup/exported_to_cloud_dti/archive_TheBulletin_'+@story.pubdate.to_s+'.xml').gsub(" ","_").gsub("-","_")
       end
       File.open(xml_filename,'w'){|f| f.write file_contents}
       #render :text => file_contents  #dont render the xml file to screen, render the story instead after ftp
 
       # write IPTC data to attached images
       puts "\nExporting images out of database"
-      image_path = '/WescomArchive/archiveup/exported_to_cloud_dti/archive '
+      image_path = '/WescomArchive/archiveup/exported_to_cloud_dti/archive_'
+      require 'mini_exiftool'
+      xml_file_images = []
     	@story.story_images.each do |image|
-    	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
     	  puts "Exporting... "+image_path+image.image_file_name
+    	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
+    	  puts "Writing IPTC data to image... "
+        pic = MiniExiftool.new image_path+image.image_file_name
+        pic.specialinstructions = "j=archive_"+@story.doc_name.gsub(" ","_").gsub("-","_")  # job = story name. DTI will attach image to the story upon import.
+        xml_file_images.push(image_path+image.image_file_name)  # create array of image files for this story
+        pic.save
+        #puts "************************* "+pic.specialinstructions
 			end
 
       # FTP Credentials
@@ -106,13 +114,20 @@ class StoriesController < ApplicationController
       ftps.passive = true
       ftps.connect(host)
       ftps.login(user, passwd)
-      puts "\nFTP Connection to " + host + " ***"
+      puts "\n*** FTP Connection to " + host + " ***"
       ftps.welcome
-      ftps.chdir("./Interfaces/Story Import/FileIn")
-#     ftps.putbinaryfile(xml_filename)
-      puts "Remote directory list after transfer"
+      # FTP xml file to import folder
+      ftps.chdir("/Interfaces/Story Import/FileIn")
+      ftps.putbinaryfile(xml_filename)
+      puts "Remote directory list of /Interfaces/Story Import/FileIn/ after transfer"
       puts ftps.list  # Output file listing of remote folder
-
+      # FTP images to import folder
+      ftps.chdir("/Refresh News Media/")
+      xml_file_images.each do |image|
+      ftps.putbinaryfile(image)
+      end
+      puts "Remote directory list of /Autoload News Media/ after transfer"
+      puts ftps.list  # Output file listing of remote folder
       ftps.close
 
       Rails.logger.info "\n*** FTP transfer to DTI story import folder complete: " + xml_filename

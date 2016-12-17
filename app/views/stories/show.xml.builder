@@ -1,9 +1,9 @@
 xml.DTIStory {
 
   if !@story.doc_name.nil?
-    xml.StoryName "archive-"+@story.doc_name
+    xml.StoryName "archive_"+@story.doc_name.gsub(" ","_").gsub("-","_")
   else
-    xml.StoryName "archive-TheBulletin "+@story.pubdate.to_s
+    xml.StoryName "archive_TheBulletin_"+@story.pubdate.to_s
   end
   xml.Author @story.byline unless @story.byline.nil?
   xml.CategoryName @story.categoryname unless @story.categoryname.nil?

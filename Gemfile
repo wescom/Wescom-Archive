@@ -20,6 +20,7 @@ gem 'mongrel', "1.2.0.pre2"
 gem "paperclip", "~> 3.0"
 
 gem 'double-bag-ftps'
+gem 'mini_exiftool'
 
 gem 'unicorn'
 gem 'capistrano'
