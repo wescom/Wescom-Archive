@@ -79,16 +79,21 @@ namespace :wescom do
         #puts "PageSet Letter: #{dti_story.pageset_letter}"
         #puts "Page: #{dti_story.page_number}"
         #puts "Paper: #{dti_story.paper}"
+        #puts "PubNum: #{dti_story.web_pubnum}"
         story.pubdate = Chronic.parse(dti_story.rundate) unless dti_story.rundate.nil?
         story.publication = Publication.find_or_create_by_name(dti_story.edition_name) unless dti_story.edition_name.nil?
         story.section = Section.find_or_create_by_name(dti_story.pageset_name) unless dti_story.pageset_name.nil?
         story.pageset_letter = dti_story.pageset_letter unless dti_story.pageset_letter.nil?
-        story.page = dti_story.page_number unless dti_story.page_number.nil?
+        story.page = dti_story.page_number unless dti_story.page_number.nil? unless dti_story.pageset_letter.nil?
         story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
-        if !dti_story.edition_name.nil? and !dti_story.pageset_name.nil?
-# ????????? check to see if this is can be more accurate now with section letter
+        story.web_pubnum = dti_story.web_pubnum unless dti_story.web_pubnum.nil?
+        if !dti_story.edition_name.nil? and !dti_story.pageset_name.nil? and !dti_story.pageset_letter.nil?
           story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,dti_story.pageset_letter)
+        else
+          # "*** pageset_letter nil ***"
+          story.plan = Plan.find_by_import_pub_name_and_import_section_name(dti_story.edition_name,dti_story.pageset_name)
         end
+        #puts "Plan: " + story.plan.id.to_s
 
         #puts "hl1: #{dti_story.hl1}"
         #puts "hl2: #{dti_story.hl2}"
@@ -217,7 +222,7 @@ namespace :wescom do
         end
         dirname = '/WescomArchive/archiveup/completed/'+file_year+'/'+file_month+'/'
         FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
-        FileUtils.mv filename, dirname+file
+#        FileUtils.mv filename, dirname+file
 
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"

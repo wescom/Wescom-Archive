@@ -2,7 +2,7 @@ class ImportDtiStory < ActiveRecord::Base
   attr_accessor :raw_xml, :storyid, :storyname, :author, :categoryname, :subcategoryname
   attr_accessor :created_at, :modified_at, :deskname, :expiredate, :keywords, :related_stories
   attr_accessor :project_group, :memo, :notes, :origin, :priority, :pub_corrections, :unpublished_corrections
-  attr_accessor :status, :web_published_at, :printrunlist, :story_elements, :story_elements_by_name
+  attr_accessor :status, :web_published_at, :web_pubnum, :printrunlist, :story_elements, :story_elements_by_name
   attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
   attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text, :web_summary
   attr_accessor :toolbox1, :toolbox2, :toolbox3, :toolbox4, :toolbox5
@@ -42,6 +42,7 @@ class ImportDtiStory < ActiveRecord::Base
     self.modified_at = cracked["DTIStory"]["LastModifiedTime"] unless cracked["DTIStory"]["LastModifiedTime"].nil?
     self.expiredate = cracked["DTIStory"]["ExpireDate"] unless cracked["DTIStory"]["ExpireDate"].nil?
     self.web_published_at = cracked["DTIStory"]["UserDefDate1"] unless cracked["DTIStory"]["UserDefDate1"].nil?
+    self.web_pubnum = cracked["DTIStory"]["UserDefStr1"] unless cracked["DTIStory"]["UserDefStr1"].nil?
 
     self.pub_corrections = cracked["DTIStory"]["PubCorrections"] unless cracked["DTIStory"]["PubCorrections"].nil?
     self.unpublished_corrections = cracked["DTIStory"]["UnpublishedCorrections"] unless cracked["DTIStory"]["UnpublishedCorrections"].nil?
@@ -61,6 +62,27 @@ class ImportDtiStory < ActiveRecord::Base
       self.pageset_name = data["PageSetName"] unless data["PageSetName"].nil?
       self.pageset_letter = data["PageSetLetter"] unless data["PageSetLetter"].nil?
       self.page_number = data["PageNumber"] unless data["PageNumber"].nil?
+    else
+      # Story did not print but was web only
+      case web_pubnum
+        when "1"
+           self.edition_name ="The Bulletin"
+        when "2"
+          self.edition_name ="Baker City Herald"
+        when "3"
+          self.edition_name ="The Observer"
+        when "4"
+          self.edition_name ="Redmond Spokesman"
+        when "7"
+          self.edition_name ="The Triplicate"
+        when "8"
+          self.edition_name ="Curry Coastal Pilot"
+        when "9"
+          self.edition_name ="Union Democrat"
+        else
+          self.edition_name ="Web Only"
+      end
+      self.pageset_name = "Web Only"
     end
 
     self.story_elements = cracked["DTIStory"]["StoryElementList"]["StoryElement"] unless cracked["DTIStory"]["StoryElementList"].nil?
@@ -176,6 +198,9 @@ class ImportDtiStory < ActiveRecord::Base
     self.web_info = cracked["DTIStory"]["WebInfo"]["LightningWebInfo"] unless cracked["DTIStory"]["WebInfo"]["LightningWebInfo"].nil?
     self.latestSEO_url = self.web_info["LatestSEOURL"] unless web_info["LatestSEOURL"].nil?
     self.publish_to_web_datetime = self.web_info["PublishToWebDateTime"] unless web_info["PublishToWebDateTime"].nil?
+    if self.rundate.nil?
+      self.rundate = self.web_info["PublishToWebDateTime"] unless web_info["PublishToWebDateTime"].nil?
+    end
     
     media_data = cracked["DTIStory"]["MediaList"]["MediaItem"] unless cracked["DTIStory"]["MediaList"].nil?
     if !media_data.nil?
