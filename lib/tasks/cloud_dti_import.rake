@@ -71,7 +71,12 @@ namespace :wescom do
         story.memo = dti_story.memo unless dti_story.memo.nil?
         story.notes = dti_story.notes unless dti_story.notes.nil?
         story.expiredate = dti_story.expiredate unless dti_story.expiredate.nil?
-        story.web_published_at = dti_story.web_published_at unless dti_story.web_published_at.nil?
+        if dti_story.web_published_at.nil?
+          story.web_published_at = dti_story.publish_to_web_datetime unless dti_story.publish_to_web_datetime.nil?
+        else
+          story.web_published_at = dti_story.web_published_at unless dti_story.web_published_at.nil?
+        end
+        puts story.web_published_at
 
         #puts "RunDate: #{dti_story.rundate}"
         #puts "Edition Name: #{dti_story.edition_name}"
