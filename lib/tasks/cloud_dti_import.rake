@@ -91,7 +91,7 @@ namespace :wescom do
           story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,dti_story.pageset_letter)
         else
           # "*** pageset_letter nil ***"
-          story.plan = Plan.find_by_import_pub_name_and_import_section_name(dti_story.edition_name,dti_story.pageset_name)
+          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name(dti_story.edition_name,dti_story.pageset_name)
         end
         #puts "Plan: " + story.plan.id.to_s
 
@@ -222,7 +222,7 @@ namespace :wescom do
         end
         dirname = '/WescomArchive/archiveup/completed/'+file_year+'/'+file_month+'/'
         FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
-#        FileUtils.mv filename, dirname+file
+        FileUtils.mv filename, dirname+file
 
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
