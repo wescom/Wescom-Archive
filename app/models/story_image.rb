@@ -22,6 +22,12 @@ class StoryImage < ActiveRecord::Base
     text :image_content_type
 
     # Sort fields - must use 'string' instead of 'text'
+    string :story_category_name do
+      story.categoryname if story.present?
+    end
+    string :story_subcategory_name do
+      story.subcategoryname if story.present?
+    end
     integer :story_location_id do
       story.plan.location_id if story.present? and story.plan.present?
     end
