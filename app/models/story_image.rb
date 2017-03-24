@@ -12,6 +12,7 @@ class StoryImage < ActiveRecord::Base
 
   searchable :auto_index => true, :auto_remove => true do
     # Search fields
+    text :media_webcaption
     text :media_printcaption
     text :media_originalcaption
     text :media_printproducer, :default_boost => 2.0
@@ -19,6 +20,7 @@ class StoryImage < ActiveRecord::Base
     text :media_name, :default_boost => 3.0
     text :media_project_group, :default_boost => 3.0
     text :publish_status
+    text :priority
     text :image_content_type
     text :story_category_name do
       story.categoryname
