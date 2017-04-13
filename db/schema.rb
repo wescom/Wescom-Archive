@@ -11,13 +11,52 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170106190855) do
+ActiveRecord::Schema.define(:version => 20170312060817) do
+
+  create_table "ar_internal_metadata", :primary_key => "key", :force => true do |t|
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "cart_items", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "quantity"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.integer  "price_cents",    :default => 0,     :null => false
+    t.string   "price_currency", :default => "USD", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "carts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "correction_links", :force => true do |t|
     t.integer  "story_id"
     t.integer  "correction_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "default_settings", :force => true do |t|
+    t.decimal  "image_price",             :precision => 12, :scale => 3
+    t.decimal  "pdf_price",               :precision => 12, :scale => 3
+    t.text     "image_use_license"
+    t.string   "confirmation_from_email"
+    t.text     "home_welcome_text"
+    t.string   "home_image_cat1_name"
+    t.string   "home_image_cat1"
+    t.string   "home_image_cat2_name"
+    t.string   "home_image_cat2"
+    t.string   "home_image_cat3_name"
+    t.string   "home_image_cat3"
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
   end
 
   create_table "keywords", :force => true do |t|
@@ -52,6 +91,29 @@ ActiveRecord::Schema.define(:version => 20170106190855) do
     t.string   "log_detail"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "order_items", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "price_cents",    :default => 0,     :null => false
+    t.string   "price_currency", :default => "USD", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "orders", :force => true do |t|
+    t.string   "obscure_uniq_identifier"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "last4"
+    t.decimal  "amount",                  :precision => 12, :scale => 3
+    t.boolean  "success"
+    t.string   "authorization_code"
+    t.string   "email"
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
   end
 
   create_table "papers", :force => true do |t|

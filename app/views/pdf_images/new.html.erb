@@ -5,61 +5,111 @@
 
 		<div class="inner-box clearfix">
 			<%= form_for @pdf_image, :url => pdf_images_path do |form| %>
-			  <div id="form-block" class="grid_18">
-					<div class="grid_8">
-						<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
-						<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
-						<%= hidden_field_tag :location, params[:location] %>
-						<%= hidden_field_tag :pub_type, params[:pub_type] %>
-						<%= hidden_field_tag :pub_select, params[:pub_select] %>
-						<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
-						<%= hidden_field_tag :pagenum, params[:pagenum] %>
+				<%= render :partial => 'shared/error_messages', :locals => { :target => @pdf_image } %>
+				<div id="form-block">
+					<div class="grid_16">
+						<div class="grid_8">
+							<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
+							<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
+							<%= hidden_field_tag :location, params[:location] %>
+							<%= hidden_field_tag :pub_type, params[:pub_type] %>
+							<%= hidden_field_tag :pub_select, params[:pub_select] %>
+							<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
+							<%= hidden_field_tag :pagenum, params[:pagenum] %>
 
-						<b>* Location:</b>
-						<%= select_tag 'location', 
-											options_from_collection_for_select(@locations, 'id', 'name', 
-											:selected => params[:location]), {:prompt => "- Select Location -", :required => true} %>
+							<b>* Location:</b>
+							<%= select_tag 'location', 
+												options_from_collection_for_select(@locations, 'id', 'name', 
+												:selected => params[:location]), {:prompt => "- Select Location -", :required => true} %>
 
-						<b>* Pub Type:</b>
-						<%= select_tag 'pub_type', 
-											options_from_collection_for_select(@pub_types, 'id', 'name', 
-											:selected => params[:pub_type]), {:prompt => "- Select Pub Type -", :required => true} %>
-						<br/>
+							<b>* Pub Type:</b>
+							<%= select_tag 'pub_type', 
+												options_from_collection_for_select(@pub_types, 'id', 'name', 
+												:selected => params[:pub_type]), {:prompt => "- Select Pub Type -", :required => true} %>
+							<br/>
 
-						<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
-						<%= form.text_field :publication, :required => true, 
-								:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
-								:class => "full", :autofocus => true %>
-
-						<b>* Section Name:</b> <%= error_messages(@pdf_image, "section_name") %>
-						<%= form.text_field :section_name, :required => true, 
-								:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
-								:class => "full" %>
-
-						<b>Section Letter:</b> 
-						<%= form.text_field :section_letter, 
-								:placeholder => "A,B,C,...",
-								:class => "small" %>
-
-						<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
-						<%= form.text_field :pubdate, :required => true, 
-											:class => 'input_date_picker large', 
-											:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
-											:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %>
-						<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %>
+							<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
+							<%= form.text_field :publication, :required => true, 
+									:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
+									:class => "full", :autofocus => true %>
+							<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
+							<%= form.text_field :pubdate, :required => true, 
+												:class => 'input_date_picker large', 
+												:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
+												:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %>
+							<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %>
+						</div>
+						<div class="grid_8">
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit large float_right', :formnovalidate => true %>
+							<%= form.submit "Create", :class => 'submit large float_right progress_bar'%>
+						</div>
 					</div>
-					<div class="grid_7">
-						<div id="pdf-upload-box">
-							<div class="grid_10">
-								* PDF Files to Upload: <%= error_messages(@pdf_image, "image") %>
-									<%= form.file_field :image, accept: 'application/pdf', :multiple => true, :required => true %>
+					<div class="grid_16">
+						<hr/>
+						<div class="grid_8">
+							<b>* Section 1 Name:</b> <%= error_messages(@pdf_image, "section_name1") %>
+							<%= form.text_field :section_name1, :required => true, 
+									:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
+									:class => "full" %>
+
+							<b>Section 1 Letter:</b> 
+							<%= form.text_field :section_letter1, 
+									:placeholder => "A,B,C,...",
+									:class => "small" %>
+						</div>
+						<div class="grid_6">
+							<div>
+								<div class="grid_10">
+									* Section 1 PDF Files to Upload: <%= error_messages(@pdf_image, "image1") %>
+										<%= form.file_field :image1, accept: 'application/pdf', :multiple => true, :required => true %>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="grid_15">
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right', :formnovalidate => true %>
-					<%= form.submit "Create", :class => 'submit small float_right progress_bar'%>
+					<div class="grid_16">
+						<hr/>
+						<div class="grid_8">
+							<b>* Section 2 Name:</b> <%= error_messages(@pdf_image, "section_name2") %>
+							<%= form.text_field :section_name2, 
+									:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
+									:class => "full" %>
+
+							<b>Section 2 Letter:</b> 
+							<%= form.text_field :section_letter2, 
+									:placeholder => "A,B,C,...",
+									:class => "small" %>
+						</div>
+						<div class="grid_6">
+							<div>
+								<div class="grid_10">
+									* Section 2 PDF Files to Upload: <%= error_messages(@pdf_image, "image2") %>
+										<%= form.file_field :image2, accept: 'application/pdf', :multiple => true %>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="grid_16">
+						<hr/>
+						<div class="grid_8">
+							<b>* Section 3 Name:</b> <%= error_messages(@pdf_image, "section_name3") %>
+							<%= form.text_field :section_name3, 
+									:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
+									:class => "full" %>
+
+							<b>Section 3 Letter:</b> 
+							<%= form.text_field :section_letter3, 
+									:placeholder => "A,B,C,...",
+									:class => "small" %>
+						</div>
+						<div class="grid_6">
+							<div>
+								<div class="grid_10">
+									* Section 3 PDF Files to Upload: <%= error_messages(@pdf_image, "image3") %>
+										<%= form.file_field :image3, accept: 'application/pdf', :multiple => true %>
+								</div>
+							</div>
+						</div>
+					</div>					
 				</div>
 			<% end %>
 		
