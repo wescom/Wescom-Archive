@@ -102,6 +102,7 @@ class PdfImagesController < ApplicationController
       section1_success = true
       section2_success = true
       section3_success = true
+      section4_success = true
 
       ## Upload Section1 PDFs
       @pdf_images = params[:pdf_image][:image1]
@@ -251,7 +252,55 @@ class PdfImagesController < ApplicationController
         end
       end
       
-      if section1_success and section2_success and section3_success
+      ## Upload Section4 PDFs
+      @pdf_images = params[:pdf_image][:image4]
+      # Loop through each pdf file and save to database
+      if @pdf_images.present?
+        for i in (0..@pdf_images.length-1)
+          # set pdf_image to current image in loop
+          params[:pdf_image][:image] = @pdf_images[i]
+
+          @pdf_image = PdfImage.new(params[:pdf_image])
+
+          # Assign plan to this pdf_image
+          @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
+                        params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name4,@pdf_image.section_letter4)
+          @pdf_image.plan_id = @plan.id
+
+          # Get page number from pdf filename
+          @section_page = @pdf_image.image_file_name.match(/[a-zA-Z]\d{1,3}/).to_s
+          @page = @section_page.match(/\d{1,3}/).to_s
+          @pdf_image.page = @page
+
+          @pdf_image.section_name = params[:pdf_image][:section_name4]
+          @pdf_image.section_letter = params[:pdf_image][:section_letter4]
+
+          if @pdf_image.save
+            # Read text within PDF file to use for fulltext indexing/searching
+            yomu = Yomu.new @pdf_image.image.path
+            pdftext = yomu.text
+            pdftext.gsub! /\n/, " "               # Clear newlines
+            pdftext.gsub! "- ", ""                # Clear hyphens from justication
+            @pdf_image.pdf_text = pdftext
+
+            if @pdf_image.save
+              Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","PDF uploaded",current_user)
+              flash[:notice] = "PDFs Uploaded"
+              section4_success = true
+            else
+              Rails.logger.info "*** pdf_image failed save"
+              flash[:error] = "PDF Upload Failed"
+              section4_success = false
+            end
+          else
+            Rails.logger.info "*** pdf_image failed save"
+            flash[:error] = "PDF Upload Failed"
+            section4_success = false
+          end
+        end
+      end
+
+      if section1_success and section2_success and section3_success and section4_success
         redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
             :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
             :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
@@ -315,59 +364,4 @@ class PdfImagesController < ApplicationController
     end
   end
   
-  private 
-  
-  def upload_section_pdfs(section_no)
-    @pdf_images = params[:pdf_image][:image1]
-    # Loop through each pdf file and save to database
-    if @pdf_images.present?
-      for i in (0..@pdf_images.length-1)
-        # set pdf_image to current image in loop
-        params[:pdf_image][:image] = @pdf_images[i]
-
-        @pdf_image = PdfImage.new(params[:pdf_image])
-puts "***** "+@pdf_image.inspect
-
-        # Assign plan to this pdf_image
-        @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
-                      params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name1,@pdf_image.section_letter1)
-        @pdf_image.plan_id = @plan.id
-
-        # Get page number from pdf filename
-        @section_page = @pdf_image.image_file_name.match(/[a-zA-Z]\d{1,3}/).to_s
-        @page = @section_page.match(/\d{1,3}/).to_s
-        @pdf_image.page = @page
-
-        @pdf_image.section_name = params[:pdf_image][:section_name1]
-        @pdf_image.section_letter = params[:pdf_image][:section_letter1]
-        
-        if @pdf_image.save
-          # Read text within PDF file to use for fulltext indexing/searching
-          yomu = Yomu.new @pdf_image.image.path
-          pdftext = yomu.text
-          pdftext.gsub! /\n/, " "               # Clear newlines
-          pdftext.gsub! "- ", ""                # Clear hyphens from justication
-          @pdf_image.pdf_text = pdftext
-
-          if @pdf_image.save
-            Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","PDF uploaded",current_user)
-            flash[:notice] = "PDFs Uploaded"
-            return true
-          else
-            Rails.logger.info "*** pdf_image failed save"
-            flash[:error] = "PDF Upload Failed"
-            return false
-          end
-        else
-          Rails.logger.info "*** pdf_image failed save"
-          flash[:error] = "PDF Upload Failed"
-          return false
-        end
-      end
-    else
-      Rails.logger.info "*** pdf_images not present"
-      flash[:error] = "PDF Upload Failed"
-      return false
-    end
-  end
 end

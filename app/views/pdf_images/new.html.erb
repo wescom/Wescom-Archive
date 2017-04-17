@@ -110,6 +110,28 @@
 							</div>
 						</div>
 					</div>					
+					<div class="grid_16">
+						<hr/>
+						<div class="grid_8">
+							<b>* Section 4 Name:</b> <%= error_messages(@pdf_image, "section_name4") %>
+							<%= form.text_field :section_name4, 
+									:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
+									:class => "full" %>
+
+							<b>Section 4 Letter:</b> 
+							<%= form.text_field :section_letter4, 
+									:placeholder => "A,B,C,...",
+									:class => "small" %>
+						</div>
+						<div class="grid_6">
+							<div>
+								<div class="grid_10">
+									* Section 4 PDF Files to Upload: <%= error_messages(@pdf_image, "image4") %>
+										<%= form.file_field :image4, accept: 'application/pdf', :multiple => true %>
+								</div>
+							</div>
+						</div>
+					</div>					
 				</div>
 			<% end %>
 		
