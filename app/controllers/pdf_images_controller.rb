@@ -21,17 +21,20 @@ class PdfImagesController < ApplicationController
         @pdf_images = PdfImage.search do
           paginate(:page => params[:page], :per_page => 16)
           fulltext params[:search_query]
-          order_by :pubdate, :desc
-          order_by :publication, :asc
-          order_by :section_letter, :asc
-          order_by :page, :asc
           with(:pubdate).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
           with(:pubdate).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
           with :pdf_image_location_id, params[:location] if params[:location].present?
           with :pdf_image_pub_type_id, params[:pub_type] if params[:pub_type].present?
-          with :publication, params[:pub_select] if params[:pub_select].present?
+#          with :publication, params[:pub_select] if params[:pub_select].present?
+          if params[:pub_select].present?
+            with(:pdf_plan_publication, params[:pub_select])
+          end
           with :section_letter, params[:sectionletter] if params[:sectionletter].present?
           with :page, params[:pagenum] if params[:pagenum].present?
+          order_by :pubdate, :desc
+          order_by :publication, :asc
+          order_by :section_letter, :asc
+          order_by :page, :asc
       end
       rescue Errno::ECONNREFUSED
         render :text => "Search Server Down\n\n\n It will be back online shortly"
