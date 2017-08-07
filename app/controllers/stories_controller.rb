@@ -90,12 +90,8 @@ class StoriesController < ApplicationController
       image_path = '/WescomArchive/archiveup/exported_to_cloud_dti/archive_'
       require 'mini_exiftool'
       xml_file_images = []
-Rails.logger.info @story.story_images.inspect
-      if !@story.story_images.nil?
-      	@story.story_images.each do |image|
-Rails.logger.info "Image exporting"
-      	  Rails.logger.info "image_path... "+image_path
-      	  Rails.logger.info "image_file_name... "+image.image_file_name
+    	@story.story_images.each do |image|
+        if !image.image_file_name.nil?
       	  Rails.logger.info "Exporting... "+image_path+image.image_file_name
       	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
       	  Rails.logger.info "Writing IPTC data to image... "
@@ -105,9 +101,9 @@ Rails.logger.info "Image exporting"
           end
           xml_file_images.push(image_path+image.image_file_name)  # create array of image files for this story
           pic.save
-          Rails.logger.info "************************* "+pic.specialinstructions
-  			end
-  		end
+          #Rails.logger.info "************************* "+pic.specialinstructions
+        end
+			end
 
       # FTP Credentials
       host = 'tbb-ftp.tbb.us1.dti'
