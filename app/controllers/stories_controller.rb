@@ -86,7 +86,7 @@ class StoriesController < ApplicationController
       #render :text => file_contents  #dont render the xml file to screen, render the story instead after ftp
 
       # write IPTC data to attached images
-      puts "\nExporting images out of database"
+      Rails.logger.info "\nExporting images out of database"
       image_path = '/WescomArchive/archiveup/exported_to_cloud_dti/archive_'
       require 'mini_exiftool'
       xml_file_images = []
@@ -100,7 +100,7 @@ class StoriesController < ApplicationController
         end
         xml_file_images.push(image_path+image.image_file_name)  # create array of image files for this story
         pic.save
-        #puts "************************* "+pic.specialinstructions
+        Rails.logger.info "************************* "+pic.specialinstructions
 			end
 
       # FTP Credentials
