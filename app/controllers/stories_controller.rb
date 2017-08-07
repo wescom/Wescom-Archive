@@ -91,9 +91,9 @@ class StoriesController < ApplicationController
       require 'mini_exiftool'
       xml_file_images = []
     	@story.story_images.each do |image|
-    	  puts "Exporting... "+image_path+image.image_file_name
+    	  Rails.logger.info "Exporting... "+image_path+image.image_file_name
     	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
-    	  puts "Writing IPTC data to image... "
+    	  Rails.logger.info "Writing IPTC data to image... "
         pic = MiniExiftool.new image_path+image.image_file_name
         if !@story.doc_name.nil?
           pic.specialinstructions = "j=archive_"+@story.doc_name.gsub(" ","_").gsub("-","_")  # job = story name. DTI will attach image to the story upon import.
