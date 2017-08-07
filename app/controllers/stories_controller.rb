@@ -95,7 +95,9 @@ class StoriesController < ApplicationController
     	  FileUtils.cp(image.image.path(:original), image_path+image.image_file_name)
     	  puts "Writing IPTC data to image... "
         pic = MiniExiftool.new image_path+image.image_file_name
-        pic.specialinstructions = "j=archive_"+@story.doc_name.gsub(" ","_").gsub("-","_")  # job = story name. DTI will attach image to the story upon import.
+        if !@story.doc_name.nil?
+          pic.specialinstructions = "j=archive_"+@story.doc_name.gsub(" ","_").gsub("-","_")  # job = story name. DTI will attach image to the story upon import.
+        end
         xml_file_images.push(image_path+image.image_file_name)  # create array of image files for this story
         pic.save
         #puts "************************* "+pic.specialinstructions
