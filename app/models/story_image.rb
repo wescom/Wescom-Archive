@@ -27,7 +27,9 @@ class StoryImage < ActiveRecord::Base
     text :story_subcategory_name do
       story.subcategoryname
     end
-
+    text :forsale
+    text :priority
+    
     string :publish_status
     string :priority
     string :image_content_type
