@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170312060817) do
+ActiveRecord::Schema.define(:version => 20171005035323) do
 
   create_table "ar_internal_metadata", :primary_key => "key", :force => true do |t|
     t.string   "value"
@@ -43,20 +43,43 @@ ActiveRecord::Schema.define(:version => 20170312060817) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "default_pages", :force => true do |t|
+    t.string   "site_name"
+    t.string   "page_name"
+    t.string   "page_head"
+    t.string   "page_subhead"
+    t.text     "page_text1"
+    t.text     "page_text2"
+    t.text     "page_text3"
+    t.string   "email_contact"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "default_settings", :force => true do |t|
-    t.decimal  "image_price",             :precision => 12, :scale => 3
-    t.decimal  "pdf_price",               :precision => 12, :scale => 3
+    t.decimal  "image_price",                 :precision => 12, :scale => 3
+    t.decimal  "pdf_price",                   :precision => 12, :scale => 3
     t.text     "image_use_license"
     t.string   "confirmation_from_email"
+    t.string   "home_main_images"
     t.text     "home_welcome_text"
     t.string   "home_image_cat1_name"
     t.string   "home_image_cat1"
+    t.string   "home_image_cat1_description"
     t.string   "home_image_cat2_name"
     t.string   "home_image_cat2"
+    t.string   "home_image_cat2_description"
     t.string   "home_image_cat3_name"
     t.string   "home_image_cat3"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
+    t.string   "home_image_cat3_description"
+    t.string   "search_for_publish_status"
+    t.string   "search_for_priority"
+    t.string   "search_for_caption_text"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+    t.string   "search_for_pdf_pubdate"
+    t.string   "search_for_pdf_pubtypeId"
+    t.integer  "location_id"
   end
 
   create_table "keywords", :force => true do |t|
@@ -75,11 +98,15 @@ ActiveRecord::Schema.define(:version => 20170312060817) do
 
   create_table "locations", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.integer  "location_no"
+    t.string   "newspaper_name"
+    t.string   "short_url_newspaper_name"
   end
 
   add_index "locations", ["name"], :name => "index_locations_on_name"
+  add_index "locations", ["short_url_newspaper_name"], :name => "index_locations_on_short_url_newspaper_name", :unique => true
 
   create_table "logs", :force => true do |t|
     t.integer  "user_id"
@@ -101,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20170312060817) do
     t.string   "price_currency", :default => "USD", :null => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.string   "item_type"
   end
 
   create_table "orders", :force => true do |t|
@@ -247,9 +275,12 @@ ActiveRecord::Schema.define(:version => 20170312060817) do
     t.string   "web_pubnum"
   end
 
+  add_index "stories", ["categoryname"], :name => "index_stories_on_categoryname"
   add_index "stories", ["plan_id"], :name => "index_stories_on_plan_id"
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
   add_index "stories", ["pubdate"], :name => "index_stories_on_pubdate"
+  add_index "stories", ["subcategoryname"], :name => "index_stories_on_subcategoryname"
+  add_index "stories", ["web_pubnum"], :name => "index_stories_on_web_pubnum"
 
   create_table "story_images", :force => true do |t|
     t.integer  "story_id"
@@ -279,9 +310,11 @@ ActiveRecord::Schema.define(:version => 20170312060817) do
     t.datetime "created_date"
     t.datetime "last_refreshed_time"
     t.datetime "expire_date"
+    t.string   "forsale"
   end
 
   add_index "story_images", ["image_updated_at"], :name => "index_story_images_on_image_updated_at"
+  add_index "story_images", ["media_id"], :name => "index_story_images_on_media_id"
   add_index "story_images", ["story_id"], :name => "index_story_images_on_story_id"
 
   create_table "story_topics", :force => true do |t|
