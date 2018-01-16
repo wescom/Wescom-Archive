@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171005035323) do
+ActiveRecord::Schema.define(:version => 20171109152806) do
 
   create_table "ar_internal_metadata", :primary_key => "key", :force => true do |t|
     t.string   "value"
@@ -80,6 +80,10 @@ ActiveRecord::Schema.define(:version => 20171005035323) do
     t.string   "search_for_pdf_pubdate"
     t.string   "search_for_pdf_pubtypeId"
     t.integer  "location_id"
+    t.string   "site_image_file_name"
+    t.string   "site_image_content_type"
+    t.integer  "site_image_file_size"
+    t.datetime "site_image_updated_at"
   end
 
   create_table "keywords", :force => true do |t|
@@ -169,8 +173,10 @@ ActiveRecord::Schema.define(:version => 20171005035323) do
   add_index "pdf_images", ["pubdate", "publication", "page"], :name => "date_pub_page"
   add_index "pdf_images", ["pubdate", "publication", "section_letter", "page"], :name => "date_pub_letter_page"
   add_index "pdf_images", ["pubdate", "publication", "section_letter", "section_name", "page"], :name => "date_pub_letter_name_page"
+  add_index "pdf_images", ["pubdate", "section_letter", "page"], :name => "date_letter_page"
   add_index "pdf_images", ["pubdate"], :name => "index_pdf_images_on_pubdate"
   add_index "pdf_images", ["publication"], :name => "index_pdf_images_on_publication"
+  add_index "pdf_images", ["section_letter", "page"], :name => "letter_page"
   add_index "pdf_images", ["section_letter"], :name => "index_pdf_images_on_section_letter"
 
   create_table "plans", :force => true do |t|
