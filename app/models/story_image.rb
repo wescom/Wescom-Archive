@@ -55,7 +55,11 @@ class StoryImage < ActiveRecord::Base
       story.page if story.present?
     end
     time :story_pubdate do
-      story.pubdate if story.present?
+      if story.present?
+        story.pubdate
+      else
+        self.created_date
+      end
     end
     string :image_type do
       self.image_type?
