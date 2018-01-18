@@ -32,6 +32,15 @@ class StoryImage < ActiveRecord::Base
     text :story_pubdate do
       story.pubdate.strftime('%-m/%-d/%y').to_s if story.present? and !story.pubdate.nil?
     end
+    text :story_pubdate_full_year do
+      story.pubdate.strftime('%-m/%-d/%Y').to_s if story.present? and !story.pubdate.nil?
+    end
+    text :story_pubdate_leading_zeros do
+      story.pubdate.strftime('%m/%d/%y').to_s if story.present? and !story.pubdate.nil?
+    end
+    text :story_pubdate_leading_zeros_full_year do
+      story.pubdate.strftime('%m/%d/%Y').to_s if story.present? and !story.pubdate.nil?
+    end
     text :story_pubyear do
       story.pubdate.strftime('%y').to_s if story.present? and !story.pubdate.nil?
     end
