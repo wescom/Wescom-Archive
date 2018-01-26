@@ -116,6 +116,25 @@
 					<a class="image-field">Last Refreshed: </a><%= @image.last_refreshed_time.strftime('%m/%d/%y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
 				<% end %>
 			</div>
+			
+			<div class="image-head">Purchasing:</div>
+			<div class="image-info-box indent">
+				<a class="image-field">Image 'For Sale' setting: </a><%= @image.forsale unless @image.forsale.nil?%>
+			</div>			
+			<% if !@image.logs.empty? %>
+				<div class="image-head">Image Change Log:</div>
+				<div class="image-info-box indent">
+					<div class="change_log">
+						<% @image.logs.reverse_each do |log| %>
+							<div>
+								<%= log.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%y %I:%M%p') %> - 
+								<%= log.log_detail %>
+								by <%= log.user.name unless log.user.nil? %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	<% end %>
 	

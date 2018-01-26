@@ -2,6 +2,8 @@ class StoryImage < ActiveRecord::Base
   belongs_to :story
   has_many :logs, :dependent => :destroy
   
+  FORSALE_OPTIONS = ["", "For Sale", "NotForSale"]
+  
   has_attached_file :image, 
       :styles => { 
         :large => ["500x500>",:jpg]
