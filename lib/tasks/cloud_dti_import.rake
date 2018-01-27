@@ -176,6 +176,7 @@ namespace :wescom do
             media.media_project_group = x["Job"] unless x["Job"].nil?
             media.media_notes = x["Notes"] unless x["Notes"].nil?
             media.media_status = x["StatusName"] unless x["StatusName"].nil?
+            media.media_category = x["CategoryName"] unless x["CategoryName"].nil?
             media.media_type = x["FileTypeExtension"].gsub(/\./, '') unless x["FileTypeExtension"].nil?
             media.byline_title = x["BylineTitle"] unless x["BylineTitle"].nil?
             media.deskname = x["DeskName"] unless x["DeskName"].nil?

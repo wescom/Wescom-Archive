@@ -209,14 +209,14 @@ class ImportDtiStory < ActiveRecord::Base
         self.media_list[0] = media_data.slice("FileHeaderId","FileHeaderName",
           "FileTypeExtension","NativeFileExtension","Byline","BylineTitle","Source","OriginalIPTCCaption","PrintCaption",
           "CreatorsName","Depth","Width","DeskName","StatusName","PriorityName","Job","Notes","UserDefinedText1",
-          "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList")
+          "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList","CategoryName")
       else    # more than one media record
         count = 0
         media_data.each { |x|
           self.media_list[count] = x.slice("FileHeaderId","FileHeaderName",
             "FileTypeExtension","NativeFileExtension","Byline","BylineTitle","Source","OriginalIPTCCaption","PrintCaption",
             "CreatorsName","Depth","Width","DeskName","StatusName","PriorityName","Job","Notes","UserDefinedText1",
-            "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList")
+            "CreatedDate","LastModifiedTime","LastRefreshedTime","ExpireDate","RelatedStoriesList","RunList","CategoryName")
           count += 1
         }
       end

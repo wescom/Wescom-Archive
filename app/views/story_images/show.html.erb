@@ -100,6 +100,9 @@
 				<% if !@image.media_project_group.nil? %>
 					<a class="image-field">Project Group: </a><%= @image.media_project_group %><br/>
 				<% end %>
+				<% if !@image.media_category.nil? %>
+					<a class="image-field">Category: </a><%= @image.media_category %><br/>
+				<% end %>
 				<% if !@image.media_status.nil? %>
 					<a class="image-field">Status: </a><%= @image.media_status %><br/>
 				<% end %>

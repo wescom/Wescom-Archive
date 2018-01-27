@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171109152806) do
+ActiveRecord::Schema.define(:version => 20180127001633) do
 
   create_table "ar_internal_metadata", :primary_key => "key", :force => true do |t|
     t.string   "value"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(:version => 20171109152806) do
     t.integer  "correction_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "default_banner_images", :force => true do |t|
+    t.integer  "default_setting_id"
+    t.string   "banner_image_file_name"
+    t.string   "banner_image_content_type"
+    t.integer  "banner_image_file_size"
+    t.datetime "banner_image_updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "default_pages", :force => true do |t|
@@ -146,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20171109152806) do
     t.string   "email"
     t.datetime "created_at",                                             :null => false
     t.datetime "updated_at",                                             :null => false
+    t.integer  "location_id"
   end
 
   create_table "papers", :force => true do |t|
@@ -317,6 +328,7 @@ ActiveRecord::Schema.define(:version => 20171109152806) do
     t.datetime "last_refreshed_time"
     t.datetime "expire_date"
     t.string   "forsale"
+    t.string   "media_category"
   end
 
   add_index "story_images", ["image_updated_at"], :name => "index_story_images_on_image_updated_at"
