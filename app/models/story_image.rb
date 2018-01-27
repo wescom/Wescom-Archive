@@ -23,6 +23,7 @@ class StoryImage < ActiveRecord::Base
     text :media_byline, :default_boost => 2.0
     text :media_name, :default_boost => 3.0
     text :media_project_group, :default_boost => 3.0
+    text :media_category
     text :story_category_name do
       story.categoryname if story.present?
     end
