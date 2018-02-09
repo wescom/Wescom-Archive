@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180127001633) do
+ActiveRecord::Schema.define(:version => 20180209224933) do
 
   create_table "ar_internal_metadata", :primary_key => "key", :force => true do |t|
     t.string   "value"
@@ -25,10 +25,12 @@ ActiveRecord::Schema.define(:version => 20180127001633) do
     t.integer  "quantity"
     t.integer  "item_id"
     t.string   "item_type"
-    t.integer  "price_cents",    :default => 0,     :null => false
-    t.string   "price_currency", :default => "USD", :null => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.integer  "price_cents",      :default => 0,     :null => false
+    t.string   "price_currency",   :default => "USD", :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "item_description"
+    t.string   "item_quality"
   end
 
   create_table "carts", :force => true do |t|
@@ -94,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20180127001633) do
     t.string   "site_image_content_type"
     t.integer  "site_image_file_size"
     t.datetime "site_image_updated_at"
+    t.decimal  "image_hi_res_price",          :precision => 12, :scale => 3
+    t.decimal  "image_low_res_price",         :precision => 12, :scale => 3
   end
 
   create_table "keywords", :force => true do |t|
@@ -138,11 +142,13 @@ ActiveRecord::Schema.define(:version => 20180127001633) do
     t.integer  "order_id"
     t.integer  "item_id"
     t.integer  "quantity"
-    t.integer  "price_cents",    :default => 0,     :null => false
-    t.string   "price_currency", :default => "USD", :null => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.integer  "price_cents",      :default => 0,     :null => false
+    t.string   "price_currency",   :default => "USD", :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "item_type"
+    t.string   "item_description"
+    t.string   "item_quality"
   end
 
   create_table "orders", :force => true do |t|
@@ -293,6 +299,7 @@ ActiveRecord::Schema.define(:version => 20180127001633) do
   end
 
   add_index "stories", ["categoryname"], :name => "index_stories_on_categoryname"
+  add_index "stories", ["doc_id"], :name => "index_stories_on_doc_id"
   add_index "stories", ["plan_id"], :name => "index_stories_on_plan_id"
   add_index "stories", ["project_group"], :name => "index_stories_on_project_group"
   add_index "stories", ["pubdate"], :name => "index_stories_on_pubdate"
