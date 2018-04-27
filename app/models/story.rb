@@ -15,7 +15,7 @@ class Story < ActiveRecord::Base
   has_many :logs, :dependent => :destroy
 
   validates :pubdate, :presence => true, :on => :update
-  validates :page, :presence => true, :numericality => true, :on => :update
+#  validates :page, :presence => true, :numericality => true, :on => :update
 
   searchable :auto_index => true, :auto_remove => true do
     # Search fields
