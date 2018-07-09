@@ -2,7 +2,7 @@ require 'chronic'
 require 'dti_nitf'
 
 logger           = Logger.new(STDOUT)
-logger.level     = Logger::DEBUG
+logger.level     = Logger::INFO
 Rails.logger     = logger
 
 namespace :wescom do
@@ -197,10 +197,11 @@ namespace :wescom do
             #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
           }
         end
+puts "*********************"
 puts "/tmp/* ..."
 puts %x[ ls -l /tmp ]
-#puts "/system/db_images/:id ..."
-#puts Dir.glob("/system/db_images/:id/*")
+puts "whoami: "+ %x[ whoami ]
+
         story.save!
         story.index!
         puts 'StoryId: '+story.id.to_s
