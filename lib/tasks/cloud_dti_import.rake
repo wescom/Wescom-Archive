@@ -1,6 +1,10 @@
 require 'chronic'
 require 'dti_nitf'
 
+logger           = Logger.new(STDOUT)
+logger.level     = Logger::INFO
+Rails.logger     = logger
+
 namespace :wescom do
   desc "Import DTI stories from Cloud"
   task :cloud_dti_import  => :environment do
@@ -139,7 +143,7 @@ namespace :wescom do
 
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
-            puts "*** Media Item: #{x}"
+            #puts "*** Media Item: #{x}"
             image_filename = '/WescomArchive/archiveup/images_cloud/'
             image_filename = image_filename + x["FileHeaderName"] unless x["FileHeaderName"].nil?
             image_filename = image_filename + x["FileTypeExtension"] unless x["FileTypeExtension"].nil?
