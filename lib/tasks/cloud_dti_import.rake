@@ -197,6 +197,10 @@ namespace :wescom do
             #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
           }
         end
+puts "/tmp/* ..."
+puts Dir.glob("/tmp/*")
+#puts "/system/db_images/:id ..."
+#puts Dir.glob("/system/db_images/:id/*")
         story.save!
         story.index!
         puts 'StoryId: '+story.id.to_s
