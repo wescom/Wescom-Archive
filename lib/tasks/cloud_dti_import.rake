@@ -2,7 +2,7 @@ require 'chronic'
 require 'dti_nitf'
 
 logger           = Logger.new(STDOUT)
-logger.level     = Logger::INFO
+logger.level     = Logger::DEBUG
 Rails.logger     = logger
 
 namespace :wescom do
