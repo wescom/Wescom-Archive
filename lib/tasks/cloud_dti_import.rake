@@ -198,7 +198,7 @@ namespace :wescom do
           }
         end
 puts "/tmp/* ..."
-puts %x[ ls -l /tmp/* ]
+puts %x[ ls -l /tmp ]
 #puts "/system/db_images/:id ..."
 #puts Dir.glob("/system/db_images/:id/*")
         story.save!
