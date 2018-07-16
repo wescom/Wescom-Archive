@@ -1,7 +1,8 @@
 namespace :wescom do
   desc "Import PDF pages"
   task :pdf_import  => :environment do
-
+    # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake wescom:pdf_import date=16-07-2018
+    
     def import_files
       files = get_daily_files
       files.each {|file| process_file(file)} unless files.nil?
@@ -11,9 +12,16 @@ namespace :wescom do
     end
 
     def get_daily_files
-      find_date = Date.today.strftime('%d-%m-%Y')
-      puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
+      # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake wescom:pdf_import date=16-07-2018
+      if ENV['date'].nil?
+        find_date = Date.today.strftime('%d-%m-%Y')
+        puts "No date requested, default to todays date: " + find_date
+      else
+        find_date = ENV['date']
+        puts "Date requested: " +ENV['date']
+      end
       #find_date = "27-02-2014"
+      puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
