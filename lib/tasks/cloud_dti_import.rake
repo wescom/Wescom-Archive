@@ -200,7 +200,9 @@ namespace :wescom do
 puts "*********************"
 puts "/tmp/* ..."
 puts %x[ ls -l /tmp ]
+puts "*********************"
 puts "whoami: "+ %x[ whoami ]
+puts "*********************"
 
         story.save!
         story.index!
@@ -242,7 +244,7 @@ puts "whoami: "+ %x[ whoami ]
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
-        FileUtils.mv filename, '/WescomArchive/archiveup/import_failed/'+file
+#        FileUtils.mv filename, '/WescomArchive/archiveup/import_failed/'+file
       end
     end
     
