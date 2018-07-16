@@ -1,9 +1,9 @@
 require 'chronic'
 require 'dti_nitf'
 
-logger           = Logger.new(STDOUT)
-logger.level     = Logger::INFO
-Rails.logger     = logger
+#logger           = Logger.new(STDOUT)
+#logger.level     = Logger::INFO
+#Rails.logger     = logger
 
 namespace :wescom do
   desc "Import DTI stories from Cloud"
@@ -197,12 +197,12 @@ namespace :wescom do
             #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
           }
         end
-puts "*********************"
-puts "/tmp/* ..."
-puts %x[ ls -l /tmp ]
-puts "*********************"
-puts "whoami: "+ %x[ whoami ]
-puts "*********************"
+#puts "*********************"
+#puts "/tmp/* ..."
+#puts %x[ ls -l /tmp ]
+#puts "*********************"
+#puts "whoami: "+ %x[ whoami ]
+#puts "*********************"
 
         story.save!
         story.index!
