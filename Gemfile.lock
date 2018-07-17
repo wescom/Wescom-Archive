@@ -137,7 +137,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rsolr (1.0.12)
+    rsolr (1.0.13)
       builder (>= 2.1.2)
     rvm-capistrano (1.5.6)
       capistrano (~> 2.15.4)
@@ -159,7 +159,7 @@ GEM
       nokogiri
       rails (>= 3)
       sunspot (= 2.2.0)
-    sunspot_solr (2.2.0)
+    sunspot_solr (2.2.8)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -215,4 +215,4 @@ DEPENDENCIES
   yomu
 
 BUNDLED WITH
-   1.10.2
+   1.16.1

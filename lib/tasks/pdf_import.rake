@@ -16,7 +16,7 @@ namespace :wescom do
       if ENV['date'].nil?
         find_date = Date.today.strftime('%d-%m-%Y')
         puts "No date requested, defaulting to todays date: " + find_date
-        puts "   - to request importing of specific date, add date=MM-DD-YYYY"
+        puts "   - to request importing of specific date, add date=DD-MM-YYYY"
       else
         find_date = ENV['date']
         puts "Date requested: " +ENV['date']
