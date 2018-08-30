@@ -51,9 +51,7 @@ class StoryImage < ActiveRecord::Base
     string :publish_status
     string :priority
     string :image_content_type
-    integer :story_id do
-      story.id if story.present?
-    end
+    integer :story_id
     integer :story_location_id do
       story.plan.location_id if story.present? and story.plan.present?
     end
