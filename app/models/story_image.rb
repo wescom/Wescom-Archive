@@ -24,6 +24,7 @@ class StoryImage < ActiveRecord::Base
     text :media_name, :default_boost => 3.0
     text :media_project_group, :default_boost => 3.0
     text :media_category
+    text :story_id
     text :story_category_name do
       story.categoryname if story.present?
     end
@@ -51,9 +52,6 @@ class StoryImage < ActiveRecord::Base
     string :publish_status
     string :priority
     string :image_content_type
-    integer :story_id do
-      story.id if story.present?
-    end
     integer :story_location_id do
       story.plan.location_id if story.present? and story.plan.present?
     end
