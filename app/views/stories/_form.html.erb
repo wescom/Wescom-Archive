@@ -45,7 +45,6 @@
 	  <p class='story-infohead1'>Information</p>
 	  <div id="story-info">
 			<%= form.label :pubdate, "PubDate", :class => "story_label" %>
-<!--			<%= form.text_field :pubdate, :class => "story_field small short_date_picker" %> -->
 			<%= form.date_select(:pubdate, {
 														:include_blank => true,
 														:start_year => 1992,
@@ -54,15 +53,25 @@
 														:order => [:month, :day, :year]},
 													{:class => "story_field smaller"}) %>
 
-			<%= form.label :section_id, "Section", :class => "story_label" %>
+			<%= form.label :section_id, "Plan Section", :class => "story_label" %>
 			<%= form.select :section_id, @sections.collect { |c| [c.name, c.id] }, {}, :class => 'story_field small' %>
 
 			<%= form.label :page, "Page", :class => "story_label" %>
-		  <%= form.text_field :page, :class => "story_field larger", 
-													:type => "number", :min => "1", :max => "100" %>
+		  	<%= form.text_field :page, :class => "story_field larger", 
+										:type => "number", :min => "1", :max => "100" %>
 
 			<%= form.label :project_group, "Project Group", :class => "story_label" %>
-		  <%= form.text_field :project_group, :class => "story_field full" %>
+		  	<%= form.text_field :project_group, :class => "story_field full" %>
+	  </div>
+
+	  <div id="story-info">
+			Category: <%= @story.categoryname %><br/>
+			<%= form.label :categoryname, "Story Category", :class => "story_label" %>
+			<%= form.text_field :categoryname, :class => 'story_field full' %>
+
+			Subcategory: <%= @story.subcategoryname %><br/>
+			<%= form.label :subcategoryname, "Story SubCategory", :class => "story_label" %>
+			<%= form.text_field :subcategoryname, :class => 'story_field full' %>
 	  </div>
 
 	  <% if @story.corrections.length > 0 %>
