@@ -40,7 +40,7 @@ namespace :wescom do
     
     def purge_dup_stories
       # Get a hash of all pdf image file names and how many records of each group
-      counts = Story.group([:doc_name]).count
+      counts = Story.group([:doc_id]).count
       #puts "Every Story duplicate count: "+counts.to_yaml
 
       # Keep only those pairs that have more than one record, thus duplicates
@@ -52,15 +52,15 @@ namespace :wescom do
       # Map objects by the attributes we have.
       object_groups = dupes.map do |attrs, count|
         #puts "attrs: "+attrs
-        Story.where(:doc_name => attrs)
+        Story.where(:doc_id => attrs)
       end
 
       # Take each group and destroy the duplicate, keeping only the first one.
       object_groups.drop(1).each do |group|
-        puts "Duplicate Record = " + group[0].doc_name
+        puts "Duplicate Record = #" + group[0].doc_id.to_s + " - " + group[0].doc_name
         group.each_with_index do |object, index|
           #puts "Duplicate Record=  "+"id:"+object.id.to_s + ", " + object.doc_name unless index == 0
-          object.destroy unless index == 0
+#          object.destroy unless index == 0
         end
       end
     end
