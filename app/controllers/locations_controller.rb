@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
 
   def index
-    @locations = Location.paginate(:page => params[:page], :per_page => 60, :order => 'name').order_by_location_type_pub_section
+    @locations = Location.paginate(:page => params[:page], :per_page => 60).order_by_location_type_pub_section
   end
 
   def show

@@ -1,9 +1,9 @@
 class StoriesController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
-    @logs = @story.logs.find(:all, :order => 'created_at DESC')
+    @logs = @story.logs.all.order('created_at DESC')
     @last_updated = @logs.first
     
     if @story.plan.present?
@@ -34,14 +34,14 @@ class StoriesController < ApplicationController
   
   def edit
     @story = Story.find(params[:id])
-    @papers = Paper.find(:all, :order => "name")
-    @sections = Section.order_by_category_plus_name.find(:all)
+    @papers = Paper.all.order("name")
+    @sections = Section.order_by_category_plus_name.all
   end
 
   def update
     @story = Story.find(params[:id])
-    @papers = Paper.find(:all, :order => "name")
-    @sections = Section.order_by_category_plus_name.find(:all)
+    @papers = Paper.all.order("name")
+    @sections = Section.order_by_category_plus_name.all
 
     if params[:cancel_button]
       redirect_to story_path

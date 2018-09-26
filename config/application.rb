@@ -1,46 +1,27 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to productiona, use this line
-  Bundler.require *Rails.groups(:assets => %w(development test))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
 module Wescomarchive
   class Application < Rails::Application
-    # config.autoload_paths += %W(#{config.root}/extras)
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
 
-    # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
 
     config.time_zone = 'Pacific Time (US & Canada)'
 
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-
-    # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
-
+    config.filter_parameters += [:password, :password_confirmation, :credit_card, :credit_card_number, :card_security_code]
+  
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
-
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
-    # Enable the asset pipeline
-    config.assets.enabled = false
-    config.assets.precompile += ['*.css', '*.js'] 
-
-    # Version of your assets, change this if you want to expire all your assets  
-    config.assets.version = '2.1'
-
-    # config.authentication_method = :authenticate_admin_user!
-    config.authentication_method = :authenticate_user!
-
-    #config.current_user_method = :current_admin_user
-    config.current_user_method = :current_user
   end
+
 end

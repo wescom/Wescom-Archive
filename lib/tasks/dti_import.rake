@@ -1,5 +1,5 @@
 require 'chronic'
-require 'dti_nitf'
+#require 'dti_nitf'     # Removed 9-25-2018 after moving to Rails 5. Dont believe I need it anymore
 
 namespace :wescom do
   desc "Import the DTI stories"

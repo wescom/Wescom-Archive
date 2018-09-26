@@ -1,10 +1,10 @@
 class PdfImagesController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def index
-    @settings = SiteSettings.find(:first)
-    @locations = Location.find(:all, :order => 'name')
-    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @settings = SiteSettings.first
+    @locations = Location.all.order('name')
+    @pub_types = PublicationType.all.order('sort_order')
     @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
 
     scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
@@ -14,7 +14,7 @@ class PdfImagesController < ApplicationController
     if !(params[:pub_type].nil? or params[:pub_type] == "")
       scope = scope.where(:publication_type_id => params[:pub_type])
     end
-    @publications = scope.uniq.order('pub_name')
+    @publications = scope.order('pub_name')
 
     if params[:search_query]
       begin
@@ -44,8 +44,8 @@ class PdfImagesController < ApplicationController
   end
 
   def book
-    @locations = Location.find(:all, :order => 'name')
-    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @locations = Location.all.order('name')
+    @pub_types = PublicationType.all.order('sort_order')
     @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
 
     scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
@@ -85,14 +85,14 @@ class PdfImagesController < ApplicationController
 
   def show
     @pdf_image = PdfImage.find(params[:id])
-    @logs = @pdf_image.logs.find(:all, :order => 'created_at DESC')
+    @logs = @pdf_image.logs.all.order('created_at DESC')
     @last_updated = @logs.first
     render :layout => "plain"
   end
 
   def new
-    @locations = Location.find(:all, :order => 'name')
-    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @locations = Location.all.order('name')
+    @pub_types = PublicationType.all.order('sort_order')
     @pdf_image = PdfImage.new
   end
 
@@ -308,8 +308,8 @@ class PdfImagesController < ApplicationController
             :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
             :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
       else
-        @locations = Location.find(:all, :order => 'name')
-        @pub_types = PublicationType.find(:all, :order => 'sort_order')
+        @locations = Location.all.order('name')
+        @pub_types = PublicationType.all.order('sort_order')
         render :action => :new
 #        redirect_to new_pdf_image_path(:pdf_image => params[:pdf_image])
       end
@@ -317,8 +317,8 @@ class PdfImagesController < ApplicationController
   end
   
   def edit
-    @locations = Location.find(:all, :order => 'name')
-    @pub_types = PublicationType.find(:all, :order => 'sort_order')
+    @locations = Location.all.order('name')
+    @pub_types = PublicationType.all.order('sort_order')
     @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
 
     @pdf_image = PdfImage.find(params[:id])
@@ -345,8 +345,8 @@ class PdfImagesController < ApplicationController
             :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
       else
         flash[:error] = "PDF Update Failed"
-        @locations = Location.find(:all, :order => 'name')
-        @pub_types = PublicationType.find(:all, :order => 'sort_order')
+        @locations = Location.all.order('name')
+        @pub_types = PublicationType.all.order('sort_order')
         render :action => :edit, :layout => "plain"
       end
     end

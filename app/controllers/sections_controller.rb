@@ -9,7 +9,7 @@ class SectionsController < ApplicationController
 
   def edit
     @section = Section.find(params[:id])
-    @section_categories = SectionCategory.find(:all, :order => "name")
+    @section_categories = SectionCategory.all.order("name")
   end
 
   def update

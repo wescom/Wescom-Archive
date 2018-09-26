@@ -1,8 +1,8 @@
 class SiteSettingsController < ApplicationController
-  before_filter :require_admin
+  before_action :require_admin
   
   def index
-    @settings = SiteSettings.find(:all)
+    @settings = SiteSettings.all
   end
   
   def edit

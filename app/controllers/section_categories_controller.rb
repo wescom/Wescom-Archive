@@ -1,7 +1,7 @@
 class SectionCategoriesController < ApplicationController
 
   def index
-    @section_categories = SectionCategory.find(:all, :order => "name")
+    @section_categories = SectionCategory.all.order("name")
   end
 
   def show

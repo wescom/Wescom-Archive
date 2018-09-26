@@ -5,19 +5,19 @@ class PlansController < ApplicationController
 
   def show
     @plan = Plan.find(params[:id])
-    @logs = @plan.logs.find(:all, :order => 'created_at DESC')
+    @logs = @plan.logs.all.order('created_at DESC')
     @last_updated = @logs.first
   end
 
   def new
     @plan = Plan.new
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
   end
 
   def create
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
     if params[:cancel_button]
       redirect_to plans_path
     else
@@ -34,18 +34,18 @@ class PlansController < ApplicationController
   
   def edit
     @plan = Plan.find(params[:id])
-    @logs = @plan.logs.find(:all, :order => 'created_at DESC')
+    @logs = @plan.logs.all.order('created_at DESC')
     @last_updated = @logs.first
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
     @pdfs = @plan.pdf_images.limit(50).order('page')
     @stories = @plan.stories.limit(50).order('page')
   end
 
   def update
     @plan = Plan.find(params[:id])
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
     @pdfs = @plan.pdf_images.limit(50).order('page')
     @stories = @plan.stories.limit(50).order('page')
     if params[:cancel_button]

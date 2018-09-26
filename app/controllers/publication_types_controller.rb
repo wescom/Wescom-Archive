@@ -1,7 +1,7 @@
 class PublicationTypesController < ApplicationController
 
   def index
-    @publication_types = PublicationType.paginate(:page => params[:page], :per_page => 60, :order => 'sort_order')
+    @publication_types = PublicationType.paginate(:page => params[:page], :per_page => 60).order('sort_order')
   end
 
   def show

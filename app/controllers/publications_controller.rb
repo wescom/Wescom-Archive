@@ -9,13 +9,13 @@ class PublicationsController < ApplicationController
 
   def new
     @publication = Publication.new
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
   end
 
   def create
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
     if params[:cancel_button]
       redirect_to publications_path
     else
@@ -32,13 +32,13 @@ class PublicationsController < ApplicationController
   
   def edit
     @publication = Publication.find(params[:id])
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
   end
 
   def update
-    @locations = Location.find(:all, :order => "name")
-    @publication_types = PublicationType.find(:all, :order => "sort_order")
+    @locations = Location.all.order("name")
+    @publication_types = PublicationType.all.order("sort_order")
     @publication = Publication.find(params[:id])
     if @publication.update_attributes(params[:publication])
       flash[:notice] = "Publication updated"
