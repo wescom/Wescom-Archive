@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+	<h1 class="navbar-brand">
+		<%= link_to root_path do %>
+			Wescom <span>| Archive</span>
+		<% end %>
+	</h1>
+	<% if signed_in? %>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<%= link_to "Search Stories", {:controller => 'search', 
+								:action => 'index',
+								:location=>current_user.default_location_id, 
+								:pub_type=>current_user.default_publication_type_id,
+							 	:pub_select=>current_user.default_publication,
+							 	:section_select=>current_user.default_section_name},
+								:class => "nav-link" %>
+				</li>
+				<li class="nav-item">
+					<%= link_to "Today's Stories", search_today_url(:papername => "All"), :class => "nav-link" %>
+				</li>
+				<li class="nav-item">
+					<%= link_to "Search Images", search_images_url(:location=>current_user.default_location_id, 
+								:pub_type=>current_user.default_publication_type_id,
+							 	:pub_select=>current_user.default_publication,
+							 	:section_select=>current_user.default_section_name), 
+								:class => "nav-link" %>
+				</li>
+				<li class="nav-item">
+					<%= link_to "Image Gallery", story_images_url(), :class => "nav-link" %>
+				</li>
+				<li class="nav-item">
+					<%= link_to "PDF Pages", pdf_images_path(:location=>current_user.default_location_id, 
+								:pub_type=>current_user.default_publication_type_id,
+							 	:pub_select=>current_user.default_publication), 
+								:class => "nav-link" %>
+				</li>
+
+				<% if admin? or edit? %>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Administration
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<%= link_to "Locations", locations_url, :class => "dropdown-item" %>
+							<%= link_to "Publications Types", publication_types_url, :class => "dropdown-item" %>
+							<%= link_to "Plans", plans_url, :class => "dropdown-item" %>
+							<% if admin? %>
+								<%= link_to "Users", users_url, :class => "dropdown-item" %>
+								<%= link_to "Site Settings", site_settings_url, :class => "dropdown-item" %>
+							<% end %>
+						</div>
+					</li>
+				<% end %>
+			</ul>
+			<div id="login-box float-right">
+				<%= render(:partial => "users/user_bar") %>
+			</div>
+		</div>
+	<% end %>
+</nav>

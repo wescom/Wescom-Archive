@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 
-    <title><%= yield :title %> Wescom | Archive</title>
-    <%= csrf_meta_tag %>
+		<title><%= yield :title %> Wescom | Archive</title>
+		<%= csrf_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-	<meta name="viewport" content="width=device-width">
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<meta name="viewport" content="width=device-width">
 
-  </head>
+	</head>
 
-  <body>
-	  <div id="container" class="container_16">
-      <div id="branding">
-        <h1>Wescom <span>| Archive</span></h1>
-      </div>
+	<body>
+		<%= render 'shared/header' %>
+		<%= render :partial => 'shared/messages' %>
 
-      <%= yield %>
+		<div class="content_block">
+			<%= yield %>
+		</div>
 
-      <div id="page-footer">
-        <p><strong>Wescom Archive</strong> - &copy; Copyright 2006-<%= Date.today.year %> - <a href="http://www.bendbulletin.com">Western Communications</a>.<br /></p>
-      </div>
-    </div>
-  </body>
+		<%= render 'shared/footer' %>
+	</body>
 </html>
