@@ -2,88 +2,47 @@
   <%= "#{params[:search_query]} - " if params[:search_query] -%>
 <% end %>
 
-<div id="search-page">
-  <div id="page-content" class="clearfix">
-		<h1>Search Stories
-			<span class="float_right">Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)</span>
-		</h1>
-		<h2 class="clearfix">
-			<div id="filter_stories_block" class="full_width clear_fix">
-				<%= form_tag search_path, :method => :get do %>
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<td class="largest"><%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %></td>
-							<td class="float_right extra_small">Date From:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_from_select, params[:date_from_select], 
-												:class => 'short_date_picker center', 
-												:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="float_right extra_small">Date To:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_to_select, params[:date_to_select], 
-													:class => 'short_date_picker center', 
-													:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="tiny"></td>
-							<td class="medium">
-								<%= select_tag 'location', 
-													options_from_collection_for_select(@locations, 'id', 'name', 
-													:selected => params[:location]), {:prompt => "- Select Location -"} %>
-								<br/>
-								<%= select_tag 'pub_type', 
-													options_from_collection_for_select(@pub_types, 'id', 'name', 
-													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
-							</td>
-							<td class="medium">
-								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-								<br/>
-								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
-													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
-							</td>
-							<td class="tiny"></td>
-							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
-						</tbody>
-					</table>
-				<% end %>
-			</div>
-		</h2>
+<div class="page-content">
+	<div class="search-header">
+		Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)
+	</div>
 
-		<div class="inner-box clearfix">
-			<div id="story-block" class="full_width">
-			  <% if @stories %>
-			    <div id="table-block" class="full_width">
-						<div id="table-paginate" class="full_width">
-			      	Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count,
-			 											:delimiter => ',') %>
-			      	<div class="float_right"><%= will_paginate @stories.hits %></div>
-						</div>
-			      <% unless @stories.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-										<td class="headline_col">Headline</td>
-										<td class="byline_col">Byline</td>
-										<td class="section_col center">Section</td>
-										<td class="pubdate_col center">PubDate</td>
-										<td class="system_col center">System</td>
-										<td class="image_col center">Images?</td>
-										<td class="status_col center">Status</td>
-										<% if admin? and @settings.show_delete_button %>
-											<td class="action_col center">Action</td>
-										<% end %>
-			            </tr>
-			            <%= render :partial => 'story_fragment', :collection => @stories.results %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @stories.hits %></div>
-						</div>
-			    </div>
-			  <% end %>
-			</div>
+	<div class="story-search">        
+		<%= render :partial => 'search/search_stories' %>
+	</div>
+
+	<div class="inner-box clearfix">
+		<div id="story-block" class="full_width">
+			<% if @stories %>
+				<div id="table-block" class="full_width">
+					<div id="table-paginate" class="full_width">
+						Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count, :delimiter => ',') %>
+						<div class="float_right"><%= will_paginate @stories.hits %></div>
+					</div>
+					<% unless @stories.nil? %>
+						<table cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr class="header">
+									<td class="headline_col">Headline</td>
+									<td class="byline_col">Byline</td>
+									<td class="section_col center">Section</td>
+									<td class="pubdate_col center">PubDate</td>
+									<td class="system_col center">System</td>
+									<td class="image_col center">Images?</td>
+									<td class="status_col center">Status</td>
+									<% if admin? and @settings.show_delete_button %>
+										<td class="action_col center">Action</td>
+									<% end %>
+								</tr>
+								<%= render :partial => 'story_fragment', :collection => @stories.results %>
+							</tbody>
+						</table>
+					<% end %>
+					<div id="table-paginate" class="full_width">
+						<div class="float_right"><%= will_paginate @stories.hits %></div>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>
