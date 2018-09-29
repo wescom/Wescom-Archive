@@ -3,46 +3,64 @@
 <% end %>
 
 <div class="page-content">
-	<div class="search-header">
-		Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>Search Stories</h2>
+			<div class="search-header">
+				Archive Search Form (<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories)
+			</div>
+		</div>
 	</div>
 
-	<div class="story-search">        
+	<div class="page-content-search story-search">        
 		<%= render :partial => 'search/search_stories' %>
 	</div>
 
-	<div class="inner-box clearfix">
-		<div id="story-block" class="full_width">
-			<% if @stories %>
-				<div id="table-block" class="full_width">
-					<div id="table-paginate" class="full_width">
-						Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count, :delimiter => ',') %>
-						<div class="float_right"><%= will_paginate @stories.hits %></div>
-					</div>
-					<% unless @stories.nil? %>
-						<table cellspacing="0" cellpadding="0">
-							<tbody>
-								<tr class="header">
-									<td class="headline_col">Headline</td>
-									<td class="byline_col">Byline</td>
-									<td class="section_col center">Section</td>
-									<td class="pubdate_col center">PubDate</td>
-									<td class="system_col center">System</td>
-									<td class="image_col center">Images?</td>
-									<td class="status_col center">Status</td>
-									<% if admin? and @settings.show_delete_button %>
-										<td class="action_col center">Action</td>
-									<% end %>
-								</tr>
-								<%= render :partial => 'story_fragment', :collection => @stories.results %>
-							</tbody>
-						</table>
-					<% end %>
-					<div id="table-paginate" class="full_width">
-						<div class="float_right"><%= will_paginate @stories.hits %></div>
-					</div>
+	<div class="page-content-body">
+		<% if @stories %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @stories.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @stories.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+			<% unless @stories.nil? %>
+				<div class="table-block">
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr class="header">
+								<td class="headline_col">Headline</td>
+								<td class="byline_col">Byline</td>
+								<td class="section_col center">Section</td>
+								<td class="pubdate_col center">PubDate</td>
+								<td class="system_col center">System</td>
+								<td class="image_col center">Images?</td>
+								<td class="status_col center">Status</td>
+								<% if admin? and @settings.show_delete_button %>
+									<td class="action_col center">Action</td>
+								<% end %>
+							</tr>
+							<%= render :partial => 'story_fragment', :collection => @stories.results %>
+						</tbody>
+					</table>
 				</div>
 			<% end %>
-		</div>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@stories.results.total_pages * @stories.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block float-right">
+					<%= will_paginate @stories.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @stories.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+		<% end %>
 	</div>
 </div>
