@@ -1,72 +1,87 @@
-<div id="today-page">
-  <%= render(:partial => "home/pagenav") %>
-  <div id="page-content" class="clearfix">
-		<h1>
-			Today's Stories
-		</h1>
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
 
-		<h2 class="clearfix">
-			<div id="filter_stories_block" class="full_width clear_fix">
-				<%= form_tag search_today_path, :method => :get do %>
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<td class="largest">
-									<%= number_with_delimiter(@total_stories_count, :delimiter => ',') %> archived stories
-							</td>
-							<td class="small"></td>
-							<td class="small"></td>
-							<td class="float_right extra_small">Date:</td>
-							<td class="smaller">
-								<%= text_field_tag :paperdate, params[:paperdate], 
-												:class => 'short_date_picker center', 
-												:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="medium">
-								<% if @publication %>
-									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-													selected = @publication.pub_name),
-													{:prompt => "- Select Publication -", :class => 'today_publication float_right'} %>
-								<% else %>
-									<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name'), 
-													{:prompt => "- Select Publication -", :class => 'today_publication float_right'} %>
-								<% end %>
-							</td>
-							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
-						</tbody>
-					</table>
-				<% end %>
-			</div>
-		</h2>
-
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-			</div>
-			<div id="story-block" class="full_width">
-			  <div id="table-block">
-					<div id="table-paginate" class="full_width">
-		      	<div class="float_right"><%= will_paginate @stories %></div>
-					</div>
-			    <table cellspacing="0" cellpadding="0">
-			      <tbody>
-			        <tr class="header">
-								<td class="headline_col">Headline</td>
-								<td class="byline_col">Byline</td>
-								<td class="section_col center">Section</td>
-								<td class="pubdate_col center">PubDate</td>
-								<td class="system_col center">System</td>
-								<td class="image_col center">Images?</td>
-								<% if admin? and @settings.show_delete_button %>
-									<td class="action_col center">Action</td>
-								<% end %>
-			        </tr>
-			        <%= render :partial => 'story_fragment', :collection => @stories %>
-			      </tbody>
-			    </table>
-					<div id="table-paginate" class="full_width">
-		      	<div class="float_right"><%= will_paginate @stories %></div>
-					</div>
-			  </div>
-			</div>
+<div id="todays-stories" class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>Today's Stories</h2>
 		</div>
 	</div>
+
+	<div class="page-content-search story-search">        
+		<%= form_tag search_today_path, :class => "form-inline", :method => :get do %>
+			<div class="d-flex flex-end align-items-center">
+				<div class="input-group form-search-date-col">
+					<%= text_field_tag :paperdate, params[:paperdate], 
+						:class => "datepicker text-center", 
+						:placeholder => "mm/dd/yyyy" %>
+				    <div class="input-group-append">
+						<i class='fa fa-calendar input-group-text'></i>
+				    </div>
+				</div>
+				<div class="form-search-select-col">
+					<% if @publication %>
+						<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
+										selected = @publication.pub_name), {:class => "form-search-select-today", :prompt => "- Publication -"} %>
+					<% else %>
+						<%= select_tag 'papername', options_from_collection_for_select(@publications, 'pub_name', 'pub_name'), 
+										{:class => "form-search-select-today", :prompt => "- Publication -"} %>
+					<% end %>
+				</div>
+				<div class="form-search-button-col">
+				 	<button class="btn-secondary form-search-button" type="submit"><i class="fa fa-search"></i></button>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+	<div class="page-content-body">
+		<% if @stories %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@stories.total_pages * @stories.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @stories, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @stories, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+			<% unless @stories.nil? %>
+				<table id="stories" class="table table-hover table-condensed table-striped table-sm">
+					<thead class="thead-light">
+						<tr>
+							<th class="">Headline</th>
+							<th class="text-center">Byline</th>
+							<th class="text-center d-none d-sm-table-cell">Section</th>
+							<th class="text-center">PubDate</th>
+							<th class="text-center d-none d-lg-table-cell">System</th>
+							<th class="text-center d-none d-md-table-cell">Images?</th>
+							<th class="text-center d-none d-lg-table-cell">Status</th>
+							<% if admin? and @settings.show_delete_button %>
+								<th class="text-center d-none d-lg-table-cell">Action</th>
+							<% end %>
+						</tr>
+					</thead>
+					<tbody>
+						<%= render :partial => 'story_fragment', :collection => @stories %>
+					</tbody>
+			    </table>
+			<% end %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@stories.total_pages * @stories.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block float-right">
+					<%= will_paginate @stories, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @stories, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
 </div>

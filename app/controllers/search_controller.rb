@@ -44,8 +44,8 @@ class SearchController < ApplicationController
   def today
     @settings = SiteSettings.first
 
-    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").uniq.order('pub_name')
-    @publication = Plan.find(:first, :conditions => ['pub_name = ?', params[:papername]])
+    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").order('pub_name')
+    @publication = Plan.where(:pub_name => params[:papername]).first if params[:papername].present?
 
     if params[:paperdate].nil?
       Rails.logger.info "******** Date is nil"
@@ -53,16 +53,12 @@ class SearchController < ApplicationController
     end
     if params[:papername] == "All" or params[:papername] == ""
       @stories = Story.where('DATE(pubdate) = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"))
-                            .paginate(
-                              :page => params[:page], 
-                              :per_page => 30, 
-                              :order => "Pubdate DESC").order_by_pub_section_page
+                            .paginate(:page => params[:page],:per_page => 30)
+                            .order_by_pub_section_page
     else
       @stories = Story.where('DATE(pubdate) = ? and plans.pub_name = ?', Date.strptime(params[:paperdate], "%m/%d/%Y"), params[:papername])
-                            .paginate(
-                              :page => params[:page], 
-                              :per_page => 30, 
-                              :order => "Pubdate DESC").order_by_pub_section_page
+                            .paginate(:page => params[:page],:per_page => 30)
+                            .order_by_pub_section_page
     end
     @total_stories_count = @stories.count
     increase_search_count
