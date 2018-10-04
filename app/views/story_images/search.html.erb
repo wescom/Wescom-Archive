@@ -2,94 +2,62 @@
   <%= "#{params[:search_query]} - " if params[:search_query] -%>
 <% end %>
 
-<div id="search-images-page">
-  <%= render(:partial => "home/pagenav") %>
-  <div id="page-content" class="clearfix">
-		<h1>Search Images
-				<span class="float_right">Archive Search Form (<%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images)</span>
-		</h1>
-		<h2 class="clearfix">
-			<div id="filter_stories_block" class="full_width clear_fix">
-				<%= form_tag search_images_path, :method => :get do %>
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<td class="largest">
-								<%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
-							</td>
-							<div class="medium">
-								<td class="float_right extra_small">Date From:</td>
-								<td class="smaller">
-									<%= text_field_tag :date_from_select, params[:date_from_select], 
-													:class => 'short_date_picker center', 
-													:placeholder => "mm/dd/yyyy" %>
-								</td>
-								<td class="float_right extra_small">Date To:</td>
-								<td class="smaller">
-									<%= text_field_tag :date_to_select, params[:date_to_select], 
-														:class => 'short_date_picker center', 
-														:placeholder => "mm/dd/yyyy" %>
-								</td>
-							</div>
-							<td class="small">
-								<%= select_tag(:image_type, options_for_select([['Images Only','Image'], ['Other','Graphic']], :selected => params[:image_type]),
-														{:selected => params[:location], :prompt => "- Select Type -"}) %>
-							</td>
-							<td class="medium">
-								<%= select_tag 'location', 
-													options_from_collection_for_select(@locations, 'id', 'name', 
-													:selected => params[:location]), {:prompt => "- Select Location -"} %>
-								<br/>
-								<%= select_tag 'pub_type', 
-													options_from_collection_for_select(@pub_types, 'id', 'name', 
-													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
-							</td>
-							<td class="medium">
-								<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-								<br/>
-								<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
-													:selected => params[:section_select]), {:prompt => "- Select Section -"} %>
-							</td>
-							<td class="tiny"></td>
-							<td class="smaller"><%= submit_tag "Search", :class => 'submit'%></td>
-						</tbody>
-					</table>
-				<% end %>
-			</div>
-		</h2>
-
-		<div class="inner-box clearfix">
-			<div id="story-block" class="full_width">
-			  <% if @images %>
-			    <div id="table-block" class="full_width">
-						<div id="table-paginate" class="full_width">
-			      	Results: <%= number_with_delimiter(@images.results.total_pages * @images.results.count,
-			 											:delimiter => ',') %>
-			      	<div class="float_right"><%= will_paginate @images.hits %></div>
-						</div>
-			      <% unless @images.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-										<td class="image_col center">Image</td>
-										<td class="headline_col">Name/Caption</td>
-										<td class="byline_col">Photog</td>
-										<td class="status_col center">Status</td>
-										<td class="section_col center">Section</td>
-										<td class="pubdate_col center">PubDate</td>
-										<td class="system_col center">System</td>
-										<td> </td>
-			            </tr>
-			            <%= render :partial => 'image_fragment', :collection => @images.results %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @images.hits %></div>
-						</div>
-			    </div>
-			  <% end %>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>Search Images</h2>
+			<div class="search-header">
+				Archive Search Form (<%= number_with_delimiter(@total_images_count, :delimiter => ',') %> archived images)
 			</div>
 		</div>
+	</div>
+
+	<div class="page-content-search image-search">        
+		<%= render :partial => 'story_images/search_images' %>
+	</div>
+
+	<div class="page-content-body">
+	  <% if @images %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@images.results.total_pages * @images.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @images.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @images.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+			<% unless @images.nil? %>
+				<table id="images" class="table table-hover table-condensed table-striped table-sm">
+					<thead class="">
+						<tr>
+							<th class="text-center">Image</th>
+							<th class="">Name/Caption</th>
+							<th class="text-center d-none d-sm-table-cell">Photog</th>
+							<th class="text-center">Status</th>
+							<th class="text-center d-none d-lg-table-cell">Section</th>
+							<th class="text-center d-none d-md-table-cell">PubDate</th>
+							<th class="text-center d-none d-lg-table-cell">System</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%= render :partial => 'image_fragment', :collection => @images.results %>
+					</tbody>
+		        </table>
+			<% end %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@images.results.total_pages * @images.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block float-right">
+					<%= will_paginate @images.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @images.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+		    </div>
+		<% end %>
 	</div>
 </div>

@@ -55,7 +55,7 @@ class PdfImagesController < ApplicationController
     if !(params[:pub_type].nil? or params[:pub_type] == "")
       scope = scope.where(:publication_type_id => params[:pub_type])
     end
-    @publications = scope.uniq.order('pub_name')
+    @publications = scope.order('pub_name')
 
     scope = PdfImage
     if (params[:date_from_select].present?)

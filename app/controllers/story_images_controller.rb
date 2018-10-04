@@ -16,13 +16,13 @@ class StoryImagesController < ApplicationController
     @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
     @sections = @sections.select(:section_name).order('section_name')
 
-    scope = StoryImage
-    scope = scope.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
-    scope = scope.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
-    scope = scope.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
-    scope = scope.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
-    scope = scope.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
-    @images = scope.paginate(:page => params[:page], :per_page => 15).order("id DESC")
+    @images = StoryImage
+#    @images = @images.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
+    @images = @images.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
+    @images = @images.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
+    @images = @images.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
+    @images = @images.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
+    @images = @images.paginate(:page => params[:page], :per_page => 15).order("id DESC")
 
     @total_images_count = @images.count
     increase_search_count

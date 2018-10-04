@@ -1,0 +1,53 @@
+<%= form_tag search_images_path, :class => "form-inline", :method => :get do %>
+	<div class="d-flex flex-wrap justify-content-start align-items-center">
+		<div class="form-search-text-col">
+			<%= text_field_tag :search_query, params[:search_query], 
+				:class => "form-search-text", 
+				:placeholder => "search", 
+				:autofocus => true %>
+		</div>
+		<div class="d-flex flex-wrap justify-content-center align-items-center">
+			<div class="input-group form-search-date-col">
+				<%= text_field_tag :date_from_select, params[:date_from_select], 
+					:class => "datepicker text-center", 
+					:placeholder => "mm/dd/yyyy" %>
+			    <div class="input-group-append">
+					<i class='fa fa-calendar input-group-text'></i>
+			    </div>
+			</div>
+			-
+			<div class="input-group form-search-date-col">
+				<%= text_field_tag :date_to_select, params[:date_to_select], 
+						:class => "datepicker text-center", 
+						:placeholder => "mm/dd/yyyy" %>
+			    <div class="input-group-append">
+					<i class='fa fa-calendar input-group-text'></i>
+			    </div>
+			</div>
+		</div>
+		<div class="form-search-select-col">
+			<%= select_tag(:image_type, options_for_select([['Images Only','Image'], ['Other','Graphic']], 
+				:selected => params[:image_type]),
+				{:selected => params[:location], :prompt => "- Select Type -"}) %>
+		</div>
+		<div class="">
+			<div class="form-search-select-col">
+				<%= select_tag 'location', 
+						options_from_collection_for_select(@locations, 'id', 'name', 
+						:selected => params[:location]), {:class => "form-search-select", :prompt => "- Location -"} %>
+				<%= select_tag 'pub_type', 
+						options_from_collection_for_select(@pub_types, 'id', 'name', 
+						:selected => params[:pub_type]), {:class => "form-search-select", :prompt => "- Pub Type -"} %>
+			</div>
+			<div class="form-search-select-col">
+				<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
+						:selected => params[:pub_select]), {:class => "form-search-select", :prompt => "- Publication -"} %>
+				<%= select_tag 'section_select', options_from_collection_for_select(@sections, 'section_name', 'section_name', 
+						:selected => params[:section_select]), {:class => "form-search-select", :prompt => "- Section -"} %>
+			</div>
+		</div>
+		<div class="form-search-button-col">
+		 	<button class="btn-secondary form-search-button" type="submit"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+<% end %>
