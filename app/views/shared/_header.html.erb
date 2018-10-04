@@ -4,11 +4,15 @@
 			Wescom <span>| Archive</span>
 		<% end %>
 	</h1>
-	<% if signed_in? %>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" 
+			data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+			aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+</nav>
 
+<% if signed_in? %>
+	<nav class="navbar navbar-expand-lg navbar-dark navbar-links">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
@@ -39,7 +43,7 @@
 							 	:pub_select=>current_user.default_publication), 
 								:class => "nav-link" %>
 				</li>
-
+				<div class="dropdown-divider"></div>
 				<% if admin? or edit? %>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
@@ -58,9 +62,10 @@
 					</li>
 				<% end %>
 			</ul>
-			<div id="login-box float-right">
+			<div class="dropdown-divider"></div>
+			<div class="login-box">
 				<%= render(:partial => "users/user_bar") %>
 			</div>
 		</div>
-	<% end %>
-</nav>
+	</nav>
+<% end %>

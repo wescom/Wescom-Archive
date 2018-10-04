@@ -1,5 +1,5 @@
-<tr class="<%= cycle("alternate","") %>">
-  <td class="headline headline_col"><%= link_to text_for_story_link(story_fragment), story_fragment %>
+<tr>
+  <td class="headline headline_col align-middle"><%= link_to text_for_story_link(story_fragment), story_fragment %>
     <% if story_fragment.copy && story_fragment.copy.length > 0 %>
 			<%= strip_subhead_tags(story_fragment.copy)[0..250].html_safe %>
 		<% else %>
@@ -9,8 +9,8 @@
 			<% end %>
 		<% end %>
   </td>
-  <td class="center byline_col"><%= story_fragment.byline if story_fragment.byline %></td>
-  <td class="center section_col">
+  <td class="byline_col text-center align-middle"><%= story_fragment.byline if story_fragment.byline %></td>
+  <td class="section_col text-center align-middle d-none d-sm-table-cell">
 		<% if story_fragment.plan.present? %>
 			<% if story_fragment.plan.pub_name.present? and story_fragment.plan.pub_name.strip == "The Bulletin" %>
 				<%= image_tag('/images/bulletin.jpg', :alt=>"bulletin", :class=>"image_thumb") %>
@@ -29,10 +29,10 @@
 			<%= "p." + story_fragment.page if story_fragment.page.to_i > 0 %>
 		<% end %>
 	</td>
-  <td class="center pubdate_col">
+  <td class="pubdate_col text-center align-middle">
 		<% if !story_fragment.pubdate.nil? %><%= story_fragment.pubdate.strftime('%m/%d/%y') %><% end %>
 	</td>
-	<td class="center system_col">
+	<td class="system_col text-center align-middle d-none d-lg-table-cell">
 		<% if story_fragment.frontend_db == "DTI" %>
 			<%= image_tag('/images/dti_logo.jpg', :alt=>"FrontEndDB", :class=>"image_thumb") %>
 		<% else %>
@@ -45,18 +45,18 @@
 			<% end %>
 		<% end %>
 	</td>
-	<td class="center system_col">
+	<td class="images_col text-center align-middle  d-none d-md-table-cell">
 		<% if story_fragment.story_images.present? %>
 			Images Attached
 		<% end %>
 	</td>
 	<% if story_fragment.approved %>
-		<td class="true center status_col">Approved</td>
+		<td class="true status_col text-center align-middle d-none d-lg-table-cell">Approved</td>
 	<% else %>
-		<td class="false center status_col">Needs Review</td>
+		<td class="false status_col text-center align-middle d-none d-lg-table-cell">Needs Review</td>
 	<% end %>
 	<% if admin? and @settings.show_delete_button %>
-		<td class="false center action_col">
+		<td class="action_col text-center align-middle d-none d-lg-table-cell">
 			<%= button_to "Delete", story_path(story_fragment), 
 										:method => :delete, 
 										:confirm => "Are you sure you want to delete story?",

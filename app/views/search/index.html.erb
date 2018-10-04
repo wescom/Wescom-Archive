@@ -30,25 +30,25 @@
 				</div>
 			</div>
 			<% unless @stories.nil? %>
-				<div class="table-block">
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr class="header">
-								<td class="headline_col">Headline</td>
-								<td class="byline_col">Byline</td>
-								<td class="section_col center">Section</td>
-								<td class="pubdate_col center">PubDate</td>
-								<td class="system_col center">System</td>
-								<td class="image_col center">Images?</td>
-								<td class="status_col center">Status</td>
-								<% if admin? and @settings.show_delete_button %>
-									<td class="action_col center">Action</td>
-								<% end %>
-							</tr>
-							<%= render :partial => 'story_fragment', :collection => @stories.results %>
-						</tbody>
-					</table>
-				</div>
+			<table id="stories" class="table table-hover table-condensed table-striped table-sm">
+				<thead class="thead-light">
+					<tr>
+						<th class="text-center">Headline</th>
+						<th class="text-center">Byline</th>
+						<th class="text-center d-none d-sm-table-cell">Section</th>
+						<th class="text-center">PubDate</th>
+						<th class="text-center d-none d-lg-table-cell">System</th>
+						<th class="text-center d-none d-md-table-cell">Images?</th>
+						<th class="text-center d-none d-lg-table-cell">Status</th>
+						<% if admin? and @settings.show_delete_button %>
+							<th class="text-center d-none d-lg-table-cell">Action</th>
+						<% end %>
+					</tr>
+				</thead>
+				<tbody>
+					<%= render :partial => 'story_fragment', :collection => @stories.results %>
+				</tbody>
+			</table>
 			<% end %>
 			<div class="search-pagination d-flex justify-content-between align-items-end">
 				<div class="search-result-totals">
