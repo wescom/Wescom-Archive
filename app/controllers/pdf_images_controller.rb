@@ -41,6 +41,7 @@ class PdfImagesController < ApplicationController
       end
     end
     increase_search_count
+    @total_pdfs_count = PdfImage.all.count
   end
 
   def book
@@ -115,7 +116,7 @@ class PdfImagesController < ApplicationController
           # set pdf_image to current image in loop
           params[:pdf_image][:image] = @pdf_images[i]
 
-          @pdf_image = PdfImage.new(params[:pdf_image])
+          @pdf_image = PdfImage.new(pdf_image_params)
 
           # Assign plan to this pdf_image
           @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
@@ -167,7 +168,7 @@ class PdfImagesController < ApplicationController
           # set pdf_image to current image in loop
           params[:pdf_image][:image] = @pdf_images[i]
 
-          @pdf_image = PdfImage.new(params[:pdf_image])
+          @pdf_image = PdfImage.new(pdf_image_params)
 
           # Assign plan to this pdf_image
           @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
@@ -215,7 +216,7 @@ class PdfImagesController < ApplicationController
           # set pdf_image to current image in loop
           params[:pdf_image][:image] = @pdf_images[i]
 
-          @pdf_image = PdfImage.new(params[:pdf_image])
+          @pdf_image = PdfImage.new(pdf_image_params)
 
           # Assign plan to this pdf_image
           @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
@@ -263,7 +264,7 @@ class PdfImagesController < ApplicationController
           # set pdf_image to current image in loop
           params[:pdf_image][:image] = @pdf_images[i]
 
-          @pdf_image = PdfImage.new(params[:pdf_image])
+          @pdf_image = PdfImage.new(pdf_image_params)
 
           # Assign plan to this pdf_image
           @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
@@ -367,4 +368,9 @@ class PdfImagesController < ApplicationController
     end
   end
   
+  private
+    def pdf_image_params
+      params.require(:pdf_image).permit(:plan_id, :location, :pub_type, :publication, :pubdate, :section_name, :section_letter,
+        :section_name, :section_letter, :image)
+    end
 end

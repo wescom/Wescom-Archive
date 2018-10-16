@@ -2,9 +2,6 @@ class PdfImage < ActiveRecord::Base
   belongs_to :plan
   has_many :logs, :dependent => :destroy
   
-  attr_accessor :section_name1, :section_letter1, :image1, :section_name2, :section_letter2, :image2, 
-    :section_name3, :section_letter3, :image3, :section_name4, :section_letter4, :image4 
-
   has_attached_file :image, 
       :styles => { 
         :large => ["500x500>",:jpg]

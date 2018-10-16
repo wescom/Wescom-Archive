@@ -1,132 +1,101 @@
-<div id="pdf-images-page">
-	<div id="page-content" class="clearfix">
-		<h1>
-			PDF Pages
-			<span>&nbsp;&nbsp;(Grid View /<%= link_to " Book View",
-																		book_pdf_images_path(:date_from_select=>params[:date_from_select], 
-																										:date_to_select=>params[:date_to_select], 
-																										:location=>params[:location], 
-																										:pub_type=>params[:pub_type], 
-																										:pub_select=>params[:pub_select], 
-																										:sectionletter=>params[:sectionletter], 
-																										:pagenum=>params[:pagenum]) %>)</span>
-			<% if admin? or edit? %>
-				<span class="float_right">
-					<%= link_to "Upload PDFs", new_pdf_image_path(
-												:date_from_select=>params[:date_from_select], 
-												:date_to_select=>params[:date_to_select], 
-												:location=>params[:location], 
-												:pub_type=>params[:pub_type], 
-												:pub_select=>params[:pub_select], 
-												:sectionletter=>params[:sectionletter], 
-												:pagenum=>params[:pagenum]) %>
-				</span>
-			<% end %>
-		</h1>
-		<h2 class="clearfix">
-			<div id="filter_images_block" class="full_width clear_fix">
-				<%= form_tag pdf_images_path , :method => :get do %>
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<td class="largest">
-								<%= text_field_tag :search_query, params[:search_query], :placeholder => "search", :autofocus => true %>
-							</td>
-							<td class="float_right extra_small">Date From:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_from_select, params[:date_from_select], 
-												:class => 'short_date_picker center', 
-												:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="float_right extra_small">Date To:</td>
-							<td class="smaller">
-								<%= text_field_tag :date_to_select, params[:date_to_select], 
-													:class => 'short_date_picker center', 
-													:placeholder => "mm/dd/yyyy" %>
-							</td>
-							<td class="medium">
-								<%= select_tag 'location', 
-													options_from_collection_for_select(@locations, 'id', 'name', 
-													:selected => params[:location]), {:prompt => "- Select Location -"} %>
-								<br/>
-								<%= select_tag 'pub_type', 
-													options_from_collection_for_select(@pub_types, 'id', 'name', 
-													:selected => params[:pub_type]), {:prompt => "- Select Pub Type -"} %>
-							</td>
-							<td class="medium">
-								<%= select_tag 'pub_select', 
-													options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-													:selected => params[:pub_select]), {:prompt => "- Select Publication -"} %>
-													<br/>
-								<table cellspacing="0" cellpadding="0">
-									<tbody>
-										<td class="float_right extra_small"> Section Letter:</td>
-										<td class="medium">
-											<%= select_tag 'sectionletter', 
-																options_from_collection_for_select(@section_letters, 'section_letter', 'section_letter', 
-																:selected => params[:sectionletter]), {:prompt => "-", :class => 'extra_small'} %>
-										</td>
-										<td class="float_right extra_small">Page #:</td>
-										<td class="medium">
-											<%= text_field_tag :pagenum, params[:pagenum], :class => 'full' %>
-										</td>
-									</tbody>
-								</table>
-							</td>
-							<td class="smaller"><%= submit_tag "Filter", :class => 'submit float_right'%></td>
-						</tbody>
-					</table>
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>PDF Pages</h2>
+			<div class="search-header">
+				<div>Archive Search Form (<%= number_with_delimiter(@total_pdfs_count, :delimiter => ',') %> archived PDFs)</div>
+				<% if admin? or edit? %>
+					<div class="float-right">
+						<%= link_to "Upload PDFs", new_pdf_image_path(
+							:date_from_select=>params[:date_from_select], 
+							:date_to_select=>params[:date_to_select], 
+							:location=>params[:location], 
+							:pub_type=>params[:pub_type], 
+							:pub_select=>params[:pub_select], 
+							:sectionletter=>params[:sectionletter], 
+							:pagenum=>params[:pagenum]) %>
+					</div>
 				<% end %>
 			</div>
-		</h2>
-
-		<div class="inner-box clearfix">
-		  <div id="pdf-block" class="full_width">
-			  <% if @pdf_images %>
-					<div id="table-paginate" class="full_width clearfix">
-						Search Results: <%= number_with_delimiter(@pdf_images.results.total_pages * @pdf_images.results.count,
-				 											:delimiter => ',') %>
-		      			<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
-					</div>
-					<div id="pdf-gallery" class="full_width clearfix">
-						<% @pdf_images.results.each do |pdf| %>
-							<div id="pdf-gallery-item" class="grid_2">
-								<div class="center">
-									<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
-								</div>
-								<div>
-									<div class="center"><%= pdf.pubdate.strftime('%m/%d/%Y') if pdf.pubdate? %></div>
-									<div class="center"><%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %></div>
-									<div class="center"><%= link_to "Edit", edit_pdf_image_path(pdf,
-																:date_from_select=>params[:date_from_select], 
-																:date_to_select=>params[:date_to_select], 
-																:location=>params[:location], 
-																:pub_type=>params[:pub_type], 
-																:pub_select=>params[:pub_select], 
-																:sectionletter=>params[:sectionletter], 
-																:pagenum=>params[:pagenum]) %></div>
-									<% if admin? and @settings.show_delete_button %>
-									<div class="center"><%= button_to "Delete", pdf_image_path(pdf	,
-																	:date_from_select=>params[:date_from_select], 
-																	:date_to_select=>params[:date_to_select], 
-																	:location=>params[:location], 
-																	:pub_type=>params[:pub_type], 
-																	:pub_select=>params[:pub_select], 
-																	:sectionletter=>params[:sectionletter], 
-																	:pagenum=>params[:pagenum]), 
-																:method => :delete, 
-																:confirm => "Are you sure you want to delete PDF?",
-																:action => 'destroy' %>
-									</div>
-									<% end %>
-								</div>
-							</div>
-						<% end %>
-					</div>
-					<div id="table-paginate" class="full_width">
-		      	<div class="float_right"><%= will_paginate @pdf_images.hits %></div>
-					</div>
-			  <% end %>
-			</div>
 		</div>
+	</div>
+
+	<div class="page-content-search image-search">        
+		<%= render :partial => 'pdf_images/search_pdfs' %>
+	</div>
+
+	<div class="page-content-body">
+		<% if @pdf_images %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@pdf_images.results.total_pages * @pdf_images.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @pdf_images.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @pdf_images.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+			<div class="pdf-gallery">
+				<div class="d-flex flex-wrap justify-content-start">
+					<% @pdf_images.results.each do |pdf| %>
+						<div class="pdf-gallery-item">
+							<div class="text-center">
+								<%= link_to image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium"), pdf.image.url %>
+							</div>
+							<div>
+								<div class="text-center">
+									<%= pdf.pubdate.strftime('%m/%d/%Y') if pdf.pubdate? %>
+								</div>
+								<div class="text-center">
+									<%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %>
+								</div>
+								<div class="text-center">
+									<%= link_to "Edit", edit_pdf_image_path(pdf,
+										:date_from_select=>params[:date_from_select], 
+										:date_to_select=>params[:date_to_select], 
+										:location=>params[:location], 
+										:pub_type=>params[:pub_type], 
+										:pub_select=>params[:pub_select], 
+										:sectionletter=>params[:sectionletter], 
+										:pagenum=>params[:pagenum]) %>
+									</div>
+								<% if admin? and @settings.show_delete_button %>
+									<div class="text-center">
+										<%= button_to "Delete", pdf_image_path(pdf	,
+											:date_from_select=>params[:date_from_select], 
+											:date_to_select=>params[:date_to_select], 
+											:location=>params[:location], 
+											:pub_type=>params[:pub_type], 
+											:pub_select=>params[:pub_select], 
+											:sectionletter=>params[:sectionletter], 
+											:pagenum=>params[:pagenum]), 
+											:method => :delete, 
+											:confirm => "Are you sure you want to delete PDF?",
+											:action => 'destroy' %>
+									</div>
+								<% end %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@pdf_images.results.total_pages * @pdf_images.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @pdf_images.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @pdf_images.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+		<% end %>
 	</div>
 </div>
