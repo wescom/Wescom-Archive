@@ -9,13 +9,13 @@ class SearchController < ApplicationController
     @publications = Plan.where("pub_name is not null and pub_name<>''")
     @publications = @publications.where(:location_id => params[:location]) if params[:location].present?
     @publications = @publications.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
-    @publications = @publications.select(:pub_name).order('pub_name')
+    @publications = @publications.select("DISTINCT pub_name").order('pub_name')
 
     @sections = Plan.where("section_name is not null and section_name<>''")
     @sections = @sections.where(:location_id => params[:location]) if params[:location].present?
     @sections = @sections.where(:publication_type_id => params[:pub_type]) if params[:pub_type].present?
     @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
-    @sections = @sections.select(:section_name).order('section_name')
+    @sections = @sections.select("DISTINCT section_name").order('section_name')
 
     if params[:search_query]
       begin
@@ -44,7 +44,7 @@ class SearchController < ApplicationController
   def today
     @settings = SiteSettings.first
 
-    @publications = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''").order('pub_name')
+    @publications = Plan.select("DISTINCT pub_name").where("pub_name is not null and pub_name<>''").order('pub_name')
     @publication = Plan.where(:pub_name => params[:papername]).first if params[:papername].present?
 
     if params[:paperdate].nil?

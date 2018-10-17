@@ -1,53 +1,51 @@
 <div id="image-sidebar">
-	<div class="clearfix">
-		<% if @story.story_images.published.length > 0 %>
-			<p class='image-head1 '>Published Images</p>
-			<% @story.story_images.published.each do |image| %>
-				<ul id="image-body">
-					<li>
-						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-						<p class="image-info">
-							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-							<% if image.priority == 'Web Ready' %>
-								<br/>Published to Web
-							<% end %>
-						</p>
-					</li>
-				</ul>
-			<% end %>
-		<% end %>
-	</div>
-
-	<div class="clearfix">
-		<% if @story.story_images.attached.length > 0 %>
-			<p class='image-head1'>Attached Images</p>
-			<% @story.story_images.attached.each do |image| %>
-				<ul id="image-body">
-					<li>
-						<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-								{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
-						<p class="image-info">
-							<% if !image.media_name.nil? %><%= image.media_name %><% end %>
-						</p>
-					</li>
-				</ul>
-			<% end %>
-		<% end %>
-	</div>
-
-	<% if @pdf_image.present? and @story.plan.present? %>
-		<div class="clearfix">
-			<p class='image-head1'>PDF Pages</p>
-			<ul id="image-body">
-				<li>
-					<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-							pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y'), 
-															:date_to_select=>@story.pubdate.strftime('%m/%d/%Y'),
-															:publication=>@story.plan.pub_name) %>
-				</li>
-			</ul>
-		</div>
+  <% if @story.story_images.published.length > 0 %>
+    <h4>Published Images</h4>
+    <% @story.story_images.published.each do |image| %>
+      <div class="card text-center">
+        <%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+          {:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+        <div class="card-block">
+          <div class="card-text">
+            <% if !image.media_name.nil? %>
+              <%= image.media_name %>
+            <% end %>
+            <% if image.priority == 'Web Ready' %>
+              <br/>Published to Web 
+            <% end %>
+          </div>
+        </div>
+        <br/>
+      </div>
+    <% end %>
 	<% end %>
 
+	<% if @story.story_images.attached.length > 0 %>
+		<h4>Attached Images</h4>
+		<% @story.story_images.attached.each do |image| %>
+			<div class="card text-center">
+				<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+				<div class="card-block">
+          <div class="card-text">
+            <% if !image.media_name.nil? %><%= image.media_name %><% end %>
+          </div>
+				</div>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% if @pdf_image.present? and @story.plan.present? %>
+			<h4>PDF Pages</h4>
+			<div class="card text-center">
+  			<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+  					pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y'), 
+  													:date_to_select=>@story.pubdate.strftime('%m/%d/%Y'),
+  													:publication=>@story.plan.pub_name) %>
+				<div class="card-block">
+          <div class="card-text">
+          </div>
+				</div>
+			</div>
+	<% end %>
 </div>

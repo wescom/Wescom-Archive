@@ -5,9 +5,9 @@ class PdfImagesController < ApplicationController
     @settings = SiteSettings.first
     @locations = Location.all.order('name')
     @pub_types = PublicationType.all.order('sort_order')
-    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
+    @section_letters = PdfImage.select("DISTINCT section_letter").where("section_letter is not null and section_letter<>''").uniq
 
-    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
+    scope = Plan.select("DISTINCT pub_name").where("pub_name is not null and pub_name<>''")
     if !(params[:location].nil? or params[:location] == "")
       scope = scope.where(:location_id => params[:location])
     end
@@ -47,9 +47,9 @@ class PdfImagesController < ApplicationController
   def book
     @locations = Location.all.order('name')
     @pub_types = PublicationType.all.order('sort_order')
-    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
+    @section_letters = PdfImage.select("DISTINCT section_letter").where("section_letter is not null and section_letter<>''").uniq
 
-    scope = Plan.select(:pub_name).where("pub_name is not null and pub_name<>''")
+    scope = Plan.select("DISTINCT pub_name").where("pub_name is not null and pub_name<>''")
     if !(params[:location].nil? or params[:location] == "")
       scope = scope.where(:location_id => params[:location])
     end
@@ -320,7 +320,7 @@ class PdfImagesController < ApplicationController
   def edit
     @locations = Location.all.order('name')
     @pub_types = PublicationType.all.order('sort_order')
-    @section_letters = PdfImage.select('section_letter').where("section_letter is not null and section_letter<>''").uniq
+    @section_letters = PdfImage.select("DISTINCT section_letter").where("section_letter is not null and section_letter<>''").uniq
 
     @pdf_image = PdfImage.find(params[:id])
     render :layout => "plain"
