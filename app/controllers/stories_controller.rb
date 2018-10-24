@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
   before_action :require_user
-
+  before_action :last_page
+ 
   def show
     @story = Story.where(:id => params[:id]).includes(:corrections, :corrected_stories).first
     @logs = @story.logs.all.order('created_at DESC')
@@ -156,5 +157,14 @@ class StoriesController < ApplicationController
       redirect_to :back and return unless request.referrer == story_path(@story)
       redirect_to search_path
     end
+  end
+
+  private
+  def last_page
+    session[:last_page] = request.env['HTTP_REFERER']
+  end
+
+  def pdf_image_params
+    params.require(:story).permit(:approved)
   end
 end

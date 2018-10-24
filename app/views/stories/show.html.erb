@@ -4,8 +4,16 @@
 
 <div class="page-content">
 	<div class="page-content-header">
-		<div class="d-flex justify-content-between align-items-end">
+		<div class="d-flex justify-content-between align-items-center">
 			<h2><%= @story.doc_id %> - <%= @story.doc_name %></h2>
+			<div class="d-flex justify-content-end">
+				<% if admin? || edit? %>
+						<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'btn btn-primary' %>
+				<% end %>
+					<% if session[:last_page] %>
+						<%= button_to "Back", session[:last_page], :class => 'btn btn-primary' %>
+					<% end %>
+			</div>
 		</div>
 	</div>
 
@@ -38,12 +46,38 @@
 						</div>
 					<% end %>
 				<% end %>
+				<div id="edit-block" class="row">
+					<% if admin? || edit? %>
+						<div class="">
+							<% if @story.approved %>
+								<p class='btn btn-outline-primary btn-sm'>Story Approved</p>
+							<% else %>
+								<%= button_to("Approve Story?", story_approve_path(@story.id), 
+										{:onclick => "return confirm('Can you verify that this story and all attached assets are accurate?')",
+											:method => :put, 
+											:action => :approve,
+											:remote => true,
+											:class => 'btn btn-outline-primary btn-sm'}) %>
+							<% end %>
+						</div>
+					<% end %>
+					<% if admin? %>
+						<div class="">
+							<%= button_to("Import to DTI", story_import_to_DTI_path(@story.id), 
+									{:onclick => "return confirm('Are you sure you want to import this story into DTI?')",
+										:method => :put, 
+										:action => :import_to_DTI,
+										:remote => true,
+										:class => 'btn btn-outline-primary btn-sm'}) %>
+						</div>
+					<% end %>
+				</div>
 			</div>
 		</div>
 		<hr/>
 
 		<div class="row">
-			<div id="story-content" class="col-9">
+			<div id="story-content" class="col-md-12 col-lg-9">
 				<div>
 				    <% if @story.hl2 %>
 				      <h4><%= @story.hl2.html_safe %> </h4>
@@ -144,64 +178,20 @@
 								</div>
 				    <% end %>
 				</div>
+				<br/>
 			</div>
 			
-			<div class="col-3">
+			<div class="col-md-12 col-lg-3">
 				<div id="sidebar" class="">
-					<div id="edit-block" class="">
-						<% if admin? || edit? %>
-							<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'btn btn-primary' %>
-							<br/>
-							<% if @story.approved %>
-								<p class='center'>Story Approved</p>
-							<!--	<%= button_to("Unapprove Story?", 
-										{:action=>'update', :id=>@story.id, :story=>{:approved=>false}}, 
-										{:onclick => "return confirm('Reverse approval?')",
-											:method => :put, 
-											:remote => true,
-											:class => 'submit full'}) %> -->
-							<% else %>
-								<%= button_to("Approve Story?", story_approve_path(@story.id), 
-										{:onclick => "return confirm('Can you verify that this story and all attached assets are accurate?')",
-											:method => :put, 
-											:action => :approve,
-											:remote => true,
-											:class => 'btn btn-primary'}) %>
-								<br/>
-							<% end %>
-						<% end %>
-						<% if admin? %>
-							<%= button_to("Import to DTI", story_import_to_DTI_path(@story.id), 
-									{:onclick => "return confirm('Are you sure you want to import this story into DTI?')",
-										:method => :put, 
-										:action => :import_to_DTI,
-										:remote => true,
-										:class => 'btn btn-primary'}) %>
-							<br/>
-						<% end %>
-					</div>
-
 					<div id="info-block" class="">
 						<div id="story-sidebar">
 					    	<%= render(:partial => 'sidebar') %>
 						</div>
 						<br/>
-						<div id="story-sidebar">
+						<div class="container">
 							<%= render(:partial => 'image_sidebar') %>
 						</div>
 					</div>
-				</div>
-
-				<div id="lower-block" class="hide">
-					<br/>
-					<div id="lower-info-block" class="grid_4">
-						<div id="story-lower">
-						<%= render(:partial => 'sidebar') %>
-						</div>
-					</div>
-					<div id="lower-image-block" class="grid_11">
-						<%= render(:partial => 'image_sidebar') %>
-					</div>	
 				</div>
 			</div>
 		</div>
