@@ -2,34 +2,26 @@
   <%= "#{h @story.hl1} - " if @story.hl1 -%>
 <% end %>
 
-<div id="story-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2><%= @story.doc_id %> - <%= @story.doc_name %></h2>
+		</div>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="story-content" class="grid_15">
-				<script type="text/javascript">
-				       bkLib.onDomLoaded(function() { 
-									nicEditors.allTextAreas({
-										iconsPath : '/images/nicEditorIcons.gif',
-										buttonList : ['bold','italic','underline','left','center','right','justify','indent','outdent','xhtml'],
-										xhtml : true
-									})
-							 });
-				</script>
-				<%= form_for @story, :url => story_path do |form| %>
-					<div id="story-edit" class="clearfix">
-						<%= render :partial => 'form', :object => form %>
-					</div>
-					<div class="full_width">
-						<div>
-							<%= form.submit "Update", :class => 'submit small'%>
-							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
-						</div>
-					</div>
-				<% end %>
-		  </div>
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
+			<%= form_for @story, :url => story_path do |form| %>
+				<div class="row">
+					<%= render :partial => 'form', :object => form %>
+				</div>
+				<br/>
+				<div class="d-flex justify-content-end">
+					<%= form.submit "Update", :class => 'btn btn-primary'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

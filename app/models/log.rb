@@ -30,4 +30,12 @@ class Log < ActiveRecord::Base
     @log.save
   end
 
+  private
+  def last_page
+    session[:last_page] = request.env['HTTP_REFERER']
+  end
+
+  def story_params
+    params.require(:log).permit(:log_type, :log_action, :log_detail)
+  end
 end

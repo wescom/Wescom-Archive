@@ -16,6 +16,11 @@ module ApplicationHelper
     end
   end
   
+  def flash_message(name, msg)
+      flash[name] ||= []
+      flash[name] << msg
+  end
+  
   def error_messages(object, field)   # ie: error_messages(@object, @object.field)
     if object.present?
       messages = object.errors["#{field}"].map { |msg| content_tag(:p, msg) }.join

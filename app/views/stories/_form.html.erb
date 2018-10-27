@@ -1,96 +1,108 @@
-<div class="clearfix">
-	<div class="grid_15">
-		<%= form.label :hl1, "Headline", :class => "story_label" %>
-		<%= form.text_field :hl1, :class => "story_field full" %>
-		<%= form.label :hl2, "SubHead", :class => "story_label" %>
-		<%= form.text_field :hl2, :class => "story_field full" %>
-	</div>
-
-	<div>
-		<div class="grid_8">
-			<%= form.label :byline, "Byline", :class => "story_label" %>
-			<%= form.text_field :byline, :class => "story_field full" %>
+<div id="story-content" class="col-md-12 col-lg-8">
+	<div class="form-group row">
+		<label for="kicker" class="col-2 col-form-label">Kicker:</label>
+		<div class="col-3">
+			<%= form.text_field :kicker, class: "form-control" %>
 		</div>
-		<div class="grid_5">
-			<%= form.label :paper_id, "Paper", :class => "story_label" %>
-			<%= form.select :paper_id, @papers.collect { |c| [c.name, c.id] }, {:include_blank => true}, 
-						:class => 'story_field large' %>
+	</div>
+	<div class="form-group row">
+		<label for="hl1" class="col-2 col-form-label">Headline:</label>
+		<div class="col">
+			<%= form.text_field :hl1, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="hl2" class="col-2 col-form-label">SubHead:</label>
+		<div class="col">
+			<%= form.text_field :hl2, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="byline" class="col-2 col-form-label">Byline:</label>
+		<div class="col">
+			<%= form.text_field :byline, class: "form-control" %>
+		</div>
+
+		<label for="paper_id" class="col-2 col-form-label">Paper:</label>
+		<div class="col">
+			<%= form.select :paper_id, @papers.collect { |c| [c.name, c.id] }, {:include_blank => true} %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="copy" class="col-2 col-form-label">Body Copy:</label>
+		<div class="col">
+			<%= form.text_area :copy, class: "form-control textarea_large" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="tagline" class="col-2 col-form-label">Tagline:</label>
+		<div class="col">
+			<%= form.text_field :tagline, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="sidebar_body" class="col-2 col-form-label">Toolbox:</label>
+		<div class="col">
+			<%= form.text_area :sidebar_body, class: "form-control textarea_small" %>
+		</div>
+	</div>
+	<hr/>
+	<div class="form-group row">
+		<label for="web_hl1" class="col-2 col-form-label">Web Headline:</label>
+		<div class="col">
+			<%= form.text_field :web_hl1, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="web_hl2" class="col-2 col-form-label">Web SubHead:</label>
+		<div class="col">
+			<%= form.text_field :web_hl2, class: "form-control" %>
 		</div>
 	</div>
 </div>
 
-<div id="story_block" class="grid_12">
-	<%= form.label :copy, "Copy Body", :class => "story_label" %>
-	<%= form.text_area :copy, :class => 'story_field large' %>
-
-	</br>
-	<%= form.label :tagline, "Tagline", :class => "story_label" %>
-  <%= form.text_field :tagline, :class => "story_field full" %>
-
-	</br>
-	<%= form.label :sidebar_body, "Sidebar Body", :class => "story_label" %>
-	<%= form.text_area :sidebar_body, :class => "story_field small" %>
-
-	</br>
-	<%= form.label :web_hl1, "Web Headline", :class => "story_label" %>
-	<%= form.text_field :web_hl1, :class => "story_field full" %>
-
-	</br>
-	<%= form.label :web_hl2, "Web SubHead", :class => "story_label" %>
-	<%= form.text_field :web_hl2, :class => "story_field full" %>
-</div>
-
-<div id="sidebar_edit_block" class="grid_3">
-	<div id="story-sidebar">
-	  <p class='story-infohead1'>Information</p>
-	  <div id="story-info">
-			<%= form.label :pubdate, "PubDate", :class => "story_label" %>
-			<%= form.date_select(:pubdate, {
-														:include_blank => true,
-														:start_year => 1992,
-														:end_year => Time.now.year+10,
-														:use_month_numbers => true,  
-														:order => [:month, :day, :year]},
-													{:class => "story_field smaller"}) %>
-
-			<%= form.label :section_id, "Plan Section", :class => "story_label" %>
+<div id="story-sidebar" class="col-md-12 col-lg">
+	<h4>Story Info</h4>
+	<hr/>
+	<div class="form-group row">
+		<label for="pubdate" class="col-3 col-form-label">PubDate:</label>
+		<div class="col">
+			<%= form.date_select(:pubdate, {:include_blank => true, :start_year => 1992, :end_year => Time.now.year+10,
+				:use_month_numbers => true, :order => [:month, :day, :year]}, {:class => ""}) %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="section_id" class="col-4 col-form-label">Plan Section:</label>
+		<div class="col">
 			<%= form.select :section_id, @sections.collect { |c| [c.name, c.id] }, {}, :class => 'story_field small' %>
-
-			<%= form.label :page, "Page", :class => "story_label" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="page" class="col-3 col-form-label">Page:</label>
+		<div class="col">
 		  	<%= form.text_field :page, :class => "story_field larger", 
 										:type => "number", :min => "1", :max => "100" %>
-
-			<%= form.label :project_group, "Project Group", :class => "story_label" %>
-		  	<%= form.text_field :project_group, :class => "story_field full" %>
-	  </div>
-
-	  <div id="story-info">
-			Category: <%= @story.categoryname %><br/>
-			<%= form.label :categoryname, "Story Category", :class => "story_label" %>
-			<%= form.text_field :categoryname, :class => 'story_field full' %>
-
-			Subcategory: <%= @story.subcategoryname %><br/>
-			<%= form.label :subcategoryname, "Story SubCategory", :class => "story_label" %>
-			<%= form.text_field :subcategoryname, :class => 'story_field full' %>
-	  </div>
-
-	  <% if @story.corrections.length > 0 %>
-	    <p class='story-infohead1'>Corrections</p>
-	    <div id="story-info">
-	      <% @story.corrections.each do |story| %>
-	        <%= link_to text_for_story_link(story), story %>
-	      <% end %>
-	    </div>
-	  <% end %>
-
-	  <% if @story.corrected_stories.length > 0 %>
-	    <p class='story-infohead1'>Corrected Stories</p>
-	    <div id="story-info">
-	      <% @story.corrected_stories.each do |story| %>
-	        <%= link_to text_for_story_link(story), story %>
-	      <% end %>
-	    </div>
-	  <% end %>
-
+		</div>
 	</div>
+	<div class="form-group row">
+		<label for="project_group" class="col-3 col-form-label">Project Group:</label>
+		<div class="col">
+			<%= form.text_field :project_group, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="categoryname" class="col-4 col-form-label">Category:</label>
+		<div class="col">
+			<%= form.text_field :categoryname, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="subcategoryname" class="col-4 col-form-label">SubCategory:</label>
+		<div class="col">
+			<%= form.text_field :subcategoryname, class: "form-control" %>
+		</div>
+	</div>
+
 </div>
+
+

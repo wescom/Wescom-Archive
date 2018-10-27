@@ -47,13 +47,12 @@ class StoriesController < ApplicationController
     if params[:cancel_button]
       redirect_to story_path
     else
-      @story.attributes=(params[:story])
-      if @story.save
+      if @story.update_attributes(story_params)
         Log.create_log("Story",@story.id,"Updated","Story edited",current_user)
-        flash[:notice] = "Story Updated"
+        flash_message :notice, "Story Updated"
         redirect_to story_path
       else
-        flash[:error] = "Story Update Failed"
+        flash_message :notice, "Story Update Failed"
         render :action => :edit
       end
     end
@@ -164,7 +163,9 @@ class StoriesController < ApplicationController
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
-  def pdf_image_params
-    params.require(:story).permit(:approved)
+  def story_params
+    params.require(:story).permit(:approved, :kicker, :hl1, :hl2, :byline, :copy, :tagline, :sidebar, :toolbox2, :toolbox3, :toolbox4, :toolbox5,
+      :web_hl1, :web_hl2, :web_text, :htmltext, :web_summary, :videourl, :alternateurl, :map, :pubdate, :section_id, :page, :project_group,
+      :categoryname, :subcategoryname)
   end
 end

@@ -19,8 +19,6 @@
 
 	<div class="page-content-body">
 		<div class="row">
-			<%= render :partial => 'shared/error_messages', :locals => { :target => @story } %>
-		
 			<div class="col-9">
 			    <% if @story.kicker and @story.kicker.length > 0 and @story.kicker != '<p></p>' %>
 					<%= @story.kicker.html_safe %>
