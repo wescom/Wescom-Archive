@@ -2,156 +2,161 @@
   <%= "#{h @image.media_name} - " if @image.media_name -%>
 <% end %>
 
-<div id="image-content" class="grid_16">
-	<div class="image-header-bar ">
-		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
-		<div class="float_right"><%= @image.publish_status %></div>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>
+				<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
+			</h2>
+			<div class="float-right"><%= @image.publish_status %></div>
+		</div>
 	</div>
 
-	<% if @image.media_type == "PagePDF" %>
-		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
-	<% else %>
-		<div id="image_image" class="grid_8 clearfix">
-<!--			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %> -->
-			<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_large"), @image.image.url %>
-			<div class="center">(Click image for full resolution)</div>
-
-		</div>
-
-		<div id="image_info" class="grid_8 clearfix">
-			<div id="last_updated" class="float_right">
-				<% if @last_updated.present? %>
-					Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
-					on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
-					<% if @logs.count > 1 %>
-						<br/><div id="log_show_more" class="float_right">show more</div><br/>
-						<br/>
-						<div id="info-logs" class="hidden">
-							<% @logs.each do |log| %>
-								<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
-								<%= log.log_action %>
-								by <%= log.user.name unless log.user.nil? %>
-								<br/>
-							<% end %>
-						</div>
-					<% end %>
-				<% end %>
-			</div>
-			
-			<div class="image-attached-story">
-				<% if @image.publish_status == "Published" %>
-					Published On <%= @image.story.pubdate.strftime('%m/%d/%y') if @image.story.pubdate.present? %><br/>
-				<% else %>
-					<% if @image.publish_status == "Attached" %>
-						Attached to Story: 
-					<% else %>
-						<% if @image.publish_status == "PagePDF" %>
-							PDF of Page for Story: 
-						<% else %>
-							Story: 
-						<% end %>
-					<% end %>
-				<% end %>
+	<div class="page-content-body">
+		<div class="row">
+			<% if @image.media_type == "PagePDF" %>
+				<div class="col-6">
+					<div class="d-flex flex-wrap justify-content-center">
+						<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
+					</div>
 				<div>
-					Story : 
-					<span class="image-storyname"><%= link_to text_for_story_link(@image.story), @image.story if @image.story.present? %></span><br/>
-				</div>
-				<% if @image.story.plan %>
-					<%= "Publication: "+@image.story.plan.pub_name if @image.story.plan.pub_name.present? %><br/>
-					<%= "Section: "+@image.story.plan.section_name if @image.story.plan.section_name.present? %><br/>
-				<% end %>
-				<%= "Page: "+@image.story.page if @image.story.page.to_i > 0 %>
-			</div>
-
-			<div class="image-head">Print Caption:</div>
-			<div class="image-info-box indent">
-				<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>
-				<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
-			</div>
-
-			<% if !@image.media_webcaption.nil? %>
-				<div class="image-head">Web Caption:</div>
-				<div class="image-info-box indent">
-					<%= @image.media_webcaption %><br/><br/>
-				</div>
-			<% end %>
-
-			<div class="image-head">Original Photographer's Caption:</div>
-			<div class="image-info-box indent">
-				<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
-				<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
-				<% if !@image.media_source.nil? %><%= @image.media_source %><br/><% end %>
-			</div>
-		
-			<div class="image-head">DTI Related Info:</div>
-			<div class="image-info-box indent">
-				<% if !@image.media_id.nil? %>
-					<a class="image-field">ID: </a><%= @image.media_id %><br/>
-				<% end %>
-				<% if !@image.media_name.nil? %>
-					<a class="image-field">Media Name: </a><%= @image.media_name %><br/>
-				<% end %>
-				<% if !@image.image_file_name.nil? %>
-					<a class="image-field">Original Filename: </a><%= @image.image_file_name %><br/>
-				<% end %>
-				<% if !@image.media_width.nil? and !@image.media_height.nil?%>
-					<a class="image-field">Image Size: </a><%= @image.media_width %>x<%= @image.media_height %><br/>
-				<% end %>
-				<% if !@image.media_project_group.nil? %>
-					<a class="image-field">Project Group: </a><%= @image.media_project_group %><br/>
-				<% end %>
-				<% if !@image.media_category.nil? %>
-					<a class="image-field">Category: </a><%= @image.media_category %><br/>
-				<% end %>
-				<% if !@image.media_status.nil? %>
-					<a class="image-field">Status: </a><%= @image.media_status %><br/>
-				<% end %>
-				<% if !@image.priority.nil? %>
-					<a class="image-field">Web Status: </a><%= @image.priority %><br/>
-				<% end %>
-				<% if !@image.media_mime_type.nil? %>
-					<a class="image-field">Type: </a><%= @image.image_content_type %><br/>
-				<% end %>
-				<% if !@image.created_date.nil? %>
-					<a class="image-field">Created: </a><%= @image.created_date.strftime('%m/%d/%y %I:%M%p') unless @image.created_date.nil? %><br/>
-				<% end %>
-				<% if !@image.last_refreshed_time.nil? %>
-					<a class="image-field">Last Refreshed: </a><%= @image.last_refreshed_time.strftime('%m/%d/%y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
-				<% end %>
-			</div>
-			
-			<div class="image-head">Purchasing:</div>
-			<div class="image-info-box indent">
-				<a class="image-field">Image 'For Sale' setting: </a><%= @image.forsale unless @image.forsale.nil?%>
-			</div>			
-			<% if !@image.logs.empty? %>
-				<div class="image-head">Image Change Log:</div>
-				<div class="image-info-box indent">
-					<div class="change_log">
-						<% @image.logs.reverse_each do |log| %>
-							<div>
-								<%= log.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%y %I:%M%p') %> - 
-								<%= log.log_detail %>
-								by <%= log.user.name unless log.user.nil? %>
-							</div>
+			<% else %>
+				<div class="col-12 col-md-6 col-lg-6">
+					<div class="d-flex flex-wrap justify-content-center">
+						<%= link_to image_tag(@image.image(:large), :alt=>"StoryImage", :class=>"image_large max-width100"), @image.image.url %>
+						<div class="full-width d-flex justify-content-center">(Click image for full resolution)</div>
+					</div>
+					<br/>
+					<div class="d-flex justify-content-center">
+						<%= button_to "Back", :back, :method => :get, :class => 'btn btn-primary' %>
+						<% if admin? || edit? %>
+							<%= button_to "Edit Captions", edit_story_image_path(@image), :method => :get, :class => 'btn btn-primary' %>
+							<% if admin? %>
+								<%= button_to "Delete Image", story_image_path(@image), 
+										:method => :delete, 
+										:confirm => "Are you sure you want to delete image from story?",
+										:action => 'destroy',
+										:class => 'btn btn-primary' %>
+							<% end %>
 						<% end %>
 					</div>
+					<br/>
 				</div>
-			<% end %>
+				<div class="col-12 col-md-6 col-lg-6">
+					<div id="" class="image-info">
+						<div id="last_updated" class="">
+							<% if @last_updated.present? %>
+								Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+								on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+								<% if @logs.count > 1 %>
+									<br/><div id="log_show_more" class="">show more</div><br/>
+									<br/>
+									<div id="info-logs" class="hidden">
+										<% @logs.each do |log| %>
+											<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+											<%= log.log_action %>
+											by <%= log.user.name unless log.user.nil? %>
+											<br/>
+										<% end %>
+									</div>
+								<% end %>
+							<% end %>
+						</div>
+			
+						<div class="image-attached-story">
+							<% if @image.publish_status == "Published" %>
+								<strong>Published On: </strong><%= @image.story.pubdate.strftime('%m/%d/%Y') if @image.story.pubdate.present? %><br/>
+							<% else %>
+								<% if @image.publish_status == "Attached" %>
+									<strong>Attached to Story: </strong>
+								<% else %>
+									<% if @image.publish_status == "PagePDF" %>
+										<strong>PDF of Page for Story: </strong>
+									<% else %>
+										<strong>Story: </strong>
+									<% end %>
+								<% end %>
+							<% end %>
+							<div>
+								<strong>Story: </strong>
+								<%= link_to text_for_story_link(@image.story), @image.story if @image.story.present? %>
+							</div>
+							<% if @image.story.plan %>
+								<strong>Publication: </strong><%= @image.story.plan.pub_name if @image.story.plan.pub_name.present? %><br/>
+								<strong>Section: </strong><%= @image.story.plan.section_name if @image.story.plan.section_name.present? %><br/>
+							<% end %>
+							<strong>Page: </strong><%= @image.story.page if @image.story.page.to_i > 0 %>
+						</div>
+						<br/>
+
+						<div class="image-head font-weight-bold">Print Caption:</div>
+						<div class="image-info-box">
+							<% if !@image.media_printcaption.nil? %><%= @image.media_printcaption %><br/><br/><% end %>
+							<% if !@image.media_printproducer.nil? %><%= @image.media_printproducer %><br/><% end %>
+						</div>
+
+						<% if !@image.media_webcaption.nil? %>
+							<div class="image-info-head font-weight-bold">Web Caption:</div>
+							<div class="image-info-box">
+								<%= @image.media_webcaption %><br/><br/>
+							</div>
+						<% end %>
+
+						<div class="image-info-head font-weight-bold">Original Photographer's Caption:</div>
+						<div class="image-info-box">
+							<% if !@image.media_originalcaption.nil? %><%= @image.media_originalcaption %><br/><br/><% end %>
+							<% if !@image.media_byline.nil? %><%= @image.media_byline %><br/><% end %>
+							<% if !@image.media_source.nil? %><%= @image.media_source %><br/><% end %>
+						</div>
+						<br/>
+						
+						<div class="image-info-head font-weight-bold">DTI Related Info:</div>
+						<div class="image-info-box">
+							<% if !@image.media_id.nil? %>
+								<strong>ID: </strong><%= @image.media_id %><br/>
+							<% end %>
+							<% if !@image.media_name.nil? %>
+								<strong>Media Name: </strong><%= @image.media_name %><br/>
+							<% end %>
+							<% if !@image.image_file_name.nil? %>
+								<strong>Original Filename: </strong><%= @image.image_file_name %><br/>
+							<% end %>
+							<% if !@image.media_width.nil? and !@image.media_height.nil?%>
+								<strong>Image Size: </strong><%= @image.media_width %>x<%= @image.media_height %><br/>
+							<% end %>
+							<% if !@image.media_project_group.nil? %>
+								<strong>Project Group: </strong><%= @image.media_project_group %><br/>
+							<% end %>
+							<% if !@image.media_category.nil? %>
+								<strong>Category: </strong><%= @image.media_category %><br/>
+							<% end %>
+							<% if !@image.media_status.nil? %>
+								<strong>Status: </strong><%= @image.media_status %><br/>
+							<% end %>
+							<% if !@image.priority.nil? %>
+								<strong>Web Status: </strong><%= @image.priority %><br/>
+							<% end %>
+							<% if !@image.media_mime_type.nil? %>
+								<strong>Type: </strong><%= @image.image_content_type %><br/>
+							<% end %>
+							<% if !@image.created_date.nil? %>
+								<strong>Created: </strong>
+								<%= @image.created_date.strftime('%m/%d/%y %I:%M%p') unless @image.created_date.nil? %><br/>
+							<% end %>
+							<% if !@image.last_refreshed_time.nil? %>
+								<strong>Last Refreshed: </strong>
+								<%= @image.last_refreshed_time.strftime('%m/%d/%Y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
+							<% end %>
+						</div>
+			
+						<div class="image-info-head font-weight-bold">Purchasing:</div>
+						<div class="image-info-box">
+							<strong>Image 'For Sale' setting: </strong><%= @image.forsale unless @image.forsale.nil?%><br/>
+						</div>			
+					</div>
+				<% end %>
+			</div>
 		</div>
-	<% end %>
-	
-	<div id="image_edit" class="grid_16">
-		<%= button_to "Back", :back, :method => :get, :class => 'submit small float_left' %>
-		<% if admin? || edit? %>
-			<%= button_to "Edit Captions", edit_story_image_path(@image), :method => :get, :class => 'submit medium float_left' %>
-			<% if admin? %>
-				<%= button_to "Delete Image", story_image_path(@image), 
-						:method => :delete, 
-						:confirm => "Are you sure you want to delete image from story?",
-						:action => 'destroy',
-						:class => 'submit medium float_left' %>
-			<% end %>
-		<% end %>
+
 	</div>
 </div>

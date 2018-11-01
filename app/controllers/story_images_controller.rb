@@ -72,7 +72,7 @@ class StoryImagesController < ApplicationController
     @image = StoryImage.find(params[:id])
     @logs = @image.logs.all.order('created_at DESC')
     @last_updated = @logs.first
-    render :layout => "plain"
+#    render :layout => "plain"
   end
   
   def edit
