@@ -10,8 +10,16 @@
 				<% if admin? || edit? %>
 						<%= button_to "Edit", edit_story_path(@story), :method => "get", :class => 'btn btn-primary' %>
 				<% end %>
-					<% if session[:last_page] %>
-						<%= button_to "Back", session[:last_page], :class => 'btn btn-primary' %>
+					<% if URI(request.referer).path == "/search" %>
+					       <%= link_to 'Back', request.referer, class: "btn btn-primary" %>
+					<% else %>
+						<%= link_to "Search Stories", {:controller => 'search', 
+							:action => 'index',
+							:location=>current_user.default_location_id, 
+							:pub_type=>current_user.default_publication_type_id,
+						 	:pub_select=>current_user.default_publication,
+						 	:section_select=>current_user.default_section_name},
+							:class => "btn btn-primary" %>
 					<% end %>
 			</div>
 		</div>

@@ -164,7 +164,7 @@ class StoriesController < ApplicationController
   end
 
   def story_params
-    params.require(:story).permit(:approved, :kicker, :hl1, :hl2, :byline, :copy, :tagline, :sidebar, :toolbox2, :toolbox3, :toolbox4, :toolbox5,
+    params.require(:story).permit(:approved, :kicker, :hl1, :hl2, :byline, :paper_id, :copy, :tagline, :sidebar, :toolbox2, :toolbox3, :toolbox4, :toolbox5,
       :web_hl1, :web_hl2, :web_text, :htmltext, :web_summary, :videourl, :alternateurl, :map, :pubdate, :section_id, :page, :project_group,
       :categoryname, :subcategoryname)
   end

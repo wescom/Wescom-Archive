@@ -28,7 +28,15 @@
 					</div>
 					<br/>
 					<div class="d-flex justify-content-center">
-						<%= button_to "Back", :back, :method => :get, :class => 'btn btn-primary' %>
+						<% if URI(request.referer).path == "/search_images" %>
+						       <%= link_to 'Back', request.referer, class: "btn btn-primary" %>
+						<% else %>
+		   					<%= link_to "Search Images", search_images_url(:location=>current_user.default_location_id, 
+   								:pub_type=>current_user.default_publication_type_id,
+   							 	:pub_select=>current_user.default_publication,
+   							 	:section_select=>current_user.default_section_name), 
+   								:class => "btn btn-primary" %>
+						<% end %>
 						<% if admin? || edit? %>
 							<%= button_to "Edit", edit_story_image_path(@image), :method => :get, :class => 'btn btn-primary' %>
 							<% if admin? %>
