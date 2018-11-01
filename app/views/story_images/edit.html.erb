@@ -2,34 +2,50 @@
   <%= "#{h @image.media_name} - " if @image.media_name -%>
 <% end %>
 
-<div id="image-content" class="grid_16">
-	<div class="image-header-bar ">
-		<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
-		<div class="float_right"><%= @image.publish_status %></div>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>
+				<% if !@image.media_name.nil? %><%= @image.media_name %><% end %>
+			</h2>
+			<div class="float-right"><%= @image.publish_status %></div>
+		</div>
 	</div>
 
-	<% if @image.media_type == "PagePDF" %>
-		<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
-	<% else %>
-		<div id="image_image" class="grid_8 clearfix">
-			<%= image_tag(@image.image(:large), :alt=>"Story Image", :class=>"image_large") %>
-		</div>
-
-		<div id="image_info" class="grid_8 clearfix">
-			<div class="image-attached-story">
-				<h3>Edit image captions</h3>
-				<%= form_for @image, :url => story_image_path do |form| %>
-					<div id="image-edit" class="clearfix">
-						<%= render :partial => 'form', :object => form %>
-					</div>
-					<div class="full_width">
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= render :partial => 'shared/error_messages', :locals => { :target => @image } %>
+			<%= form_for @image, :url => story_image_path do |form| %>
+				<div class="row">
+					<% if @image.media_type == "PagePDF" %>
+						<div class="col-6">
+							<div class="d-flex flex-wrap justify-content-center">
+								<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
+							</div>
 						<div>
-							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
-							<%= form.submit "Update", :class => 'submit small float_right'%>
+					<% else %>
+						<div class="col-12 col-md-6 col-lg-6">
+							<div class="d-flex flex-wrap justify-content-center">
+								<%= link_to image_tag(@image.image(:large), :alt=>"StoryImage", :class=>"image_large max-width100"), @image.image.url %>
+							</div>
+							<br/>
+							<div class="d-flex justify-content-center">
+								<%= form.submit "Update", :class => 'btn btn-primary'%>
+								<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+							</div>
+							<br/>
 						</div>
-					</div>
-				<% end %>
-			</div>
+
+						<div class="col-12 col-md-6 col-lg-6">
+							<div class="image-info">
+								<div id="image-edit" class="clearfix">
+									<%= render :partial => 'form', :object => form %>
+								</div>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
 		</div>
-	<% end %>
+	</div>
 </div>

@@ -15,7 +15,7 @@
 	<div class="page-content-body">
 		<div class="row">
 			<% if @image.media_type == "PagePDF" %>
-				<div class="col-6">
+				<div class="col-12 col-md-6 col-lg-6">
 					<div class="d-flex flex-wrap justify-content-center">
 						<%= link_to image_tag(@image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @image.image.url %>
 					</div>
@@ -30,7 +30,7 @@
 					<div class="d-flex justify-content-center">
 						<%= button_to "Back", :back, :method => :get, :class => 'btn btn-primary' %>
 						<% if admin? || edit? %>
-							<%= button_to "Edit Captions", edit_story_image_path(@image), :method => :get, :class => 'btn btn-primary' %>
+							<%= button_to "Edit", edit_story_image_path(@image), :method => :get, :class => 'btn btn-primary' %>
 							<% if admin? %>
 								<%= button_to "Delete Image", story_image_path(@image), 
 										:method => :delete, 
@@ -63,7 +63,7 @@
 							<% end %>
 						</div>
 			
-						<div class="image-attached-story">
+						<div>
 							<% if @image.publish_status == "Published" %>
 								<strong>Published On: </strong><%= @image.story.pubdate.strftime('%m/%d/%Y') if @image.story.pubdate.present? %><br/>
 							<% else %>
@@ -112,41 +112,18 @@
 						
 						<div class="image-info-head font-weight-bold">DTI Related Info:</div>
 						<div class="image-info-box">
-							<% if !@image.media_id.nil? %>
-								<strong>ID: </strong><%= @image.media_id %><br/>
-							<% end %>
-							<% if !@image.media_name.nil? %>
-								<strong>Media Name: </strong><%= @image.media_name %><br/>
-							<% end %>
-							<% if !@image.image_file_name.nil? %>
-								<strong>Original Filename: </strong><%= @image.image_file_name %><br/>
-							<% end %>
-							<% if !@image.media_width.nil? and !@image.media_height.nil?%>
-								<strong>Image Size: </strong><%= @image.media_width %>x<%= @image.media_height %><br/>
-							<% end %>
-							<% if !@image.media_project_group.nil? %>
-								<strong>Project Group: </strong><%= @image.media_project_group %><br/>
-							<% end %>
-							<% if !@image.media_category.nil? %>
-								<strong>Category: </strong><%= @image.media_category %><br/>
-							<% end %>
-							<% if !@image.media_status.nil? %>
-								<strong>Status: </strong><%= @image.media_status %><br/>
-							<% end %>
-							<% if !@image.priority.nil? %>
-								<strong>Web Status: </strong><%= @image.priority %><br/>
-							<% end %>
-							<% if !@image.media_mime_type.nil? %>
-								<strong>Type: </strong><%= @image.image_content_type %><br/>
-							<% end %>
-							<% if !@image.created_date.nil? %>
-								<strong>Created: </strong>
-								<%= @image.created_date.strftime('%m/%d/%y %I:%M%p') unless @image.created_date.nil? %><br/>
-							<% end %>
-							<% if !@image.last_refreshed_time.nil? %>
-								<strong>Last Refreshed: </strong>
-								<%= @image.last_refreshed_time.strftime('%m/%d/%Y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
-							<% end %>
+							<strong>Media ID: </strong><%= @image.media_id unless @image.media_id.nil? %><br/>
+							<strong>Media Name: </strong><%= @image.media_name unless @image.media_name.nil? %><br/>
+							<strong>Original Filename: </strong><%= @image.image_file_name unless @image.image_file_name.nil? %><br/>
+							<strong>Image Size: </strong><%= @image.media_width %>x<%= @image.media_height %><br/>
+							<strong>Project Group: </strong><%= @image.media_project_group unless @image.media_project_group.nil? %><br/>
+							<strong>Category: </strong><%= @image.media_category unless @image.media_category.nil? %><br/>
+							<strong>Status: </strong><%= @image.media_status unless @image.media_status.nil? %><br/>
+							<strong>Web Status: </strong><%= @image.priority unless @image.priority.nil? %><br/>
+							<strong>Type: </strong><%= @image.image_content_type unless @image.media_mime_type.nil? %><br/>
+							<strong>Created: </strong><%= @image.created_date.strftime('%m/%d/%y %I:%M%p') unless @image.created_date.nil? %><br/>
+							<strong>Last Refreshed: </strong>
+							<%= @image.last_refreshed_time.strftime('%m/%d/%Y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
 						</div>
 			
 						<div class="image-info-head font-weight-bold">Purchasing:</div>

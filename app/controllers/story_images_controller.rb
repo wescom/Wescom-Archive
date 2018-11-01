@@ -77,7 +77,9 @@ class StoryImagesController < ApplicationController
   
   def edit
     @image = StoryImage.find(params[:id])
-    render :layout => "plain"
+    @image_categories = StoryImage.distinct.pluck(:media_category)
+    puts @image_categories.inspect
+#    render :layout => "plain"
   end
 
   def update
@@ -86,13 +88,13 @@ class StoryImagesController < ApplicationController
     if params[:cancel_button]
       redirect_to story_image_path
     else
-      @image.attributes=(params[:story_image])
+      @image.update_attributes(image_params)
       if @image.save
         Log.create_log("Story_image",@image.id,"Updated","Story Image edited",current_user)
-        flash[:notice] = "Image Updated"
+        flash_message :notice, "Image Updated"
         redirect_to story_image_path
       else
-        flash[:error] = "Image Update Failed"
+        flash_message :error, "Image Update Failed"
         render :action => :edit
       end
     end
@@ -102,12 +104,18 @@ class StoryImagesController < ApplicationController
     @image = StoryImage.find(params[:id])
     @story = @image.story
     if @image.destroy
-      flash[:notice] = "Image Deleted"
+      flash_message :notice, "Image Deleted"
       redirect_to story_path(@story)
     else
-      flash[:error] = "Image Deletion Failed"
+      flash_message :error, "Image Deletion Failed"
       redirect_to :back and return unless request.referrer == story_path(@story)
       redirect_to search_path
     end
+  end
+
+  private
+  def image_params
+    params.require(:story_image).permit(:media_printcaption, :media_printproducer, :media_webcaption, :media_originalcaption, 
+      :media_byline, :media_source, :media_category, :forsale)
   end
 end
