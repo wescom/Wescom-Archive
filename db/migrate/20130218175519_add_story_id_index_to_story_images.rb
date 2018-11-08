@@ -1,4 +1,4 @@
-class AddStoryIdIndexToStoryImages < ActiveRecord::Migration
+class AddStoryIdIndexToStoryImages < ActiveRecord::Migration[4.2]
   def self.up
     add_index :story_images, :story_id
   end

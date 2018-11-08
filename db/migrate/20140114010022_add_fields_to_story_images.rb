@@ -1,4 +1,4 @@
-class AddFieldsToStoryImages < ActiveRecord::Migration
+class AddFieldsToStoryImages < ActiveRecord::Migration[4.2]
   def self.up
     add_column :story_images, :media_webcaption, :text
     add_column :story_images, :byline_title, :string

@@ -1,4 +1,4 @@
-class CreateKeywordStoryJoinTable < ActiveRecord::Migration
+class CreateKeywordStoryJoinTable < ActiveRecord::Migration[4.2]
   def self.up
     drop_table :story_keywords
     create_table :keywords_stories, :id => false do |t|

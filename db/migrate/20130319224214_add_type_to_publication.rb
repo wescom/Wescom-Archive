@@ -1,4 +1,4 @@
-class AddTypeToPublication < ActiveRecord::Migration
+class AddTypeToPublication < ActiveRecord::Migration[4.2]
   def self.up
     add_column :publications, :publication_type_id, :integer
   end

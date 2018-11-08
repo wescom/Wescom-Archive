@@ -11,7 +11,9 @@ class StoryImage < ActiveRecord::Base
       :url => "/system/db_images/:id/:style_:basename.:extension",  
       :path => ":rails_root/public/system/db_images/:id/:style_:basename.:extension",
       :default_url => '/images/no-image.jpg'
-
+  
+  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
+  
   searchable :auto_index => true, :auto_remove => true do
     # Search fields
     # text fields will be full-text searchable. Other fields (e.g., integer and string) can be used to scope queries.

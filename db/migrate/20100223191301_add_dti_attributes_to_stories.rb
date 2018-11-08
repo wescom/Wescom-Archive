@@ -1,4 +1,4 @@
-class AddDtiAttributesToStories < ActiveRecord::Migration
+class AddDtiAttributesToStories < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :doc_id, :integer
     add_column :stories, :copyright_holder, :string

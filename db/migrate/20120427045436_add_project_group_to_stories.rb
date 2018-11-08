@@ -1,4 +1,4 @@
-class AddProjectGroupToStories < ActiveRecord::Migration
+class AddProjectGroupToStories < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :project_group, :string
     add_index :stories, :project_group

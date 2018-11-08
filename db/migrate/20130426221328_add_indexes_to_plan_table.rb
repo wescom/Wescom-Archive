@@ -1,4 +1,4 @@
-class AddIndexesToPlanTable < ActiveRecord::Migration
+class AddIndexesToPlanTable < ActiveRecord::Migration[4.2]
   def up
     add_index :plans, :location_id
     add_index :plans, :publication_type_id

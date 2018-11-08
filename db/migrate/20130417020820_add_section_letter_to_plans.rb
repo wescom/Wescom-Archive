@@ -1,4 +1,4 @@
-class AddSectionLetterToPlans < ActiveRecord::Migration
+class AddSectionLetterToPlans < ActiveRecord::Migration[4.2]
   def self.up
     add_column :plans, :import_section_letter, :string
   end

@@ -1,4 +1,4 @@
-class AddApprovedToStories < ActiveRecord::Migration
+class AddApprovedToStories < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :approved, :boolean
   end

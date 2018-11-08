@@ -1,4 +1,4 @@
-class AddFrontendDbToStory < ActiveRecord::Migration
+class AddFrontendDbToStory < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :frontend_db, :string
   end

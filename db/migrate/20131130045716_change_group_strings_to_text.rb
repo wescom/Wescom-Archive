@@ -1,4 +1,4 @@
-class ChangeGroupStringsToText < ActiveRecord::Migration
+class ChangeGroupStringsToText < ActiveRecord::Migration[4.2]
   def up
     change_table :users do |t|
       t.change :group_strings, :text

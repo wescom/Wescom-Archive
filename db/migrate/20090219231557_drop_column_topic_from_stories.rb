@@ -1,4 +1,4 @@
-class DropColumnTopicFromStories < ActiveRecord::Migration
+class DropColumnTopicFromStories < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :stories, :topic
   end

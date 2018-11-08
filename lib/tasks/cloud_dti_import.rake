@@ -60,9 +60,11 @@ namespace :wescom do
 
     def add_story(file_contents, filename)
       begin
+        puts 'begin add_story'        
         dti_story = ImportDtiStory.new(file_contents)
+        puts 'TESTING2'        
         story = Story.new
-        #puts "\nStoryId: #{dti_story.storyid}"
+        puts "\nStoryId: #{dti_story.storyid}"
         #puts "Story Name: #{dti_story.storyname}"
         #puts "Project Group: #{dti_story.project_group}"
         story.doc_id = dti_story.storyid unless dti_story.storyid.nil?

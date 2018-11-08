@@ -1,4 +1,4 @@
-class RemoveCorrectionIdFromStory < ActiveRecord::Migration
+class RemoveCorrectionIdFromStory < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :stories, :correction_id  
   end

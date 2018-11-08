@@ -1,4 +1,4 @@
-class AddFieldsToStory < ActiveRecord::Migration
+class AddFieldsToStory < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :pageset_letter, :string
     add_column :stories, :author, :string

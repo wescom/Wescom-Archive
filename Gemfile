@@ -8,7 +8,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
-gem 'mysql2'
+gem 'mysql2' 
 
 gem 'bootstrap', '= 4.0.0'
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -18,7 +18,7 @@ gem 'progress_bar'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
-gem "paperclip", "~> 5.0.0"
+gem "paperclip", "~> 6.0.0"
 gem "mini_magick"
 gem 'mini_exiftool'
 gem 'yomu'

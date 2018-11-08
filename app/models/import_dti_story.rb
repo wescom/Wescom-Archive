@@ -11,7 +11,11 @@ class ImportDtiStory < ActiveRecord::Base
   attr_accessor :media_list
   attr_accessor :correction, :original_story_id
 
+  puts 'ImportDtiStory'
+  puts ''
+
   def initialize(xml)
+puts 'initialize'
     self.raw_xml = xml
 
 #    self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)

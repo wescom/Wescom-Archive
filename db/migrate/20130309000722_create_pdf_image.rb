@@ -1,4 +1,4 @@
-class CreatePdfImage < ActiveRecord::Migration
+class CreatePdfImage < ActiveRecord::Migration[4.2]
   def self.up
     create_table :pdf_images do |t|
       t.string :image_file_name

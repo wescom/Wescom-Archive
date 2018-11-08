@@ -48,7 +48,7 @@ namespace :wescom do
         pdf_image.publication = get_publication(path)
         pdf_image.section_letter = get_section_letter(filename)
         pdf_image.section_name = get_section_name(filename)
-        pdf_image.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(pdf_image.publication,pdf_image.section_name,pdf_image.section_letter)
+        pdf_image.plan = Plan.find_or_create_by(pub_name: pdf_image.publication, import_section_name: pdf_image.section_name, import_section_letter: pdf_image.section_letter)
         pdf_image.page = get_page(filename)
 
         # Read text within PDF file to use for fulltext indexing/searching

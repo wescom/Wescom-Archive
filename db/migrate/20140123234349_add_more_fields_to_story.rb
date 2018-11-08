@@ -1,4 +1,4 @@
-class AddMoreFieldsToStory < ActiveRecord::Migration
+class AddMoreFieldsToStory < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :related_stories, :string
     add_column :stories, :web_hl1, :string

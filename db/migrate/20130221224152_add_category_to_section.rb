@@ -1,4 +1,4 @@
-class AddCategoryToSection < ActiveRecord::Migration
+class AddCategoryToSection < ActiveRecord::Migration[4.2]
   def self.up
     add_column :sections, :section_category_id, :integer
   end

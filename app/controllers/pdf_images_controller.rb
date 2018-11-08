@@ -119,8 +119,14 @@ class PdfImagesController < ApplicationController
           @pdf_image = PdfImage.new(pdf_image_params)
 
           # Assign plan to this pdf_image
-          @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
-                        params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name1,@pdf_image.section_letter1)
+#          @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
+#                        params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name1,@pdf_image.section_letter1)
+          @plan = Plan.find_or_create_by(
+                        location_id: params[:location],
+                        publication_type_id: arams[:pub_type],
+                        pub_name: @pdf_image.publication,
+                        section_name: @pdf_image.section_name1,
+                        import_section_letter: @pdf_image.section_letter1)
           @pdf_image.plan_id = @plan.id
 
           # Get page number from pdf filename

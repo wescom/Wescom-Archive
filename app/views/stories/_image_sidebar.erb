@@ -3,8 +3,7 @@
     <h4 class="col-12">Published Images</h4>
     <% @story.story_images.published.each do |image| %>
       <div class="card text-center col-sm-4 col-md-3 col-lg-12">
-        <%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-          {:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+        <%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), story_image_path(image.id) %>
         <div class="card-block">
           <div class="card-text">
             <% if !image.media_name.nil? %>
@@ -25,8 +24,7 @@
     <div class="row">
   		<% @story.story_images.attached.each do |image| %>
         <div class="card text-center col-sm-4 col-md-3 col-lg-12">
-  				<%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
-  						{:action => 'show', :controller => 'story_images', :id => image }, :rel => 'facebox' %>
+          <%= link_to image_tag(image.image(:large), :alt=>"Story Image", :class=>"image_medium"), story_image_path(image.id) %>
   				<div class="card-block">
             <div class="card-text">
               <% if !image.media_name.nil? %><%= image.media_name %><% end %>
@@ -40,7 +38,7 @@
 	<% if @pdf_image.present? and @story.plan.present? %>
 			<h4 class="col-12">PDF Pages</h4>
 			<div class="card text-center col">
-  			<%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
+        <%= link_to image_tag(@pdf_image.image(:large), :alt=>"Story Image", :class=>"image_medium"), 
   					pdf_images_path(:date_from_select=>@story.pubdate.strftime('%m/%d/%Y'), 
   													:date_to_select=>@story.pubdate.strftime('%m/%d/%Y'),
   													:publication=>@story.plan.pub_name) %>

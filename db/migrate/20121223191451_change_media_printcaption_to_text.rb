@@ -1,4 +1,4 @@
-class ChangeMediaPrintcaptionToText < ActiveRecord::Migration
+class ChangeMediaPrintcaptionToText < ActiveRecord::Migration[4.2]
   def up
     change_table :story_images do |t|
       t.change :media_printcaption, :text

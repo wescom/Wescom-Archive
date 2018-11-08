@@ -1,4 +1,4 @@
-class AddSidebarToStories < ActiveRecord::Migration
+class AddSidebarToStories < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :sidebar_body, :text
   end

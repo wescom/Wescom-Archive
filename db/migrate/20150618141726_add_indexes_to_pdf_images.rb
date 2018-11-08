@@ -1,4 +1,4 @@
-class AddIndexesToPdfImages < ActiveRecord::Migration
+class AddIndexesToPdfImages < ActiveRecord::Migration[4.2]
   def up
     add_index :pdf_images, [:pubdate, :publication, :page], :name => 'date_pub_page'
     add_index :pdf_images, [:pubdate, :publication, :section_letter, :page], :name => 'date_pub_letter_page'

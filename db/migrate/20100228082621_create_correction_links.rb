@@ -1,4 +1,4 @@
-class CreateCorrectionLinks < ActiveRecord::Migration
+class CreateCorrectionLinks < ActiveRecord::Migration[4.2]
   def self.up
     create_table :correction_links do |t|
       t.integer :story_id

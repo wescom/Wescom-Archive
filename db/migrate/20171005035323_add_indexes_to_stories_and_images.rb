@@ -1,4 +1,4 @@
-class AddIndexesToStoriesAndImages < ActiveRecord::Migration
+class AddIndexesToStoriesAndImages < ActiveRecord::Migration[4.2]
   def up
     add_index :stories, :categoryname
     add_index :stories, :subcategoryname

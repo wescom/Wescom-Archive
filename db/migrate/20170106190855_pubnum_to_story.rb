@@ -1,4 +1,4 @@
-class PubnumToStory < ActiveRecord::Migration
+class PubnumToStory < ActiveRecord::Migration[4.2]
   def self.up
     add_column :stories, :web_pubnum, :string
 

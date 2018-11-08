@@ -14,10 +14,11 @@ class PdfImage < ActiveRecord::Base
   validates_presence_of :pubdate, :message=>'PubDate is required'
 #  validates_presence_of :section_name, :message=>'Section Name is required'
 #  validates_presence_of :image, :message=>'Image is required'
-  validates :section1_upload, on: :create, presence: { message: 'section1 missing data' }
-  validates :section2_upload, on: :create, presence: { message: 'section2 missing data' }
-  validates :section3_upload, on: :create, presence: { message: 'section3 missing data' }
-  validates :section4_upload, on: :create, presence: { message: 'section4 missing data' }
+#  validates :section1_upload, on: :create, presence: { message: 'section1 missing data' }
+#  validates :section2_upload, on: :create, presence: { message: 'section2 missing data' }
+#  validates :section3_upload, on: :create, presence: { message: 'section3 missing data' }
+#  validates :section4_upload, on: :create, presence: { message: 'section4 missing data' }
+  validates_attachment_content_type :image, :content_type => ["application/pdf"]
 
   searchable :auto_index => true, :auto_remove => true do
     # Search fields

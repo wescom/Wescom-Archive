@@ -1,4 +1,4 @@
-class AddSearchCountToUsers < ActiveRecord::Migration
+class AddSearchCountToUsers < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :search_count, :integer
   end

@@ -1,4 +1,4 @@
-class CreateStoryKeywords < ActiveRecord::Migration
+class CreateStoryKeywords < ActiveRecord::Migration[4.2]
   def self.up
     create_table :story_keywords do |t|
       t.integer :story_id, :keyword_id

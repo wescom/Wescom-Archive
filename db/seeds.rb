@@ -7,15 +7,15 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 puts 'Creating DEFAULT USER:'
-user = User.find_or_create_by_email :login => ENV['LOGIN']
-user.name = 'Admin'
-user.role = 'Admin'
-user.save
-puts 'user: ' << user.name
-puts ''
+#user = User.find_or_create_by_email(:login => ENV['LOGIN'])
+#user.name = 'Admin'
+#user.role = 'Admin'
+#user.save
+#puts 'user: ' << user.name
+#puts ''
 
 puts 'Creating SITE SETTINGS RECORD'
-site_settings = SiteSettings.find_or_create_by_id({:id => 1}, :without_protection => true)
+site_settings = SiteSettings.find_or_create_by(id: 1)
 site_settings.show_delete_button = 0
 site_settings.site_announcement = ''
 site_settings.show_site_announcement = 0

@@ -1,4 +1,4 @@
-class AddStoryImageCategory < ActiveRecord::Migration
+class AddStoryImageCategory < ActiveRecord::Migration[4.2]
   def self.up
     add_column :story_images, :media_category, :string
 

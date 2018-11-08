@@ -1,4 +1,4 @@
-class AddPlanToPdfImages < ActiveRecord::Migration
+class AddPlanToPdfImages < ActiveRecord::Migration[4.2]
   def self.up
     add_column :pdf_images, :plan_id, :integer
   end
