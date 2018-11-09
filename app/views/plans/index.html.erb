@@ -1,45 +1,58 @@
-<div id="plans-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<h1>
-			Plans
-		</h1>
-		<p>Plans are used to link stories and pages to their corresponding plan data, such as publication, section and location. Stories and pages are imported into the Archive with a pub and section based on the originating news system. This does not always work for an organized Archive. These plans allow an admin user to use the imported data and assign the plan to correct info to be used for searching and filtering within the Archive.</p>
-		<p>Each plan should be assigned to a Location and Publication Type, along with a correct Publication and Section (if applicable).</p>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Plans</h2>
+		</div>
+		<small>
+			<p>Plans are used to link stories and pages to their corresponding plan data, such as publication, section and location. Stories and pages are imported into the Archive with a pub and section based on the originating news system. This does not always work for an organized Archive. These plans allow an admin user to use the imported data and assign the plan to correct info to be used for searching and filtering within the Archive.</p>
+			<p>Each plan should be assigned to a Location and Publication Type, along with a correct Publication and Section (if applicable).</p>
+		</small>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="plan-block" class="full_width">
-			  <% if @plans %>
-			    <div id="table-block" class="full_width">
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @plans %></div>
-						</div>
-			      <% unless @plans.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-										<td>Location</td>
-										<td>Pub Type</td>
-			              <td>Publication</td>
-			              <td>Section</td>
-			              <td>Import Pub Name</td>
-			              <td>Import Sect Name</td>
-			              <td class="center">Import<br/>Sect Letter</td>
-			              <td class="center">Updated</td>
-										<td>Stories Attached</td>
-										<td>PDFs Attached</td>
-			              <td class="center">Action</td>
-			            </tr>
-			            <%= render :partial => 'table_row', :collection => @plans %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @plans %></div>
-						</div>
-			    </div>
-			  <% end %>
-			</div>
+	<div class="page-content-body">
+		<div class="">
+			<% if @plans %>
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @plans, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @plans, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+
+				<% unless @plans.nil? %>
+					<table id="plans" class="table table-hover table-condensed table-striped table-sm">
+						<thead class="">
+							<tr>
+								<th class="Location"></th>
+								<th class="text-center">Pub Type</th>
+								<th class="text-center d-none d-sm-table-cell">Publications</th>
+								<th class="text-center">Section</th>
+								<th class="text-center d-none d-lg-table-cell">Import Pub Name</th>
+								<th class="text-center d-none d-md-table-cell">Import Sect Name</th>
+								<th class="text-center d-none d-sm-table-cell">Import<br/>Sect Letter</th>
+								<th class="text-center d-none d-sm-table-cell">Updated</th>
+								<th class="text-center d-none d-sm-table-cell">Stories<br/>Attached</th>
+								<th class="text-center d-none d-sm-table-cell">PDFs<br/>Attached</th>
+								<th class="text-center d-none d-sm-table-cell">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%= render :partial => 'table_row', :collection => @plans %>
+						</tbody>
+					</table>
+				<% end %>
+
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @plans, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @plans, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

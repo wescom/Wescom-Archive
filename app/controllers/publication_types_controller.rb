@@ -16,12 +16,12 @@ class PublicationTypesController < ApplicationController
     if params[:cancel_button]
       redirect_to publication_types_path
     else
-      @publication_type = PublicationType.new(params[:publication_type])
+      @publication_type = PublicationType.new(publication_type_params)
       if @publication_type.save
-        flash[:notice] = "Publication Type Created"
+        flash_message :notice, "Publication Type Created"
         redirect_to publication_types_path
       else
-        flash[:error] = "Publication Type Creation Failed"
+        flash_message :error, "Publication Type Creation Failed"
         render :action => :new
       end
     end    
@@ -33,23 +33,28 @@ class PublicationTypesController < ApplicationController
 
   def update
     @publication_type = PublicationType.find(params[:id])
-    if @publication_type.update_attributes(params[:publication_type])
-      flash[:notice] = "Publication Type updated"
-      redirect_to publication_types_url
+    if @publication_type.update_attributes(publication_type_params)
+        flash_message :notice, "Publication Type Updated"
+        redirect_to publication_types_url
     else
-      render :action => :edit
+        flash_message :error, "Publication Type Update Failed"
+        render :action => :edit
     end
   end
   
   def destroy
     @publication_type = PublicationType.find(params[:id])
     if @publication_type.destroy
-      flash[:notice] = "Publication Type Killed!"
-      redirect_to publication_types_path
+        flash_message :notice, "Publication Type Deleted"
+        redirect_to publication_types_path
     else
-      flash[:error] = "Publication Type Deletion Failed"
-      redirect_to publication_types_path
+        flash_message :error, "Publication Type Deletion Failed"
+        redirect_to publication_types_path
     end
   end
 
+  private
+    def publication_type_params
+      params.require(:publication_type).permit(:name, :sort_order)
+    end
 end

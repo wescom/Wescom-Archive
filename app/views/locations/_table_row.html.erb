@@ -1,18 +1,29 @@
 <tr>
-	<td></td>
 	<td><%= table_row.name %></td>	
-	<td></td>
-	<td>
+	<td class="d-none d-sm-table-cell"></td>
+	<td class="text-center d-none d-lg-table-cell">
 		<% if table_row.created_at? %>
 			<%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td>
+	<td class="text-center d-none d-lg-table-cell">
 		<% if table_row.updated_at? %>
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td class="center"><%= link_to "Edit", edit_location_path(table_row) %>
+	<td class="text-center">
+		<p class="btn btn-outline-info">
+			<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_location_path(table_row),
+				title: 'Edit', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
+		<p class="btn btn-outline-info">
+			<%= link_to icon('remove fa-lg'), 
+				location_path(table_row),
+				:method=> :delete, :action => 'destroy',
+				data: {confirm:'Delete location?'},
+				title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
+	</td>
 
 	<% table_row.plans.each do |plan| %>
 		<tr class="location_plans">

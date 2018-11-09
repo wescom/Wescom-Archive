@@ -16,12 +16,12 @@ class LocationsController < ApplicationController
     if params[:cancel_button]
       redirect_to locations_path
     else
-      @location = Location.new(params[:location])
+      @location = Location.new(location_params)
       if @location.save
-        flash[:notice] = "Location Created"
+        flash_message :notice, "Location Created"
         redirect_to locations_path
       else
-        flash[:error] = "Location Creation Failed"
+        flash_message :error, "Location Creation Failed"
         render :action => :new
       end
     end    
@@ -33,23 +33,28 @@ class LocationsController < ApplicationController
 
   def update
     @location = Location.find(params[:id])
-    if @location.update_attributes(params[:location])
-      flash[:notice] = "Location updated"
-      redirect_to locations_url
+    if @location.update_attributes(location_params)
+        flash_message :notice, "Location Updated"
+        redirect_to locations_path
     else
-      render :action => :edit
+        flash_message :error, "Location Update Failed"
+        render :action => :edit
     end
   end
   
   def destroy
     @location = Location.find(params[:id])
     if @location.destroy
-      flash[:notice] = "Location Killed!"
-      redirect_to locations_path
+        flash_message :notice, "Location Killed!"
+        redirect_to locations_path
     else
-      flash[:error] = "Location Deletion Failed"
-      redirect_to locations_path
+        flash_message :error, "Location Deletion Failed"
+        redirect_to locations_path
     end
   end
 
+  private
+    def location_params
+      params.require(:location).permit(:name)
+    end
 end

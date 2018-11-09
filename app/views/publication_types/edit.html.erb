@@ -1,27 +1,28 @@
-<div id="publication_types-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<h1>
-			Publication Type: <%= @publication_type.name %>
-			<span class="float_right"><%= button_to "Delete Publication Type", publication_type_path(@publication_type), 
-										:method => :delete, 
-										:confirm => "Are you sure you want to delete publication type?",
-										:action => 'destroy' %></span>
-		</h1>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Publication Type: <%= @publication_type.name %></h2>
+		</div>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-				<%= form_for @publication_type, :url => publication_type_path do |form| %>
-					<% if admin? %>
-						Name: <%= form.text_field :name, :class => "large" %>
-						Sort Order: <%= form.select :sort_order, (1..99), {}, :class => 'extra_small' %>
-						
-					<% end %>
-					<br/>
-					<%= form.submit "Update", :class => 'submit small'%>
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small'%>
-				<% end %>
-			</div>
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= form_for @publication_type do |form| %>
+				<div class="form-group">
+					<label for="name" class="col-form-label">Name:</label>
+					<div class="col">
+						<%= form.text_field :name, :class => 'col-4', :autofocus => true %>
+					</div>
+					<label for="sort_order" class="col-form-label">Sort Order:</label>
+					<div class="col">
+						<%= form.select :sort_order, (1..99), {}, :class => '' %>
+					</div>
+				</div>
+				<div class="d-flex justify-content-end">
+					<%= form.submit "Update", :class => 'btn btn-primary'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

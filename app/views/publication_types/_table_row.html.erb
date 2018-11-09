@@ -1,16 +1,27 @@
 <tr>
-	<td><%= table_row.sort_order %></td>
-	<td><%= table_row.name %></td>	
-	<td>
+	<td class="text-center"><%= table_row.sort_order %></td>
+	<td class=""><%= table_row.name %></td>	
+	<td class="text-center d-none d-sm-table-cell">
 		<% if table_row.created_at? %>
 			<%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td>
+	<td class="text-center d-none d-sm-table-cell">
 		<% if table_row.updated_at? %>
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td class="center"><%= link_to "Edit", edit_publication_type_path(table_row) %>
-
+	<td class="text-center">
+		<p class="btn btn-outline-info">
+			<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_publication_type_path(table_row),
+				title: 'Edit', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
+		<p class="btn btn-outline-info">
+			<%= link_to icon('remove fa-lg'), 
+				publication_type_path(table_row),
+				:method=> :delete, :action => 'destroy',
+				data: {confirm:'Delete publication type?'},
+				title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
+	</td>
 </tr>

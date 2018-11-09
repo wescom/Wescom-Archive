@@ -1,38 +1,48 @@
-<div id="locations-page">
-	<div id="page-content" class="clearfix">
-		<h1>
-			Locations
-			<span class="float_right"><%= link_to "New Location", new_location_path %></span>
-		</h1>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Locations</h2>
+			<div class="float-right"><%= link_to "New Location", new_location_path %></div>
+		</div>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-			  <% if @locations %>
-			    <div id="table-block" class="grid_15">
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @locations %></div>
-						</div>
-			      <% unless @locations.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-			              <td></td>
-			              <td>Name</td>
-										<td>Publications <a id="toggle_pubs">(show pubs)</a></td>
-			              <td>Created</td>
-			              <td>Updated</td>
-			              <td class="center">Action</td>
-			            </tr>
-			            <%= render :partial => 'table_row', :collection => @locations %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @locations %></div>
-						</div>
-			    </div>
-			  <% end %>
-			</div>
+	<div class="page-content-body">
+		<div class="">
+			<% if @locations %>
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @locations, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @locations, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+
+				<% unless @locations.nil? %>
+					<table id="locations" class="table table-hover table-condensed table-striped table-sm">
+						<thead class="">
+							<tr>
+								<th class="">Name</th>
+								<th class="text-center d-none d-sm-table-cell">Publications</th>
+								<th class="text-center d-none d-lg-table-cell">Created</th>
+								<th class="text-center d-none d-lg-table-cell">Updated</th>
+								<th class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%= render :partial => 'table_row', :collection => @locations %>
+						</tbody>
+					</table>
+				<% end %>
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @locations, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @locations, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

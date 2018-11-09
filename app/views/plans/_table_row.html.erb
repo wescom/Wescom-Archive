@@ -5,21 +5,27 @@
 	<td><%= table_row.section_name %></td>	
 	<td><%= table_row.import_pub_name %></td>	
 	<td><%= table_row.import_section_name %></td>	
-	<td class="center"><%= table_row.import_section_letter %></td>	
-	<td class="center">
+	<td class="text-center"><%= table_row.import_section_letter %></td>	
+	<td class="text-center">
 		<% if table_row.updated_at? %>
 			<%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %>
 		<% end %>
 	</td>
-	<td class="center"><%= table_row.stories.count %></td>
-	<td class="center"><%= table_row.pdf_images.count %></td>
-	<td class="center">
-		<%= link_to "Edit", edit_plan_path(table_row) %>
+	<td class="text-center"><%= table_row.stories.count %></td>
+	<td class="text-center"><%= table_row.pdf_images.count %></td>
+	<td class="text-center">
+		<p class="btn btn-outline-info">
+			<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_plan_path(table_row),
+				title: 'Edit', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
 		<% if table_row.stories.count == 0 and table_row.pdf_images.count == 0 %>
-			<%= button_to "Delete", plan_path(table_row), 
-										:method => :delete, 
-										:confirm => "Are you sure you want to delete plan?",
-										:action => 'destroy' %>
+			<p class="btn btn-outline-info">
+				<%= link_to icon('remove fa-lg'), 
+					plan_path(table_row),
+					:method=> :delete, :action => 'destroy',
+					data: {confirm:'Are you sure you want to delete plan?'},
+					title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+			</p>
 		<% end %>
 	</td>
 </tr>

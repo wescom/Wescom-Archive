@@ -1,126 +1,135 @@
-<div id="plans-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<h1>
-			Plan Edit:
-		</h1>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Plan Edit:</h2>
+		</div>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-				<%= form_for @plan, :url => plan_path do |form| %>
-					<div class="full_width clearfix">
-						<div class="grid_8">
-							<div class="grid_8">
-								Location: 
-								<%= form.select :location_id, @locations.collect { |c| [c.name, c.id] }, 
-										{:prompt => "- Select Location -"}, :class => 'medium' %>
-								Publication Type: 
-								<%= form.select :publication_type_id, @publication_types.collect { |c| [c.name, c.id] },
-										{:prompt => "- Select Publication Type -"}, :class => 'medium' %>
-							</div>
-							<div class="grid_8">
-								<div id="last_updated" class="float_right">
-									<% if @last_updated.present? %>
-										Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
-										on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
-										<% if @logs.count > 1 %>
-											<br/><div id="log_show_more" class="float_right">show more</div><br/>
-											<br/>
-											<div id="info-logs" class="hidden">
-												<% @logs.each do |log| %>
-													<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
-													<%= log.log_action %>
-													by <%= log.user.name unless log.user.nil? %>
-													<br/>
-												<% end %>
-											</div>
-										<% end %>
-									<% end %>
-								</div>
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= form_for @plan do |form| %>
+				<div class="col-6">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="location" class="col-form-label">Location:</label>
+							<div class="col">
+								<%= select_tag 'location_id', 
+										options_from_collection_for_select(@locations, 'id', 'name', 
+										:selected => params[:location_id]), {:class => "form-search-select", :prompt => "- Select Location -"} %>
 							</div>
 						</div>
-
-						<div class="grid_8">
-							<h3>Sample Records attached to this plan:</h3>
-							<div id="plan_sample_block">
-								</br>
-								<div class="full_width clearfix">
-									<% if @stories.present? %>
-										<% @stories.each do |sample| %>
-											<div class="float_left story_sample">
-												<%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %>
-												<div class="center">
-													<% if sample.pubdate.present? %>
-														<%= link_to "PDFs", 
-																				pdf_images_path(:date_from_select=>sample.pubdate.strftime('%m/%d/%Y'), 
-																												:date_to_select=>sample.pubdate.strftime('%m/%d/%Y'), 
-																												:pagenum=>sample.page) %>
-													<% end %>
-												</div>
-											</div>
-										<% end %>
-									<% end %>
-								</div>
-								<div class="full_width clearfix">
-									<% if @pdfs.present? %>
-										<% @pdfs.each do |sample| %>
-											<div class="float_left pdf_sample">
-												<%= sample.pubdate %>, p.<%= sample.page %>
-												<br/>
-												<div class="center">
-													<%= link_to image_tag(sample.image(:large), :alt=>"PagePDF", :class=>"image_small"), pdf_image_path(sample) %>
-												</div>
-											</div>
-										<% end %>
-									<% end %>
-								</div>
+						<div class="form-group">
+							<label for="name" class="col-form-label">Publication Type:</label>
+							<div class="col">
+								<%= select_tag 'publication_type_id', 
+										options_from_collection_for_select(@publication_types, 'id', 'name', 
+										:selected => params[:publication_type_id]), 
+										{:class => "form-search-select", :prompt => "- Select Publication Type -"} %>
 							</div>
 						</div>
 					</div>
-					</br>
-					<div class="full_width clearfix">
-						<div class="grid_6">
-							<h2>Pub and Section from imported story data file</h2><br/>
-							<% if admin? %>
-								<div class="indent">
-									Imported Publication Name: <%= form.text_field :import_pub_name %>
-									Imported Section Name: <%= form.text_field :import_section_name %>
-									Imported Section Letter: <%= form.text_field :import_section_letter %>
-								</div>
-							<% else %>
-								<div class="indent">
-									Imported Publication Name: <% form.text_field :import_pub_name %>
-									Imported Section Name: <% form.text_field :import_section_name %>
-									Imported Section Letter: <% form.text_field :import_section_letter %>
-								</div>
+					<div class="col-6">
+						<div id="last_updated" class="float-right">
+							<% if @last_updated.present? %>
+								Last updated by <%= @last_updated.user.name unless @last_updated.user.nil? %> 
+								on <%= @last_updated.created_at.strftime('%m/%d/%y at %I:%M%p') %>
+								<% if @logs.count > 1 %>
+									<br/><div id="log_show_more" class="float_right">show more</div><br/>
+									<br/>
+									<div id="info-logs" class="hidden">
+										<% @logs.each do |log| %>
+											<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+											<%= log.log_action %>
+											by <%= log.user.name unless log.user.nil? %>
+											<br/>
+										<% end %>
+									</div>
+								<% end %>
 							<% end %>
 						</div>
-						<div class="grid_2">
-							<br/><br/><br/><br/><br/>
-							===============><br/>
-							===============><br/>
-							<br/><br/>
-							===============><br/>
-							===============><br/>
-							<br/><br/>
-							===============><br/>
-							===============><br/>
+					</div>
+				</div>
+				<div class="col-6">
+					<h3>Sample Records attached to this plan:</h3>
+					<div id="plan_sample_block">
+						</br>
+						<div class="full_width clearfix">
+							<% if @stories.present? %>
+								<% @stories.each do |sample| %>
+									<div class="float_left story_sample">
+										<%= link_to "Story", story_path(sample) %> : <%= sample.pubdate %>, p.<%= sample.page %>
+										<div class="center">
+											<% if sample.pubdate.present? %>
+												<%= link_to "PDFs", pdf_images_path(:date_from_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+													:date_to_select=>sample.pubdate.strftime('%m/%d/%Y'), 
+													:pagenum=>sample.page) %>
+											<% end %>
+										</div>
+									</div>
+								<% end %>
+							<% end %>
 						</div>
-						<div class="grid_8">
-							<h2>Pub and Section to use within this Archive for searching</h2><br/>
-							<div class="indent">
-								Publication Name: <%= form.text_field :pub_name, 
-										:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)" %>
-								Section Name: <%= form.text_field :section_name, 
-										:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)" %>
-							</div>
+						<div class="full_width clearfix">
+							<% if @pdfs.present? %>
+								<% @pdfs.each do |sample| %>
+									<div class="float_left pdf_sample">
+										<%= sample.pubdate %>, p.<%= sample.page %>
+										<br/>
+										<div class="center">
+											<%= link_to image_tag(sample.image(:large), :alt=>"PagePDF", :class=>"image_small"), 
+												pdf_image_path(sample) %>
+										</div>
+									</div>
+								<% end %>
+							<% end %>
 						</div>
 					</div>
-					<br/>
-					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
-					<%= form.submit "Update", :class => 'submit small float_right'%>
+				</div>
+			</div>
+			</br>
+
+			<div class="col-4">
+				<h2>Pub and Section from imported story data file</h2><br/>
+				<% if admin? %>
+					<div class="indent">
+						Imported Publication Name: <%= form.text_field :import_pub_name %>
+						Imported Section Name: <%= form.text_field :import_section_name %>
+						Imported Section Letter: <%= form.text_field :import_section_letter %>
+					</div>
+				<% else %>
+					<div class="indent">
+						Imported Publication Name: <% form.text_field :import_pub_name %>
+						Imported Section Name: <% form.text_field :import_section_name %>
+						Imported Section Letter: <% form.text_field :import_section_letter %>
+					</div>
 				<% end %>
 			</div>
-		</div>
+			<div class="col-2">
+				<br/><br/><br/><br/><br/>
+				===============><br/>
+				===============><br/>
+				<br/><br/>
+				===============><br/>
+				===============><br/>
+				<br/><br/>
+				===============><br/>
+				===============><br/>
+			</div>
+			<div class="col-6">
+				<h2>Pub and Section to use within this Archive for searching</h2><br/>
+				<div class="indent">
+					Publication Name: <%= form.text_field :pub_name, 
+							:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)" %>
+					Section Name: <%= form.text_field :section_name, 
+							:placeholder => "Enter section here only if needed (ie. Local, Sports, Health,...)" %>
+				</div>
+			</div>
+			<br/>
+
+			<div class="d-flex justify-content-end">
+				<%= form.submit "Update", :class => 'btn btn-primary'%>
+				<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+			</div>
+		<% end %>
 	</div>
 </div>
