@@ -21,12 +21,12 @@ class PlansController < ApplicationController
     if params[:cancel_button]
       redirect_to plans_path
     else
-      @plan = Plan.new(params[:plan])
+      @plan = Plan.new(plan_params)
       if @plan.save
-        flash[:notice] = "Plan Created"
+        flash_message :notice, "Plan Created"
         redirect_to plans_path
       else
-        flash[:error] = "Plan Creation Failed"
+        flash_message :error, "Plan Creation Failed"
         render :action => :new
       end
     end    
@@ -46,16 +46,17 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @locations = Location.all.order("name")
     @publication_types = PublicationType.all.order("sort_order")
-    @pdfs = @plan.pdf_images.limit(50).order('page')
-    @stories = @plan.stories.limit(50).order('page')
+#    @pdfs = @plan.pdf_images.limit(50).order('page')
+#    @stories = @plan.stories.limit(50).order('page')
     if params[:cancel_button]
       redirect_to plans_path
     else
-      if @plan.update_attributes(params[:plan])
-        Log.create_log("Plan",@plan.id,"Updated","Plan edited",current_user)
-        flash[:notice] = "Plan updated"
+      if @plan.update_attributes(plan_params)
+#        Log.create_log("Plan",@plan.id,"Updated","Plan edited",current_user)
+        flash_message :notice, "Plan updated"
         redirect_to plans_url
       else
+        flash_message :error, "Plan update failed"
         render :action => :edit
       end
     end
@@ -64,11 +65,11 @@ class PlansController < ApplicationController
   def destroy
     @plan = Plan.find(params[:id])
     if @plan.destroy
-      flash[:notice] = "Plan Killed!"
-      redirect_to plans_path
+        flash_message :notice, "Plan Killed!"
+        redirect_to plans_path
     else
-      flash[:error] = "Plan Deletion Failed"
-      redirect_to plans_path
+        flash_message :error, "Plan Deletion Failed"
+        redirect_to plans_path
     end
   end
   
@@ -90,4 +91,10 @@ class PlansController < ApplicationController
       format.json  { render :json => {:publications => publications, :sections => sections} }
     end
   end
+
+  private
+    def plan_params
+      params.require(:plan).permit(:location_id, :publication_type_id, :import_pub_name, :import_section_name, :import_section_letter, 
+          :pub_name, :section_name)
+    end
 end
