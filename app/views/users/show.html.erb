@@ -1,41 +1,44 @@
-<div id="users-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<% if @user.name.nil? %>
-			<h1><%= @user.first_name %> <%= @user.last_name %></h1>
-		<% else %>
-			<h1><%= @user.name %></h1>
-		<% end %>
-		
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_16">
-				<div class="grid_8">
-					<b>Username:</b> <%= @user.login %><br/>
-					<b>Name:</b> <%= @user.name %><br/>
-					<b>Created At:</b> <%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-					<b>Updated At:</b> <%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
-					<b>Role:</b> <%= @user.role %><br/>
-				</div>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2><%= @user.name %></h2>
+			<div class="float-right"><%= button_to "Edit", edit_user_path(@user), :method => :get, :class => 'btn btn-primary' %></div>
+		</div>
+	</div>
 
-				<div class="grid_8">
-					<%= @logs.count %> Changes to Archive:
-						<div id="info-logs-full">
-							<% if @logs.count > 1 %>
-								<% @logs.each do |log| %>
-									<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
-									<%= 'Story #'+log.story_id.to_s unless log.story_id.nil? %>
-									<%= 'Story Image#'+log.story_image_id.to_s unless log.story_image_id.nil? %>
-									<%= 'PDF #'+log.pdf_image_id.to_s unless log.pdf_image_id.nil? %>
-									<%= 'Plan #'+log.plan_id.to_s unless log.plan_id.nil? %>
-									<%= log.log_action.downcase %>
-									<br/>
-								<% end %>
-							<% end %>
-						</div>
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= form_for @user, :url => user_path do |form| %>
+				<div class="row">
+					<div class="col-6">
+						<strong>Username: </strong><%= @user.login %><br/>
+						<strong>Created: </strong><%= @user.created_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+						<strong>Updated: </strong><%= @user.updated_at.strftime('%m/%d/%Y %I:%M%p') %><br/>
+						<br/>
+						<% if admin? %>
+							<strong>Role: </strong><%= @user.role %>
+						<% end %>
+					</div>
 				</div>
-				<%= button_to "Back", users_path, :method => :get, :class => 'submit medium float_left' %>
-				<%= button_to "Edit", edit_user_path(@user), :method => :get, :class => 'submit medium float_left' %>
-			</div>
+				<br/>
+
+				<strong><%= @logs.count %> Changes to Archive ...</strong>
+				<div class="offset-1">
+					<div id="info-logs-full">
+						<% if @logs.count > 1 %>
+							<% @logs.each do |log| %>
+								<%= log.created_at.strftime('%m/%d/%y %I:%M%p') %> - 
+								<%= 'Story #'+log.story_id.to_s unless log.story_id.nil? %>
+								<%= 'Story Image#'+log.story_image_id.to_s unless log.story_image_id.nil? %>
+								<%= 'PDF #'+log.pdf_image_id.to_s unless log.pdf_image_id.nil? %>
+								<%= 'Plan #'+log.plan_id.to_s unless log.plan_id.nil? %>
+								<%= log.log_action.downcase %>
+								<br/>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

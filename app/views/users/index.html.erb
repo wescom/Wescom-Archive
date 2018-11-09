@@ -1,34 +1,50 @@
-<div id="users-page">
-	<%= render(:partial => "home/pagenav") %>
-	<div id="page-content" class="clearfix">
-		<h1>Users</h1>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Users</h2>
+		</div>
+	</div>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="grid_15">
-			  <% if @users %>
-			    <div id="table-block" class="grid_15">
-			      <% unless @users.nil? %>
-			        <table cellspacing="0" cellpadding="0">
-			          <tbody>
-			            <tr class="header">
-			              <td>Username</td>
-			              <td>Name</td>
-			              <td class="center">Created</td>
-			              <td class="center">Last Login</td>
-										<td class="center">Searches</td>
-			              <td class="center">Role</td>
-			              <td></td>
-			            </tr>
-			            <%= render :partial => 'table_row', :collection => @users %>
-			          </tbody>
-			        </table>
-			      <% end %>
-						<div id="table-paginate" class="full_width">
-			      	<div class="float_right"><%= will_paginate @users %></div>
-						</div>
-			    </div>
-			  <% end %>
-			</div>
+	<div class="page-content-body">
+		<div class="">
+			<% if @users %>
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @publication_types, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @publication_types, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+
+				<% unless @users.nil? %>
+					<table id="publication_types" class="table table-hover table-condensed table-striped table-sm">
+						<thead class="">
+							<tr>
+								<th class="">Username</th>
+								<th class="">Name</th>
+								<th class="text-center d-none d-sm-table-cell">Created</th>
+								<th class="text-center d-none d-sm-table-cell">Last Login</th>
+								<th class="text-center d-none d-sm-table-cell">Searches</th>
+								<th class="text-center d-none d-sm-table-cell">Role</th>
+								<th class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%= render :partial => 'table_row', :collection => @users %>
+						</tbody>
+					</table>
+				<% end %>
+
+				<div class="search-pagination d-flex justify-content-between align-items-end">
+					<div class="flickr_pagination d-none d-sm-block">
+						<%= will_paginate @publication_types, :inner_window => 2, :outer_window => 0 %>
+					</div>
+					<div class="flickr_pagination d-block d-sm-none">
+						<%= will_paginate @publication_types, :inner_window => 2, :outer_window => 0, :page_links => false %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

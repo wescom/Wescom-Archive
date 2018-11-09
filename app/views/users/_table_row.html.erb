@@ -5,9 +5,14 @@
 		<td><%= table_row.email %></td>
 	<% end %>
 	<td><%= table_row.name %></td>	
-	<td class="center"><%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %></td>
-	<td class="center"><%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %></td>
-	<td class="center"><%= table_row.search_count %></td>
-	<td class="center"><%= table_row.role %></td>
-	<td class="center"><%= link_to "Edit", edit_user_path(table_row) %></td>
+	<td class="text-center"><%= table_row.created_at.strftime('%m/%d/%Y') %> at <%= table_row.created_at.strftime('%I:%M%p') %></td>
+	<td class="text-center"><%= table_row.updated_at.strftime('%m/%d/%Y') %> at <%= table_row.updated_at.strftime('%I:%M%p') %></td>
+	<td class="text-center"><%= table_row.search_count %></td>
+	<td class="text-center"><%= table_row.role %></td>
+	<td class="text-center">
+		<p class="btn btn-outline-info">
+			<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_user_path(table_row),
+				title: 'Edit', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+		</p>
+	</td>
 </tr>

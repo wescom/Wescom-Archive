@@ -42,10 +42,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # Only allow users to view/edit their own profile
     if current_user == @user or admin?
-      if @user.update_attributes(params[:user])
-        flash[:notice] = "Account updated"
-        redirect_to users_url
+      if @user.update_attributes(user_params)
+        flash_message :notice, "Account Updated"
+        redirect_to user_url(@user)
       else
+        flash_message :error, "Account Update Failed"
         render :action => :edit
       end
     else
@@ -53,4 +54,8 @@ class UsersController < ApplicationController
     end
   end
 
+  private
+    def user_params
+      params.require(:user).permit(:role, :default_location_id, :default_publication_type_id, :default_publication, :default_section_name)
+    end
 end
