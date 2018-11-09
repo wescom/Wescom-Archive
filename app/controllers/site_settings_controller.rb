@@ -14,13 +14,19 @@ class SiteSettingsController < ApplicationController
     if params[:cancel_button]
       redirect_to site_settings_url
     else
-      @settings.attributes=(params[:site_settings])
+      @settings.update_attributes(site_settings_params)
       if @settings.save
-        flash[:notice] = "Site Settings updated"
+        flash_message :notice, "Site Settings updated"
         redirect_to site_settings_url
       else
+        flash_message :error, "Site Settings update failed"
         render :action => :edit
       end
     end
   end
+
+  private
+    def site_settings_params
+      params.require(:site_settings).permit(:show_delete_button, :show_site_announcement, :site_announcement)
+    end
 end

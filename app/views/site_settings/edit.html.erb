@@ -1,47 +1,38 @@
-<%= content_for :title do %>
-  <%= "#{params[:search_query]} - " if params[:search_query] -%>
-<% end %>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Global Settings</h2>
+		</div>
+		<h6>These settings control site-wide settings...</h6>
+	</div>
 
-<div id="settings-page">
-  <%= render(:partial => "home/pagenav") %>
-  <div id="page-content" class="clearfix">
-		<h1>Global Settings</h1>
-		<h2>These settings control site-wide settings...</h2>
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= form_for @settings, :url => site_setting_path do |form| %>
+				<h4>
+					Settings
+				</h4>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="full_width clearfix">
-				<div id="settings_block">
-					<%= form_for @settings, :url => site_setting_path do |form| %>
-						<div id="settings_inner_block grid_16">
-							<div class="grid_12">
-								<div class="setting_header">Settings</div>
-								<div class="setting_body">
-									<div class="setting_field clearfix">
-										<div class="setting_label">Show Story Delete Button? </div>
-										<div class="setting_value setting_value_checkbox">
-											<%= form.check_box :show_delete_button, :class => 'medium' %>
-										</div>
-									</div>
-									<div class="setting_field clearfix">
-										<div class="setting_label">Show? </div>
-										<div class="setting_value setting_value_checkbox">
-											<%= form.check_box :show_site_announcement, :class => 'medium' %>
-										</div>
-									</div>
-									<div class="setting_field clearfix">
-										<div class="setting_label">Announcement Text: </div>
-										<%= form.text_area :site_announcement, {:class => 'setting_value'} %>
-									</div>
-								</div>
-							</div>
-							<div class="grid_4">
-								<%= form.submit "Update", :class => 'submit medium float_left'%>
-								<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit medium float_left'%>
-							</div>
-						</div>
-					<% end %>
+				<div class="form-group">
+					<label for="show_delete_button" class="col-form-label">Show Story Delete Button?</label>
+					<%= form.check_box :show_delete_button, :class => '' %>
 				</div>
-			</div>
+				<div class="form-group">
+					<label for="show_site_announcement" class="form-check-label">Show Announcement Text?</label>
+					<%= form.check_box :show_site_announcement, class: "" %>
+				</div>
+				<div class="form-group">
+					<label for="site_announcement" class="form-check-label">Announcement Text:</label>
+					<div class="offset-1">
+						<%= form.text_area :site_announcement, :class => 'full-width textarea_large' %>
+					</div>
+				</div>
+
+				<div class="d-flex justify-content-end">
+					<%= form.submit "Update", :class => 'btn btn-primary'%>
+					<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>

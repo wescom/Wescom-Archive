@@ -1,46 +1,54 @@
-<%= content_for :title do %>
-  <%= "#{params[:search_query]} - " if params[:search_query] -%>
-<% end %>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Global Settings</h2>
+		</div>
+		<h6>These settings control site-wide settings...</h6>
+	</div>
 
-<div id="settings-page">
-  <%= render(:partial => "home/pagenav") %>
-  <div id="page-content" class="clearfix">
-		<h1>Global Settings</h1>
-		<h2>These settings control site-wide settings...</h2>
+	<div class="page-content-body">
+		<div class="">
+			<% @settings.each do |form| %>
+				<h4>
+					Settings
+					<span class="float-right">
+						<%= button_to "Edit", edit_site_setting_path(form), :method => "get", :class => 'btn btn-primary' %>
+					</span>
+				</h4>
 
-		<div class="inner-box clearfix">
-		  <div id="form-block" class="full_width clearfix">
-				<div id="settings_block">
-					<% @settings.each do |form| %>
-						<div id="settings_inner_block">
-							<div class="setting_header">Settings
-								<span class="float_right">
-									<%= button_to "Edit", edit_site_setting_path(form), :method => "get", :class => 'submit medium float_left' %>
-								</span>
-							</div>
-							<div class="setting_body">
-								<div class="setting_field clearfix">
-									<div class="setting_label">Show Story Delete Button? </div>
-									<div class="setting_value setting_value_checkbox">
-										<%= form.show_delete_button %>
-									</div>
-								</div>
-								
-								<div class="setting_field clearfix">
-									<div class="setting_label">Show Site Announcement? </div>
-									<div class="setting_value setting_value_checkbox">
-										<%= form.show_site_announcement %>
-									</div>
-								</div>
-								<div class="setting_field clearfix">
-									<div class="setting_label">Announcement Text: </div>
-									<div class="setting_value"><%= form.site_announcement.html_safe %></div>
-								</div>
-							</div>
-						</div>
-					<% end %>
+				<div class="row">
+					<div class="col">
+						Show Story Delete Button? 
+						<% if form.show_delete_button %>
+							<%= icon('check-square fa-lg') %>
+						<% else %>
+							<i class="far fa-square fa-lg"></i>
+						<% end %>
+					</div>
 				</div>
-			</div>
+				<br/>
+				<div class="row">
+					<div class="col">
+						Show Site Announcement? 
+						<% if form.show_site_announcement %>
+							<%= icon('check-square fa-lg') %>
+						<% else %>
+							<i class="far fa-square fa-lg"></i>
+						<% end %>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-3">Announcement Text:</div>
+				</div>
+				<div class="row">
+					<div class="col-8 offset-3">
+						<div class="site-announcement-box">
+							<%= form.site_announcement.html_safe %>
+						</div>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>
