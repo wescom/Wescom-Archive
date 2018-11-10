@@ -1,35 +1,43 @@
-<h1>Login</h1>
+<div class="page-content container">
 
-<!-- <%= default_adauth_form %> -->
+	<div class="page-content-body">
+		<h1>Login <span><small><i>(Using your Spark or Computer username/password)</i></small></span></h1>
+		<hr/>
 
-<div id="login-page">
-	<div id="page-content" class="clearfix">
-		<div class="inner-box clearfix">
-			<h1>Login <span>(Using your Spark or Computer username/password)</span></h1>
-		  <div id="login-content" class="grid_5 clearfix">
+		<div class="row">
+			<div class="col-6">
 				<%= adauth_form do %>
 					<div class="indent">
-						<br/><br/>
-						<p>Username:
-						<%= text_field_tag :username, nil, :class => 'full' %></p>
-						<p>Password:
-						<%= password_field_tag :password, nil, :class => 'full' %></p>
-						<%= submit_tag "Login", :class => 'submit small' %>
+						<br/>
+						<div class="form-group row">
+							<label for="username" class="col-form-label">Username:</label>
+							<div class="col">
+								<%= text_field_tag :username, :class => 'col-5', :placeholder => "Username", :autofocus => true %>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="password" class="col-form-label">Password:</label>
+							<div class="col">
+								<%= password_field_tag :password, :class => 'col-5', :placeholder => "Password" %>
+							</div>
+						</div>
+						<%= submit_tag "Login", :class => 'submit btn btn-primary' %>
 					</div>
 				<% end %>
 			</div>
-			<div class="9">
-				<!--<img src = "/images/Newspapers_1.jpg" alt = "Newspapers" />-->
-				<% if @pdfs.present? %>
-					<% @pdfs.each do |pdf| %>
-						<div class="float_left">
-							<div class="center">
-								<%= image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_medium") %>
+			<div class="col-6">
+				<div class="row">
+					<% if @pdfs.present? %>
+						<% @pdfs.each do |pdf| %>
+							<div class="col-2">
+								<div class="text-center">
+									<%= image_tag(pdf.image(:large), :alt=>"PagePDF", :class=>"image_small") %>
+								</div>
 							</div>
-						</div>
+						<% end %>
 					<% end %>
-				<% end %>
-			<div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
