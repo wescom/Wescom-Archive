@@ -16,15 +16,35 @@ class StoryImagesController < ApplicationController
     @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
     @sections = @sections.select("DISTINCT section_name").order('section_name')
 
-    @images = StoryImage
+#    @images = StoryImage
 #    @images = @images.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
-    @images = @images.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
-    @images = @images.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
-    @images = @images.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
-    @images = @images.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
-    @images = @images.paginate(:page => params[:page], :per_page => 15).order("id DESC")
-
-    @total_images_count = @images.count
+#    @images = @images.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
+#    @images = @images.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
+#    @images = @images.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
+#    @images = @images.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
+#    @images = @images.paginate(:page => params[:page], :per_page => 15).order("id DESC")
+    begin
+      @images = StoryImage.search(:include => [:story]) do
+        paginate(:page => params[:page], :per_page => 15)
+        fulltext params[:search_query]
+        order_by :story_pubdate, :desc
+        order_by :story_publication_name, :asc
+        order_by :story_section_name, :asc
+        order_by :story_page, :asc
+        with(:story_pubdate).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+        with(:story_pubdate).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+        with :image_type, params[:image_type] if params[:image_type].present?
+        with :story_location_id, params[:location] if params[:location].present?
+        with :story_pub_type_id, params[:pub_type] if params[:pub_type].present?
+        with :story_publication_name, params[:pub_select] if params[:pub_select].present?
+        with :story_section_name, params[:section_select] if params[:section_select].present?
+    end
+    rescue Errno::ECONNREFUSED
+      render :text => "Search Server Down\n\n\n It will be back online shortly"
+    end
+    
+#    @total_images_count = @images.count
+    @total_images_count = StoryImage.count(:all)
     increase_search_count
   end
   

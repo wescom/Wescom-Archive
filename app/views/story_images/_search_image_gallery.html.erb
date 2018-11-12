@@ -1,4 +1,4 @@
-<%= form_tag search_path, :class => "form-inline", :method => :get do %>
+<%= form_tag story_images_path, :class => "form-inline", :method => :get do %>
 	<div class="d-flex flex-wrap justify-content-start align-items-center">
 		<div class="form-search-text-col">
 			<%= text_field_tag :search_query, params[:search_query], 
@@ -24,6 +24,11 @@
 					<i class='fa fa-calendar input-group-text'></i>
 			    </div>
 			</div>
+		</div>
+		<div class="form-search-select-col">
+			<%= select_tag(:image_type, options_for_select([['Images Only','Image'], ['Other','Graphic']], 
+				:selected => params[:image_type]),
+				{:selected => params[:location], :prompt => "- Select Type -"}) %>
 		</div>
 		<div class="">
 			<div class="form-search-select-col">
