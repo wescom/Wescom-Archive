@@ -16,13 +16,6 @@ class StoryImagesController < ApplicationController
     @sections = @sections.where(:pub_name => params[:pub_select]) if params[:pub_select].present?
     @sections = @sections.select("DISTINCT section_name").order('section_name')
 
-#    @images = StoryImage
-#    @images = @images.has_pubdate_in_range(params[:date_from_select], params[:date_to_select])
-#    @images = @images.joins(:story => :plan).where('location_id = ?',params[:location]) if params[:location].present? 
-#    @images = @images.joins(:story => :plan).where('publication_type_id = ?',params[:pub_type]) if params[:pub_type].present? 
-#    @images = @images.joins(:story => :plan).where('pub_name = ?',params[:pub_select]) if params[:pub_select].present? 
-#    @images = @images.joins(:story => :plan).where('section_name = ?',params[:section_select]) if params[:section_select].present? 
-#    @images = @images.paginate(:page => params[:page], :per_page => 15).order("id DESC")
     begin
       @images = StoryImage.search(:include => [:story]) do
         paginate(:page => params[:page], :per_page => 15)
@@ -43,7 +36,6 @@ class StoryImagesController < ApplicationController
       render :text => "Search Server Down\n\n\n It will be back online shortly"
     end
     
-#    @total_images_count = @images.count
     @total_images_count = StoryImage.count(:all)
     increase_search_count
   end
