@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="page-content-body">
-		<%= form_for @pdf_image, :url => pdf_images_path do |form| %>
+		<%= form_for @pdf_image, :html => { :multipart => true } do |form| %>
 			<%= render :partial => 'shared/error_messages', :locals => { :target => @pdf_image } %>
 
 			<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
@@ -22,122 +22,78 @@
 			<%= hidden_field_tag :pagenum, params[:pagenum] %>
 
 			<h5>Publication Info:</h5>
-			<div class="form-group row offset-1">
-				<label for="select_location" class="col-2 col-form-label">Location</label>
+			<div class="form-group row offset-md-1">
+				<label for="select_location" class="col-md-2 col-3 col-form-label">Location</label>
 				<%= select_tag 'location', 
 					options_from_collection_for_select(@locations, 'id', 'name', :selected => params[:location]), 
 					{:prompt => "- Select Location -", :required => true, :id => 'select_location', :class => "form-search-select"} %>
 			</div>
-			
-			<div class="form-group row offset-1">
-				<label for="select_pubtype" class="col-2 col-form-label">Pub Type</label>
+			<div class="form-group row offset-md-1">
+				<label for="select_pubtype" class="col-md-2 col-3 col-form-label">Pub Type</label>
 				<%= select_tag 'pub_type', 
 					options_from_collection_for_select(@pub_types, 'id', 'name', :selected => params[:pub_type]), 
 					{:prompt => "- Select Pub Type -", :required => true, :id => 'select_pubtype', :class => "form-search-select"} %>
 			</div>
-			
-			<div class="form-group row offset-1">
-				<label for="pubname" class="col-2 col-form-label">Publication Name</label>
-				<%= form.text_field :publication, :required => true, 
+			<div class="form-group row offset-md-1">
+				<label for="pubname" class="col-md-2 col-3 col-form-label">Publication Name</label>
+				<%= form.text_field :publication, :required => true, :value => params[:pub_select], 
 						:placeholder => "Enter publication here (ie, The Bulletin, GO!, U Magazine,...)",
 						:class => "col-8", :autofocus => true %>
 			</div>
-			
-			<div class="form-group row offset-1">
-				<label for="pubdate" class="col-2 col-form-label">PubDate</label>
-				<%= form.text_field :pubdate, :required => true, 
-									:class => 'datepicker text-center', 
-									:placeholder => Date.current.try(:strftime,'%m-%d-%Y'),
-									:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %>
+			<div class="form-group row offset-md-1">
+				<label for="pubdate" class="col-md-2 col-3 col-form-label">PubDate</label>
+				<% if params[:date_to_select].present? %>
+					<%= form.date_field :pubdate, :required => true,
+						:value => Date.strptime(params[:date_to_select], "%m/%d/%Y") %>
+				<% else %>
+					<%= form.date_field :pubdate, :required => true,
+						:value => Date.today.strftime("%Y-%m-%d") %>
+				<% end %>
 				<div class="input-group-append">
 					<i class='fa fa-calendar input-group-text'></i>
 				</div>
-				<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %>
 			</div>
 
 			<hr/>
+			<h5>Section:</h5>
 			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="section_name1" class="">Section 1 Name:</label>
-					<%= form.text_field :section_name1, :required => true, 
+				<div class="form-group col-md-6 offset-md-1">
+					<label for="section_name" class="">Name:</label>
+					<%= text_field_tag "pdf_image[section_name]", params[:section_name1], :required => true, 
 							:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
 							:class => "form-control col" %>
 				</div>
-				<div class="form-group col-md-6">
-					<label for="section_letter1" class="">Section 1 Letter:</label>
-					<%= form.text_field :section_letter1, :placeholder => "A,B,C,...", :class => "form-control col-3" %>
+				<div class="form-group col-md-2">
+					<label for="section_letter" class="">Letter:</label>
+					<%= text_field_tag "pdf_image[section_letter]", params[:section_letter1], :required => true, 
+						:placeholder => "A,B,C,...", :class => "form-control" %>
 				</div>
-			</div>
-			<div class="form-row">
-					<label for="image1">Section 1 PDF Files to Upload:</label>
-					<%= form.file_field :image1, accept: 'application/pdf', :multiple => true, :required => true, :class => "offset-1" %>
+				<div class="form-group col-md-3">
+					<label for="image">PDF Files:</label>
+					<%= file_field_tag "pdf_image[image][]", accept: 'application/pdf', :multiple => true, :required => true, :class => "" %>
+				</div>
 			</div>
 
-			<hr/>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="section_name2" class="">Section 2 Name:</label>
-					<%= form.text_field :section_name2, :required => true, 
-							:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
-							:class => "form-control col" %>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="section_letter2" class="">Section 2 Letter:</label>
-					<%= form.text_field :section_letter2, :placeholder => "A,B,C,...", :class => "form-control col-3" %>
-				</div>
-			</div>
-			<div class="form-row">
-					<label for="image2">Section 2 PDF Files to Upload:</label>
-					<%= form.file_field :image2, accept: 'application/pdf', :multiple => true, :required => true, :class => "offset-1" %>
-			</div>
 
 			<hr/>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="section_name3" class="">Section 3 Name:</label>
-					<%= form.text_field :section_name3, :required => true, 
-							:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
-							:class => "form-control col" %>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="section_letter3" class="">Section 3 Letter:</label>
-					<%= form.text_field :section_letter3, :placeholder => "A,B,C,...", :class => "form-control col-3" %>
-				</div>
-			</div>
-			<div class="form-row">
-					<label for="image3">Section 3 PDF Files to Upload:</label>
-					<%= form.file_field :image3, accept: 'application/pdf', :multiple => true, :required => true, :class => "offset-1" %>
-			</div>
-
-			<hr/>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="section_name4" class="">Section 4 Name:</label>
-					<%= form.text_field :section_name4, :required => true, 
-							:placeholder => "Enter section here (ie. Local, Sports, Health,...)",
-							:class => "form-control col" %>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="section_letter4" class="">Section 4 Letter:</label>
-					<%= form.text_field :section_letter4, :placeholder => "A,B,C,...", :class => "form-control col-3" %>
-				</div>
-			</div>
-			<div class="form-row">
-					<label for="image4">Section 4 PDF Files to Upload:</label>
-					<%= form.file_field :image4, accept: 'application/pdf', :multiple => true, :required => true, :class => "offset-1" %>
-			</div>
-
-			<hr/>
+			<%= button_tag(:type => "submit", :id => "pdf_upload_submit", 
+				:class => "btn btn-primary", :'data-toggle' => "modal", :href => "#progressModal") do %>
+		    	Create
+			<% end %>
 			<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary', :formnovalidate => true %>
-			<%= form.submit "Create", :class => 'btn btn-primary progress_bar'%>
 		</div>
 		<% end %>
 		
-		<div id="ProgressOverlay" class="modal hide fade">
-			<div class="modal-box text-center">
-				<div class="modal-header text-center">
-					<h3>Uploading Files</h3>
-				</div>
+		<!-- Modal -->
+		<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="">Uploading Files</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
 				<div class="modal-body text-center">
 					<br/>
 					<br/>
@@ -146,6 +102,7 @@
 					<br/>
 					Please be patient while we upload your files. Thank you.
 				</div>
-			</div>
+		    </div>
+		  </div>
 		</div>
 </div>

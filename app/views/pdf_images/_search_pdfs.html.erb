@@ -30,13 +30,13 @@
 				<%= select_tag 'location', 
 						options_from_collection_for_select(@locations, 'id', 'name', 
 						:selected => params[:location]), {:class => "form-search-select", :prompt => "- Location -"} %>
+				<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
+						:selected => params[:pub_select]), {:class => "form-search-select", :prompt => "- Publication -"} %>
+			</div>
+			<div class="form-search-select-col">
 				<%= select_tag 'pub_type', 
 						options_from_collection_for_select(@pub_types, 'id', 'name', 
 						:selected => params[:pub_type]), {:class => "form-search-select", :prompt => "- Pub Type -"} %>
-			</div>
-			<div class="form-search-select-col">
-				<%= select_tag 'pub_select', options_from_collection_for_select(@publications, 'pub_name', 'pub_name', 
-						:selected => params[:pub_select]), {:class => "form-search-select", :prompt => "- Publication -"} %>
 				<%= select_tag 'sectionletter', 
 						options_from_collection_for_select(@section_letters, 'section_letter', 'section_letter', 
 						:selected => params[:sectionletter]), {:prompt => "- Letter -", :class => 'form-search-select-md'} %>
