@@ -137,20 +137,20 @@ class PdfImagesController < ApplicationController
                     if @pdf_image.save
                         Log.create_log("Pdf_image",@pdf_image.id,"Uploaded","Section 1 PDFs uploaded",current_user)
                         flash_message :notice, "Section PDF Uploaded: "+@pdf_image.section_name.to_s+" "+@pdf_image.section_letter.to_s+@pdf_image.page.to_s
-                        section1_success = true
+                        section_success = true
                     else
                         Rails.logger.info "*** pdf_image failed save"
                         flash_message :error, "PDF Upload Failed"
-                        section1_success = false
+                        section_success = false
                     end
                 else
                     Rails.logger.info "*** pdf_image failed save"
                     flash_message :error, "PDF Upload Failed"
-                    section1_success = false
+                    section_success = false
                 end
             end
         end
-        if section1_success
+        if section_success
             redirect_to pdf_images_path(:date_from_select=>@pdf_image.pubdate.strftime('%m/%d/%Y').to_s, 
                 :date_to_select=>@pdf_image.pubdate.strftime('%m/%d/%Y').to_s, 
                 :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
