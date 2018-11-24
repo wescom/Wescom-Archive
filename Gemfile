@@ -23,6 +23,7 @@ gem "mini_magick"
 gem 'mini_exiftool'
 gem 'yomu'
 gem 'double-bag-ftps'
+gem 'crack'
 
 #gem 'activerecord-mysql-adapter'
 #gem 'net-ssh', '< 2.8.0'

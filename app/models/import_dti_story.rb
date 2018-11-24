@@ -1,21 +1,19 @@
-class ImportDtiStory < ActiveRecord::Base
-  attr_accessor :raw_xml, :storyid, :storyname, :author, :categoryname, :subcategoryname
-  attr_accessor :created_at, :modified_at, :deskname, :expiredate, :keywords, :related_stories
-  attr_accessor :project_group, :memo, :notes, :origin, :priority, :pub_corrections, :unpublished_corrections
-  attr_accessor :status, :web_published_at, :web_pubnum, :printrunlist, :story_elements, :story_elements_by_name
-  attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
-  attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text, :web_summary
-  attr_accessor :toolbox1, :toolbox2, :toolbox3, :toolbox4, :toolbox5
-  attr_accessor :kicker, :tagline, :caption, :alternateurl, :map, :videourl, :htmltext
-  attr_accessor :web_info, :latestSEO_url, :publish_to_web_datetime
-  attr_accessor :media_list
-  attr_accessor :correction, :original_story_id
-
-  puts 'ImportDtiStory'
-  puts ''
+class ImportDtiStory
+    include ActiveModel::Model
+    
+    attr_accessor :raw_xml, :storyid, :storyname, :author, :categoryname, :subcategoryname
+    attr_accessor :created_at, :modified_at, :deskname, :expiredate, :keywords, :related_stories
+    attr_accessor :project_group, :memo, :notes, :origin, :priority, :pub_corrections, :unpublished_corrections
+    attr_accessor :status, :web_published_at, :web_pubnum, :printrunlist, :story_elements, :story_elements_by_name
+    attr_accessor :rundate, :edition_name, :pageset_name, :pageset_letter, :page_number
+    attr_accessor :hl1, :hl2, :byline, :paper, :print_text, :web_hl1, :web_hl2, :web_text, :web_summary
+    attr_accessor :toolbox1, :toolbox2, :toolbox3, :toolbox4, :toolbox5
+    attr_accessor :kicker, :tagline, :caption, :alternateurl, :map, :videourl, :htmltext
+    attr_accessor :web_info, :latestSEO_url, :publish_to_web_datetime
+    attr_accessor :media_list
+    attr_accessor :correction, :original_story_id
 
   def initialize(xml)
-puts 'initialize'
     self.raw_xml = xml
 
 #    self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
@@ -123,9 +121,8 @@ puts 'initialize'
 
       self.byline = self.story_elements.select.reject{|x| x["storyElementName"] != "bytag"}.collect{|x| x["elementStyleMarkUp"] }.join.split("</p>")
       if !self.byline.empty?
-        self.paper = self.byline[1] unless self.byline[1].nil?
+        self.paper = self.byline[1].nil? ? "" : self.byline[1]
         self.paper = self.paper.gsub(/<[^<>]*>/, "") unless self.paper.nil? #Remove all tags from string
-        
         self.byline = self.byline[0] unless self.byline[0].nil?
         self.byline = fix_escaped_elements(self.byline) unless self.byline.nil?
         self.byline = self.byline.gsub(/<[^<>]*>/, "") unless self.byline.nil? #Remove all tags from string

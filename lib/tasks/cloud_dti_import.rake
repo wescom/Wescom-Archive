@@ -60,12 +60,10 @@ namespace :wescom do
 
     def add_story(file_contents, filename)
       begin
-        puts 'begin add_story'        
         dti_story = ImportDtiStory.new(file_contents)
-        puts 'TESTING2'        
         story = Story.new
         puts "\nStoryId: #{dti_story.storyid}"
-        #puts "Story Name: #{dti_story.storyname}"
+        puts "Story Name: #{dti_story.storyname}"
         #puts "Project Group: #{dti_story.project_group}"
         story.doc_id = dti_story.storyid unless dti_story.storyid.nil?
         story.doc_name = dti_story.storyname unless dti_story.storyname.nil?
@@ -82,8 +80,7 @@ namespace :wescom do
         else
           story.web_published_at = dti_story.web_published_at unless dti_story.web_published_at.nil?
         end
-        puts story.web_published_at
-
+        #puts story.web_published_at
         #puts "RunDate: #{dti_story.rundate}"
         #puts "Edition Name: #{dti_story.edition_name}"
         #puts "Section: #{dti_story.pageset_name}"
@@ -92,17 +89,20 @@ namespace :wescom do
         #puts "Paper: #{dti_story.paper}"
         #puts "PubNum: #{dti_story.web_pubnum}"
         story.pubdate = Chronic.parse(dti_story.rundate) unless dti_story.rundate.nil?
-        story.publication = Publication.find_or_create_by_name(dti_story.edition_name) unless dti_story.edition_name.nil?
-        story.section = Section.find_or_create_by_name(dti_story.pageset_name) unless dti_story.pageset_name.nil?
+        story.publication = Publication.find_or_create_by(name: dti_story.edition_name) unless dti_story.edition_name.nil?
+        story.section = Section.find_or_create_by(name: dti_story.pageset_name) unless dti_story.pageset_name.nil?
         story.pageset_letter = dti_story.pageset_letter unless dti_story.pageset_letter.nil?
         story.page = dti_story.page_number unless dti_story.page_number.nil? unless dti_story.pageset_letter.nil?
-        story.paper = Paper.find_or_create_by_name(dti_story.paper) unless dti_story.paper.nil?
+        story.paper = Paper.find_or_create_by(name: dti_story.paper) unless dti_story.paper.nil?
         story.web_pubnum = dti_story.web_pubnum unless dti_story.web_pubnum.nil?
         if !dti_story.edition_name.nil? and !dti_story.pageset_name.nil? and !dti_story.pageset_letter.nil?
-          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name_and_import_section_letter(dti_story.edition_name,dti_story.pageset_name,dti_story.pageset_letter)
+          story.plan = Plan.find_or_create_by(
+              import_pub_name: dti_story.edition_name,
+              import_section_name: dti_story.pageset_name,
+              import_section_letter: dti_story.pageset_letter)
         else
           # "*** pageset_letter nil ***"
-          story.plan = Plan.find_or_create_by_import_pub_name_and_import_section_name(dti_story.edition_name,dti_story.pageset_name)
+          story.plan = Plan.find_or_create_by(import_pub_name: dti_story.edition_name, import_section_name: dti_story.pageset_name)
         end
         #puts "Plan: " + story.plan.id.to_s
 
@@ -131,17 +131,6 @@ namespace :wescom do
         story.alternateurl = dti_story.alternateurl unless dti_story.alternateurl.nil?
         story.map = dti_story.map unless dti_story.map.nil?
         story.caption = dti_story.caption unless dti_story.caption.nil?
-
-        #puts "Keywords: #{dti_story.keywords}"
-        if !dti_story.keywords.nil?
-          if dti_story.keywords.kind_of?(Array)
-            dti_story.keywords.each { |x|
-              keyword = story.keywords.find_or_create_by_text(x)
-            }
-          else
-            keyword = story.keywords.find_or_create_by_text(dti_story.keywords)
-          end
-        end
 
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
@@ -199,20 +188,24 @@ namespace :wescom do
             #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
           }
         end
-#puts "*********************"
-#puts "/tmp/* ..."
-#puts %x[ ls -l /tmp ]
-#puts "*********************"
-#puts "whoami: "+ %x[ whoami ]
-#puts "*********************"
 
         story.save!
         story.index!
         puts 'StoryId: '+story.id.to_s
 
+        if !dti_story.keywords.nil?
+          if dti_story.keywords.kind_of?(Array)
+            dti_story.keywords.each { |x|
+              keyword = story.keywords.find_or_create_by(text: x)
+            }
+          else
+            keyword = story.keywords.find_or_create_by(text: dti_story.keywords)
+          end
+        end
+
         if dti_story.correction?
           puts "Correction for Original Story #" + dti_story.original_story_id.to_s
-          original_story = Story.find_by_doc_id(dti_story.original_story_id)
+          original_story = Story.find_by(doc_id: dti_story.original_story_id)
           if original_story
             #puts original_story.class
             correction_link = original_story.correction_links.build(:correction_id => story.id)
