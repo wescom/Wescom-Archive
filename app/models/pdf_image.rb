@@ -1,5 +1,5 @@
 class PdfImage < ActiveRecord::Base
-  belongs_to :plan
+  belongs_to :plan, optional: true
   has_many :logs, :dependent => :destroy
   
   has_attached_file :image, 

@@ -1,5 +1,5 @@
 class StoryImage < ActiveRecord::Base
-  belongs_to :story
+  belongs_to :story, optional: true
   has_many :logs, :dependent => :destroy
   
   FORSALE_OPTIONS = ["", "For Sale", "NotForSale"]
@@ -12,7 +12,10 @@ class StoryImage < ActiveRecord::Base
       :path => ":rails_root/public/system/db_images/:id/:style_:basename.:extension",
       :default_url => '/images/no-image.jpg'
   
-  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
+  #validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "application/pdf", "image/gif"]
+
+  # Explicitly do not validate
+    do_not_validate_attachment_file_type :image
   
   searchable :auto_index => true, :auto_remove => true do
     # Search fields

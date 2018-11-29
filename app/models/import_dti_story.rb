@@ -23,6 +23,9 @@ class ImportDtiStory
 
     self.raw_xml = Nitf.parse(xml)
 
+    # Fix bad tags within raw_xml. These characters break the Crack parsing.
+    self.raw_xml = fix_bad_tags(xml)
+    
     cracked = Crack::XML.parse(self.raw_xml)
     self.storyid = cracked["DTIStory"]["StoryId"] unless cracked["DTIStory"]["StoryId"].nil?
     self.storyname = cracked["DTIStory"]["StoryName"] unless cracked["DTIStory"]["StoryName"].nil?
@@ -129,6 +132,7 @@ class ImportDtiStory
         self.byline = self.byline.gsub(/^By /, "") unless self.byline.nil?
       else
         self.byline = ""
+        self.paper = ""
       end
 
       self.print_text = self.story_elements.select.reject{|x| x["storyElementName"] != "text"}.collect{|x| x["elementStyleMarkUp"] }.join
@@ -234,6 +238,16 @@ class ImportDtiStory
       count = count + 1 unless key != "p"
     }
     return count
+  end
+
+  def fix_bad_tags(string)
+    if !string.nil?
+      return_string = string
+      return_string.gsub! '<2044>', "/"
+      return_string
+    else
+      string
+    end
   end
 
   def strip_formatting(string)

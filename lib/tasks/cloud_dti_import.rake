@@ -61,9 +61,13 @@ namespace :wescom do
     def add_story(file_contents, filename)
       begin
         dti_story = ImportDtiStory.new(file_contents)
-        story = Story.new
-        puts "\nStoryId: #{dti_story.storyid}"
-        puts "Story Name: #{dti_story.storyname}"
+#        story = Story.new
+        story = Story.find_or_create_by(doc_id: dti_story.storyid)
+        if story.created_at.nil?
+            puts "   * created at "+Time.now.strftime('%m/%d/%y %r')
+        else
+            puts "   * updated at "+story.updated_at.strftime('%m/%d/%y %r')
+        end
         #puts "Project Group: #{dti_story.project_group}"
         story.doc_id = dti_story.storyid unless dti_story.storyid.nil?
         story.doc_name = dti_story.storyname unless dti_story.storyname.nil?
@@ -104,7 +108,12 @@ namespace :wescom do
           # "*** pageset_letter nil ***"
           story.plan = Plan.find_or_create_by(import_pub_name: dti_story.edition_name, import_section_name: dti_story.pageset_name)
         end
-        #puts "Plan: " + story.plan.id.to_s
+        #puts "Plan: " + story.plan.inspect
+        #puts "Edition_name: " + dti_story.edition_name
+        #puts "Pageset_name: " + dti_story.pageset_name
+        #puts "Pageset_letter: " + dti_story.pageset_letter
+#puts "Errors: "+story.errors.full_messages.inspect
+#puts "Errors: "+story.plan.errors.full_messages.inspect
 
         #puts "hl1: #{dti_story.hl1}"
         #puts "hl2: #{dti_story.hl2}"
@@ -132,6 +141,11 @@ namespace :wescom do
         story.map = dti_story.map unless dti_story.map.nil?
         story.caption = dti_story.caption unless dti_story.caption.nil?
 
+        story.save!
+        story.index!
+        puts '   Story: #'+story.id.to_s + " - " + dti_story.storyname
+        puts "      Errors: "+story.errors.full_messages.inspect if story.errors.present?
+        
         if !dti_story.media_list.nil?
           dti_story.media_list.each { |x|
             #puts "*** Media Item: #{x}"
@@ -139,11 +153,15 @@ namespace :wescom do
             image_filename = image_filename + x["FileHeaderName"] unless x["FileHeaderName"].nil?
             image_filename = image_filename + x["FileTypeExtension"] unless x["FileTypeExtension"].nil?
 
-            if !x["FileHeaderName"].nil? and File.exists?(image_filename)
-              media = story.story_images.build(:image => File.open(image_filename))
+            media = story.story_images.find_or_create_by(media_id: x["FileHeaderId"])
+            if !x["FileHeaderName"].nil?
+                if File.exists?(image_filename)
+                  media.image = File.open(image_filename)
+                else
+                  puts "   "+image_filename+' does not exist'
+                end
             else
-              puts image_filename+' does not exist'
-              media = story.story_images.build
+                puts '   FileHeaderName field empty in xml'
             end
 
             media.media_id = x["FileHeaderId"] unless x["FileHeaderId"].nil?
@@ -186,12 +204,12 @@ namespace :wescom do
             media.last_refreshed_time = x["LastRefreshedTime"] unless x["LastRefreshedTime"].nil?
             media.expire_date = x["ExpireDate"] unless x["ExpireDate"].nil?
             #media.related_stories = x["RelatedStoriesList"] unless x["RelatedStoriesList"].nil?
+
+            media.update_attributes(media_id: x["FileHeaderId"],media_name: x["FileHeaderName"])
+
+            puts '   Image: #'+media.media_id.to_s + " - " + media.media_name
           }
         end
-
-        story.save!
-        story.index!
-        puts 'StoryId: '+story.id.to_s
 
         if !dti_story.keywords.nil?
           if dti_story.keywords.kind_of?(Array)
@@ -235,6 +253,7 @@ namespace :wescom do
         dirname = '/WescomArchive/archiveup/completed/'+file_year+'/'+file_month+'/'
         FileUtils.mkdir_p(dirname) unless File.exists?(dirname)
         FileUtils.mv filename, dirname+file
+        puts ""
 
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
@@ -256,7 +275,7 @@ namespace :wescom do
 
     def comic_story?(file)
       fileupper = file.upcase
-puts fileupper
+      puts fileupper
        if !(fileupper =~ /COMICS \da?/).nil?
         return true
       else

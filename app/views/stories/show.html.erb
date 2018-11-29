@@ -91,7 +91,9 @@
 				    <% if @story.byline and @story.byline.length > 0 %>
 						<h6>
 							By: <%= @story.byline.html_safe %>
-							<% if @story.paper %>, <%= @story.paper.name.html_safe if @story.paper.present? %> <% end %>
+							<% if @story.paper and @story.paper.name != "" %>
+								, <%= @story.paper.name.html_safe if @story.paper.present? %>
+							<% end %>
 						</h6>
 				    <% end %>
 					<br/>
