@@ -56,7 +56,7 @@
 									<%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %>
 								</div>
 								<div class="text-center">
-									<%= link_to "Edit", edit_pdf_image_path(pdf,
+									<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_pdf_image_path(pdf,
 										:date_from_select=>params[:date_from_select], 
 										:date_to_select=>params[:date_to_select], 
 										:location=>params[:location], 
@@ -64,10 +64,9 @@
 										:pub_select=>params[:pub_select], 
 										:sectionletter=>params[:sectionletter], 
 										:pagenum=>params[:pagenum]) %>
-									</div>
-								<% if admin? and @settings.show_delete_button %>
-									<div class="text-center">
-										<%= button_to "Delete", pdf_image_path(pdf	,
+									<% if admin? and @settings.show_delete_button %>
+										<%= link_to icon('trash-o fa-lg'), 
+											pdf_image_path(pdf,
 											:date_from_select=>params[:date_from_select], 
 											:date_to_select=>params[:date_to_select], 
 											:location=>params[:location], 
@@ -75,11 +74,12 @@
 											:pub_select=>params[:pub_select], 
 											:sectionletter=>params[:sectionletter], 
 											:pagenum=>params[:pagenum]), 
-											:method => :delete, 
-											:confirm => "Are you sure you want to delete PDF?",
-											:action => 'destroy' %>
-									</div>
-								<% end %>
+											:class => "",
+											:method=> :delete, :action => 'destroy',
+											data: {confirm:'Delete PDF?'},
+											title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'top' %>
+									<% end %>
+								</div>
 							</div>
 						</div>
 					<% end %>

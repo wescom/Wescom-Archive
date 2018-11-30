@@ -17,7 +17,7 @@
 				title: 'Edit', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
 		</p>
 		<p class="btn btn-outline-info">
-			<%= link_to icon('remove fa-lg'), 
+			<%= link_to icon('trash-o fa-lg'), 
 				publication_type_path(table_row),
 				:method=> :delete, :action => 'destroy',
 				data: {confirm:'Delete publication type?'},

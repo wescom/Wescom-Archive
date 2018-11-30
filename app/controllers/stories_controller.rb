@@ -63,10 +63,10 @@ class StoriesController < ApplicationController
     @story.approved = true
     if @story.save
       Log.create_log("Story",@story.id,"Approved","Story approved",current_user)
-      flash[:notice] = "Story Approved"
+      flash_message :notice, "Story Approved"
       redirect_to story_path(@story)
     else
-      flash[:error] = "Story Approval Failed"
+      flash_message :error, "Story Approval Failed"
       redirect_to story_path(@story)
     end
   end
@@ -135,10 +135,10 @@ class StoriesController < ApplicationController
       ftps.close
 
       Rails.logger.info "\n*** FTP transfer to DTI story import folder complete: " + xml_filename
-      flash[:notice] = "Story exported to Cloud DTI"
+      flash_message :notice, "Story exported to Cloud DTI"
     else
       Rails.logger.info "\n*** FTP transfer to DTI story failed - NO PUBDATE"
-      flash[:error] = "Story export failed - NO PUBDATE"
+      flash_message :error, "Story export failed - NO PUBDATE"
     end
     
     redirect_to story_path(@story)
@@ -148,13 +148,11 @@ class StoriesController < ApplicationController
   def destroy
     @story = Story.find(params[:id])
     if @story.destroy
-      flash[:notice] = "Story Killed!"
-      redirect_to :back and return unless request.referrer == story_path(@story)
-      redirect_to search_path
+        flash_message :notice, "Story Killed!"
+        redirect_to session[:last_page]
     else
-      flash[:error] = "Story Deletion Failed"
-      redirect_to :back and return unless request.referrer == story_path(@story)
-      redirect_to search_path
+        flash_message :error, "Story Deletion Failed"
+        redirect_to session[:last_page]
     end
   end
 

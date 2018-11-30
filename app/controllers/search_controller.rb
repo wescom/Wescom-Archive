@@ -47,7 +47,7 @@ class SearchController < ApplicationController
     @publications = Plan.select("DISTINCT pub_name").where("pub_name is not null and pub_name<>''").order('pub_name')
     @publication = Plan.where(:pub_name => params[:papername]).first if params[:papername].present?
 
-    if params[:paperdate].nil?
+    if params[:paperdate].nil? or params[:paperdate].empty?
       Rails.logger.info "******** Date is nil"
       params[:paperdate] = Date.today.strftime('%m/%d/%Y')
     end
@@ -67,10 +67,10 @@ class SearchController < ApplicationController
   def destroy
     @stories = Story.find(params[:id])
     if @stories.destroy
-      flash[:notice] = "Story Killed!"
+      flash_message :notice, "Story Killed!"
       redirect_to stories_path
     else
-      flash[:error] = "Story Deletion Failed"
+      flash_message :error, "Story Deletion Failed"
       redirect_to stories_path
     end
   end

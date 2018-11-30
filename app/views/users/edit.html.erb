@@ -25,16 +25,16 @@
 						<div class="offset-1">
 							<%= form.select 'default_location_id', 
 								options_from_collection_for_select(@locations, 'id', 'name', @user.default_location_id), 
-								{:prompt => "- Select Location -", :include_blank => 'No Default'} %>
-							<%= form.select 'default_publication_type_id', 
-								options_from_collection_for_select(@pub_types, 'id', 'name', @user.default_publication_type_id), 
-								{:prompt => "- Select Pub Type -", :include_blank => 'No Default'} %>
+								{:prompt => "- Select Location -", :include_blank => 'No Default'}, :class => "col-5" %>
 							<%= form.select 'default_publication', 
 								options_from_collection_for_select(@publications, 'pub_name', 'pub_name', @user.default_publication), 
-								{:prompt => "- Select Publication -", :include_blank => 'No Default'} %>
+								{:prompt => "- Select Publication -", :include_blank => 'No Default'}, :class => "col-5" %>
+							<%= form.select 'default_publication_type_id', 
+								options_from_collection_for_select(@pub_types, 'id', 'name', @user.default_publication_type_id), 
+								{:prompt => "- Select Pub Type -", :include_blank => 'No Default'}, :class => "col-5" %>
 							<%= form.select 'default_section_name', 
 								options_from_collection_for_select(@sections, 'section_name', 'section_name', @user.default_section_name), 
-								{:prompt => "- Select Section -", :include_blank => 'No Default'} %>
+								{:prompt => "- Select Section -", :include_blank => 'No Default'}, :class => "col-5" %>
 						</div>
 					</div>
 				</div>

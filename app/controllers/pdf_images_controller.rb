@@ -186,12 +186,12 @@ class PdfImagesController < ApplicationController
       @pdf_image.plan_id = @plan.id
       if @pdf_image.save
         Log.create_log("Pdf_image",@pdf_image.id,"Updated","PDF edited",current_user)
-        flash[:notice] = "PDF Updated"
+        flash_message :notice, "PDF Updated"
         redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
             :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
             :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
       else
-        flash[:error] = "PDF Update Failed"
+        flash_message :error, "PDF Update Failed"
         @locations = Location.all.order('name')
         @pub_types = PublicationType.all.order('sort_order')
         render :action => :edit, :layout => "plain"
@@ -202,15 +202,15 @@ class PdfImagesController < ApplicationController
   def destroy
     @pdf_images = PdfImage.find(params[:id])
     if @pdf_images.destroy
-      flash[:notice] = "PDF Killed!"
-      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
-          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
-          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
+        flash_message :notice, "PDF Killed!"
+        redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+            :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+            :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
-      flash[:error] = "PDF Deletion Failed"
-      redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
-          :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
-          :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
+        flash_message :notice, "PDF Deletion Failed"
+        redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+            :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+            :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     end
   end
   

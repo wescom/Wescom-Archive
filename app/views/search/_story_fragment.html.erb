@@ -57,10 +57,11 @@
 	<% end %>
 	<% if admin? and @settings.show_delete_button %>
 		<td class="action_col text-center align-middle d-none d-lg-table-cell">
-			<%= button_to "Delete", story_path(story_fragment), 
-										:method => :delete, 
-										:confirm => "Are you sure you want to delete story?",
-										:action => 'destroy' %>
+			<%= link_to icon('trash-o fa-lg'), 
+				story_path(story_fragment),
+				:method=> :delete, :action => 'destroy',
+				data: {confirm:'Are you sure you want to delete story?'},
+				title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
 		</td>
 	<% end %>
 </tr>

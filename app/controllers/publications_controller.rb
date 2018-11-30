@@ -21,10 +21,10 @@ class PublicationsController < ApplicationController
     else
       @publication = Publication.new(params[:publication])
       if @publication.save
-        flash[:notice] = "Publication Created"
+        flash_message :notice, "Publication Created"
         redirect_to publications_path
       else
-        flash[:error] = "Publication Creation Failed"
+        flash_message :error, "Publication Creation Failed"
         render :action => :new
       end
     end    
@@ -41,7 +41,7 @@ class PublicationsController < ApplicationController
     @publication_types = PublicationType.all.order("sort_order")
     @publication = Publication.find(params[:id])
     if @publication.update_attributes(params[:publication])
-      flash[:notice] = "Publication updated"
+      flash_message :notice, "Publication updated"
       redirect_to publications_url
     else
       render :action => :edit
@@ -51,10 +51,10 @@ class PublicationsController < ApplicationController
   def destroy
     @publication = Publication.find(params[:id])
     if @publication.destroy
-      flash[:notice] = "Publication Killed!"
+      flash_message :notice, "Publication Killed!"
       redirect_to publications_path
     else
-      flash[:error] = "Publication Deletion Failed"
+      flash_message :error, "Publication Deletion Failed"
       redirect_to publications_path
     end
   end

@@ -20,10 +20,10 @@ Rails.logger.info "********* CREATE"
       redirect_to section_categories_path
     else
       if @section_categories.save
-        flash[:notice] = "Section Category Created"
+        flash_message :notice, "Section Category Created"
         redirect_to section_categories_path
       else
-        flash[:error] = "Section Category Creation Failed"
+        flash_message :error, "Section Category Creation Failed"
         render :action => :new
       end
     end
@@ -36,7 +36,7 @@ Rails.logger.info "********* CREATE"
   def update
     @section_categories = SectionCategory.find(params[:id])
     if @section_categories.update_attributes(params[:section_category])
-      flash[:notice] = "Section Category Updated"
+      flash_message :notice, "Section Category Updated"
       redirect_to section_categories_url
     else
       render :action => :edit
@@ -46,10 +46,10 @@ Rails.logger.info "********* CREATE"
   def destroy
     @section_categories = SectionCategory.find(params[:id])
     if @section_categories.destroy
-      flash[:notice] = "Section Category Killed!"
+      flash_message :notice, "Section Category Killed!"
       redirect_to section_categories_path
     else
-      flash[:error] = "Section Category Deletion Failed"
+      flash_message :error, "Section Category Deletion Failed"
       redirect_to section_categories_path
     end
   end
