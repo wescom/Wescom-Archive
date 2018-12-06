@@ -169,7 +169,7 @@ class PdfImagesController < ApplicationController
     @section_letters = PdfImage.select("DISTINCT section_letter").where("section_letter is not null and section_letter<>''").uniq
 
     @pdf_image = PdfImage.find(params[:id])
-    render :layout => "plain"
+#    render :layout => "plain"
   end
 
   def update
@@ -180,16 +180,26 @@ class PdfImagesController < ApplicationController
           :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
           :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
     else
-      @pdf_image.attributes=(params[:pdf_image])
-      @plan = Plan.find_or_create_by_location_id_and_publication_type_id_and_pub_name_and_section_name_and_import_section_letter(
-                    params[:location],params[:pub_type],@pdf_image.publication,@pdf_image.section_name,@pdf_image.section_letter)
-      @pdf_image.plan_id = @plan.id
-      if @pdf_image.save
-        Log.create_log("Pdf_image",@pdf_image.id,"Updated","PDF edited",current_user)
-        flash_message :notice, "PDF Updated"
-        redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
-            :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
-            :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
+      if @pdf_image.update_attributes(pdf_image_params)
+          @plan = Plan.find_or_create_by(
+              location_id: params[:location],
+              publication_type_id: params[:pub_type],
+              pub_name: @pdf_image.publication,
+              section_name: @pdf_image.section_name,
+              import_section_letter: @pdf_image.section_letter)
+          @pdf_image.plan_id = @plan.id
+          if @pdf_image.save
+            Log.create_log("Pdf_image",@pdf_image.id,"Updated","PDF edited",current_user)
+            flash_message :notice, "PDF Updated"
+            redirect_to pdf_images_path(:date_from_select=>params[:date_from_select], :date_to_select=>params[:date_to_select], 
+                :location=>params[:location], :pub_type=>params[:pub_type], :pub_select=>params[:pub_select], 
+                :sectionletter=>params[:sectionletter], :pagenum=>params[:pagenum])
+          else
+            flash_message :error, "PDF Update Failed"
+            @locations = Location.all.order('name')
+            @pub_types = PublicationType.all.order('sort_order')
+            render :action => :edit, :layout => "plain"
+          end
       else
         flash_message :error, "PDF Update Failed"
         @locations = Location.all.order('name')

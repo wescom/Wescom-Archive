@@ -2,72 +2,95 @@
   <%= "#{h @pdf_image.image_file_name} - " if @pdf_image.image_file_name -%>
 <% end %>
 
-<%= form_for @pdf_image, :url => pdf_image_path do |form| %>
-	<div id="image-content" class="grid_16">
-		<div class="image-header-bar ">
-			<%= @pdf_image.image_file_name if !@pdf_image.image_file_name.nil? %>
-		</div>
-
-		<div id="image_pdf" class="grid_4">
-			<%= link_to image_tag(@pdf_image.image(:large), :alt=>"PagePDF", :class=>"image_medium"), @pdf_image.image.url %><br/>
-			<%= @pdf_image.image_file_name if !@pdf_image.image_file_name.nil? %>
-		</div>
-	
-		<div id="image_edit" class="grid_5">
-			<b>* Publication Name:</b> <%= error_messages(@pdf_image, "publication") %>
-			<%= form.text_field :publication, :class => "full" %><br/>
-
-			<b>* Section Name:</b> <%= error_messages(@pdf_image, "section_name") %>
-			<%= form.text_field :section_name, :class => "full" %><br/>
-
-			<b>Section Letter:</b>
-			<%= form.text_field :section_letter, :class => "small" %><br/>
-			
-			<b>Page:</b>
-			<%= form.text_field :page, :class => "small" %><br/>
-
-			<b>* PubDate:</b> <%= error_messages(@pdf_image, "pubdate") %>
-			<%= form.text_field :pubdate, 
-				:class => 'input_date_picker large', 
-				:placeholder => :pubdate,
-				:value => @pdf_image.try(:pubdate).try(:strftime,'%m-%d-%Y') %><br/>
-			<%= form.hidden_field :pubdate, :id => 'pubdate-alt' %><br/>
-
-			<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
-			<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
-			<%= hidden_field_tag :location, params[:location] %>
-			<%= hidden_field_tag :pub_type, params[:pub_type] %>
-			<%= hidden_field_tag :pub_select, params[:pub_select] %>
-			<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
-			<%= hidden_field_tag :pagenum, params[:pagenum] %>
-		</div>
-
-		<div id="image_edit" class="grid_1">&nbsp;</div>
-
-		<div id="image_edit" class="grid_3">
-			<b>Current Plan Info:</b><br/>
-			<div class="indent">
-				Plan: <%= @pdf_image.plan_id %><br/>
-				Location: <%= @pdf_image.plan.location.name if @pdf_image.plan.location.present? %><br/>
-				Pub Type: <%= @pdf_image.plan.publication_type.name if @pdf_image.plan.publication_type.present? %><br/>
-			</div>
-			<br/><br/>
-			<b>Change To:</b><br/>
-			<div class="indent">
-				<b>* Location:</b>
-				<%= select_tag 'location', 
-									options_from_collection_for_select(@locations, 'id', 'name', :selected => @pdf_image.plan.location_id), 
-									{:class => "medium", :prompt => "- Select New Location -"} %>
-
-				<b>* Pub Type:</b>
-				<%= select_tag 'pub_type', 
-									options_from_collection_for_select(@pub_types, 'id', 'name', :selected => @pdf_image.plan.publication_type_id), 
-									{:class => "medium", :prompt => "- Select New Pub Type -"} %>
-			</div>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>
+				<%= @pdf_image.image_file_name unless @pdf_image.image_file_name.nil? %>
+			</h2>
 		</div>
 	</div>
-	<div class="grid_16">
-		<%= form.submit "Cancel", :name => 'cancel_button', :class => 'submit small float_right'%>
-		<%= form.submit "Update", :class => 'submit small float_right'%>
+
+	<div class="page-content-body">
+		<div id="edit-block" class="container">
+			<%= form_for @pdf_image, :url => pdf_image_path do |form| %>
+				<div class="row">
+					<div class="col-12 col-md-4 col-lg-5">
+						<div class="d-flex flex-wrap justify-content-center">
+							<%= link_to image_tag(@pdf_image.image(:large), :alt=>"StoryImage", :class=>"image_medium max-width100"), 
+								@pdf_image.image.url %>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-8 col-lg-7">
+						<div class="form-group row">
+							<label for="publication" class="col-form-label col-4">Publication Name:</label>
+							<div class="col">
+								<%= form.text_field :publication, :class => 'col-7', :autofocus => true %>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="section_name" class="col-form-label col-4">Section Name:</label>
+							<div class="col">
+								<%= form.text_field :section_name, :class => 'col-7' %>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="section_letter" class="col-form-label col-4">Section Letter:</label>
+							<div class="col">
+								<%= form.text_field :section_letter, :class => 'col-2' %>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="page" class="col-form-label col-4">Page:</label>
+							<div class="col">
+								<%= form.text_field :page, :class => 'col-2' %>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="pubdate" class="col-form-label col-4">PubDate:</label>
+							<div class="col">
+								<%= form.date_field :pubdate, :required => true,
+									:value => params[:pubdate] %>
+							</div>
+						</div>
+
+						<%= hidden_field_tag :date_from_select, params[:date_from_select] %>
+						<%= hidden_field_tag :date_to_select, params[:date_to_select] %>
+						<%= hidden_field_tag :location, params[:location] %>
+						<%= hidden_field_tag :pub_type, params[:pub_type] %>
+						<%= hidden_field_tag :pub_select, params[:pub_select] %>
+						<%= hidden_field_tag :sectionletter, params[:sectionletter] %>
+						<%= hidden_field_tag :pagenum, params[:pagenum] %>
+
+						<b>Current Plan Info:</b><br/>
+						<div class="offset-1">
+							Plan: <%= @pdf_image.plan_id %><br/>
+							Location: <%= @pdf_image.plan.location.name if @pdf_image.plan.location.present? %><br/>
+							Pub Type: <%= @pdf_image.plan.publication_type.name if @pdf_image.plan.publication_type.present? %><br/>
+						</div>
+						<br/><br/>
+						<b>Change To:</b>
+						<div class="offset-1">
+							<%= select_tag 'location', 
+								options_from_collection_for_select(@locations, 'id', 'name', 
+								:selected => @pdf_image.plan.location_id), 
+								{:class => "medium col-5", :prompt => "- Select New Location -"} %>
+							<br/>
+							<%= select_tag 'pub_type', 
+								options_from_collection_for_select(@pub_types, 'id', 'name', 
+								:selected => @pdf_image.plan.publication_type_id), 
+								{:class => "medium col-5", :prompt => "- Select New Pub Type -"} %>
+						</div>
+						<br/>
+
+						<div class="d-flex justify-content-center">
+							<%= form.submit "Update", :class => 'btn btn-primary'%>
+							<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary'%>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
 	</div>
-<% end %>
+</div>
