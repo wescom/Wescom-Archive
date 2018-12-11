@@ -275,7 +275,7 @@ DEPENDENCIES
   bootstrap (= 4.0.0)
   bootstrap-datepicker-rails
   byebug
-  capistrano (~> 3.6)
+  capistrano (~> 3.11)
   capistrano-bundler
   capistrano-rails (~> 1.2)
   capistrano-rvm

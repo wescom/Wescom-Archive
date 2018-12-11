@@ -71,7 +71,7 @@ end
 
 # Use Capistrano for deployment
 group :development do
-  gem 'capistrano', '~> 3.6'
+  gem "capistrano", "~> 3.11", require: false
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler', require: false
