@@ -76,7 +76,6 @@ group :development do
     gem 'capistrano-rvm', require: false
     gem 'capistrano-bundler', require: false
     gem 'capistrano3-puma', require: false
-    gem 'capistrano-ssh-doctor', '~> 1.0'
 end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

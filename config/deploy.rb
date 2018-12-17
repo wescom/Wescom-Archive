@@ -6,8 +6,6 @@ set :rails_env,   "production"
 set :migration_role, :app
 #set :assets_role, [:web, :app, :worker]
 
-set :log_level, :debug
-
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -58,7 +56,7 @@ set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-
 #set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
 set :puma_error_log,  "#{release_path}/log/puma.access.log"
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+#set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
@@ -103,6 +101,8 @@ namespace :deploy do
       execute "ln -s /WescomArchive/solr #{release_path}/solr"
       execute "mkdir -p #{release_path}/public && ln -s #{shared_path}/system #{release_path}/public/system"
       #execute "mkdir -p #{shared_path}/system && ln -s /WescomArchive/db_images #{shared_path}/system/db_images && ln -s /WescomArchive/pdf_images #{shared_path}/system/pdf_images"
+      execute "ln -s #{shared_path}/banner_images #{release_path}/public/images/banner_images"
+      execute "ln -s #{shared_path}/site_images #{release_path}/public/images/site_images"
       execute "ln -s #{shared_path}/log #{release_path}/log"
     end
   end
@@ -125,7 +125,7 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
+#  after  :finishing,    :restart
 end
 
 # ps aux | grep puma    # Get puma pid
