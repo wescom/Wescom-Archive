@@ -4,7 +4,7 @@
 set :rails_env,   "production"
 
 set :migration_role, :app
-#set :assets_role, [:web, :app, :worker]
+set :assets_role, [:web, :app, :worker]
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -76,7 +76,7 @@ end
 namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
-    on roles(:all) do
+    on roles(:web) do
       unless `git rev-parse HEAD` == `git rev-parse origin/master`
         puts "WARNING: HEAD is not the same as origin/master"
         puts "Run `git push` to sync changes."
@@ -96,11 +96,11 @@ namespace :deploy do
 
   desc "Update links"
   after :finished, :update_links do
-    on roles(:web) do
+    on roles(:all) do
       execute "rm -rf #{release_path}/solr #{release_path}/log #{release_path}/public/system #{release_path}/tmp/pids"
       execute "ln -s /WescomArchive/solr #{release_path}/solr"
-      execute "mkdir -p #{release_path}/public && ln -s #{shared_path}/system #{release_path}/public/system"
-      #execute "mkdir -p #{shared_path}/system && ln -s /WescomArchive/db_images #{shared_path}/system/db_images && ln -s /WescomArchive/pdf_images #{shared_path}/system/pdf_images"
+      execute "mkdir -p #{release_path}/public && ln -s #{shared_path}/public/system #{release_path}/public/system"
+      #execute "ln -s /WescomArchive/db_images #{shared_path}/public/system/db_images && ln -s /WescomArchive/pdf_images #{shared_path}/public/system/pdf_images"
       execute "ln -s #{shared_path}/banner_images #{release_path}/public/images/banner_images"
       execute "ln -s #{shared_path}/site_images #{release_path}/public/images/site_images"
       execute "ln -s #{shared_path}/log #{release_path}/log"
