@@ -21,5 +21,6 @@ production:
     database: archive_production
     username: wescom_archive
     password: u5VZPqgZYxKbI4msRg25w
-    host: 172.16.128.102
+#    host: 172.16.128.102
+    host: 192.168.112.93
     socket: /var/run/mysqld/mysqld.sock
