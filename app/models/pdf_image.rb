@@ -6,6 +6,7 @@ class PdfImage < ActiveRecord::Base
       :styles => { 
         :large => ["500x500>",:jpg]
       },
+      source_file_options:  { all: '-layers merge' },
       :url => "/system/pdf_images/:id/:style_:basename.:extension",  
       :path => ":rails_root/public/system/pdf_images/:id/:style_:basename.:extension",
       :default_url => '/images/no-image.jpg'
