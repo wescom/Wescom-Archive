@@ -18,7 +18,9 @@ class PdfImage < ActiveRecord::Base
 #  validates :section2_upload, on: :create, presence: { message: 'section2 missing data' }
 #  validates :section3_upload, on: :create, presence: { message: 'section3 missing data' }
 #  validates :section4_upload, on: :create, presence: { message: 'section4 missing data' }
-  validates_attachment_content_type :image, :content_type => ["application/pdf"]
+
+#  validates_attachment_content_type :image, :content_type => ["application/pdf"]
+  do_not_validate_attachment_file_type :image   # Explicitly do not validate
 
   searchable :auto_index => true, :auto_remove => true do
     # Search fields
