@@ -21,7 +21,7 @@ namespace :wescom do
         find_date = ENV['date']
         puts "Date requested: " +ENV['date']
       end
-      #find_date = "27-02-2014"
+      #find_date = "18-12-2018"
       puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
@@ -54,8 +54,9 @@ namespace :wescom do
         # Read text within PDF file to use for fulltext indexing/searching
         yomu = Yomu.new file
         pdftext = yomu.text
-        pdftext.gsub! /\n/, " "               # Clear newlines
-        pdftext.gsub! "- ", ""                # Clear hyphens from justication
+        pdftext.gsub! /\n/, " "                 # Clear newlines
+        pdftext.gsub! "- ", ""                  # Clear hyphens from justication
+        pdftext.gsub! /[^a-zA-Z0-9]/, ""        # Clear all non-alphanumeric characters
         pdf_image.pdf_text = pdftext
         
         #puts "Filename: "+filename
