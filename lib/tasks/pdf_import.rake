@@ -77,7 +77,7 @@ namespace :wescom do
 
         rescue Exception => e
           puts "Failed to Process File: #{file}\n Error: #{e}\n\n"
-          FileUtils.mv file, '/data/archiveup/import_failed/'+filename
+          FileUtils.cp file, '/data/archiveup/import_failed/'+filename
       end
     end
   
