@@ -34,6 +34,23 @@ namespace :wescom do
         puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name+", = "+ pdf.count.to_s
       }
     end
+
+    def delete_by_date
+        if ENV['date'].nil?
+            puts "No date requested!"
+            puts "   - to request deleting specific date, add date=DD-MM-YYYY"
+        else
+            find_date = ENV['date']
+            puts "Purge Date: " +ENV['date']
+            #find_date = "03-01-2019"
+
+            pdf_images = PdfImage.where('pubdate = ?', find_date).order_by_pubdate_section_page
+            pdf_images.each  { |pdf|
+                puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name+", = "+ pdf.count.to_s
+                #pdf.destroy
+            }
+        end
+    end
     
 
     delete_duplicates
