@@ -21,7 +21,7 @@ namespace :wescom do
         find_date = ENV['date']
         puts "Date requested: " +ENV['date']
       end
-      #find_date = "18-12-2018"
+      #find_date = "03-01-2019"
       puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
@@ -77,7 +77,7 @@ namespace :wescom do
 
         rescue Exception => e
           puts "Failed to Process File: #{file}\n Error: #{e}\n\n"
-          FileUtils.cp file, '/data/archiveup/import_failed/'+filename
+          FileUtils.mv file, '/data/archiveup/import_failed/'+filename
       end
     end
   
