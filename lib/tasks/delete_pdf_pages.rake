@@ -45,8 +45,8 @@ namespace :wescom do
 
         pdf_images = PdfImage.where('pubdate = ?', find_date).order_by_pubdate_section_page
         pdf_images.each  { |pdf|
-            puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name
-            #pdf.destroy
+            puts "Purging PDF => ID:"+pdf.id.to_s + ", " + pdf.image_file_name
+            pdf.destroy
         }
     end
   end

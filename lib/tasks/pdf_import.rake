@@ -56,7 +56,7 @@ namespace :wescom do
         pdftext = yomu.text
         pdftext.gsub! /\n/, " "                 # Clear newlines
         pdftext.gsub! "- ", ""                  # Clear hyphens from justication
-        pdftext.gsub! /^[\w\-\s]+$/, ""        # Clear all non-alphanumeric characters
+        pdftext.gsub! /[^a-zA-Z0-9 -]/, ""        # Clear all non-alphanumeric characters
         pdf_image.pdf_text = pdftext
         
         #puts "Filename: "+filename
