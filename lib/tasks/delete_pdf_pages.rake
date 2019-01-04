@@ -1,8 +1,7 @@
 namespace :wescom do
   desc "Delete PDF pages"
-  task :delete_pdf_pages  => :environment do
 
-    def delete_duplicates
+  task :delete_pdf_pages  => :environment do
       # Get a hash of all pdf image file names and how many records of each group
       counts = PdfImage.group([:image_file_name]).count
       #puts "counts: "+counts.to_yaml
@@ -24,37 +23,31 @@ namespace :wescom do
           object.destroy unless index == 0
         end
       end
-    end
+  end
 
-    def delete_by_year
+  task :delete_pdf_by_year  => :environment do
       #find_date = Date.new('2009-01-01')
       find_year = 2012
       pdf_images = PdfImage.where('Year(pubdate) = ?', find_year).order_by_pubdate_section_page
       pdf_images.each  { |pdf|
         puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name+", = "+ pdf.count.to_s
       }
+  end
+
+  task :delete_pdf_by_date  => :environment do
+    if ENV['date'].nil?
+        puts "No date requested!"
+        puts "   - to request deleting specific date, add date=DD-MM-YYYY"
+    else
+        find_date = ENV['date']
+        puts "Purge Date: " +ENV['date']
+        #find_date = "03-01-2019"
+
+        pdf_images = PdfImage.where('pubdate = ?', find_date).order_by_pubdate_section_page
+        pdf_images.each  { |pdf|
+            puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name+", = "+ pdf.count.to_s
+            #pdf.destroy
+        }
     end
-
-    def delete_by_date
-        if ENV['date'].nil?
-            puts "No date requested!"
-            puts "   - to request deleting specific date, add date=DD-MM-YYYY"
-        else
-            find_date = ENV['date']
-            puts "Purge Date: " +ENV['date']
-            #find_date = "03-01-2019"
-
-            pdf_images = PdfImage.where('pubdate = ?', find_date).order_by_pubdate_section_page
-            pdf_images.each  { |pdf|
-                puts "ID:"+pdf.id.to_s + ", " + pdf.image_file_name+", = "+ pdf.count.to_s
-                #pdf.destroy
-            }
-        end
-    end
-    
-
-    delete_duplicates
-    #delete_by_year
-
   end
 end
