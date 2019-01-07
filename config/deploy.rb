@@ -103,8 +103,8 @@ namespace :deploy do
       execute "rm -rf #{release_path}/solr #{release_path}/log #{release_path}/public/system #{release_path}/tmp/pids"
 #
 # TURN BACK ON WHEN READY TO BE LIVE
-#      execute "ln -s /WescomArchive/solr #{release_path}/solr"
-      execute "ln -s #{shared_path}/solr #{release_path}/solr"
+      execute "ln -s /WescomArchive/solr #{release_path}/solr"
+#      execute "ln -s #{shared_path}/solr #{release_path}/solr"
 #
       execute "mkdir -p #{release_path}/public && ln -s #{shared_path}/public/system #{release_path}/public/system"
       #execute "ln -s /WescomArchive/db_images #{shared_path}/public/system/db_images && ln -s /WescomArchive/pdf_images #{shared_path}/public/system/pdf_images"
