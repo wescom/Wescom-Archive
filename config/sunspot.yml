@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: 192.168.112.87
+    hostname: archive2.wescompapers.com
     port: 8983
     path: '/solr/default'
     min_memory: 1G
