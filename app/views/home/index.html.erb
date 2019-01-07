@@ -1,11 +1,12 @@
-<%= content_for :title do %>
-  <%= "#{params[:search_query]} - " if params[:search_query] -%>
-<% end %>
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h2>Notice</h2>
+		</div>
+	</div>
 
-<div id="notice-page">
-  <div id="page-content" class="clearfix">
+	<div class="page-content-body">
 		<% if @settings.show_site_announcement %>
-			<h1>Notice</h1>
 			<div class="inner-box clearfix">
 				<div id="story-block" class="full_width">
 					<div class="grid_4"><img src = "/images/Post-it.png" alt = "Post-it" /></div>
