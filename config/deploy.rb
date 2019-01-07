@@ -26,12 +26,12 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 set :keep_releases, 5
 
 ##### Need change to your own configs #####
-ARCHIVE1 = "192.168.112.109"
-ARCHIVE2 = "192.168.112.87"
-ARCHIVE3 = "192.168.112.93"
-#ARCHIVE1 = "archive1.wescompapers.com"
-#ARCHIVE2 = "archive2.wescompapers.com"
-#ARCHIVE3 = "archive3.wescompapers.com"
+#ARCHIVE1 = "192.168.112.109"
+#ARCHIVE2 = "192.168.112.87"
+#ARCHIVE3 = "192.168.112.93"
+ARCHIVE1 = "archive1.wescompapers.com"
+ARCHIVE2 = "archive2.wescompapers.com"
+ARCHIVE3 = "archive3.wescompapers.com"
 role :web, ARCHIVE1
 role :app, ARCHIVE1
 role :app, ARCHIVE2, :solr => true
