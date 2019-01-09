@@ -4,12 +4,12 @@ upstream puma {
 
 # for redirecting to https version of the site
 server {
-	listen 80;
-
-    server_name archive.wescompapers.com;
-
-	rewrite ^(.*) https://$host$1 permanent;
+    listen 80;
 	root /u/apps/wescomarchive/current/public;
+    access_log /u/apps/wescomarchive/current/log/nginx.access.log;
+    error_log /u/apps/wescomarchive/current/log/nginx.error.log info;
+
+	server_name wescomarchive.com;
 
 	location ^~ /assets/ { 
 		gzip_static on; 
@@ -27,17 +27,26 @@ server {
 	}
 
 	error_page 500 502 503 504 /500.html; 
+	client_max_body_size 10M; 
 	keepalive_timeout 10;
 }
  
+# for redirecting to non-www version of the site
+server {
+    listen  80;
+    server_name  www.wescompapers.com;
+    rewrite ^(.*) https://wescompapers.com$1 permanent;
+}
+
 server {  
 	listen 443 ssl;
 	root /u/apps/wescomarchive/current/public;
 
-	server_name archive.wescompapers.com;
 	ssl_certificate /etc/nginx/ssl/wescompapers.com.crt;
 	ssl_certificate_key /etc/nginx/ssl/wescompapers.com.key;
 	
+	server_name wescompapers.com;
+
 	location ^~ /assets/ { 
 		gzip_static on; 
 		expires max; 
@@ -49,22 +58,8 @@ server {
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
 		proxy_set_header Host $http_host; 
 		proxy_redirect off;
-		proxy_set_header X-Forwarded-Proto https;	# Needed to avoid 'WARNING: Can't verify CSRF token authenticity'
-		proxy_pass http://puma; 
 
-		# Set files larger than 4000M to stream rather than cache
-		proxy_max_temp_file_size 4000M;
-		
-		#set client_max_body_size to allow larger uploads
-		client_max_body_size 4000M;
-		types_hash_max_size 2048;
-	
-		keepalive_timeout 600s;
-		proxy_connect_timeout 600s;
-		proxy_send_timeout 600s;
-		proxy_read_timeout 600s;
-		fastcgi_send_timeout 600s;
-		fastcgi_read_timeout 600s;
+		proxy_pass http://puma; 
 	}
 
 	error_page 500 502 503 504 /500.html; 
