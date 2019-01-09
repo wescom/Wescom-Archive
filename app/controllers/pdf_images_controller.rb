@@ -132,6 +132,7 @@ class PdfImagesController < ApplicationController
                     pdftext = yomu.text
                     pdftext.gsub! /\n/, " "               # Clear newlines
                     pdftext.gsub! "- ", ""                # Clear hyphens from justication
+                    pdftext.gsub! /[^a-zA-Z0-9 -]/, ""        # Clear all non-alphanumeric characters
                     @pdf_image.pdf_text = pdftext
 
                     if @pdf_image.save
