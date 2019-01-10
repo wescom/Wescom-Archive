@@ -51,15 +51,18 @@ set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
 set :deploy_to,       "/u/apps/#{fetch(:application)}"
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+#set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 #set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 #set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 #set :puma_access_log, "#{release_path}/log/puma.error.log"
 #set :puma_error_log,  "#{release_path}/log/puma.access.log"
 #set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
-#set :puma_preload_app, true
+set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :puma_threads,    [4, 16]
+set :puma_workers,    3
+
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
@@ -98,7 +101,11 @@ namespace :deploy do
   after :finished, :update_links do
     on roles(:all) do
       execute "rm -rf #{release_path}/solr #{release_path}/log #{release_path}/public/system #{release_path}/tmp/pids"
+#
+# TURN BACK ON WHEN READY TO BE LIVE
       execute "ln -s /WescomArchive/solr #{release_path}/solr"
+#      execute "ln -s #{shared_path}/solr #{release_path}/solr"
+#
       execute "mkdir -p #{release_path}/public && ln -s #{shared_path}/public/system #{release_path}/public/system"
       #execute "ln -s /WescomArchive/db_images #{shared_path}/public/system/db_images && ln -s /WescomArchive/pdf_images #{shared_path}/public/system/pdf_images"
       execute "ln -s #{shared_path}/banner_images #{release_path}/public/images/banner_images"
