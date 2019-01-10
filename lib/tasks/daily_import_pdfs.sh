@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # load rvm ruby
-#source /usr/local/rvm/environments/ruby-1.9.3-p194@rails-3.2.11
+source /usr/local/rvm/environments/ruby-2.5.1@wescomarchive
 
 echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
