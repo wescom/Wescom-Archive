@@ -36,7 +36,7 @@ workers 3
 preload_app!
 
 # Min and Max threads per worker
-threads 4, 16
+threads 5, 5
 
 #app_dir = File.expand_path("../..", __FILE__)
 #shared_dir = "#{app_dir}/shared"
