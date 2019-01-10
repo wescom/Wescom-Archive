@@ -55,8 +55,6 @@
 								<div class="text-center">
 									<%= pdf.plan.pub_name if pdf.plan.present?  %> <%= pdf.section_letter %><%= pdf.page %>
 								</div>
-								<%= pdf.pubdate.strftime('%m/%d/%Y %T') %>
-								<%= Date.strptime(params[:date_from_select], "%m/%d/%Y %T") %>
 								<div class="text-center">
 									<%= link_to '<i class="fa fa-edit"></i>'.html_safe, edit_pdf_image_path(pdf,
 										:date_from_select=>params[:date_from_select], 
