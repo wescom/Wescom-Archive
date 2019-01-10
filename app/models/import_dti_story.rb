@@ -293,6 +293,7 @@ class ImportDtiStory
       return_string.gsub! '&#x2044', "/"
       return_string.gsub! '&#x201c', '"'
       return_string.gsub! '&#x201d', '"'
+      return_string = return_string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
       return_string
     else
       string
