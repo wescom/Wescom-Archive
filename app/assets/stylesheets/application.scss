@@ -70,6 +70,7 @@ td .btn { min-width: 0px !important;}
     font-weight: 100;
     letter-spacing: .05em;
 }
+.input-calendar { height: 35px; }
 .story-search .form-search-label { min-width: 250px; align-self: center; }
 .story-search .form-search-text-col { flex-grow: 1; }
 .story-search .form-search-text { width: 98%; min-width: 500px; margin: 5px 5px; padding-left: 5px;}
@@ -77,7 +78,7 @@ td .btn { min-width: 0px !important;}
 .story-search .form-search-select { width: 150px; height: 23px;}
 .story-search .form-search-select-today  { width: 150px; height: 35px;}
 .story-search .form-search-date-col { margin: 5px 5px; }
-.story-search .form-search-date-col input { width: 100px; }
+.story-search .form-search-date-col input { width: 100px; padding: 0 0; }
 .form-search-date-col #date_select{ width: 110px; text-align: center; }
 .story-search .form-search-button {
     border: 1px solid #02888f;
@@ -103,7 +104,7 @@ td .btn { min-width: 0px !important;}
 .image-search .form-search-select-sm { width: 50px; height: 23px;}
 .image-search .form-search-select-today  { width: 150px; height: 35px;}
 .image-search .form-search-date-col { margin: 5px 5px; }
-.image-search .form-search-date-col input { width: 100px; }
+.image-search .form-search-date-col input { width: 100px; padding: 0 0; }
 .form-search-date-col #date_select{ width: 110px; text-align: center; }
 .image-search .form-search-button {
     border: 1px solid #02888f;

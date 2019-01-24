@@ -12,12 +12,12 @@
 	<div class="page-content-search story-search">        
 		<%= form_tag search_today_path, :class => "form-inline", :method => :get do %>
 			<div class="d-flex flex-end align-items-center">
-				<div class="input-group form-search-date-col">
+				<div class="input-group date form-search-date-col" data-provide="datepicker">
 					<%= text_field_tag :paperdate, params[:paperdate], 
-						:class => "datepicker text-center", 
+						:class => "text-center form-control datepicker", 
 						:placeholder => "mm/dd/yyyy" %>
-				    <div class="input-group-append">
-						<i class='fa fa-calendar input-group-text'></i>
+				    <div class="input-group-addon">
+						<i class='fa fa-calendar input-group-text input-calendar'></i>
 				    </div>
 				</div>
 				<div class="form-search-select-col">
