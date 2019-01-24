@@ -139,19 +139,20 @@ $(document).ready(function(){
   
 	var todays_date = new Date();
 	var max_year = (todays_date.getFullYear()+5);
-	$(".short_date_picker").datepicker({ 
-		changeMonth: true, 
-		changeYear: true,
-		yearRange: "1992:"+max_year
-	});
-	$(".input_date_picker").datepicker({ 
-		altField: "#pubdate-alt",
-		altFormat: "yy-mm-d", 
-		changeMonth: true, 
-		changeYear: true,
-		yearRange: "1992:"+max_year
-	});
-	
+//	$(".short_date_picker").datepicker({ 
+//		changeMonth: true, 
+//		changeYear: true,
+//		yearRange: "1992:"+max_year
+//	});
+//	$(".input_date_picker").datepicker({ 
+//		altField: "#pubdate-alt",
+//		altFormat: "yy-mm-d", 
+//		changeMonth: true, 
+//		changeYear: true,
+//		yearRange: "1992:"+max_year
+//	});
+	$(".datepicker").attr("autocomplete", "off");
+		
 	$("#sidebar_today").hide();
 
   $(".toggle_hide").click(function () {
