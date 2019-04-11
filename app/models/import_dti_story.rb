@@ -144,7 +144,7 @@ class ImportDtiStory
       self.web_text = fix_escaped_elements(self.web_text) unless self.web_text.nil?
       self.web_text = handle_chapterheads_in_body(self.web_text) unless self.web_text.nil?
       self.web_text = self.web_text.encode('utf-8') unless self.web_text.nil?
-
+puts self.web_text
       self.toolbox1 = self.story_elements.select.reject{|x| x["storyElementName"] != "mug.line"}.collect{|x| x["elementStyleMarkUp"] }.join
       self.toolbox1 = fix_escaped_elements(self.toolbox1) unless self.toolbox1.nil?
       self.toolbox1 = handle_chapterheads_in_body(self.toolbox1) unless self.toolbox1.nil?

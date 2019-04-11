@@ -123,11 +123,11 @@ namespace :wescom do
         story.hl1 = dti_story.hl1.truncate(250) unless dti_story.hl1.nil?
         story.hl2 = dti_story.hl2.truncate(250) unless dti_story.hl2.nil?
         story.byline = dti_story.byline unless dti_story.byline.nil?
-        story.copy = dti_story.print_text.web_text.truncate(65500) unless dti_story.print_text.nil?
+        story.copy = dti_story.print_text.truncate(65500) unless dti_story.print_text.nil?
         story.sidebar_body = dti_story.toolbox1 unless dti_story.toolbox1.nil?
         story.tagline = dti_story.tagline unless dti_story.tagline.nil?
-        story.web_hl1 = dti_story.web_hl1.hl1.truncate(250) unless dti_story.web_hl1.nil?
-        story.web_hl2 = dti_story.web_hl2.hl1.truncate(250) unless dti_story.web_hl2.nil?
+        story.web_hl1 = dti_story.web_hl1.truncate(250) unless dti_story.web_hl1.nil?
+        story.web_hl2 = dti_story.web_hl2.truncate(250) unless dti_story.web_hl2.nil?
         story.web_text = dti_story.web_text.truncate(65500) unless dti_story.web_text.nil?
         story.toolbox2 = dti_story.toolbox2 unless dti_story.toolbox2.nil?
         story.toolbox3 = dti_story.toolbox3 unless dti_story.toolbox3.nil?
