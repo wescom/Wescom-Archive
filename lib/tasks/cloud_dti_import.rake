@@ -128,7 +128,7 @@ namespace :wescom do
         story.tagline = dti_story.tagline unless dti_story.tagline.nil?
         story.web_hl1 = dti_story.web_hl1 unless dti_story.web_hl1.nil?
         story.web_hl2 = dti_story.web_hl2 unless dti_story.web_hl2.nil?
-        story.web_text = dti_story.web_text.truncate(65535) unless dti_story.web_text.nil?
+        story.web_text = dti_story.web_text.truncate(65500) unless dti_story.web_text.nil?
         story.toolbox2 = dti_story.toolbox2 unless dti_story.toolbox2.nil?
         story.toolbox3 = dti_story.toolbox3 unless dti_story.toolbox3.nil?
         story.toolbox4 = dti_story.toolbox4 unless dti_story.toolbox4.nil?
