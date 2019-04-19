@@ -198,7 +198,7 @@ img.image_gallery_size, div.image_gallery_size {height: auto; width: 300px;}
 }
 
 img.spinner {
-		display: block;
+	display: block;
     margin-left: auto;
     margin-right: auto
 }
@@ -265,6 +265,12 @@ img.spinner {
 .pdf-gallery { padding: 20px 0px 20px 0px; }
 .pdf-gallery-item { font: normal 0.8em/145% Arial, Tahoma, sans-serif;; padding: 10px 5px; }
 .pdf-upload-box { width: 100%; min-height: 100px; border: solid lightgrey; padding: 30px; }
+
+/*** Ads ***/
+.ad-gallery {padding: 20px 0px 20px 0px}
+.ad-gallery-item {width: 250px; padding: 10px;}
+.ad-gallery-item-top {overflow: hidden; margin: 0 auto;}
+.card_section_img {max-height: 250px; max-width: 230px;}
 
 /*** Updates and Logs ***/
 #last_updated { font-size: .6em; font-style: italic; }

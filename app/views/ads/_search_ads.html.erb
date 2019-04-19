@@ -1,0 +1,32 @@
+<%= form_tag ads_path, :class => "form-inline", :method => :get do %>
+	<div class="d-flex flex-wrap justify-content-start align-items-center">
+		<div class="form-search-text-col">
+			<%= text_field_tag :search_query, params[:search_query], 
+				:class => "form-search-text", 
+				:placeholder => "search", 
+				:autofocus => true %>
+		</div>
+		<div class="d-flex justify-content-center align-items-center">
+			<div class="input-group date form-search-date-col" data-provide="datepicker">
+				<%= text_field_tag :date_from_select, params[:date_from_select], 
+					:class => "text-center form-control datepicker", 
+					:placeholder => "mm/dd/yyyy" %>
+			    <div class="input-group-addon">
+					<i class='fa fa-calendar input-group-text input-calendar'></i>
+			    </div>
+			</div>
+			-
+			<div class="input-group date form-search-date-col" data-provide="datepicker">
+				<%= text_field_tag :date_to_select, params[:date_to_select], 
+					:class => "text-center form-control datepicker", 
+					:placeholder => "mm/dd/yyyy" %>
+			    <div class="input-group-addon">
+					<i class='fa fa-calendar input-group-text input-calendar'></i>
+			    </div>
+			</div>
+		</div>
+		<div class="form-search-button-col">
+		 	<button class="btn-secondary form-search-button" type="submit"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+<% end %>

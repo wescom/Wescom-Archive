@@ -1,0 +1,55 @@
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>New Ad</h2>
+		</div>
+	</div>
+
+	<div class="page-content-body">
+		<%= form_for @ad, :html => { :multipart => true } do |form| %>
+			<%= render :partial => 'shared/error_messages', :locals => { :target => @ad } %>
+
+			<div class="form-group col-md-3">
+				<label for="image">Ad name:</label>
+				<%= form.text_field :ad_name, :required => true, :class => "" %>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="image">PDF file of ad:</label>
+				<%= form.file_field :image, accept: 'application/pdf', :required => true, :class => "" %>
+			</div>
+
+			<hr/>
+			<%= button_tag(:type => "submit", :id => "pdf_upload_submit", 
+				:class => "btn btn-primary", :'data-toggle' => "modal", :href => "#progressModal") do %>
+		    	Create
+			<% end %>
+			<%= form.submit "Cancel", :name => 'cancel_button', :class => 'btn btn-primary', :formnovalidate => true %>
+		</div>
+		<% end %>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="">Uploading Files</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+				<div class="modal-body text-center">
+					<br/>
+					<br/>
+					<img class="spinner" src="/images/Spinner.gif">
+					<br/>
+					<br/>
+					Please be patient while we upload your ad. Thank you.
+				</div>
+		    </div>
+		  </div>
+		</div>
+</div>

@@ -1,0 +1,71 @@
+<%= content_for :title do %>
+  <%= "#{params[:search_query]} - " if params[:search_query] -%>
+<% end %>
+
+<div class="page-content">
+	<div class="page-content-header">
+		<div class="d-flex justify-content-between align-items-end">
+			<h2>Ads</h2>
+			<div class="search-header">
+				<div>Archive Search Form (<%= number_with_delimiter(@total_ads_count, :delimiter => ',') %> archived ads)</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="page-content-search image-search">        
+		<%= render :partial => 'ads/search_ads' %>
+	</div>
+
+	<div class="page-content-body">
+		<% if @ads %>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@ads.results.total_pages * @ads.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @ads.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @ads.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+			<div class="ad-gallery">
+				<div class="d-flex flex-wrap justify-content-start">
+					<% @ads.results.each do |ad| %>
+						<div class="card text-center ad-gallery-item">
+							<div class="ad-gallery-item-top">
+								<%= link_to image_tag(ad.image(:large), :alt=>ad.ad_name, :class=>"card_section_img"), ad.image.url %>
+							</div>
+							<div class="card-block">
+								<p class="card-text">
+									<br/><%= ad.ad_name %>
+									<br/>Proof Date: <%= ad.proof_date.strftime('%m/%d/%Y') if ad.proof_date? %>
+								</p>
+								<% if admin? %>
+									<%= link_to icon('trash-o fa-lg'), 
+										ad_path(ad), 
+										:class => "",
+										:method=> :delete, :action => 'destroy',
+										data: {confirm:'Delete ad?'},
+										title: 'Delete', 'data-toggle' => 'tooltip', 'data-placement' => 'top' %>
+								<% end %>
+							</div>
+						</div>
+					<% end %>
+				</div>
+
+			</div>
+			<div class="search-pagination d-flex justify-content-between align-items-end">
+				<div class="search-result-totals">
+					Search Results: <%= number_with_delimiter(@ads.results.total_pages * @ads.results.count, :delimiter => ',') %>
+				</div>
+				<div class="flickr_pagination d-none d-sm-block">
+					<%= will_paginate @ads.results, :inner_window => 2, :outer_window => 0 %>
+				</div>
+				<div class="flickr_pagination d-block d-sm-none">
+					<%= will_paginate @ads.results, :inner_window => 2, :outer_window => 0, :page_links => false %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :pdf_images do
       get 'book', :on => :collection
     end
+    resources :ads
 
     resources :users, :only => [:index, :show, :edit, :update]
     resources :site_settings, :only => [:index, :edit, :update]
