@@ -47,6 +47,9 @@
 							 	:pub_select=>current_user.default_publication), 
 								:class => "nav-link" %>
 				</li>
+				<li class="nav-item">
+					<%= link_to "Ads", ads_path(),:class => "nav-link" %>
+				</li>
 				<div class="dropdown-divider"></div>
 				<% if admin? or edit? %>
 					<li class="nav-item dropdown">
