@@ -4,8 +4,14 @@ namespace :wescom do
     # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake wescom:pdf_import date=16-07-2018
     
     def import_files
+      # Get Newscycle Ad info to use when importing Ads
+      require 'csv'
+      csv_file = '/WescomArchive/archiveup/Newscycle_Ads.csv'
+      ad_info = CSV.open(csv_file, headers: :first_row).map(&:to_h)
+      #puts ad_info.inspect
+      
       files = get_daily_files
-      files.each {|file| process_file(file)} unless files.nil?
+      files.each {|file| process_file(file,ad_info)} unless files.nil?
     end
 
     def get_daily_files
@@ -27,26 +33,34 @@ namespace :wescom do
       pdf_files
     end
 
-    def process_file(file)
+    def process_file(file,ad_info)
       puts "Processing: #{file}"
       begin
         # filename example: 20671751R.pdf
-#ad = Ad.new(:image => File.open(file))
         filename = File.basename(file)
         path = File.path(file)
-        ad_name = filename.gsub(".PDF",'').gsub(".pdf",'')
+        ad_name = filename.gsub(".PDF",'').gsub(".pdf",'').gsub("v2-",'').gsub("v3-",'')
 
         ad_image = Ad.find_or_create_by(ad_name: ad_name)
         ad_image.image = File.open(file)
-        #ad_image.ad_id = filename.gsub('/\D{1,2}/','')
         ad_image.ad_name = ad_name
         ad_image.proof_date = File.mtime(file)
         ad_image.frontend_db = "DTI"
-
         #puts "ad_id: "+ad_image.ad_id.to_s
         #puts "ad_name: "+ad_image.ad_name
         #puts "proof_date: "+ad_image.proof_date.to_s
         #puts "frontend_db: "+ad_image.frontend_db
+
+        imported_ad_info = ad_info.select {|x| x["adName"] == ad_name}
+        ad_image.ad_id = imported_ad_info[0]["adId"]
+        ad_image.startDate = imported_ad_info[0]["startDate"]
+        ad_image.stopDate = imported_ad_info[0]["stopDate"]
+        ad_image.issues = imported_ad_info[0]["issues"]
+        ad_image.account = imported_ad_info[0]["account"]
+        ad_image.customerName = imported_ad_info[0]["customerName"]
+        ad_image.salesRepId = imported_ad_info[0]["salesRepId"]
+        ad_image.salesRepName = imported_ad_info[0]["salesRepName"]
+        
         ad_image.save!
         ad_image.index!
 

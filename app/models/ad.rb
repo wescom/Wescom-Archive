@@ -14,11 +14,19 @@ class Ad < ActiveRecord::Base
 
     searchable :auto_index => true, :auto_remove => true do
       # Search fields
-      integer :ad_id
+      text :ad_id
       text :ad_name
+      text :account
+      text :customerName
+      text :salesRepName
 
       # Sort fields - must use 'string' instead of 'text'
+      string :ad_id
+      string :ad_name
+      string :account
       time :proof_date
+      time :startDate
+      time :stopDate
 
     end
 end

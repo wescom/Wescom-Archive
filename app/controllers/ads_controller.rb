@@ -7,9 +7,21 @@ class AdsController < ApplicationController
           @ads = Ad.search do
             paginate(:page => params[:page], :per_page => 16)
             fulltext params[:search_query]
-            with(:proof_date).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
-            with(:proof_date).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
-            order_by :proof_date, :desc
+            any_of do
+                all_of do
+                    with(:startDate).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+                    with(:startDate).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+                    # need something true to avoid a failure when no date_to_select or date_from_select
+                    with(:proof_date).greater_than_or_equal_to("01/01/2000")
+                end
+                all_of do
+                    with(:stopDate).greater_than_or_equal_to(Date.strptime(params[:date_from_select], "%m/%d/%Y")) if params[:date_from_select].present?
+                    with(:stopDate).less_than_or_equal_to(Date.strptime(params[:date_to_select], "%m/%d/%Y")) if params[:date_to_select].present?
+                    # need something true to avoid a failure when no date_to_select or date_from_select
+                    with(:proof_date).greater_than_or_equal_to("01/01/2000")
+                end
+            end
+            order_by :startDate, :desc
         end
         rescue Errno::ECONNREFUSED
           render :text => "Search Server Down\n\n\n It will be back online shortly"
