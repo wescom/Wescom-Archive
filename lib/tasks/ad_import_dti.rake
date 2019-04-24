@@ -52,14 +52,16 @@ namespace :wescom do
         #puts "frontend_db: "+ad_image.frontend_db
 
         imported_ad_info = ad_info.select {|x| x["adName"] == ad_name}
-        ad_image.ad_id = imported_ad_info[0]["adId"]
-        ad_image.startDate = imported_ad_info[0]["startDate"]
-        ad_image.stopDate = imported_ad_info[0]["stopDate"]
-        ad_image.issues = imported_ad_info[0]["issues"]
-        ad_image.account = imported_ad_info[0]["account"]
-        ad_image.customerName = imported_ad_info[0]["customerName"]
-        ad_image.salesRepId = imported_ad_info[0]["salesRepId"]
-        ad_image.salesRepName = imported_ad_info[0]["salesRepName"]
+        if !imported_ad_info.empty?
+            ad_image.ad_id = imported_ad_info[0]["adId"]
+            ad_image.startDate = imported_ad_info[0]["startDate"]
+            ad_image.stopDate = imported_ad_info[0]["stopDate"]
+            ad_image.issues = imported_ad_info[0]["issues"]
+            ad_image.account = imported_ad_info[0]["account"]
+            ad_image.customerName = imported_ad_info[0]["customerName"]
+            ad_image.salesRepId = imported_ad_info[0]["salesRepId"]
+            ad_image.salesRepName = imported_ad_info[0]["salesRepName"]
+        end
         
         ad_image.save!
         ad_image.index!
