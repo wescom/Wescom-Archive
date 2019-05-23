@@ -67,7 +67,7 @@ namespace :wescom do
         #puts "Page: "+get_page(filename).to_s
         #puts "Pdf_text: "+pdftext
         pdf_image.save!
-#        pdf_image.index!
+        pdf_image.index!
 
         if file.include?('manual-import')
           newfile = '/WescomArchive/pdf-storage/archive-pdf/'+filename
