@@ -9,10 +9,7 @@ echo "$(date +%m/%d/%y\ %T)"
 cd /u/apps/wescomarchive/current
 bundle install>>/tmp/null
 
-echo "Import 4-20-17 Ads"
-bundle exec rake wescom:ad_import date=04-20-17 RAILS_ENV=production
-
-echo "Import 5-20-17 Ads"
-bundle exec rake wescom:ad_import date=05-20-17 RAILS_ENV=production
+echo "Import current months Ads"
+bundle exec rake wescom:ad_import RAILS_ENV=production
 
 echo "$(date +%m/%d/%y\ %T)"

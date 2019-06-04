@@ -15,10 +15,11 @@ namespace :wescom do
     end
 
     def get_daily_files
-      # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake wescom:pdf_import date=16-07-2018
+      # rake task accepts a date variable to force import of dates other than current month. ie: bundle exec rake wescom:pdf_import date=16-07-2018
       if ENV['date'].nil?
-        find_date = Date.today.strftime('%m-%d-%y')
-        puts "No date folder requested, defaulting to todays date: " + find_date
+        find_date = Date.today.strftime('%m-20-19')
+        puts find_date
+        puts "No date folder requested, defaulting to this month: " + find_date
         puts "   - to request importing of specific date folder, add date=MM-DD-YY"
       else
         find_date = ENV['date']
