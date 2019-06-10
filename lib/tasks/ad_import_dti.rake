@@ -46,7 +46,11 @@ namespace :wescom do
         ad_image.image = File.open(file)
         ad_image.ad_name = ad_name
         ad_image.proof_date = File.mtime(file)
-        ad_image.frontend_db = "DTI"
+        if Date.today.strftime('%m-%d-%y') > '06-01-2019'
+            ad_image.frontend_db = "Brainworks"
+        else
+            ad_image.frontend_db = "DTI"
+        end
         #puts "ad_id: "+ad_image.ad_id.to_s
         #puts "ad_name: "+ad_image.ad_name
         #puts "proof_date: "+ad_image.proof_date.to_s
