@@ -262,7 +262,7 @@ namespace :wescom do
       rescue Exception => e
         puts "Failed to Process File: #{filename}\n Error: #{e}\n\n"
         file = File.basename(filename)
-#        FileUtils.mv filename, '/WescomArchive/archiveup/import_failed/'+file
+        FileUtils.mv filename, '/WescomArchive/archiveup/import_failed/'+file
       end
     end
     
