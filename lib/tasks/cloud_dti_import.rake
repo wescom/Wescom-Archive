@@ -97,7 +97,6 @@ namespace :wescom do
         else
             story.pubdate = Chronic.parse(dti_story.rundate) unless dti_story.rundate.nil?
         end
-puts "**********-"+story.pubdate.to_s+"-***"
         story.publication = Publication.find_or_create_by(name: dti_story.edition_name) unless dti_story.edition_name.nil?
         story.section = Section.find_or_create_by(name: dti_story.pageset_name) unless dti_story.pageset_name.nil?
         story.pageset_letter = dti_story.pageset_letter unless dti_story.pageset_letter.nil?
