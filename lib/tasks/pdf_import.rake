@@ -57,7 +57,7 @@ namespace :wescom do
         pdftext.gsub! /\n/, " "                 # Clear newlines
         pdftext.gsub! "- ", ""                  # Clear hyphens from justication
         pdftext.gsub! /[^a-zA-Z0-9 -]/, ""        # Clear all non-alphanumeric characters
-        pdf_image.pdf_text = pdftext
+        pdf_image.pdf_text = pdftext.truncate(65500)
         
         #puts "Filename: "+filename
         #puts "PubDate: "+get_pubdate(filename).to_s
