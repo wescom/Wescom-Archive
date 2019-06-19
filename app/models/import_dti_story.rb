@@ -14,7 +14,7 @@ class ImportDtiStory
     attr_accessor :correction, :original_story_id
 
   def initialize(xml)
-    self.raw_xml = xml
+    self.raw_xml = fix_escaped_elements(xml)
 
 #    self.raw_xml = cleanup_problems_in_keywords(self.raw_xml)
 #    self.raw_xml = cleanup_media_originalcaption(self.raw_xml)
@@ -126,8 +126,9 @@ class ImportDtiStory
       if !self.byline.empty?
         self.paper = self.byline[1].nil? ? "" : self.byline[1]
         self.paper = self.paper.gsub(/<[^<>]*>/, "") unless self.paper.nil? #Remove all tags from string
+        self.paper = fix_escaped_elements(self.paper).truncate(250) unless self.paper.nil?
         self.byline = self.byline[0] unless self.byline[0].nil?
-        self.byline = fix_escaped_elements(self.byline) unless self.byline.nil?
+        self.byline = fix_escaped_elements(self.byline).truncate(250) unless self.byline.nil?
         self.byline = self.byline.gsub(/<[^<>]*>/, "") unless self.byline.nil? #Remove all tags from string
         self.byline = self.byline.gsub(/^By /, "") unless self.byline.nil?
       else
