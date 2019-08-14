@@ -4,7 +4,9 @@ class PdfImage < ActiveRecord::Base
   
   has_attached_file :image, 
       :styles => { 
-        :large => ["500x500>",:jpg]
+          :small => ["150x150>",:jpg],
+          :medium => ["300x300>",:jpg],
+          :large => ["500x500>",:jpg]
       },
       source_file_options:  { all: '-layers merge' },   #fixes transparency issue with PDFs
       :url => "/system/pdf_images/:id/:style_:basename.:extension",  
