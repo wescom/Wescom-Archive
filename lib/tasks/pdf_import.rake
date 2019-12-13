@@ -65,7 +65,7 @@ namespace :wescom do
         #puts "PubDate: "+pdf_image.pubdate.to_s
         #puts "Publication: "+pdf_image.publication.to_s
         #puts "Section Letter: "+pdf_image.section_letter
-        #puts "Section Name: "+pdf_image.section_name
+        puts "Section Name: "+pdf_image.section_name.inspect
         #puts "Page: "+pdf_image.page.to_s
         #puts "Pdf_text: "+pdftext
         pdf_image.save!
@@ -73,7 +73,7 @@ namespace :wescom do
 
         if file.include?('manual-import')
           newfile = '/WescomArchive/pdf-storage/archive-pdf/'+filename
-#          FileUtils.mv file, newfile
+          FileUtils.mv file, newfile
           puts "Moved to #{newfile}"
         end
 
@@ -139,7 +139,6 @@ namespace :wescom do
     def get_section_name(filename)
       array_of_letters = filename.match(/^(?:[^_]*_)?(.*?)(?:_[^_]*)?$/)
       section_name = array_of_letters[1]
-      puts "section_name: "+section_name
       return section_name
     end
 
