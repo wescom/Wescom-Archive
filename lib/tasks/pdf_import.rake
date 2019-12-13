@@ -138,8 +138,8 @@ namespace :wescom do
 
     def get_section_name(filename)
       array_of_letters = filename.match(/^(?:[^_]*_)?(.*?)(?:_[^_]*)?$/)
-      section_name = array_of_letters
-      #puts "section_name: "+section_name
+      section_name = array_of_letters[1]
+      puts "section_name: "+section_name
       return section_name
     end
 
