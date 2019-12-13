@@ -65,7 +65,7 @@ namespace :wescom do
         #puts "PubDate: "+pdf_image.pubdate.to_s
         #puts "Publication: "+pdf_image.publication.to_s
         #puts "Section Letter: "+pdf_image.section_letter
-        puts "Section Name: "+pdf_image.section_name.inspect
+        #puts "Section Name: "+pdf_image.section_name.inspect
         #puts "Page: "+pdf_image.page.to_s
         #puts "Pdf_text: "+pdftext
         pdf_image.save!
