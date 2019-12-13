@@ -14,15 +14,16 @@ namespace :wescom do
     def get_daily_files
       # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake wescom:pdf_import date=16-07-2018
       if ENV['date'].nil?
-        find_date = Date.today.strftime('%d-%m-%Y')
+        find_date = Date.today.strftime('%Y-%m-%d')
         puts "No date requested, defaulting to todays date: " + find_date
-        puts "   - to request importing of specific date, add date=DD-MM-YYYY"
+        puts "   - to request importing of specific date, add date=YYYY-MM-DD"
       else
         find_date = ENV['date']
         puts "Date requested: " +ENV['date']
       end
-      #find_date = "03-01-2019"
-      puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
+      #find_date = "2019-12-15"
+      #puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%m-%d-%Y')
+      puts "\nSearching for PDF files published on "+find_date.to_date.strftime('%Y-%m-%d')
       pdf_files = File.join("/","WescomArchive","pdf-storage","archive-pdf",'**','*'+find_date+'{*.PDF,*.pdf}')
       puts "Path: "+pdf_files
       pdf_files = Dir.glob(pdf_files)
@@ -41,6 +42,7 @@ namespace :wescom do
       puts "Processing: #{file}"
       begin
         # filename example: C01_NEWS MAIN_28-05-2010_.PDF
+        # new filename example: 2019-12-15_BUL_C01.pdf
         pdf_image = PdfImage.new(:image => File.open(file))
         filename = File.basename(file)
         path = File.path(file)
@@ -60,18 +62,18 @@ namespace :wescom do
         pdf_image.pdf_text = pdftext.truncate(65500)
         
         #puts "Filename: "+filename
-        #puts "PubDate: "+get_pubdate(filename).to_s
-        #puts "Publication: "+get_publication(path).to_s
-        #puts "Section Letter: "+get_section_letter(filename)
-        #puts "Section Name: "+get_section_name(filename)
-        #puts "Page: "+get_page(filename).to_s
+        #puts "PubDate: "+pdf_image.pubdate.to_s
+        #puts "Publication: "+pdf_image.publication.to_s
+        #puts "Section Letter: "+pdf_image.section_letter
+        #puts "Section Name: "+pdf_image.section_name
+        #puts "Page: "+pdf_image.page.to_s
         #puts "Pdf_text: "+pdftext
         pdf_image.save!
         pdf_image.index!
 
         if file.include?('manual-import')
           newfile = '/WescomArchive/pdf-storage/archive-pdf/'+filename
-          FileUtils.mv file, newfile
+#          FileUtils.mv file, newfile
           puts "Moved to #{newfile}"
         end
 
@@ -83,10 +85,11 @@ namespace :wescom do
   
     def get_pubdate(filename)
       array_of_numbers = filename.split(/\D{1,2}/)
-      year = array_of_numbers[-1]
-      month = array_of_numbers[-2]
-      day = array_of_numbers[-3]
-      return pubdate = Date::strptime(array_of_numbers[-2]+"-"+array_of_numbers[-3]+"-"+array_of_numbers[-1], "%m-%d-%Y")
+      year = array_of_numbers[0]
+      month = array_of_numbers[1]
+      day = array_of_numbers[-2]
+      pubdate = Date::strptime(array_of_numbers[1]+"-"+array_of_numbers[2]+"-"+array_of_numbers[0], "%m-%d-%Y")
+      return pubdate
     end
 
     def get_publication(path)
@@ -127,27 +130,22 @@ namespace :wescom do
     end
 
     def get_section_letter(filename)
-      array_of_letters = filename.split(/\d/)
-      section_letter = array_of_letters[0]
+      array_of_letters = filename.match(/(?<=_)[^_]{1}(?=[^_]*$)/)
+      section_letter = array_of_letters
       #puts "section_letter: "+section_letter
       return section_letter
     end
 
     def get_section_name(filename)
-      array_of_letters = filename.split(/\d+/)
-      array_of_letters[1].gsub! "_", ""
-      section_name = array_of_letters[1]
+      array_of_letters = filename.match(/^(?:[^_]*_)?(.*?)(?:_[^_]*)?$/)
+      section_name = array_of_letters
       #puts "section_name: "+section_name
       return section_name
     end
 
     def get_page(filename)
-      array_of_numbers = filename.split(/\D{1,3}/)
-      if array_of_numbers[1].to_i == 0
-        return array_of_numbers[0].to_i
-      else
-        return array_of_numbers[1].to_i
-      end
+      page = filename.match(/(\d+)(?!.*\d)/).to_s.to_i
+      return page
     end
     
     import_files
