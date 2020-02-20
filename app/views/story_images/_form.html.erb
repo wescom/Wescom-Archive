@@ -74,12 +74,3 @@
 		<%= @image.last_refreshed_time.strftime('%m/%d/%Y %I:%M%p') unless @image.last_refreshed_time.nil? %><br/>
 	</div>
 </div>
-
-/*
-<div class="form-group">
-	<label for="forsale" class="col-form-label">Set Image For Sale (ignore any search filters on WescomPhotos)?</label>
-	<div class="col">
-		<%= form.select :forsale, options_for_select(StoryImage::FORSALE_OPTIONS, :selected=>@image.forsale) %>
-	</div>
-</div>
-*/
