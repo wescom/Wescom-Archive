@@ -29,9 +29,9 @@ set :keep_releases, 5
 #ARCHIVE1 = "192.168.112.109"
 #ARCHIVE2 = "192.168.112.87"
 #ARCHIVE3 = "192.168.112.93"
-ARCHIVE1 = "archive1.wescompapers.com"
-ARCHIVE2 = "archive2.wescompapers.com"
-ARCHIVE3 = "archive3.wescompapers.com"
+ARCHIVE1 = "archive1.bendbulletin.com"
+ARCHIVE2 = "archive2.bendbulletin.com"
+ARCHIVE3 = "archive3.bendbulletin.com"
 role :web, ARCHIVE1
 role :app, ARCHIVE1
 role :app, ARCHIVE2, :solr => true

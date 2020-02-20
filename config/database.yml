@@ -22,5 +22,5 @@ production:
     username: wescom_archive
     password: u5VZPqgZYxKbI4msRg25w
 #    host: 172.16.128.102
-    host: archive3.wescompapers.com
+    host: archive3.bendbulletin.com
     socket: /var/run/mysqld/mysqld.sock
