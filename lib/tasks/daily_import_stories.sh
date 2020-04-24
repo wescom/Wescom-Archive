@@ -11,6 +11,12 @@ bundle install>>/tmp/null
 
 echo "Import Daily Stories"
 #bundle exec rake wescom:dti_import RAILS_ENV=production
-bundle exec rake wescom:cloud_dti_import RAILS_ENV=production
+#bundle exec rake wescom:cloud_dti_import RAILS_ENV=production
+
+# Update any changes to yesterday's stories and import any missing stories
+bundle exec rake townnews:rss_import date=$(date -d "1 days ago" +%m/%d/%Y) RAILS_ENV=production
+
+# Import today's stories. Any story with a startdate time after NOW will be excluded because it is not live yet.
+bundle exec rake townnews:rss_import date=$(date +%m/%d/%Y) RAILS_ENV=production
 
 echo "$(date +%m/%d/%y\ %T)"
