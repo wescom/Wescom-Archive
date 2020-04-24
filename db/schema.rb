@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_224218) do
+ActiveRecord::Schema.define(version: 2020_04_13_230920) do
 
   create_table "ads", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "ad_id"
@@ -28,6 +28,26 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.string "customerName"
     t.string "salesRepId"
     t.string "salesRepName"
+  end
+
+  create_table "authors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "authors_stories", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_id"
+    t.integer "author_id"
+    t.index ["author_id"], name: "index_authors_stories_on_author_id"
+    t.index ["story_id"], name: "index_authors_stories_on_story_id"
+  end
+
+  create_table "authors_story_images", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_image_id"
+    t.integer "author_id"
+    t.index ["author_id"], name: "index_authors_story_images_on_author_id"
+    t.index ["story_image_id"], name: "index_authors_story_images_on_story_image_id"
   end
 
   create_table "cart_items", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -127,6 +147,26 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.string "search_for_caption_text2"
   end
 
+  create_table "flags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "flags_stories", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_id"
+    t.integer "flag_id"
+    t.index ["flag_id"], name: "index_flags_stories_on_flag_id"
+    t.index ["story_id"], name: "index_flags_stories_on_story_id"
+  end
+
+  create_table "flags_story_images", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_image_id"
+    t.integer "flag_id"
+    t.index ["flag_id"], name: "index_flags_story_images_on_flag_id"
+    t.index ["story_image_id"], name: "index_flags_story_images_on_story_image_id"
+  end
+
   create_table "keywords", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "text"
     t.datetime "created_at", null: false
@@ -138,6 +178,13 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.integer "keyword_id"
     t.index ["keyword_id"], name: "index_keywords_stories_on_keyword_id"
     t.index ["story_id"], name: "index_keywords_stories_on_story_id"
+  end
+
+  create_table "keywords_story_images", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_image_id"
+    t.integer "keyword_id"
+    t.index ["keyword_id"], name: "index_keywords_story_images_on_keyword_id"
+    t.index ["story_image_id"], name: "index_keywords_story_images_on_story_image_id"
   end
 
   create_table "locations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -264,6 +311,20 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.integer "section_category_id"
   end
 
+  create_table "sections_stories", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_id"
+    t.integer "section_id"
+    t.index ["section_id"], name: "index_sections_stories_on_section_id"
+    t.index ["story_id"], name: "index_sections_stories_on_story_id"
+  end
+
+  create_table "sections_story_images", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "story_image_id"
+    t.integer "section_id"
+    t.index ["section_id"], name: "index_sections_story_images_on_section_id"
+    t.index ["story_image_id"], name: "index_sections_story_images_on_story_image_id"
+  end
+
   create_table "site_settings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.text "site_announcement"
     t.boolean "show_site_announcement"
@@ -319,6 +380,8 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.text "htmltext"
     t.boolean "approved"
     t.string "web_pubnum"
+    t.binary "uuid", limit: 16
+    t.string "weblink"
     t.index ["categoryname"], name: "index_stories_on_categoryname"
     t.index ["doc_id"], name: "index_stories_on_doc_id"
     t.index ["plan_id"], name: "index_stories_on_plan_id"
@@ -358,6 +421,9 @@ ActiveRecord::Schema.define(version: 2019_04_19_224218) do
     t.datetime "expire_date"
     t.string "forsale"
     t.string "media_category"
+    t.binary "uuid", limit: 16
+    t.datetime "pubdate"
+    t.string "weblink"
     t.index ["image_updated_at"], name: "index_story_images_on_image_updated_at"
     t.index ["media_id"], name: "index_story_images_on_media_id"
     t.index ["story_id"], name: "index_story_images_on_story_id"

@@ -1,6 +1,8 @@
 class Section < ActiveRecord::Base
-  has_many :stories
-  belongs_to :section_category
+#  has_many :stories
+  belongs_to :section_category, optional: true
+  has_and_belongs_to_many :stories
+  has_and_belongs_to_many :story_images
 
   def self.order_by_category_plus_name
     includes('section_category').order('section_categories.name').order('sections.name')

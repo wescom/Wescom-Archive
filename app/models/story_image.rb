@@ -1,5 +1,9 @@
 class StoryImage < ActiveRecord::Base
   belongs_to :story, optional: true
+  has_and_belongs_to_many :keywords
+  has_and_belongs_to_many :authors
+  has_and_belongs_to_many :sections, optional: true
+  has_and_belongs_to_many :flags
   has_many :logs, :dependent => :destroy
   
   FORSALE_OPTIONS = ["", "For Sale", "NotForSale"]

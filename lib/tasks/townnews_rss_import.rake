@@ -7,14 +7,28 @@ namespace :townnews do
 
         def import_files
             desc "Import TownNews RSS story/Image export"
-            url = 'https://www.bendbulletin.com/search/?q="Elixir of Love"&t=article&l=100&s=start_time&sd=desc&d=03/05/2020&c=*lifestyle/arts*&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
 
+            # rake task accepts a date variable to force import of dates other than today. ie: bundle exec rake townnews:rss_import date=04/16/2020
+            if ENV['date'].nil?
+              find_date = Date.today.strftime('%m/%d/%Y')
+              puts "No date requested, defaulting to todays date: " + find_date
+              puts "   - to request importing of specific date, add date=MM/DD/YYYY"
+            else
+              find_date = ENV['date']
+              puts "Date requested: " +ENV['date']
+            end
+
+            # fyi... TownNews will only export stories 'published' based on startdate AND starttime. 
+            # If a story does not publish until an hour later than it will not be included in the rss feed.
+            url = 'https://www.bendbulletin.com/search/?q=&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
             xml_raw = Nokogiri::XML(open(url), nil, "UTF-8").to_s
             xml_parsed = Crack::XML.parse(xml_raw)
 
             xml_tag = xml_parsed["xml"]
             item_tags = Array.wrap(xml_parsed["xml"]["item"])
-        
+
+            num_stories = 0
+            num_images = 0
             item_tags.each do |item|
                 #puts "Importing "+item["uuid"]+" - "+item["headline"]
 
@@ -30,9 +44,9 @@ namespace :townnews do
                 #puts uuid_to_s(story.uuid)
 
                 if story.created_at.nil?
-                    puts "\n   * created at "+Time.now.strftime('%m/%d/%y %r')
+                    puts "\n* created at "+Time.now.strftime('%m/%d/%Y %r')
                 else
-                    puts "\n   * updated at "+story.updated_at.strftime('%m/%d/%y %r')
+                    puts "\n* updated at "+story.updated_at.strftime('%m/%d/%Y %r')
                 end
 
                 story.doc_id = 0            # TownNews does not have an id, uses uuid instead                
@@ -69,24 +83,20 @@ namespace :townnews do
                 story.paper = Paper.find_or_create_by(name: paper) unless paper.nil?
 
                 story.copy = item["description"].truncate(65500) unless item["description"].nil?
-#                story.copy = story.copy.truncate(65500) unless item["description"].nil?
 
                 # import side_body, toolbox, extra text
-                asset_facts = Array.wrap(item["asset_facts"]) unless item["asset_facts"].nil?
                 facts = ""
+                asset_facts = Array.wrap(item["asset_facts"]["asset_fact"]) unless item["asset_facts"].nil?
                 unless asset_facts.nil?
                     asset_facts.each do |asset_fact|
-                        fact_title = asset_fact["fact_title"].to_s
-                        fact_content = asset_fact["fact_content"]
-                        fact = ""
-                        unless asset_facts.nil?
-                            fact_content_p = ""
-                            fact_content["p"].each do |p|
-                                fact_content_p += "<p>"+ p + "</p>"
+                        facts = facts + "<p><strong>" + asset_fact["fact_title"] + "</strong></p>"
+                        fact_content = Array.wrap(asset_fact["fact_content"]["p"]) unless asset_fact["fact_content"].nil?
+                        unless fact_content.nil?
+                            fact_content.each do |p|
+                                facts = facts + "<p>" + p + "</p>"
                             end
-                            fact = "<p><strong>"+fact_title+"</strong></p>" + fact_content_p + "\n\n"
+                            facts = facts + "<p> </p>"
                         end
-                        facts += fact 
                     end
                 end
                 story.sidebar_body = facts
@@ -95,9 +105,46 @@ namespace :townnews do
                 story.kicker = item["kicker"] unless item["kicker"].nil?
                 #story.hammer = item["hammer"] unless item["hammer"].nil?
 
+                # import keyword records
+                keywords = Array.wrap(item["keywords"]["keyword"]) unless item["keywords"].nil?
+                unless keywords.nil?
+                    keywords.each do |x|
+                        keyword = Keyword.find_or_create_by(text: x)
+                        story.keywords << keyword unless story.keywords.include?(keyword)
+                    end
+                end
+
+                # import author records
+                authors = Array.wrap(item["authors"]["author"]) unless item["authors"].nil?
+                unless authors.nil?
+                    authors.each do |x|
+                        author = Author.find_or_create_by(name: x)
+                        story.authors << author unless story.authors.include?(author)
+                    end
+                end
+
+                # import section records
+                sections = Array.wrap(item["sections"]["section"]) unless item["sections"].nil?
+                unless sections.nil?
+                    sections.each do |x|
+                        section = Section.find_or_create_by(name: x)
+                        story.sections << section unless story.sections.include?(section)
+                    end
+                end
+
+                # import flag records
+                flags = Array.wrap(item["flags"]["flag"]) unless item["flags"].nil?
+                unless flags.nil?
+                    flags.each do |x|
+                        flag = Flag.find_or_create_by(name: x)
+                        story.flags << flag unless story.flags.include?(flag)
+                    end
+                end
+
                 # Import images attached to story
                 media_tags = Array.wrap(item["multimedia"]["media"]) unless item["multimedia"].nil?
                 unless media_tags.nil?
+                    media_tags = media_tags.reject { |array_item| array_item["uuid"].nil? }
                     media_tags.each do |media_tag|
                         media_uuid = s_to_uuid(media_tag["uuid"])
 
@@ -114,16 +161,48 @@ namespace :townnews do
                         media.media_source = media_tag["source"] unless media_tag["source"].nil?
                         media.media_webcaption = media_tag["caption"].gsub("</p><p>","\n").gsub(/<[^<>]*>/, "") unless media_tag["caption"].nil?
                         media.media_byline = media_tag["byline"] unless media_tag["byline"].nil?
-                        media.media_status = media_tag["StatusName"] unless media_tag["StatusName"].nil?
-                        media.media_category = media_tag["CategoryName"] unless media_tag["CategoryName"].nil?
                         media.media_type = File.extname(media.image_file_name).strip.downcase[1..-1] unless media.image_file_name.nil?
                         media.forsale = media_tag["forSale"] unless media_tag["forSale"].nil?
-
-#import sections, flags, keywords
 
                         media.pubdate = (media_tag["pubdate"].nil? ? Time.now : media_tag["pubdate"])
                         media.publish_status = (media_tag["isPublished"] == 'true' ? "Published" : "Attached")
 
+                        # import image keyword records
+                        image_keywords = Array.wrap(media_tag["keywords"]["keyword"]) unless media_tag["keywords"].nil?
+                        unless image_keywords.nil?
+                            image_keywords.each do |x|
+                                keyword = Keyword.find_or_create_by(text: x)
+                                media.keywords << keyword unless media.keywords.include?(keyword)
+                            end
+                        end
+
+                        # import image photographer 'author' records
+                        image_authors = Array.wrap(media_tag["photographers"]["photographer"]) unless media_tag["photographers"].nil?
+                        unless image_authors.nil?
+                            image_authors.each do |x|
+                                author = Author.find_or_create_by(name: x)
+                                media.authors << author unless media.authors.include?(author)
+                            end
+                        end
+
+                        # import image section records
+                        image_sections = Array.wrap(media_tag["sections"]["section"]) unless media_tag["sections"].nil?
+                        unless image_sections.nil?
+                            image_sections.each do |x|
+                                section = Section.find_or_create_by(name: x)
+                                media.sections << section unless media.sections.include?(section)
+                            end
+                        end
+
+                        # import image flag records
+                        image_flags = Array.wrap(media_tag["flags"]["flag"]) unless media_tag["flags"].nil?
+                        unless image_flags.nil?
+                            image_flags.each do |x|
+                                flag = Flag.find_or_create_by(name: x)
+                                media.flags << flag unless media.flags.include?(flag)
+                            end
+                        end
+                        
                         media.update_attributes(uuid: s_to_uuid(media_tag["uuid"]), media_name: media_tag["title"])
                         #puts '   Image: #'+media.id.to_s + " - " + uuid_to_s(media.uuid) + " - " + media.media_name
                     end
@@ -135,44 +214,17 @@ namespace :townnews do
                 # Display imported story record
                 puts '   Story: #'+story.id.to_s + " - " + uuid_to_s(story.uuid) + " - " + story.hl1
                 puts "      Errors: "+story.errors.full_messages.inspect if story.errors.present?
+                num_stories += 1                        
                 unless story.story_images.nil?
                     story.story_images.each do |image|
                         puts '      Image: #'+image.id.to_s + " - " + image.media_name
-                    end
-                end
-            
-                # import author records
-                authors = Array.wrap(item["authors"]["author"]) unless item["authors"].nil?
-                unless authors.nil?
-                    authors.each do |x|
-#                       author = story.authors.find_or_create_by(text: x)
-                    end
-                end
-
-                # import section records
-                sections = Array.wrap(item["sections"]["section"]) unless item["sections"].nil?
-                unless sections.nil?
-                    sections.each do |x|
-    #                    section = story.sections.find_or_create_by(text: x)
-                    end
-                end
-
-                # import keyword records
-                keywords = Array.wrap(item["keywords"]["keyword"]) unless item["keywords"].nil?
-                unless keywords.nil?
-                    keywords.each do |x|
-                        keyword = story.keywords.find_or_create_by(text: x)
-                    end
-                end
-
-                # import flag records
-                flags = Array.wrap(item["flags"]["flag"]) unless item["flags"].nil?
-                unless flags.nil?
-                    flags.each do |x|
-    #                    flag = story.flags.find_or_create_by(text: x)
+                        num_images += 1                        
                     end
                 end
             end
+            puts "\nTotal imported for date " + find_date
+            puts "  Stories: " + num_stories.to_s
+            puts "  Images:  " + num_images.to_s
         end
 
 

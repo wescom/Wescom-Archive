@@ -1,10 +1,13 @@
 class Story < ActiveRecord::Base
   belongs_to :publication, optional: true
-  belongs_to :section, optional: true
+#  belongs_to :section, optional: true
   belongs_to :paper, optional: true
   belongs_to :plan, optional: true
 
   has_and_belongs_to_many :keywords
+  has_and_belongs_to_many :authors
+  has_and_belongs_to_many :sections, optional: true
+  has_and_belongs_to_many :flags
   has_many :story_topics
   has_many :topics, :through => :story_topics
   has_many :correction_links
