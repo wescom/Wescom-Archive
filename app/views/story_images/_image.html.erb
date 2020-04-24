@@ -5,7 +5,11 @@
 		<% if !image.media_printcaption.nil? %>
 			<%= image.media_printcaption %>
 		<% else %>
-			<%= image.media_originalcaption %>
+			<% if !image.media_webcaption.nil? %>
+				<%= image.media_webcaption %>
+			<% else %>
+				<%= image.media_originalcaption %>
+			<% end %>
 		<% end %>
 	</div>
 </div>

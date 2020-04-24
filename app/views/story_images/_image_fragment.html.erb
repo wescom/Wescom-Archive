@@ -7,10 +7,12 @@
 		<%= link_to text_for_image_link(image_fragment), image_fragment %>
 		<p>
 			<% if image_fragment.media_printcaption && image_fragment.media_printcaption.length > 0 %>
-				<%= strip_subhead_tags(image_fragment.media_printcaption)[0..250].html_safe %>
+				<%= strip_subhead_tags(image_fragment.media_printcaption)[0..250].html_safe  unless image_fragment.media_printcaption.nil?%>
 			<% else %>
-				<% if image_fragment.media_originalcaption %>
-					<%= strip_subhead_tags(image_fragment.media_originalcaption)[0..250].html_safe %>
+				<% if image_fragment.media_webcaption && image_fragment.media_webcaption.length > 0%>
+					<%= strip_subhead_tags(image_fragment.media_webcaption)[0..250].html_safe unless image_fragment.media_webcaption.nil? %>
+				<% else %>
+					<%= strip_subhead_tags(image_fragment.media_originalcaption)[0..250].html_safe unless image_fragment.media_originalcaption.nil? %>
 				<% end %>
 			<% end %>
 		</p>
