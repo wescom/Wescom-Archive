@@ -29,6 +29,11 @@ namespace :townnews do
 
             num_stories = 0
             num_images = 0
+            warnings_log = ""
+            errors_log = ""
+
+            puts "\nImporting for date: " + find_date
+            puts "----------------------------------"
             item_tags.each do |item|
                 #puts "Importing "+item["uuid"]+" - "+item["headline"]
 
@@ -43,10 +48,10 @@ namespace :townnews do
                 #puts story.id
                 #puts uuid_to_s(story.uuid)
 
-                if story.created_at.nil?
-                    puts "\n* created at "+Time.now.strftime('%m/%d/%Y %r')
+                if ((story.updated_at - story.created_at) * 24 * 60 * 60).to_i < 10
+                    puts "\nCreated at "+Time.now.strftime('%m/%d/%Y %r')
                 else
-                    puts "\n* updated at "+story.updated_at.strftime('%m/%d/%Y %r')
+                    puts "\nUpdated at "+story.updated_at.strftime('%m/%d/%Y %r')
                 end
 
                 story.doc_id = 0            # TownNews does not have an id, uses uuid instead                
@@ -166,6 +171,7 @@ namespace :townnews do
 
                         media.pubdate = (media_tag["pubdate"].nil? ? Time.now : media_tag["pubdate"])
                         media.publish_status = (media_tag["isPublished"] == 'true' ? "Published" : "Attached")
+                        media.last_refreshed_time = media_tag["lastupdated"].nil? unless media_tag["lastupdated"].nil?
 
                         # import image keyword records
                         image_keywords = Array.wrap(media_tag["keywords"]["keyword"]) unless media_tag["keywords"].nil?
@@ -218,13 +224,30 @@ namespace :townnews do
                 unless story.story_images.nil?
                     story.story_images.each do |image|
                         puts '      Image: #'+image.id.to_s + " - " + image.media_name
+                        if image.image_file_size.nil?
+                           puts "      *** WARNING: Imported image missing content"
+                           warnings_log = warnings_log + "\nImported image missing content "
+                           warnings_log = warnings_log + "\n   Story: #" + story.id.to_s + " - " + story.hl1
+                           warnings_log = warnings_log + "\n   Image: #" + image.id.to_s + " - " + image.media_name
+                        end
                         num_images += 1                        
                     end
                 end
             end
             puts "\nTotal imported for date " + find_date
+            puts "-------------------"
             puts "  Stories: " + num_stories.to_s
             puts "  Images:  " + num_images.to_s
+            
+            # Display Warnings\Errors
+            if warnings_log.length > 0
+                puts "\n Warnings:"
+                puts "-------------------" + warnings_log
+            end
+            if errors_log.length > 0
+                puts "\n Errors:"
+                puts "-------------------" + errors_log
+            end
         end
 
 
