@@ -13,6 +13,7 @@ namespace :townnews do
               find_date = Date.today.strftime('%m/%d/%Y')
               puts "No date requested, defaulting to todays date: " + find_date
               puts "   - to request importing of specific date, add date=MM/DD/YYYY"
+              puts "   - to request importing of date range, add 'startdate=MM/DD/YYYY' AND 'stopdate=MM/DD/YYYY'" 
             else
               find_date = ENV['date']
               puts "Date requested: " +ENV['date']
@@ -87,7 +88,7 @@ namespace :townnews do
                 story.byline = byline
                 story.paper = Paper.find_or_create_by(name: paper) unless paper.nil?
 
-                story.copy = item["description"].truncate(65500).mb_chars.normalize(:kd) unless item["description"].nil?
+                story.copy = item["description"].truncate(65500).mb_chars.normalize(:kd).unaccent unless item["description"].nil?
 
                 # import side_body, toolbox, extra text
                 facts = ""

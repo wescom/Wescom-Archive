@@ -25,6 +25,7 @@ gem 'yomu'
 gem 'double-bag-ftps'
 gem 'crack'
 gem 'rss'
+gem 'sixarm_ruby_unaccent' # used to unaccent foreign characters
 
 #gem 'activerecord-mysql-adapter'
 #gem 'net-ssh', '< 2.8.0'
