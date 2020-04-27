@@ -277,6 +277,24 @@ namespace :townnews do
             return uuid
         end
 
-        import_files
+
+        # Check for startdate and stopdate range
+        if !ENV['startdate'].nil? or !ENV['stopdate'].nil?
+            if !ENV['startdate'].nil? and !ENV['stopdate'].nil?
+                startdate = Date.strptime(ENV['startdate'], '%m/%d/%Y')
+                stopdate = Date.strptime(ENV['stopdate'], '%m/%d/%Y')
+                while (stopdate - startdate).to_i >= 0
+                    ENV['date'] = startdate.strftime('%m/%d/%Y')
+                    import_files
+                    startdate = startdate + 1
+                end
+            else
+                puts "Requested date error:"
+                puts "   - to request importing of date range, add 'startdate=MM/DD/YYYY' AND 'stopdate=MM/DD/YYYY'" 
+            end
+        else
+            import_files
+        end
+
     end
 end
