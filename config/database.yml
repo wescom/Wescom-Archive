@@ -18,7 +18,7 @@ test:
 
 production:
     adapter: mysql2
-	encoding: utf8
+    encoding: utf8
     database: archive_production
     username: wescom_archive
     password: u5VZPqgZYxKbI4msRg25w
