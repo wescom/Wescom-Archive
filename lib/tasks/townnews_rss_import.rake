@@ -21,7 +21,7 @@ namespace :townnews do
 
             # fyi... TownNews will only export stories 'published' based on startdate AND starttime. 
             # If a story does not publish until an hour later than it will not be included in the rss feed.
-            url = 'https://www.bendbulletin.com/search/?q=scoreboard&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
+            url = 'https://www.bendbulletin.com/search/?q=&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
             xml_raw = Nokogiri::XML(open(url), nil, "UTF-8").to_s
             xml_parsed = Crack::XML.parse(xml_raw)
 
@@ -70,7 +70,7 @@ namespace :townnews do
 
                 story.hl1 = item["headline"].truncate(250) unless item["headline"].nil?
                 story.hl2 = item["subheadline"].truncate(250) unless item["subheadline"].nil?
-puts '   Story hl1: '+story.hl1
+                #puts '   Story hl1: '+story.hl1
 
                 byline = item["byline"]
                 unless byline.nil?
@@ -91,8 +91,8 @@ puts '   Story hl1: '+story.hl1
 
                 # import story body, truncating to max length and removing accent characters
                 story.copy = item["description"].truncate(65500).unaccent unless item["description"].nil?
-story.copy = cleanup_text(story.copy)
-puts story.copy
+                story.copy = cleanup_text(story.copy)
+                #puts story.copy
 
                 # import side_body, toolbox, extra text
                 facts = ""
