@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_230920) do
+ActiveRecord::Schema.define(version: 2020_04_30_230108) do
 
   create_table "ads", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "ad_id"
@@ -348,7 +348,7 @@ ActiveRecord::Schema.define(version: 2020_04_13_230920) do
     t.integer "section_id"
     t.integer "paper_id"
     t.string "hl2"
-    t.string "tagline"
+    t.text "tagline"
     t.text "sidebar_body"
     t.string "project_group"
     t.string "frontend_db"
