@@ -21,7 +21,7 @@ namespace :townnews do
 
             # fyi... TownNews will only export stories 'published' based on startdate AND starttime. 
             # If a story does not publish until an hour later than it will not be included in the rss feed.
-            url = 'https://www.bendbulletin.com/search/?q=&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
+            url = 'https://www.bendbulletin.com/search/?q=scoreboard&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
             xml_raw = Nokogiri::XML(open(url), nil, "UTF-8").to_s
             xml_parsed = Crack::XML.parse(xml_raw)
 
@@ -70,6 +70,7 @@ namespace :townnews do
 
                 story.hl1 = item["headline"].truncate(250) unless item["headline"].nil?
                 story.hl2 = item["subheadline"].truncate(250) unless item["subheadline"].nil?
+puts '   Story hl1: '+story.hl1
 
                 byline = item["byline"]
                 unless byline.nil?
@@ -90,6 +91,8 @@ namespace :townnews do
 
                 # import story body, truncating to max length and removing accent characters
                 story.copy = item["description"].truncate(65500).unaccent unless item["description"].nil?
+story.copy = cleanup_text(story.copy)
+puts story.copy
 
                 # import side_body, toolbox, extra text
                 facts = ""
@@ -278,8 +281,59 @@ namespace :townnews do
             uuid = uuid.pack('n*')                      # pack array into a binary sequence for storing
             return uuid
         end
+        
+        def self.cleanup_text(file_string)
+          file_string.gsub!("\xEF\xBB\xBF", ' ')    #BOMS
+          file_string.gsub!("\xE2\x80\xA8", ' ')    #BOMS
+          file_string.gsub!("\xE2\x80\x89", ' ')   #BOMS
+          file_string.gsub!("\xE2\x80\x82", ' ')    #EM Space
+          file_string.gsub!("\xE2\x80\x83", ' ')    #EM Space
+          file_string.gsub!("\xE2\x81\x84", '/')    #BOMS
+          file_string.gsub!("\xC2\x82", ',')   # High code comma
+          file_string.gsub!("\xC2\x84", ',,')  # High code double comma
+          file_string.gsub!("\xC2\x85", '...') # Tripple dot
+          file_string.gsub!("\xC2\x88", '^')   # High carat
+          file_string.gsub!("\xC2\x91", "'")   # Forward single quote
+          file_string.gsub!("\xC2\x92", "'")   # Reverse single quote
+          file_string.gsub!("\xC2\x93", '"')   # Forward double quote
+          file_string.gsub!("\xC2\x94", '"')   # Reverse double quote
+          file_string.gsub!("\xC2\x95", ' ')
+          file_string.gsub!("\xC2\x96", '-')   # High hyphen
+          file_string.gsub!("\xC2\x97", '--')  # Double hyphen
+          file_string.gsub!("\xC2\x99", ' ')
+          file_string.gsub!("\xC2\xa0", ' ')
+          file_string.gsub!("\xC2\xa6", '|')   # Split vertical bar
+          file_string.gsub!("\xC2\xab", '<<')  # Double less than
+          file_string.gsub!("\xC2\xbb", '>>')  # Double greater than
+          file_string.gsub!("\xE2\x80\xA9", '')    #
+          file_string.gsub!("\xE2\x85\x90", '1/7')    #one seventh
+          file_string.gsub!("\xE2\x85\x91", '1/9')    #one ninth
+          file_string.gsub!("\xE2\x85\x92", '1/10')    #one tenth
+          file_string.gsub!("\xE2\x85\x93", '1/3')    #one third
+          file_string.gsub!("\xE2\x85\x94", '2/3')    #two third
+          file_string.gsub!("\xE2\x85\x95", '1/5')    #one fifth
+          file_string.gsub!("\xE2\x85\x96", '2/5')    #two fifth
+          file_string.gsub!("\xE2\x85\x97", '3/5')    #three fifth
+          file_string.gsub!("\xE2\x85\x98", '4/5')    #four fifth
+          file_string.gsub!("\xE2\x85\x99", '1/6')    #one sixth
+          file_string.gsub!("\xE2\x85\x9A", '5/6')    #five sixth
+          file_string.gsub!("\xE2\x85\x9B", '1/8')    #one eighth
+          file_string.gsub!("\xE2\x85\x9C", '3/8')    #three eighth
+          file_string.gsub!("\xE2\x85\x9D", '5/8')    #five eighth
+          file_string.gsub!("\xE2\x85\x9E", '7/8')    #seven eighth
+          file_string.gsub!("\xC2\xbc", '1/4') # one quarter
+          file_string.gsub!("\xC2\xbd", '1/2') # one half
+          file_string.gsub!("\xC2\xbe", '3/4') # three quarters
+          file_string.gsub!("\xCA\xbf", "'")   # c-single quote
+          file_string.gsub!("\xCC\xa8", '')    # modifier - under curve
+          file_string.gsub!("\xCC\xb1", '')    # modifier - under line
+          file_string.gsub!("\xEF\xBF\xBC", '')    # unknown
+          file_string.gsub!("\xEF\xBF\xBD", '')    # unknown
 
+          file_string
+        end
 
+# Run initial code
         # Check for startdate and stopdate range
         if !ENV['startdate'].nil? or !ENV['stopdate'].nil?
             if !ENV['startdate'].nil? and !ENV['stopdate'].nil?
