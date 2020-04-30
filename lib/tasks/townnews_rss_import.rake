@@ -84,8 +84,9 @@ namespace :townnews do
                 story.paper = Paper.find_or_create_by(name: paper) unless paper.nil?
 
                 # import story body, truncating to max length and removing accent characters
-                story.copy = item["description"].truncate(65500).unaccent unless item["description"].nil?
-                story.copy = cleanup_text(story.copy)
+                story.copy = item["description"].truncate(65500) unless item["description"].nil?
+                story.copy = cleanup_text(story.copy) unless item["description"].nil?
+                story.copy = story.copy.unaccent unless item["description"].nil?
                 #puts story.copy
 
                 # import side_body, toolbox, extra text
