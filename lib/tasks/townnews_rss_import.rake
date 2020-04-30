@@ -57,8 +57,6 @@ namespace :townnews do
                 story.origin = item["asset_source"] unless item["asset_source"].nil?
                 story.categoryname = item["sections"]["section"] unless item["sections"].nil?
                 story.pubdate = (item["pubDate"].nil? ? Time.now : item["pubDate"])
-puts item["pubDate"]
-puts story.pubdate.strftime('%m/%d/%Y')
 
                 # print data is not accessible from a TownNews RSS feed
                 #story.publication = Publication.find_or_create_by(name: dti_story.edition_name) unless dti_story.edition_name.nil?
