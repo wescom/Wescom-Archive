@@ -49,12 +49,6 @@ namespace :townnews do
                 #puts story.id
                 #puts uuid_to_s(story.uuid)
 
-                if ((story.updated_at - story.created_at) * 24 * 60 * 60).to_i < 10
-                    puts "\nCreated at "+Time.now.strftime('%m/%d/%Y %r')
-                else
-                    puts "\nUpdated at "+story.updated_at.strftime('%m/%d/%Y %r')
-                end
-
                 story.doc_id = 0            # TownNews does not have an id, uses uuid instead                
                 story.doc_name = ""         # TownNews cannot export slug in an RSS feed
                 story.frontend_db = "TownNews"
@@ -62,7 +56,9 @@ namespace :townnews do
 
                 story.origin = item["asset_source"] unless item["asset_source"].nil?
                 story.categoryname = item["sections"]["section"] unless item["sections"].nil?
-                story.pubdate = (item["pubdate"].nil? ? Time.now : item["pubdate"])
+                story.pubdate = (item["pubDate"].nil? ? Time.now : item["pubDate"])
+puts item["pubDate"]
+puts story.pubdate.strftime('%m/%d/%Y')
 
                 # print data is not accessible from a TownNews RSS feed
                 #story.publication = Publication.find_or_create_by(name: dti_story.edition_name) unless dti_story.edition_name.nil?
@@ -174,7 +170,7 @@ namespace :townnews do
                         media.media_type = File.extname(media.image_file_name).strip.downcase[1..-1] unless media.image_file_name.nil?
                         media.forsale = media_tag["forSale"] unless media_tag["forSale"].nil?
 
-                        media.pubdate = (media_tag["pubdate"].nil? ? Time.now : media_tag["pubdate"])
+                        media.pubdate = (media_tag["pubDate"].nil? ? Time.now : media_tag["pubDate"])
                         media.publish_status = (media_tag["isPublished"] == 'true' ? "Published" : "Attached")
                         media.last_refreshed_time = media_tag["lastupdated"].nil? unless media_tag["lastupdated"].nil?
 
@@ -223,7 +219,12 @@ namespace :townnews do
                 story.index!
 
                 # Display imported story record
-                puts '   Story: #'+story.id.to_s + " - " + uuid_to_s(story.uuid) + " - " + story.hl1
+                if ((story.updated_at - story.created_at) * 24 * 60 * 60).to_i < 10
+                    puts "\nCreated Story: #"+story.id.to_s + " - " + uuid_to_s(story.uuid) + " - " + story.hl1
+                else
+                    puts "\nUpdated Story: #"+story.id.to_s + " - " + uuid_to_s(story.uuid) + " - " + story.hl1
+                end
+
                 puts "      Errors: "+story.errors.full_messages.inspect if story.errors.present?
                 num_stories += 1                        
                 unless story.story_images.nil?
