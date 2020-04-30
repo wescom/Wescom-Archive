@@ -305,24 +305,24 @@ namespace :townnews do
           file_string.gsub!("\xC2\xab", '<<')  # Double less than
           file_string.gsub!("\xC2\xbb", '>>')  # Double greater than
           file_string.gsub!("\xE2\x80\xA9", '')    #
-          file_string.gsub!("\xE2\x85\x90", '1/7')    #one seventh
-          file_string.gsub!("\xE2\x85\x91", '1/9')    #one ninth
-          file_string.gsub!("\xE2\x85\x92", '1/10')    #one tenth
-          file_string.gsub!("\xE2\x85\x93", '1/3')    #one third
-          file_string.gsub!("\xE2\x85\x94", '2/3')    #two third
-          file_string.gsub!("\xE2\x85\x95", '1/5')    #one fifth
-          file_string.gsub!("\xE2\x85\x96", '2/5')    #two fifth
-          file_string.gsub!("\xE2\x85\x97", '3/5')    #three fifth
-          file_string.gsub!("\xE2\x85\x98", '4/5')    #four fifth
-          file_string.gsub!("\xE2\x85\x99", '1/6')    #one sixth
-          file_string.gsub!("\xE2\x85\x9A", '5/6')    #five sixth
-          file_string.gsub!("\xE2\x85\x9B", '1/8')    #one eighth
-          file_string.gsub!("\xE2\x85\x9C", '3/8')    #three eighth
-          file_string.gsub!("\xE2\x85\x9D", '5/8')    #five eighth
-          file_string.gsub!("\xE2\x85\x9E", '7/8')    #seven eighth
-          file_string.gsub!("\xC2\xbc", '1/4') # one quarter
-          file_string.gsub!("\xC2\xbd", '1/2') # one half
-          file_string.gsub!("\xC2\xbe", '3/4') # three quarters
+          file_string.gsub!("\xE2\x85\x90", ' 1/7')    #one seventh
+          file_string.gsub!("\xE2\x85\x91", ' 1/9')    #one ninth
+          file_string.gsub!("\xE2\x85\x92", ' 1/10')    #one tenth
+          file_string.gsub!("\xE2\x85\x93", ' 1/3')    #one third
+          file_string.gsub!("\xE2\x85\x94", ' 2/3')    #two third
+          file_string.gsub!("\xE2\x85\x95", ' 1/5')    #one fifth
+          file_string.gsub!("\xE2\x85\x96", ' 2/5')    #two fifth
+          file_string.gsub!("\xE2\x85\x97", ' 3/5')    #three fifth
+          file_string.gsub!("\xE2\x85\x98", ' 4/5')    #four fifth
+          file_string.gsub!("\xE2\x85\x99", ' 1/6')    #one sixth
+          file_string.gsub!("\xE2\x85\x9A", ' 5/6')    #five sixth
+          file_string.gsub!("\xE2\x85\x9B", ' 1/8')    #one eighth
+          file_string.gsub!("\xE2\x85\x9C", ' 3/8')    #three eighth
+          file_string.gsub!("\xE2\x85\x9D", ' 5/8')    #five eighth
+          file_string.gsub!("\xE2\x85\x9E", ' 7/8')    #seven eighth
+          file_string.gsub!("\xC2\xbc", ' 1/4') # one quarter
+          file_string.gsub!("\xC2\xbd", ' 1/2') # one half
+          file_string.gsub!("\xC2\xbe", ' 3/4') # three quarters
           file_string.gsub!("\xCA\xbf", "'")   # c-single quote
           file_string.gsub!("\xCC\xa8", '')    # modifier - under curve
           file_string.gsub!("\xCC\xb1", '')    # modifier - under line
