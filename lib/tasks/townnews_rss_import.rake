@@ -23,6 +23,7 @@ namespace :townnews do
             # If a story does not publish until an hour later than it will not be included in the rss feed.
             url = 'https://www.bendbulletin.com/search/?q=&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
             xml_raw = Nokogiri::XML(open(url), nil, "UTF-8").to_s
+            xml_raw = remove_tags(xml_raw)
             xml_parsed = Crack::XML.parse(xml_raw)
 
             xml_tag = xml_parsed["xml"]
@@ -253,6 +254,7 @@ namespace :townnews do
                 puts "\n Errors:"
                 puts "-------------------" + errors_log
             end
+            puts "\n\n"
         end
 
 
@@ -281,8 +283,15 @@ namespace :townnews do
             uuid = uuid.pack('n*')                      # pack array into a binary sequence for storing
             return uuid
         end
+
+        def remove_tags(file_string)
+            file_string.gsub!("<em>", '')
+            file_string.gsub!("</em>", '')
+
+            file_string
+        end    
         
-        def self.cleanup_text(file_string)
+        def cleanup_text(file_string)
           file_string.gsub!("\xEF\xBB\xBF", ' ')    #BOMS
           file_string.gsub!("\xE2\x80\xA8", ' ')    #BOMS
           file_string.gsub!("\xE2\x80\x89", ' ')   #BOMS
