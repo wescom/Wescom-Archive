@@ -165,7 +165,7 @@ namespace :townnews do
                         media.media_height = media_tag["height"] unless media_tag["height"].nil?
 
                         media.media_source = media_tag["source"] unless media_tag["source"].nil?
-                        media.media_webcaption = media_tag["caption"].gsub("</p><p>","\n").gsub(/<[^<>]*>/, "") unless media_tag["caption"].nil?
+                        media.media_webcaption = cleanup_text(media_tag["caption"].gsub("</p><p>","\n").gsub(/<[^<>]*>/, "")) unless media_tag["caption"].nil?
                         media.media_byline = media_tag["byline"].truncate(250) unless media_tag["byline"].nil?
                         media.media_type = File.extname(media.image_file_name).strip.downcase[1..-1] unless media.image_file_name.nil?
                         media.forsale = media_tag["forSale"] unless media_tag["forSale"].nil?
@@ -315,6 +315,7 @@ namespace :townnews do
           file_string.gsub!("\xC2\xab", '<<')  # Double less than
           file_string.gsub!("\xC2\xbb", '>>')  # Double greater than
           file_string.gsub!("\xE2\x80\xA9", '')    #
+          file_string.gsub!("\xE2\x80\xB2", '')    #
           file_string.gsub!("\xE2\x85\x90", ' 1/7')    #one seventh
           file_string.gsub!("\xE2\x85\x91", ' 1/9')    #one ninth
           file_string.gsub!("\xE2\x85\x92", ' 1/10')    #one tenth
