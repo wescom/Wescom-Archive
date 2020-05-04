@@ -344,6 +344,7 @@ namespace :townnews do
           file_string.gsub!("\xCC\xb1", '')    # modifier - under line
           file_string.gsub!("\xEF\xBF\xBC", '')    # unknown
           file_string.gsub!("\xEF\xBF\xBD", '')    # unknown
+          file_string.gsub!("\xEF\xB8\x8F", '')    # unknown
 
           file_string
         end
