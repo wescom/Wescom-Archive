@@ -156,7 +156,11 @@ namespace :townnews do
 
                         media = story.story_images.find_or_create_by(uuid: media_uuid)
                         media.uuid = media_uuid
-                        media.media_name = media_tag["title"].truncate(250) unless media_tag["title"].nil?
+                        if media_tag["title"].nil?
+                            media.media_name = item["headline"].truncate(250)
+                        else
+                            media.media_name = media_tag["title"].truncate(250)
+                        end
                         media.weblink = media_tag["link"] unless media_tag["link"].nil?
 
                         # download image and attach
@@ -209,8 +213,9 @@ namespace :townnews do
                                 media.flags << flag unless media.flags.include?(flag)
                             end
                         end
-                        
-                        media.update_attributes(uuid: s_to_uuid(media_tag["uuid"]), media_name: media_tag["title"].truncate(250))
+
+                        media_name = media.media_name
+                        media.update_attributes(uuid: s_to_uuid(media_tag["uuid"]), media_name: media_name)
                         #puts '   Image: #'+media.id.to_s + " - " + uuid_to_s(media.uuid) + " - " + media.media_name.truncate(250)
                     end
                 end
@@ -229,12 +234,12 @@ namespace :townnews do
                 num_stories += 1                        
                 unless story.story_images.nil?
                     story.story_images.each do |image|
-                        puts '      Image: #'+image.id.to_s + " - " + image.media_name.truncate(250)
+                        puts '      Image: #'+image.id.to_s + " - " + image.media_name
                         if image.image_file_size.nil?
                            puts "      *** WARNING: Imported image missing content"
                            warnings_log = warnings_log + "\nImported image missing content "
                            warnings_log = warnings_log + "\n   Story: #" + story.id.to_s + " - " + story.hl1
-                           warnings_log = warnings_log + "\n   Image: #" + image.id.to_s + " - " + image.media_name.truncate(250)
+                           warnings_log = warnings_log + "\n   Image: #" + image.id.to_s + " - " + image.media_name
                         end
                         num_images += 1                        
                     end
