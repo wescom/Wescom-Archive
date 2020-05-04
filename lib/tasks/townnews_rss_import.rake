@@ -56,7 +56,6 @@ namespace :townnews do
                 story.weblink = item["link"] unless item["link"].nil?
 
                 story.origin = item["asset_source"] unless item["asset_source"].nil?
-                story.categoryname = item["sections"]["section"] unless item["sections"].nil?
                 story.pubdate = (item["pubDate"].nil? ? Time.now : item["pubDate"])
 
                 # print data is not accessible from a TownNews RSS feed
@@ -115,7 +114,7 @@ namespace :townnews do
                 keywords = Array.wrap(item["keywords"]["keyword"]) unless item["keywords"].nil?
                 unless keywords.nil?
                     keywords.each do |x|
-                        keyword = Keyword.find_or_create_by(text: x)
+                        keyword = Keyword.find_or_create_by(text: x.truncate(250))
                         story.keywords << keyword unless story.keywords.include?(keyword)
                     end
                 end
@@ -132,8 +131,9 @@ namespace :townnews do
                 # import section records
                 sections = Array.wrap(item["sections"]["section"]) unless item["sections"].nil?
                 unless sections.nil?
+                    story.categoryname = sections[0] unless sections.nil?
                     sections.each do |x|
-                        section = Section.find_or_create_by(name: x)
+                        section = Section.find_or_create_by(name: x.truncate(250))
                         story.sections << section unless story.sections.include?(section)
                     end
                 end
@@ -142,7 +142,7 @@ namespace :townnews do
                 flags = Array.wrap(item["flags"]["flag"]) unless item["flags"].nil?
                 unless flags.nil?
                     flags.each do |x|
-                        flag = Flag.find_or_create_by(name: x)
+                        flag = Flag.find_or_create_by(name: x.truncate(250))
                         story.flags << flag unless story.flags.include?(flag)
                     end
                 end
@@ -178,7 +178,7 @@ namespace :townnews do
                         image_keywords = Array.wrap(media_tag["keywords"]["keyword"]) unless media_tag["keywords"].nil?
                         unless image_keywords.nil?
                             image_keywords.each do |x|
-                                keyword = Keyword.find_or_create_by(text: x)
+                                keyword = Keyword.find_or_create_by(text: x.truncate(250))
                                 media.keywords << keyword unless media.keywords.include?(keyword)
                             end
                         end
@@ -196,7 +196,7 @@ namespace :townnews do
                         image_sections = Array.wrap(media_tag["sections"]["section"]) unless media_tag["sections"].nil?
                         unless image_sections.nil?
                             image_sections.each do |x|
-                                section = Section.find_or_create_by(name: x)
+                                section = Section.find_or_create_by(name: x.truncate(250))
                                 media.sections << section unless media.sections.include?(section)
                             end
                         end
@@ -205,13 +205,13 @@ namespace :townnews do
                         image_flags = Array.wrap(media_tag["flags"]["flag"]) unless media_tag["flags"].nil?
                         unless image_flags.nil?
                             image_flags.each do |x|
-                                flag = Flag.find_or_create_by(name: x)
+                                flag = Flag.find_or_create_by(name: x.truncate(250))
                                 media.flags << flag unless media.flags.include?(flag)
                             end
                         end
                         
-                        media.update_attributes(uuid: s_to_uuid(media_tag["uuid"]), media_name: media_tag["title"])
-                        #puts '   Image: #'+media.id.to_s + " - " + uuid_to_s(media.uuid) + " - " + media.media_name
+                        media.update_attributes(uuid: s_to_uuid(media_tag["uuid"]), media_name: media_tag["title"].truncate(250))
+                        #puts '   Image: #'+media.id.to_s + " - " + uuid_to_s(media.uuid) + " - " + media.media_name.truncate(250)
                     end
                 end
 
@@ -229,12 +229,12 @@ namespace :townnews do
                 num_stories += 1                        
                 unless story.story_images.nil?
                     story.story_images.each do |image|
-                        puts '      Image: #'+image.id.to_s + " - " + image.media_name
+                        puts '      Image: #'+image.id.to_s + " - " + image.media_name.truncate(250)
                         if image.image_file_size.nil?
                            puts "      *** WARNING: Imported image missing content"
                            warnings_log = warnings_log + "\nImported image missing content "
                            warnings_log = warnings_log + "\n   Story: #" + story.id.to_s + " - " + story.hl1
-                           warnings_log = warnings_log + "\n   Image: #" + image.id.to_s + " - " + image.media_name
+                           warnings_log = warnings_log + "\n   Image: #" + image.id.to_s + " - " + image.media_name.truncate(250)
                         end
                         num_images += 1                        
                     end
