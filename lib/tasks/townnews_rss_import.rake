@@ -156,7 +156,7 @@ namespace :townnews do
 
                         media = story.story_images.find_or_create_by(uuid: media_uuid)
                         media.uuid = media_uuid
-                        media.media_name = media_tag["title"] unless media_tag["title"].nil?
+                        media.media_name = media_tag["title"].truncate(250) unless media_tag["title"].nil?
                         media.weblink = media_tag["link"] unless media_tag["link"].nil?
 
                         # download image and attach
@@ -166,7 +166,7 @@ namespace :townnews do
 
                         media.media_source = media_tag["source"] unless media_tag["source"].nil?
                         media.media_webcaption = media_tag["caption"].gsub("</p><p>","\n").gsub(/<[^<>]*>/, "") unless media_tag["caption"].nil?
-                        media.media_byline = media_tag["byline"] unless media_tag["byline"].nil?
+                        media.media_byline = media_tag["byline"].truncate(250) unless media_tag["byline"].nil?
                         media.media_type = File.extname(media.image_file_name).strip.downcase[1..-1] unless media.image_file_name.nil?
                         media.forsale = media_tag["forSale"] unless media_tag["forSale"].nil?
 
