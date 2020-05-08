@@ -68,6 +68,8 @@ module ApplicationHelper
   end
 
   def strip_subhead_tags(text)
-    text.html_safe.gsub(/<p class="hl2_chapterhead">/, '<p>')
+    #text.gsub!(/<p class="hl2_chapterhead">/, '<p>')
+    text.gsub!(/<(.*?)>/, ' ')
+    return text
   end
 end

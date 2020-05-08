@@ -1,7 +1,7 @@
 <tr>
   <td class="headline headline_col align-middle"><%= link_to text_for_story_link(story_fragment), story_fragment %>
     <% if story_fragment.copy && story_fragment.copy.length > 0 %>
-			<%= strip_subhead_tags(story_fragment.copy)[0..250].html_safe %>
+			<br/><%= strip_subhead_tags(story_fragment.copy)[0..250].html_safe %>
 		<% else %>
 			<% if story_fragment.sidebar_body and (story_fragment.sidebar_body =~ /<table/).nil? %>
 				<!--Do not display if <table> tags exist-->
