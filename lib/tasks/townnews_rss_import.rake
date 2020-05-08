@@ -368,6 +368,7 @@ namespace :townnews do
           file_string.gsub!("\xEF\xBF\xBD", '')    # unknown
           file_string.gsub!("\xEF\xB8\x8F", '')    # unknown
           file_string.gsub!("\xEF\x80\x85", '')    # unknown
+          file_string.gsub!("\xEF\x84\xA3", '')    # unknown
 
           file_string
         end
