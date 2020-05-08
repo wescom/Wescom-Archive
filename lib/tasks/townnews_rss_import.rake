@@ -309,10 +309,22 @@ namespace :townnews do
         def cleanup_text(file_string)
           file_string.gsub!("\xEF\xBB\xBF", ' ')    #BOMS
           file_string.gsub!("\xE2\x80\xA8", ' ')    #BOMS
-          file_string.gsub!("\xE2\x80\x89", ' ')   #BOMS
+          file_string.gsub!("\xE2\x80\x80", ' ')    #Unknown
+          file_string.gsub!("\xE2\x80\x81", ' ')    #Unknown
           file_string.gsub!("\xE2\x80\x82", ' ')    #EM Space
           file_string.gsub!("\xE2\x80\x83", ' ')    #EM Space
           file_string.gsub!("\xE2\x81\x84", '/')    #BOMS
+          file_string.gsub!("\xE2\x80\x85", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x86", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x87", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x88", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x89", ' ')   #BOMS
+          file_string.gsub!("\xE2\x80\x8A", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x8B", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x8C", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x8D", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x8E", '')    #Unknown
+          file_string.gsub!("\xE2\x80\x8F", '')    #Unknown
           file_string.gsub!("\xC2\x82", ',')   # High code comma
           file_string.gsub!("\xC2\x84", ',,')  # High code double comma
           file_string.gsub!("\xC2\x85", '...') # Tripple dot
