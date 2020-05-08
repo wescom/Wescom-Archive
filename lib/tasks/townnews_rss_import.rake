@@ -84,9 +84,9 @@ namespace :townnews do
                 story.paper = Paper.find_or_create_by(name: paper) unless paper.nil?
 
                 # import story body, truncating to max length and removing accent characters
-                story.copy = item["description"].truncate(65500) unless item["description"].nil?
-                story.copy = cleanup_text(story.copy) unless item["description"].nil?
-                story.copy = story.copy.unaccent unless item["description"].nil?
+                story.copy = item["content"].truncate(65500) unless item["content"].nil?
+                story.copy = cleanup_text(story.copy) unless story.copy.nil?
+                story.copy = story.copy.unaccent unless story.copy.nil?
                 #puts story.copy
 
                 # import side_body, toolbox, extra text
@@ -98,7 +98,12 @@ namespace :townnews do
                         fact_content = Array.wrap(asset_fact["fact_content"]["p"]) unless asset_fact["fact_content"].nil?
                         unless fact_content.nil?
                             fact_content.each do |p|
-                                facts = facts + "<p>" + p + "</p>"
+                                if p.is_a?(Hash)
+                                    text = hash_to_tag(p)
+                                else
+                                    text = p
+                                end
+                                facts = facts + "<p>" + text + "</p>"
                             end
                             facts = facts + "<p> </p>"
                         end
@@ -287,6 +292,11 @@ namespace :townnews do
             uuid = uuid.map { |x| x.to_i(16) }          # convert each item in uuid array into 16bit integer
             uuid = uuid.pack('n*')                      # pack array into a binary sequence for storing
             return uuid
+        end
+
+        def hash_to_tag(hash)
+            string_with_tag = "<"+hash.keys[0]+">" + hash.values[0] + "</"+hash.keys[0]+">"
+            return string_with_tag 
         end
 
         def remove_tags(file_string)
