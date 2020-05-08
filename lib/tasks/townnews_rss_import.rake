@@ -64,7 +64,7 @@ namespace :townnews do
 
                 story.hl1 = item["headline"].truncate(250) unless item["headline"].nil?
                 story.hl2 = item["subheadline"].truncate(250) unless item["subheadline"].nil?
-                #puts '   Story hl1: '+story.hl1
+                #puts "\n" + story.pubdate.strftime('%m/%d/%Y') + '   Importing Story: '+story.hl1
 
                 byline = item["byline"]
                 unless byline.nil?
@@ -85,8 +85,8 @@ namespace :townnews do
 
                 # import story body, truncating to max length and removing accent characters
                 story.copy = item["content"].truncate(65500) unless item["content"].nil?
-                story.copy = cleanup_text(story.copy) unless story.copy.nil?
                 story.copy = story.copy.unaccent unless story.copy.nil?
+                story.copy = cleanup_text(story.copy) unless story.copy.nil?
                 #puts story.copy
 
                 # import side_body, toolbox, extra text
