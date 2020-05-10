@@ -368,6 +368,18 @@ namespace :townnews do
           file_string.gsub!("\xEF\xBF\xBD", '')    # unknown
           file_string.gsub!("\xEF\xB8\x8F", '')    # unknown
           file_string.gsub!("\xEF\x80\x85", '')    # unknown
+          file_string.gsub!("\xEF\x80\x86", '')    # unknown
+          file_string.gsub!("\xEF\x80\x87", '')    # unknown
+          file_string.gsub!("\xEF\x80\x88", '')    # unknown
+          file_string.gsub!("\xEF\x80\x89", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8A", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8B", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8C", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8D", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8E", '')    # unknown
+          file_string.gsub!("\xEF\x80\x8F", '')    # unknown
+          file_string.gsub!("\xEF\x84\xA1", '')    # unknown
+          file_string.gsub!("\xEF\x84\xA2", '')    # unknown
           file_string.gsub!("\xEF\x84\xA3", '')    # unknown
 
           return file_string
