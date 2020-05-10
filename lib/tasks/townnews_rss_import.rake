@@ -370,7 +370,7 @@ namespace :townnews do
           file_string.gsub!("\xEF\x80\x85", '')    # unknown
           file_string.gsub!("\xEF\x84\xA3", '')    # unknown
 
-          file_string
+          return file_string
         end
 
 # Run initial code
