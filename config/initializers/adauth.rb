@@ -19,7 +19,8 @@ Adauth.configure do |c|
 	# This could be anything and probably wont be 127.0.0.1
 	#
 	# Again contact your IT Support if you can't work this out
-	c.server = "bendbulletin.com"
+	#c.server = "bendbulletin.com"
+  c.server = "192.168.212.111"
 
 	# The LDAP base of your domain/intended users
 	#
