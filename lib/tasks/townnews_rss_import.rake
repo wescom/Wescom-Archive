@@ -21,7 +21,20 @@ namespace :townnews do
 
             # fyi... TownNews will only export stories 'published' based on startdate AND starttime. 
             # If a story does not publish until an hour later than it will not be included in the rss feed.
-            url = 'https://www.bendbulletin.com/search/?q=&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
+            url = 'https://www.bendbulletin.com/search/?q="Bend teen climate"&t=article&l=100&s=start_time&sd=desc&d='+find_date+'&c=&nk=%23tncen&fulltext=alltext&f=rss&altf=archive'
+ 
+puts "******"           
+xml_rawXML = Nokogiri::XML(open(url))
+#puts xml_rawXML
+assets_facts = xml_rawXML.xpath("//assets_facts//assets_fact")
+#puts "assets_facts: " + assets_facts[0].to_s
+assets_facts.xpath('//assets_facts//assets_fact').each do |link|
+  puts link.content
+end
+
+puts "******"           
+quit
+
             xml_raw = Nokogiri::XML(open(url), nil, "UTF-8").to_s
             xml_raw = remove_tags(xml_raw)
             xml_parsed = Crack::XML.parse(xml_raw)
@@ -95,10 +108,16 @@ namespace :townnews do
                 unless asset_facts.nil?
                     asset_facts.each do |asset_fact|
                         facts = facts + "<p><strong>" + asset_fact["fact_title"] + "</strong></p>"
+puts asset_fact["fact_content"]
+puts asset_fact["fact_content"]["p"]
+
                         fact_content = Array.wrap(asset_fact["fact_content"]["p"]) unless asset_fact["fact_content"].nil?
                         unless fact_content.nil?
                             fact_content.each do |p|
+puts p.inspect
                                 if p.is_a?(Hash)
+puts "p is hash"
+puts array_to_tag(p)
                                     text = hash_to_tag(p)
                                 else
                                     text = p
@@ -110,6 +129,7 @@ namespace :townnews do
                     end
                 end
                 story.sidebar_body = facts
+puts facts
 
                 story.tagline = item["tagline"] unless item["tagline"].nil?
                 story.kicker = item["kicker"] unless item["kicker"].nil?
