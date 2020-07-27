@@ -1,6 +1,7 @@
 production:
   solr:
-    hostname: archive2.bendbulletin.com
+#    hostname: archive2.bendbulletin.com
+    hostname: 192.168.212.203
     port: 8983
     path: '/solr/default'
     min_memory: 1G
