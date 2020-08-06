@@ -10,6 +10,6 @@ cd /u/apps/wescomarchive/current
 bundle install>>/tmp/null
 
 echo "Import current months Ads"
-bundle exec rake wescom:ad_import RAILS_ENV=production
+bundle exec rake archive:ad_import RAILS_ENV=production
 
 echo "$(date +%m/%d/%y\ %T)"
