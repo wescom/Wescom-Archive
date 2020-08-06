@@ -73,7 +73,7 @@ namespace :archive do
 
     rescue Exception => e
           puts "Failed to Process File: #{file}\n Error: #{e}\n\n"
-          FileUtils.cp file, '/WescomArchive/Ads_Backup/import_failed/'+filename
+          FileUtils.cp file, '/WescomArchive/Ads_backup/import_failed/'+filename
       end
     end
   
